@@ -1,5 +1,8 @@
 <template>
-  <div ref="container" class="promotion-list">
+  <div
+    ref="container"
+    class="promotion-list"
+  >
     <div
       v-for="(spu, index) in spuList"
       :key="index"
@@ -13,14 +16,25 @@
         borderBottomRightRadius: property.borderRadiusBottom + 'px'
       }"
     >
-      <div v-if="property.badge.show" class="badge">
-        <el-image fit="cover" :src="property.badge.imgUrl" class="badge-image" />
+      <div
+        v-if="property.badge.show"
+        class="badge"
+      >
+        <el-image
+          fit="cover"
+          :src="property.badge.imgUrl"
+          class="badge-image"
+        />
       </div>
       <div
         class="product-image-wrap"
         :class="{ 'small-image': property.layoutType === 'oneColSmallImg' }"
       >
-        <el-image fit="cover" class="product-image" :src="spu.picUrl" />
+        <el-image
+          fit="cover"
+          class="product-image"
+          :src="spu.picUrl"
+        />
       </div>
       <div
         class="product-info"
@@ -64,7 +78,10 @@
           >
             已售{{ (spu.salesCount || 0) + (spu.virtualSalesCount || 0) }}件
           </span>
-          <span v-if="property.fields.stock.show" :style="{ color: property.fields.stock.color }">
+          <span
+            v-if="property.fields.stock.show"
+            :style="{ color: property.fields.stock.color }"
+          >
             库存{{ spu.stock || 0 }}
           </span>
         </div>

@@ -14,7 +14,10 @@
           :value="item.id"
         />
       </el-select>
-      <el-button :disabled="disabled" @click="$refs.categoryManage.open()">管理分类</el-button>
+      <el-button
+        :disabled="disabled"
+        @click="$refs.categoryManage.open()"
+      >管理分类</el-button>
     </div>
     <fms-voucher-template-category-manage
       ref="categoryManage"

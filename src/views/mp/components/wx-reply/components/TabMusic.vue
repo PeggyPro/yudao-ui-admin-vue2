@@ -12,7 +12,7 @@
             :src="reply.thumbMediaUrl"
             class="thumb-img"
             alt=""
-          />
+          >
           <i
             v-else
             class="el-icon-plus avatar-uploader-icon"

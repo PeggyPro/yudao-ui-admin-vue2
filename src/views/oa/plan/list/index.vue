@@ -9,7 +9,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="计划标题" prop="title">
+      <el-form-item
+        label="计划标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入计划标题"
@@ -18,7 +21,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="计划标签" prop="label">
+      <el-form-item
+        label="计划标签"
+        prop="label"
+      >
         <el-input
           v-model="queryParams.label"
           placeholder="请输入计划标签"
@@ -27,7 +33,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="计划类型" prop="type">
+      <el-form-item
+        label="计划类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择计划类型"
@@ -42,7 +51,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="计划状态" prop="status">
+      <el-form-item
+        label="计划状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择计划状态"
@@ -57,7 +69,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间" prop="createTime">
+      <el-form-item
+        label="发布时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -68,8 +83,15 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:plan:create']"
           type="primary"
@@ -81,17 +103,48 @@
     </el-form>
 
     <!-- 工作计划列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="计划标题" prop="title" min-width="180" show-overflow-tooltip />
-      <el-table-column label="标签" prop="label" width="120" show-overflow-tooltip />
-      <el-table-column label="类型" prop="type" align="center" width="90">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="计划标题"
+        prop="title"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="标签"
+        prop="label"
+        width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="类型"
+        prop="type"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PLAN_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PLAN_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="status" align="center" width="90">
+      <el-table-column
+        label="状态"
+        prop="status"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PLAN_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PLAN_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -115,20 +168,42 @@
         align="center"
         width="180"
       />
-      <el-table-column label="发布人" prop="userName" align="center" width="110" />
-      <el-table-column label="部门" prop="deptName" align="center" width="120" />
-      <el-table-column label="点评" min-width="180">
+      <el-table-column
+        label="发布人"
+        prop="userName"
+        align="center"
+        width="110"
+      />
+      <el-table-column
+        label="部门"
+        prop="deptName"
+        align="center"
+        width="120"
+      />
+      <el-table-column
+        label="点评"
+        min-width="180"
+      >
         <template slot-scope="scope">
           <div class="pre-line">{{ scope.row.comment || '-' }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="附件" width="80" align="center">
+      <el-table-column
+        label="附件"
+        width="80"
+        align="center"
+      >
         <template slot-scope="scope">
           <span v-if="scope.row.fileUrls && scope.row.fileUrls.length">{{ scope.row.fileUrls.length }}</span>
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="140">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="140"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:plan:update']"
@@ -155,7 +230,10 @@
     />
 
     <!-- 工作计划表单 -->
-    <oa-plan-form ref="formRef" @success="getList" />
+    <oa-plan-form
+      ref="formRef"
+      @success="getList"
+    />
   </div>
 </template>
 

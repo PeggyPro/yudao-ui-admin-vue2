@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="500px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="500px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,10 +11,22 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item v-if="formType === 'create' || formType === 'rename'" label="名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入名称" maxlength="255" />
+      <el-form-item
+        v-if="formType === 'create' || formType === 'rename'"
+        label="名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入名称"
+          maxlength="255"
+        />
       </el-form-item>
-      <el-form-item v-else label="目标目录" prop="parentId">
+      <el-form-item
+        v-else
+        label="目标目录"
+        prop="parentId"
+      >
         <el-select
           v-model="formData.parentId"
           placeholder="请选择目标目录"
@@ -26,15 +42,22 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as NodeApi from '@/api/oa/file/node'
 import { handleTree } from '@/utils/tree'
 import { OA_FILE_NODE_TYPE, OA_FILE_PARENT_ID_ROOT } from '@/views/oa/utils/constants'
@@ -73,7 +96,7 @@ function flattenDirectoryTree(list, depth, result) {
 
 export default {
   name: 'OaFileNodeForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, // 弹窗的是否展示

@@ -1,19 +1,55 @@
 <template>
   <div class="app-container fms-ledger-page">
-    <doc-alert title="【账簿】账簿管理" url="https://doc.iocoder.cn/fms/ledger/" />
-    <el-card class="ledger-toolbar" shadow="never">
-      <el-form :inline="true" label-width="78px" class="ledger-form">
+    <doc-alert
+      title="【账簿】账簿管理"
+      url="https://doc.iocoder.cn/fms/ledger/"
+    />
+    <el-card
+      class="ledger-toolbar"
+      shadow="never"
+    >
+      <el-form
+        :inline="true"
+        label-width="78px"
+        class="ledger-form"
+      >
         <el-form-item label="会计期间"><FmsLedgerMonthRangePicker v-model="monthRange" /></el-form-item>
         <el-form-item label="辅助类">
-          <FmsAuxiliaryTypeSelect v-model="queryParams.auxiliaryTypeId" :account-set-id="accountSetId" :clearable="false" style="width: 220px" @change="handleTypeChange" @loaded="handleTypeLoaded" />
+          <FmsAuxiliaryTypeSelect
+            v-model="queryParams.auxiliaryTypeId"
+            :account-set-id="accountSetId"
+            :clearable="false"
+            style="width: 220px"
+            @change="handleTypeChange"
+            @loaded="handleTypeLoaded"
+          />
         </el-form-item>
         <el-form-item label="辅助项目">
-          <FmsAuxiliaryItemSelect v-model="queryParams.auxiliaryItemId" :account-set-id="accountSetId" :auxiliary-type-id="queryParams.auxiliaryTypeId" clearable placeholder="全部辅助项目" style="width: 220px" />
+          <FmsAuxiliaryItemSelect
+            v-model="queryParams.auxiliaryItemId"
+            :account-set-id="accountSetId"
+            :auxiliary-type-id="queryParams.auxiliaryTypeId"
+            clearable
+            placeholder="全部辅助项目"
+            style="width: 220px"
+          />
         </el-form-item>
-        <el-form-item label="科目"><FmsSubjectSelect v-model="queryParams.subjectId" :options="subjects" clearable placeholder="全部科目" style="width: 220px" /></el-form-item>
+        <el-form-item label="科目"><FmsSubjectSelect
+          v-model="queryParams.subjectId"
+          :options="subjects"
+          clearable
+          placeholder="全部科目"
+          style="width: 220px"
+        /></el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <FmsLedgerPrintButton
             :end-month="monthRange[1] || ''"
             :start-month="monthRange[0] || ''"
@@ -21,29 +57,98 @@
             target="fms-auxiliary-balance-table"
             title="核算项目余额表"
           />
-          <el-button v-hasPermi="['fms:ledger:subject-balance:export']" :loading="exportLoading" type="success" plain icon="el-icon-download" @click="handleExport">导出</el-button>
+          <el-button
+            v-hasPermi="['fms:ledger:subject-balance:export']"
+            :loading="exportLoading"
+            type="success"
+            plain
+            icon="el-icon-download"
+            @click="handleExport"
+          >导出</el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <el-card shadow="never">
-      <el-table id="fms-auxiliary-balance-table" v-loading="loading || accountSetLoading" :data="list" border stripe height="calc(100vh - 325px)">
-        <el-table-column align="center" label="编码" min-width="120" prop="code" fixed="left" />
-        <el-table-column label="项目名称" min-width="180" prop="name" fixed="left" />
-        <el-table-column align="center" label="期初余额">
-          <el-table-column align="right" label="借方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.openingDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.openingCreditAmount) }}</template></el-table-column>
+      <el-table
+        id="fms-auxiliary-balance-table"
+        v-loading="loading || accountSetLoading"
+        :data="list"
+        border
+        stripe
+        height="calc(100vh - 325px)"
+      >
+        <el-table-column
+          align="center"
+          label="编码"
+          min-width="120"
+          prop="code"
+          fixed="left"
+        />
+        <el-table-column
+          label="项目名称"
+          min-width="180"
+          prop="name"
+          fixed="left"
+        />
+        <el-table-column
+          align="center"
+          label="期初余额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.openingDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.openingCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本期发生额">
-          <el-table-column align="right" label="借方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本期发生额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本年累计发生额">
-          <el-table-column align="right" label="借方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本年累计发生额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="期末余额">
-          <el-table-column align="right" label="借方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.endingDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" min-width="130"><template slot-scope="scope">{{ formatMoney(scope.row.endingCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="期末余额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.endingDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            min-width="130"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.endingCreditAmount) }}</template></el-table-column>
         </el-table-column>
       </el-table>
     </el-card>

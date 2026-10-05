@@ -1,15 +1,33 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="导入凭证" width="750px" @closed="resetImport">
-    <el-steps :active="step" align-center finish-status="success" class="steps">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="导入凭证"
+    width="750px"
+    @closed="resetImport"
+  >
+    <el-steps
+      :active="step"
+      align-center
+      finish-status="success"
+      class="steps"
+    >
       <el-step title="上传文件" />
       <el-step title="导入数据" />
       <el-step title="导入完成" />
     </el-steps>
 
-    <div v-if="step === 0" class="import-content">
+    <div
+      v-if="step === 0"
+      class="import-content"
+    >
       <section>
         <h4>一、请按照数据模板的格式准备要导入的数据</h4>
-        <el-button type="text" :loading="templateLoading" @click="downloadTemplate">
+        <el-button
+          type="text"
+          :loading="templateLoading"
+          @click="downloadTemplate"
+        >
           <i class="el-icon-download" /> 下载《凭证导入模板》
         </el-button>
         <div class="tip">导入文件请勿超过 2MB</div>
@@ -30,12 +48,18 @@
         >
           <i class="el-icon-upload" />
           <div class="el-upload__text">将文件拖到此处，或<em>点击选择文件</em></div>
-          <div slot="tip" class="el-upload__tip">仅支持 xls、xlsx 格式</div>
+          <div
+            slot="tip"
+            class="el-upload__tip"
+          >仅支持 xls、xlsx 格式</div>
         </el-upload>
       </section>
     </div>
 
-    <div v-else-if="step === 1" class="importing">
+    <div
+      v-else-if="step === 1"
+      class="importing"
+    >
       <i class="el-icon-loading loading-icon" />
       <h3>凭证正在导入，请稍候</h3>
       <div class="tip">系统会按同一日期、凭证字和凭证号合并分录</div>
@@ -48,7 +72,12 @@
       :sub-title="importResultSummary"
     >
       <template slot="extra">
-        <el-button v-if="result && result.errorFileUrl" type="primary" plain @click="downloadErrorFile">
+        <el-button
+          v-if="result && result.errorFileUrl"
+          type="primary"
+          plain
+          @click="downloadErrorFile"
+        >
           <i class="el-icon-download" /> 下载错误数据
         </el-button>
       </template>
@@ -57,11 +86,18 @@
     <div slot="footer">
       <template v-if="step === 0">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" :disabled="!fileList.length" @click="submitImport">开始导入</el-button>
+        <el-button
+          type="primary"
+          :disabled="!fileList.length"
+          @click="submitImport"
+        >开始导入</el-button>
       </template>
       <template v-else-if="step === 2">
         <el-button @click="resetImport">继续导入</el-button>
-        <el-button type="primary" @click="dialogVisible = false">完 成</el-button>
+        <el-button
+          type="primary"
+          @click="dialogVisible = false"
+        >完 成</el-button>
       </template>
     </div>
   </el-dialog>

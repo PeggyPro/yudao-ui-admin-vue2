@@ -1,21 +1,115 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="上级菜单"><treeselect v-model="formData.parentId" :options="menuTree" :normalizer="normalizer" placeholder="请选择上级菜单" /></el-form-item>
-      <el-form-item label="菜单名称" prop="name"><el-input v-model="formData.name" clearable placeholder="请输入菜单名称" /></el-form-item>
-      <el-form-item label="菜单类型" prop="type"><el-radio-group v-model="formData.type"><el-radio v-for="dict in menuTypeDictDatas" :key="dict.value" :label="Number(dict.value)">{{ dict.label }}</el-radio></el-radio-group></el-form-item>
-      <el-form-item v-if="formData.type !== 3" label="菜单图标"><IconSelect v-model="formData.icon" /></el-form-item>
-      <el-form-item v-if="formData.type !== 3" label="路由地址" prop="path"><el-input v-model="formData.path" clearable placeholder="请输入路由地址" /></el-form-item>
-      <el-form-item v-if="formData.type === 2" label="组件地址" prop="component"><el-input v-model="formData.component" clearable placeholder="例如说：system/user/index" /></el-form-item>
-      <el-form-item v-if="formData.type === 2" label="组件名字" prop="componentName"><el-input v-model="formData.componentName" clearable placeholder="例如说：SystemUser" /></el-form-item>
-      <el-form-item v-if="formData.type !== 1" label="权限标识"><el-input v-model="formData.permission" clearable placeholder="请输入权限标识" /></el-form-item>
-      <el-form-item label="显示排序" prop="sort"><el-input-number v-model="formData.sort" :min="0" controls-position="right" /></el-form-item>
-      <el-form-item label="菜单状态" prop="status"><el-radio-group v-model="formData.status"><el-radio v-for="dict in statusDictDatas" :key="dict.value" :label="Number(dict.value)">{{ dict.label }}</el-radio></el-radio-group></el-form-item>
-      <el-form-item v-if="formData.type !== 3" label="显示状态"><el-radio-group v-model="formData.visible"><el-radio :label="true">显示</el-radio><el-radio :label="false">隐藏</el-radio></el-radio-group></el-form-item>
-      <el-form-item v-if="formData.type !== 3" label="总是显示"><el-radio-group v-model="formData.alwaysShow"><el-radio :label="true">总是</el-radio><el-radio :label="false">不是</el-radio></el-radio-group></el-form-item>
-      <el-form-item v-if="formData.type === 2" label="缓存状态"><el-radio-group v-model="formData.keepAlive"><el-radio :label="true">缓存</el-radio><el-radio :label="false">不缓存</el-radio></el-radio-group></el-form-item>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="800px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
+      <el-form-item label="上级菜单"><treeselect
+        v-model="formData.parentId"
+        :options="menuTree"
+        :normalizer="normalizer"
+        placeholder="请选择上级菜单"
+      /></el-form-item>
+      <el-form-item
+        label="菜单名称"
+        prop="name"
+      ><el-input
+        v-model="formData.name"
+        clearable
+        placeholder="请输入菜单名称"
+      /></el-form-item>
+      <el-form-item
+        label="菜单类型"
+        prop="type"
+      ><el-radio-group v-model="formData.type"><el-radio
+        v-for="dict in menuTypeDictDatas"
+        :key="dict.value"
+        :label="Number(dict.value)"
+      >{{ dict.label }}</el-radio></el-radio-group></el-form-item>
+      <el-form-item
+        v-if="formData.type !== 3"
+        label="菜单图标"
+      ><IconSelect v-model="formData.icon" /></el-form-item>
+      <el-form-item
+        v-if="formData.type !== 3"
+        label="路由地址"
+        prop="path"
+      ><el-input
+        v-model="formData.path"
+        clearable
+        placeholder="请输入路由地址"
+      /></el-form-item>
+      <el-form-item
+        v-if="formData.type === 2"
+        label="组件地址"
+        prop="component"
+      ><el-input
+        v-model="formData.component"
+        clearable
+        placeholder="例如说：system/user/index"
+      /></el-form-item>
+      <el-form-item
+        v-if="formData.type === 2"
+        label="组件名字"
+        prop="componentName"
+      ><el-input
+        v-model="formData.componentName"
+        clearable
+        placeholder="例如说：SystemUser"
+      /></el-form-item>
+      <el-form-item
+        v-if="formData.type !== 1"
+        label="权限标识"
+      ><el-input
+        v-model="formData.permission"
+        clearable
+        placeholder="请输入权限标识"
+      /></el-form-item>
+      <el-form-item
+        label="显示排序"
+        prop="sort"
+      ><el-input-number
+        v-model="formData.sort"
+        :min="0"
+        controls-position="right"
+      /></el-form-item>
+      <el-form-item
+        label="菜单状态"
+        prop="status"
+      ><el-radio-group v-model="formData.status"><el-radio
+        v-for="dict in statusDictDatas"
+        :key="dict.value"
+        :label="Number(dict.value)"
+      >{{ dict.label }}</el-radio></el-radio-group></el-form-item>
+      <el-form-item
+        v-if="formData.type !== 3"
+        label="显示状态"
+      ><el-radio-group v-model="formData.visible"><el-radio :label="true">显示</el-radio><el-radio :label="false">隐藏</el-radio></el-radio-group></el-form-item>
+      <el-form-item
+        v-if="formData.type !== 3"
+        label="总是显示"
+      ><el-radio-group v-model="formData.alwaysShow"><el-radio :label="true">总是</el-radio><el-radio :label="false">不是</el-radio></el-radio-group></el-form-item>
+      <el-form-item
+        v-if="formData.type === 2"
+        label="缓存状态"
+      ><el-radio-group v-model="formData.keepAlive"><el-radio :label="true">缓存</el-radio><el-radio :label="false">不缓存</el-radio></el-radio-group></el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer"><el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></div>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    ><el-button
+      type="primary"
+      :loading="formLoading"
+      @click="submitForm"
+    >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></div>
   </el-dialog>
 </template>
 <script>

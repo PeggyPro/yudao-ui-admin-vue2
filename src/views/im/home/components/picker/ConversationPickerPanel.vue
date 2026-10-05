@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     会话选择面板：用于推荐名片 / 转发消息等"选已有会话"场景
     - 左：搜索 + 最近转发横向头像 + 创建聊天入口 + 最近聊天列表（圆形勾选）
     - 右：已选数标题 + 已选会话列表（按点击顺序）+ footer slot
@@ -13,7 +13,11 @@
     >
       <!-- 搜索框 -->
       <div class="flex-shrink-0 px-3 py-2">
-        <el-input v-model="keyword" placeholder="搜索" clearable>
+        <el-input
+          v-model="keyword"
+          placeholder="搜索"
+          clearable
+        >
           <template #prefix>
             <Icon icon="ant-design:search-outlined" />
           </template>
@@ -63,7 +67,10 @@
                   class="flex absolute -top-1 -right-1 justify-center items-center w-4 h-4 rounded-full cursor-pointer bg-[var(--el-fill-color-dark)] text-[var(--el-text-color-primary)]"
                   @click.stop="emit('remove-recent', getConversationKey(conversation))"
                 >
-                  <Icon icon="ant-design:close-outlined" :size="10" />
+                  <Icon
+                    icon="ant-design:close-outlined"
+                    :size="10"
+                  />
                 </span>
                 <!-- 非移除模式：右上角圆形勾选指示器；未选灰空心圈、选中绿底白对勾 -->
                 <span
@@ -101,7 +108,10 @@
           <span
             class="flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-full bg-[var(--el-fill-color)] text-[var(--el-text-color-secondary)]"
           >
-            <Icon icon="ant-design:plus-outlined" :size="16" />
+            <Icon
+              icon="ant-design:plus-outlined"
+              :size="16"
+            />
           </span>
           <span class="text-sm text-[var(--el-text-color-primary)]">创建聊天</span>
         </div>
@@ -218,21 +228,21 @@
         v-if="$slots.footer"
         class="flex-shrink-0 border-t border-t-solid border-[var(--el-border-color-lighter)]"
       >
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import UserAvatar from '../user/UserAvatar.vue';
-import GroupAvatar from '../group/GroupAvatar.vue';
-import { filterConversationsByKeyword, getConversationKey } from '../../../utils/conversation';
-import { ImConversationType } from '../../../utils/constants';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import UserAvatar from '../user/UserAvatar.vue'
+import GroupAvatar from '../group/GroupAvatar.vue'
+import { filterConversationsByKeyword, getConversationKey } from '../../../utils/conversation'
+import { ImConversationType } from '../../../utils/constants'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImConversationPickerPanel'
   },
@@ -272,84 +282,84 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       default: false
     }
   },
-  emits: ["update:selectedKeys", "create-chat", "remove-recent"],
+  emits: ['update:selectedKeys', 'create-chat', 'remove-recent'],
   setup(__props, {
     expose: __expose,
     emit: __emit
   }) {
-    __expose();
-    const props = __props;
-    const emit = __emit;
-    const message = useMessage();
-    const keyword = ref('');
+    __expose()
+    const props = __props
+    const emit = __emit
+    const message = useMessage()
+    const keyword = ref('')
     /** 「最近转发」段是否处于移除模式：true 时头像右上角变 × 不再切勾选 */
-    const recentRemoveMode = ref(false);
+    const recentRemoveMode = ref(false)
 
     /** 全量会话的 key→Conversation 映射，已选 / 最近转发反查共用，避免每次 O(N) 扫 */
     const byKey = computed(() => {
-      const map = new Map();
+      const map = new Map()
       for (const conversation of props.conversations) {
-        map.set(getConversationKey(conversation), conversation);
+        map.set(getConversationKey(conversation), conversation)
       }
-      return map;
-    });
+      return map
+    })
 
     /** 隐藏集合：每次过滤复用 */
-    const hideSet = computed(() => new Set(props.hideKeys));
+    const hideSet = computed(() => new Set(props.hideKeys))
 
     /** 已选集合：圆形指示器 isSelected 走 set 快查 */
-    const selectedSet = computed(() => new Set(props.selectedKeys));
+    const selectedSet = computed(() => new Set(props.selectedKeys))
 
     /** 候选会话：剔除 hideKeys */
-    const candidateConversations = computed(() => props.conversations.filter(c => !hideSet.value.has(getConversationKey(c))));
+    const candidateConversations = computed(() => props.conversations.filter(c => !hideSet.value.has(getConversationKey(c))))
 
     /** 左栏展示列表：在候选基础上按 keyword 过滤 */
-    const shownConversations = computed(() => filterConversationsByKeyword(candidateConversations.value, keyword.value));
+    const shownConversations = computed(() => filterConversationsByKeyword(candidateConversations.value, keyword.value))
 
     /** 最近转发的会话对象列表：从 recentForwardConversationKeys 反查；剔除 hide / 不存在的 key */
-    const recentForwardConversations = computed(() => props.recentForwardConversationKeys.map(key => byKey.value.get(key)).filter(c => c != null && !hideSet.value.has(getConversationKey(c))));
+    const recentForwardConversations = computed(() => props.recentForwardConversationKeys.map(key => byKey.value.get(key)).filter(c => c != null && !hideSet.value.has(getConversationKey(c))))
 
     /** 是否展示「最近转发」段：keyword 为空 + 有数据时才展示，搜索时让位 */
-    const showRecentSection = computed(() => !keyword.value.trim() && recentForwardConversations.value.length > 0);
+    const showRecentSection = computed(() => !keyword.value.trim() && recentForwardConversations.value.length > 0)
 
     /** 已选会话列表：按 selectedKeys 数组顺序（即点击顺序）反查；过滤 hideSet 避免父组件动态隐藏的会话仍在右侧渲染 / 提交 */
-    const selectedConversations = computed(() => props.selectedKeys.map(key => byKey.value.get(key)).filter(conversation => conversation != null && !hideSet.value.has(getConversationKey(conversation))));
+    const selectedConversations = computed(() => props.selectedKeys.map(key => byKey.value.get(key)).filter(conversation => conversation != null && !hideSet.value.has(getConversationKey(conversation))))
 
     /** 右栏标题文案：单选「发送给」、多选「分别发送给」 */
-    const sendTitle = computed(() => props.selectedKeys.length > 1 ? '分别发送给' : '发送给');
+    const sendTitle = computed(() => props.selectedKeys.length > 1 ? '分别发送给' : '发送给')
 
     /** 是否已选中：左栏圆形指示器 / 最近转发头像角标共用 */
     function isSelected(conversation) {
-      return selectedSet.value.has(getConversationKey(conversation));
+      return selectedSet.value.has(getConversationKey(conversation))
     }
 
     /** 「最近转发」头像点击：移除模式下不切勾选（移除由 × 角标处理） */
     function handleRecentTileClick(conversation) {
       if (recentRemoveMode.value) {
-        return;
+        return
       }
-      handleToggle(conversation);
+      handleToggle(conversation)
     }
 
     /** 切换选中态：左栏 row / 最近转发头像 / 右栏 × 移除都走这里 */
     function handleToggle(conversation) {
-      const key = getConversationKey(conversation);
-      const next = [...props.selectedKeys];
-      const index = next.indexOf(key);
+      const key = getConversationKey(conversation)
+      const next = [...props.selectedKeys]
+      const index = next.indexOf(key)
       if (index >= 0) {
-        next.splice(index, 1);
+        next.splice(index, 1)
       } else {
         // 父组件标记隐藏的会话即便有路径触达也不应入选
         if (hideSet.value.has(key)) {
-          return;
+          return
         }
         if (props.maxSize > 0 && next.length >= props.maxSize) {
-          message.error(`最多选择 ${props.maxSize} 个会话`);
-          return;
+          message.error(`最多选择 ${props.maxSize} 个会话`)
+          return
         }
-        next.push(key);
+        next.push(key)
       }
-      emit('update:selectedKeys', next);
+      emit('update:selectedKeys', next)
     }
     const __returned__ = {
       props,
@@ -373,20 +383,20 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       UserAvatar,
       GroupAvatar,
       get getConversationKey() {
-        return getConversationKey;
+        return getConversationKey
       },
       get ImConversationType() {
-        return ImConversationType;
+        return ImConversationType
       }
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

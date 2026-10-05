@@ -8,7 +8,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="文档编号" prop="documentId">
+      <el-form-item
+        label="文档编号"
+        prop="documentId"
+      >
         <el-input
           v-model="queryParams.documentId"
           clearable
@@ -16,8 +19,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="是否启用" prop="status">
-        <el-select v-model="queryParams.status" clearable placeholder="请选择是否启用">
+      <el-form-item
+        label="是否启用"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          clearable
+          placeholder="请选择是否启用"
+        >
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -27,13 +37,20 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
         <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
+        <el-button
+          v-hasPermi="['ai:knowledge:create']"
           type="primary"
           plain
           icon="el-icon-plus"
-          v-hasPermi="['ai:knowledge:create']"
           @click="openForm('create')"
         >
           新增
@@ -47,7 +64,12 @@
       stripe
       :show-overflow-tooltip="true"
     >
-      <el-table-column label="分段编号" align="center" prop="id" width="100" />
+      <el-table-column
+        label="分段编号"
+        align="center"
+        prop="id"
+        width="100"
+      />
       <el-table-column type="expand">
         <template slot-scope="scope">
           <div class="content-expand">
@@ -63,10 +85,30 @@
         min-width="250"
         :show-overflow-tooltip="true"
       />
-      <el-table-column label="字符数" align="center" prop="contentLength" width="90" />
-      <el-table-column label="token 数量" align="center" prop="tokens" width="110" />
-      <el-table-column label="召回次数" align="center" prop="retrievalCount" width="100" />
-      <el-table-column label="是否启用" align="center" prop="status" width="100">
+      <el-table-column
+        label="字符数"
+        align="center"
+        prop="contentLength"
+        width="90"
+      />
+      <el-table-column
+        label="token 数量"
+        align="center"
+        prop="tokens"
+        width="110"
+      />
+      <el-table-column
+        label="召回次数"
+        align="center"
+        prop="retrievalCount"
+        width="100"
+      />
+      <el-table-column
+        label="是否启用"
+        align="center"
+        prop="status"
+        width="100"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -77,21 +119,30 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
         <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" min-width="120">
+      <el-table-column
+        label="操作"
+        align="center"
+        min-width="120"
+      >
         <template slot-scope="scope">
           <el-button
+            v-hasPermi="['ai:knowledge:update']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:knowledge:update']"
             @click="openForm('update', scope.row.id)"
           >编辑</el-button>
           <el-button
+            v-hasPermi="['ai:knowledge:delete']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:knowledge:delete']"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
@@ -105,7 +156,10 @@
       @pagination="getList"
     />
 
-    <knowledge-segment-form ref="form" @success="getList" />
+    <knowledge-segment-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

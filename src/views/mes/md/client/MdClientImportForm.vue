@@ -1,6 +1,11 @@
 <!-- MES 客户导入表单 -->
 <template>
-  <el-dialog title="客户导入" :visible.sync="dialogVisible" width="400px" append-to-body>
+  <el-dialog
+    title="客户导入"
+    :visible.sync="dialogVisible"
+    width="400px"
+    append-to-body
+  >
     <el-upload
       ref="upload"
       drag
@@ -19,14 +24,25 @@
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <div slot="tip" class="el-upload__tip import-tip">
+      <div
+        slot="tip"
+        class="el-upload__tip import-tip"
+      >
         <div><el-checkbox v-model="updateSupport" /> 是否更新已经存在的客户数据</div>
         <span>仅允许导入 xls、xlsx 格式文件。</span>
-        <el-link type="primary" :underline="false" @click="importTemplate">下载模板</el-link>
+        <el-link
+          type="primary"
+          :underline="false"
+          @click="importTemplate"
+        >下载模板</el-link>
       </div>
     </el-upload>
     <span slot="footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

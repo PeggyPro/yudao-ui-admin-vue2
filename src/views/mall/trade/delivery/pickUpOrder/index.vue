@@ -201,7 +201,7 @@
         prop="spuName"
         min-width="300"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div
             v-for="item in scope.row.items"
             :key="item.id"
@@ -236,7 +236,7 @@
         prop="payPrice"
         min-width="110"
       >
-        <template v-slot="scope">￥{{ fenToYuan(scope.row.payPrice) }}</template>
+        <template slot-scope="scope">￥{{ fenToYuan(scope.row.payPrice) }}</template>
       </el-table-column>
       <el-table-column
         label="核销员"
@@ -250,7 +250,7 @@
         prop="pickUpStoreId"
         min-width="100"
       >
-        <template v-slot="scope">{{ getPickUpStoreName(scope.row.pickUpStoreId) }}</template>
+        <template slot-scope="scope">{{ getPickUpStoreName(scope.row.pickUpStoreId) }}</template>
       </el-table-column>
       <el-table-column
         label="支付状态"
@@ -258,7 +258,7 @@
         prop="payStatus"
         min-width="90"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
             :value="scope.row.payStatus || false"
@@ -271,7 +271,7 @@
         prop="status"
         width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.TRADE_ORDER_STATUS"
             :value="scope.row.status"
@@ -284,7 +284,7 @@
         prop="createTime"
         min-width="170"
       >
-        <template v-slot="scope"><span>{{ parseTime(scope.row.createTime) }}</span></template>
+        <template slot-scope="scope"><span>{{ parseTime(scope.row.createTime) }}</span></template>
       </el-table-column>
     </el-table>
 

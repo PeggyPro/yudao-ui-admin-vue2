@@ -2,70 +2,100 @@
   <div class="node-handler-wrapper">
     <div class="node-handler">
       <el-popover
-        trigger="hover"
+        v-if="!readonly"
         v-model="popoverShow"
+        trigger="hover"
         placement="right-start"
         width="auto"
-        v-if="!readonly"
       >
         <div class="handler-item-wrapper">
-          <div class="handler-item" @click="addNode(NodeType.USER_TASK_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.USER_TASK_NODE)"
+          >
             <div class="approve handler-item-icon">
-              <span class="iconfont icon-approve icon-size"></span>
+              <span class="iconfont icon-approve icon-size" />
             </div>
             <div class="handler-item-text">审批人</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.TRANSACTOR_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.TRANSACTOR_NODE)"
+          >
             <div class="transactor handler-item-icon">
-              <span class="iconfont icon-transactor icon-size"></span>
+              <span class="iconfont icon-transactor icon-size" />
             </div>
             <div class="handler-item-text">办理人</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.COPY_TASK_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.COPY_TASK_NODE)"
+          >
             <div class="handler-item-icon copy">
-              <span class="iconfont icon-size icon-copy"></span>
+              <span class="iconfont icon-size icon-copy" />
             </div>
             <div class="handler-item-text">抄送</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.CONDITION_BRANCH_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.CONDITION_BRANCH_NODE)"
+          >
             <div class="handler-item-icon condition">
-              <span class="iconfont icon-size icon-exclusive"></span>
+              <span class="iconfont icon-size icon-exclusive" />
             </div>
             <div class="handler-item-text">条件分支</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.PARALLEL_BRANCH_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.PARALLEL_BRANCH_NODE)"
+          >
             <div class="handler-item-icon parallel">
-              <span class="iconfont icon-size icon-parallel"></span>
+              <span class="iconfont icon-size icon-parallel" />
             </div>
             <div class="handler-item-text">并行分支</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.INCLUSIVE_BRANCH_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.INCLUSIVE_BRANCH_NODE)"
+          >
             <div class="handler-item-icon inclusive">
-              <span class="iconfont icon-size icon-inclusive"></span>
+              <span class="iconfont icon-size icon-inclusive" />
             </div>
             <div class="handler-item-text">包容分支</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.DELAY_TIMER_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.DELAY_TIMER_NODE)"
+          >
             <div class="handler-item-icon delay">
-              <span class="iconfont icon-size icon-delay"></span>
+              <span class="iconfont icon-size icon-delay" />
             </div>
             <div class="handler-item-text">延迟器</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.ROUTER_BRANCH_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.ROUTER_BRANCH_NODE)"
+          >
             <div class="handler-item-icon router">
-              <span class="iconfont icon-size icon-router"></span>
+              <span class="iconfont icon-size icon-router" />
             </div>
             <div class="handler-item-text">路由分支</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.TRIGGER_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.TRIGGER_NODE)"
+          >
             <div class="handler-item-icon trigger">
-              <span class="iconfont icon-size icon-trigger"></span>
+              <span class="iconfont icon-size icon-trigger" />
             </div>
             <div class="handler-item-text">触发器</div>
           </div>
-          <div class="handler-item" @click="addNode(NodeType.CHILD_PROCESS_NODE)">
+          <div
+            class="handler-item"
+            @click="addNode(NodeType.CHILD_PROCESS_NODE)"
+          >
             <div class="handler-item-icon child-process">
-              <span class="iconfont icon-size icon-child-process"></span>
+              <span class="iconfont icon-size icon-child-process" />
             </div>
             <div class="handler-item-text">子流程</div>
           </div>
@@ -91,7 +121,6 @@ import {
   DEFAULT_CONDITION_GROUP_VALUE
 } from './consts'
 import { generateUUID, deepClone } from '@/utils'
-
 
 const popoverShow = ref(false)
 const props = defineProps({

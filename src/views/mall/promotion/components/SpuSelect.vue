@@ -91,7 +91,7 @@
               label="图片"
               min-width="80"
             >
-              <template v-slot="scope">
+              <template slot-scope="scope">
                 <el-image
                   v-if="scope.row.picUrl"
                   :src="scope.row.picUrl"
@@ -107,7 +107,7 @@
               align="center"
               min-width="80"
             >
-              <template v-slot="scope">
+              <template slot-scope="scope">
                 <span class="property-value">{{ propertyValue(scope.row, index) }}</span>
               </template>
             </el-table-column>
@@ -184,7 +184,7 @@
         label="商品图"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             :src="scope.row.picUrl"
             :preview-src-list="scope.row.picUrl ? [scope.row.picUrl] : []"
@@ -204,7 +204,7 @@
         min-width="90"
         prop="price"
       >
-        <template v-slot="scope">{{ formatToFraction(scope.row.price) }}</template>
+        <template slot-scope="scope">{{ formatToFraction(scope.row.price) }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -230,7 +230,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
     </el-table>
     <pagination

@@ -12,18 +12,38 @@
       :rules="formRules"
       label-width="96px"
     >
-      <el-form-item label="模板名称" prop="name">
-        <el-input v-model="formData.name" maxlength="64" placeholder="请输入模板名称" />
+      <el-form-item
+        label="模板名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="64"
+          placeholder="请输入模板名称"
+        />
       </el-form-item>
-      <el-form-item label="默认模板" prop="defaultStatus">
+      <el-form-item
+        label="默认模板"
+        prop="defaultStatus"
+      >
         <el-switch v-model="formData.defaultStatus" />
       </el-form-item>
-      <el-form-item label="调薪项" prop="options">
-        <salary-change-option-select ref="optionSelect" v-model="formData.options" />
+      <el-form-item
+        label="调薪项"
+        prop="options"
+      >
+        <salary-change-option-select
+          ref="optionSelect"
+          v-model="formData.options"
+        />
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

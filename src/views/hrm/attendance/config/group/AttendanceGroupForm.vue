@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="1120px" append-to-body>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="1120px"
+      append-to-body
+    >
       <el-form
         ref="form"
         v-loading="formLoading"
@@ -11,12 +16,22 @@
         <div class="section-title">基本信息</div>
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item label="考勤组名称" prop="name">
-              <el-input v-model="formData.name" maxlength="50" placeholder="请输入考勤组名称" />
+            <el-form-item
+              label="考勤组名称"
+              prop="name"
+            >
+              <el-input
+                v-model="formData.name"
+                maxlength="50"
+                placeholder="请输入考勤组名称"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="适用部门" prop="deptIds">
+            <el-form-item
+              label="适用部门"
+              prop="deptIds"
+            >
               <DeptSelect
                 v-model="formData.deptIds"
                 multiple
@@ -26,7 +41,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="适用员工" prop="employeeIds">
+            <el-form-item
+              label="适用员工"
+              prop="employeeIds"
+            >
               <HrmEmployeeSelect
                 v-model="formData.employeeIds"
                 class="form-control"
@@ -40,7 +58,10 @@
 
         <div class="section-title">考勤规则</div>
         <el-form-item label="规则类型">
-          <el-radio :value="1" :label="1">早晚打卡</el-radio>
+          <el-radio
+            :value="1"
+            :label="1"
+          >早晚打卡</el-radio>
         </el-form-item>
         <el-form-item label="班次">
           <div class="form-control">
@@ -49,27 +70,50 @@
                 <i class="el-icon-plus" /> 新增班次
               </el-button>
             </div>
-            <el-table :data="formData.shifts" border>
-              <el-table-column label="工作日" min-width="220">
+            <el-table
+              :data="formData.shifts"
+              border
+            >
+              <el-table-column
+                label="工作日"
+                min-width="220"
+              >
                 <template slot-scope="scope">
                   {{ formatWeeks(scope.row.weeks) }}
                 </template>
               </el-table-column>
-              <el-table-column label="上下班时间" min-width="180">
+              <el-table-column
+                label="上下班时间"
+                min-width="180"
+              >
                 <template slot-scope="scope">
                   {{ scope.row.startTime }} - {{ scope.row.endTime }}
                 </template>
               </el-table-column>
-              <el-table-column label="打卡时间段" min-width="310">
+              <el-table-column
+                label="打卡时间段"
+                min-width="310"
+              >
                 <template slot-scope="scope">
                   {{ scope.row.clockInStartTime }} - {{ scope.row.clockInEndTime }} /
                   {{ scope.row.clockOutStartTime }} - {{ scope.row.clockOutEndTime }}
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="120" align="center">
+              <el-table-column
+                label="操作"
+                width="120"
+                align="center"
+              >
                 <template slot-scope="scope">
-                  <el-button type="text" @click="openShiftForm(scope.$index)">编辑</el-button>
-                  <el-button type="text" class="danger-button" @click="removeShift(scope.$index)">
+                  <el-button
+                    type="text"
+                    @click="openShiftForm(scope.$index)"
+                  >编辑</el-button>
+                  <el-button
+                    type="text"
+                    class="danger-button"
+                    @click="removeShift(scope.$index)"
+                  >
                     删除
                   </el-button>
                 </template>
@@ -87,20 +131,36 @@
                 <i class="el-icon-plus" /> 添加日期
               </el-button>
             </div>
-            <el-table :data="formData.specialDates" border>
-              <el-table-column label="日期" min-width="180">
+            <el-table
+              :data="formData.specialDates"
+              border
+            >
+              <el-table-column
+                label="日期"
+                min-width="180"
+              >
                 <template slot-scope="scope">
                   {{ formatDate(scope.row.date) }}
                 </template>
               </el-table-column>
-              <el-table-column label="上下班时间" min-width="220">
+              <el-table-column
+                label="上下班时间"
+                min-width="220"
+              >
                 <template slot-scope="scope">
                   {{ formatSpecialDate(scope.row, formData.shifts) }}
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="120" align="center">
+              <el-table-column
+                label="操作"
+                width="120"
+                align="center"
+              >
                 <template slot-scope="scope">
-                  <el-button type="text" @click="openSpecialDateForm(scope.$index)">
+                  <el-button
+                    type="text"
+                    @click="openSpecialDateForm(scope.$index)"
+                  >
                     编辑
                   </el-button>
                   <el-button
@@ -121,28 +181,57 @@
           <div class="form-control">
             <div class="card-toolbar">
               <el-checkbox v-model="formData.openPointCard">关联打卡地址</el-checkbox>
-              <el-button :disabled="!formData.openPointCard" @click="openPointForm()">
+              <el-button
+                :disabled="!formData.openPointCard"
+                @click="openPointForm()"
+              >
                 <i class="el-icon-plus" /> 新增打卡地址
               </el-button>
             </div>
-            <el-table v-if="formData.openPointCard" :data="formData.points" border>
-              <el-table-column prop="name" label="地点名称" min-width="150" />
+            <el-table
+              v-if="formData.openPointCard"
+              :data="formData.points"
+              border
+            >
+              <el-table-column
+                prop="name"
+                label="地点名称"
+                min-width="150"
+              />
               <el-table-column
                 prop="address"
                 label="打卡地址"
                 min-width="260"
                 show-overflow-tooltip
               />
-              <el-table-column label="经纬度" min-width="220">
+              <el-table-column
+                label="经纬度"
+                min-width="220"
+              >
                 <template slot-scope="scope">
                   {{ formatPointCoordinate(scope.row) }}
                 </template>
               </el-table-column>
-              <el-table-column prop="radius" label="范围(米)" width="110" />
-              <el-table-column label="操作" width="120" align="center">
+              <el-table-column
+                prop="radius"
+                label="范围(米)"
+                width="110"
+              />
+              <el-table-column
+                label="操作"
+                width="120"
+                align="center"
+              >
                 <template slot-scope="scope">
-                  <el-button type="text" @click="openPointForm(scope.$index)">编辑</el-button>
-                  <el-button type="text" class="danger-button" @click="removePoint(scope.$index)">
+                  <el-button
+                    type="text"
+                    @click="openPointForm(scope.$index)"
+                  >编辑</el-button>
+                  <el-button
+                    type="text"
+                    class="danger-button"
+                    @click="removePoint(scope.$index)"
+                  >
                     删除
                   </el-button>
                 </template>
@@ -154,17 +243,43 @@
           <div class="form-control">
             <div class="card-toolbar">
               <el-checkbox v-model="formData.openWifiCard">关联打卡 WiFi</el-checkbox>
-              <el-button :disabled="!formData.openWifiCard" @click="openWifiForm()">
+              <el-button
+                :disabled="!formData.openWifiCard"
+                @click="openWifiForm()"
+              >
                 <i class="el-icon-plus" /> 新增打卡 WiFi
               </el-button>
             </div>
-            <el-table v-if="formData.openWifiCard" :data="formData.wifis" border>
-              <el-table-column prop="ssid" label="WiFi 名称" min-width="220" />
-              <el-table-column prop="mac" label="MAC 地址" min-width="220" />
-              <el-table-column label="操作" width="120" align="center">
+            <el-table
+              v-if="formData.openWifiCard"
+              :data="formData.wifis"
+              border
+            >
+              <el-table-column
+                prop="ssid"
+                label="WiFi 名称"
+                min-width="220"
+              />
+              <el-table-column
+                prop="mac"
+                label="MAC 地址"
+                min-width="220"
+              />
+              <el-table-column
+                label="操作"
+                width="120"
+                align="center"
+              >
                 <template slot-scope="scope">
-                  <el-button type="text" @click="openWifiForm(scope.$index)">编辑</el-button>
-                  <el-button type="text" class="danger-button" @click="removeWifi(scope.$index)">
+                  <el-button
+                    type="text"
+                    @click="openWifiForm(scope.$index)"
+                  >编辑</el-button>
+                  <el-button
+                    type="text"
+                    class="danger-button"
+                    @click="removeWifi(scope.$index)"
+                  >
                     删除
                   </el-button>
                 </template>
@@ -183,8 +298,14 @@
         />
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="迟到规则" prop="deductRule.lateMethod">
-              <el-select v-model="formData.deductRule.lateMethod" class="form-control">
+            <el-form-item
+              label="迟到规则"
+              prop="deductRule.lateMethod"
+            >
+              <el-select
+                v-model="formData.deductRule.lateMethod"
+                class="form-control"
+              >
                 <el-option
                   v-for="item in lateEarlyDeductOptions"
                   :key="item.value"
@@ -195,7 +316,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="迟到计算方式" prop="deductRule.lateDeductMoney">
+            <el-form-item
+              label="迟到计算方式"
+              prop="deductRule.lateDeductMoney"
+            >
               <div class="deduct-money-row">
                 <el-input-number
                   v-model="formData.deductRule.lateDeductMoney"
@@ -209,8 +333,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="早退规则" prop="deductRule.earlyMethod">
-              <el-select v-model="formData.deductRule.earlyMethod" class="form-control">
+            <el-form-item
+              label="早退规则"
+              prop="deductRule.earlyMethod"
+            >
+              <el-select
+                v-model="formData.deductRule.earlyMethod"
+                class="form-control"
+              >
                 <el-option
                   v-for="item in lateEarlyDeductOptions"
                   :key="item.value"
@@ -221,7 +351,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="早退计算方式" prop="deductRule.earlyDeductMoney">
+            <el-form-item
+              label="早退计算方式"
+              prop="deductRule.earlyDeductMoney"
+            >
               <div class="deduct-money-row">
                 <el-input-number
                   v-model="formData.deductRule.earlyDeductMoney"
@@ -235,8 +368,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="旷工规则" prop="deductRule.absenteeismMethod">
-              <el-select v-model="formData.deductRule.absenteeismMethod" class="form-control">
+            <el-form-item
+              label="旷工规则"
+              prop="deductRule.absenteeismMethod"
+            >
+              <el-select
+                v-model="formData.deductRule.absenteeismMethod"
+                class="form-control"
+              >
                 <el-option
                   v-for="item in absenteeismDeductOptions"
                   :key="item.value"
@@ -247,7 +386,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="旷工计算方式" prop="deductRule.absenteeismDeductMoney">
+            <el-form-item
+              label="旷工计算方式"
+              prop="deductRule.absenteeismDeductMoney"
+            >
               <div class="deduct-money-row">
                 <el-input-number
                   v-model="formData.deductRule.absenteeismDeductMoney"
@@ -261,8 +403,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="缺卡规则" prop="deductRule.misscardMethod">
-              <el-select v-model="formData.deductRule.misscardMethod" class="form-control">
+            <el-form-item
+              label="缺卡规则"
+              prop="deductRule.misscardMethod"
+            >
+              <el-select
+                v-model="formData.deductRule.misscardMethod"
+                class="form-control"
+              >
                 <el-option
                   v-for="item in misscardDeductOptions"
                   :key="item.value"
@@ -273,7 +421,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="缺卡计算方式" prop="deductRule.misscardDeductMoney">
+            <el-form-item
+              label="缺卡计算方式"
+              prop="deductRule.misscardDeductMoney"
+            >
               <div class="deduct-money-row">
                 <el-input-number
                   v-model="formData.deductRule.misscardDeductMoney"
@@ -289,14 +440,30 @@
         </el-row>
       </el-form>
       <span slot="footer">
-        <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+        <el-button
+          :disabled="formLoading"
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
-    <AttendanceGroupShiftForm ref="shiftForm" @confirm="handleShiftConfirm" />
-    <AttendanceGroupSpecialDateForm ref="specialDateForm" @confirm="handleSpecialDateConfirm" />
-    <AttendanceGroupPointForm ref="pointForm" @confirm="handlePointConfirm" />
-    <AttendanceGroupWifiForm ref="wifiForm" @confirm="handleWifiConfirm" />
+    <AttendanceGroupShiftForm
+      ref="shiftForm"
+      @confirm="handleShiftConfirm"
+    />
+    <AttendanceGroupSpecialDateForm
+      ref="specialDateForm"
+      @confirm="handleSpecialDateConfirm"
+    />
+    <AttendanceGroupPointForm
+      ref="pointForm"
+      @confirm="handlePointConfirm"
+    />
+    <AttendanceGroupWifiForm
+      ref="wifiForm"
+      @confirm="handleWifiConfirm"
+    />
   </div>
 </template>
 

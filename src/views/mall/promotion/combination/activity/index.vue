@@ -95,7 +95,7 @@
         label="活动时间"
         min-width="210"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           {{ formatDateOnly(scope.row.startTime) }}
           ~ {{ formatDateOnly(scope.row.endTime) }}
         </template>
@@ -105,7 +105,7 @@
         prop="spuName"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             :src="scope.row.picUrl"
             :preview-src-list="[scope.row.picUrl]"
@@ -124,14 +124,14 @@
         prop="marketPrice"
         min-width="100"
       >
-        <template v-slot="scope">￥{{ fenToYuan(scope.row.marketPrice) }}</template>
+        <template slot-scope="scope">￥{{ fenToYuan(scope.row.marketPrice) }}</template>
       </el-table-column>
       <el-table-column
         label="拼团价"
         prop="combinationPrice"
         min-width="100"
       >
-        <template v-slot="scope">{{ formatCombinationPrice(scope.row.products) }}</template>
+        <template slot-scope="scope">{{ formatCombinationPrice(scope.row.products) }}</template>
       </el-table-column>
       <el-table-column
         label="开团组数"
@@ -154,7 +154,7 @@
         align="center"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -167,7 +167,7 @@
         align="center"
         width="180"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
       <el-table-column
         label="操作"
@@ -175,7 +175,7 @@
         width="150"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:combination-activity:update']"
             type="text"

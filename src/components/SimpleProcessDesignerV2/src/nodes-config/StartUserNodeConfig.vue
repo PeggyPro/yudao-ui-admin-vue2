@@ -5,7 +5,10 @@
     size="550px"
     :before-close="handleBeforeClose"
   >
-    <div slot="title" class="start-user-config-title">
+    <div
+      slot="title"
+      class="start-user-config-title"
+    >
       <el-input
         v-if="editingName"
         v-model="draft.name"
@@ -15,26 +18,46 @@
       />
       <span v-else>
         {{ drawerTitle }}
-        <i class="el-icon-edit" title="编辑节点名称" @click="editingName = true" />
+        <i
+          class="el-icon-edit"
+          title="编辑节点名称"
+          @click="editingName = true"
+        />
       </span>
     </div>
 
     <div class="start-user-config">
-      <el-tabs v-model="activeTab" type="border-card">
-        <el-tab-pane label="权限" name="user">
+      <el-tabs
+        v-model="activeTab"
+        type="border-card"
+      >
+        <el-tab-pane
+          label="权限"
+          name="user"
+        >
           <div class="start-user-permission-summary">
             <template v-if="!startUserIds.length && !startDeptIds.length">
               全部成员可以发起流程
             </template>
             <template v-else-if="startUserIds.length">
               <span v-if="startUserIds.length === 1">{{ userNames(startUserIds) }} 可发起流程</span>
-              <el-tooltip v-else effect="dark" placement="top" :content="userNames(startUserIds)">
+              <el-tooltip
+                v-else
+                effect="dark"
+                placement="top"
+                :content="userNames(startUserIds)"
+              >
                 <span>{{ userNames(startUserIds.slice(0, 2)) }} 等 {{ startUserIds.length }} 人可发起流程</span>
               </el-tooltip>
             </template>
             <template v-else>
               <span v-if="startDeptIds.length === 1">{{ deptNames(startDeptIds) }} 可发起流程</span>
-              <el-tooltip v-else effect="dark" placement="top" :content="deptNames(startDeptIds)">
+              <el-tooltip
+                v-else
+                effect="dark"
+                placement="top"
+                :content="deptNames(startDeptIds)"
+              >
                 <span>{{ deptNames(startDeptIds.slice(0, 2)) }} 等 {{ startDeptIds.length }} 个部门可发起流程</span>
               </el-tooltip>
             </template>
@@ -48,14 +71,31 @@
           />
         </el-tab-pane>
 
-        <el-tab-pane v-if="isNormalForm" label="表单字段权限" name="fields">
+        <el-tab-pane
+          v-if="isNormalForm"
+          label="表单字段权限"
+          name="fields"
+        >
           <div class="field-setting-desc">字段权限（默认可编辑）</div>
           <div class="permission-actions">
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.READ)">全部只读</el-button>
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.WRITE)">全部可编辑</el-button>
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.NONE)">全部隐藏</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.READ)"
+            >全部只读</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.WRITE)"
+            >全部可编辑</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.NONE)"
+            >全部隐藏</el-button>
           </div>
-          <div v-for="item in fieldsPermission" :key="item.field" class="permission-row">
+          <div
+            v-for="item in fieldsPermission"
+            :key="item.field"
+            class="permission-row"
+          >
             <span class="permission-field">{{ item.title || item.field }}</span>
             <el-radio-group v-model="item.permission">
               <el-radio :label="FieldPermissionType.READ">只读</el-radio>
@@ -63,13 +103,19 @@
               <el-radio :label="FieldPermissionType.NONE">隐藏</el-radio>
             </el-radio-group>
           </div>
-          <div v-if="!fieldsPermission.length" class="empty-tip">当前表单暂无可配置字段</div>
+          <div
+            v-if="!fieldsPermission.length"
+            class="empty-tip"
+          >当前表单暂无可配置字段</div>
         </el-tab-pane>
       </el-tabs>
     </div>
 
     <div class="drawer-footer">
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
       <el-button @click="cancelConfig">取 消</el-button>
     </div>
   </el-drawer>
@@ -89,9 +135,6 @@ function unwrap(value) {
 
 export default {
   name: 'StartUserNodeConfig',
-  props: {
-    flowNode: { type: Object, required: true }
-  },
   inject: {
     startUserIdsRef: { from: 'startUserIds', default: () => [] },
     startDeptIdsRef: { from: 'startDeptIds', default: () => [] },
@@ -99,6 +142,9 @@ export default {
     deptListRef: { from: 'deptList', default: () => ({ value: [] }) },
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
     formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
+  },
+  props: {
+    flowNode: { type: Object, required: true }
   },
   data() {
     return {

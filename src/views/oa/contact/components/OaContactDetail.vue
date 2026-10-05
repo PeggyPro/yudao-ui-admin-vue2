@@ -1,10 +1,21 @@
 <template>
   <!-- 联系人详情 -->
-  <Dialog v-model="dialogVisible" title="联系人详情" width="720px">
-    <el-descriptions v-loading="loading" :column="1" border>
+  <AppDialog
+    v-model="dialogVisible"
+    title="联系人详情"
+    width="720px"
+  >
+    <el-descriptions
+      v-loading="loading"
+      :column="1"
+      border
+    >
       <el-descriptions-item label="姓名">
         <div class="contact-detail__name">
-          <el-avatar :src="detailData.avatar" :size="32" />
+          <el-avatar
+            :src="detailData.avatar"
+            :size="32"
+          />
           <span>{{ detailData.name }}</span>
         </div>
       </el-descriptions-item>
@@ -26,11 +37,11 @@
       <el-descriptions-item label="联系地址">{{ detailData.address }}</el-descriptions-item>
       <el-descriptions-item label="备注">{{ detailData.remark }}</el-descriptions-item>
     </el-descriptions>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as ContactApi from '@/api/oa/contact'
 import { DICT_TYPE } from '@/utils/dict'
 
@@ -40,7 +51,7 @@ function createEmptyDetail() {
 
 export default {
   name: 'OaContactDetail',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

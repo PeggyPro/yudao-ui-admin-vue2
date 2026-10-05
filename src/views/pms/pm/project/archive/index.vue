@@ -1,33 +1,51 @@
 <template>
   <div class="app-container">
-  <doc-alert
-    title="【PMS】项目中心、工作台与项目管理"
-    url="https://doc.iocoder.cn/pms/pm/project/"
-  />
-
-  <el-card shadow="never">
-    <el-table v-loading="loading" :data="projectList" :show-overflow-tooltip="true">
-      <el-table-column label="项目名称" min-width="320" prop="name" />
-      <el-table-column :formatter="dateFormatter" label="归档时间" prop="archiveTime" width="220" />
-      <el-table-column fixed="right" label="操作" width="120">
-        <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.adminStatus && checkPermi(['pms:pm:project:update'])" type="text"
-            @click="handleRestore(scope.row)"
-          >
-            恢复项目
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!-- 分页 -->
-    <Pagination
-      :limit.sync="queryParams.pageSize"
-      :page.sync="queryParams.pageNo"
-      :total="total"
-      @pagination="getProjectList"
+    <doc-alert
+      title="【PMS】项目中心、工作台与项目管理"
+      url="https://doc.iocoder.cn/pms/pm/project/"
     />
-  </el-card>
+
+    <el-card shadow="never">
+      <el-table
+        v-loading="loading"
+        :data="projectList"
+        :show-overflow-tooltip="true"
+      >
+        <el-table-column
+          label="项目名称"
+          min-width="320"
+          prop="name"
+        />
+        <el-table-column
+          :formatter="dateFormatter"
+          label="归档时间"
+          prop="archiveTime"
+          width="220"
+        />
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="120"
+        >
+          <template slot-scope="scope">
+            <el-button
+              v-if="scope.row.adminStatus && checkPermi(['pms:pm:project:update'])"
+              type="text"
+              @click="handleRestore(scope.row)"
+            >
+              恢复项目
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- 分页 -->
+      <Pagination
+        :limit.sync="queryParams.pageSize"
+        :page.sync="queryParams.pageNo"
+        :total="total"
+        @pagination="getProjectList"
+      />
+    </el-card>
   </div>
 </template>
 <script>

@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,7 +13,10 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="收文类型" prop="receiveType">
+          <el-form-item
+            label="收文类型"
+            prop="receiveType"
+          >
             <el-select
               v-model="formData.receiveType"
               placeholder="请选择收文类型"
@@ -29,7 +36,10 @@
         <template v-if="formData.sendId">
           <el-col :span="12">
             <el-form-item label="发文单位">
-              <el-input :value="formData.sendDeptName" disabled />
+              <el-input
+                :value="formData.sendDeptName"
+                disabled
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -42,12 +52,19 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="签发人">
-              <el-input :value="formData.signerName" disabled />
+              <el-input
+                :value="formData.signerName"
+                disabled
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="公开类别">
-              <el-select v-model="formData.disclosureType" disabled style="width: 100%">
+              <el-select
+                v-model="formData.disclosureType"
+                disabled
+                style="width: 100%"
+              >
                 <el-option
                   v-for="dict in publicCategoryOptions"
                   :key="dict.value"
@@ -59,18 +76,36 @@
           </el-col>
         </template>
         <el-col :span="12">
-          <el-form-item label="来文字号" prop="documentNo">
-            <el-input v-model="formData.documentNo" placeholder="请输入来文字号" />
+          <el-form-item
+            label="来文字号"
+            prop="documentNo"
+          >
+            <el-input
+              v-model="formData.documentNo"
+              placeholder="请输入来文字号"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="公文标题" prop="title">
-            <el-input v-model="formData.title" placeholder="请输入公文标题" />
+          <el-form-item
+            label="公文标题"
+            prop="title"
+          >
+            <el-input
+              v-model="formData.title"
+              placeholder="请输入公文标题"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="密级" prop="secrecyLevel">
-            <el-select v-model="formData.secrecyLevel" style="width: 100%">
+          <el-form-item
+            label="密级"
+            prop="secrecyLevel"
+          >
+            <el-select
+              v-model="formData.secrecyLevel"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in secretLevelOptions"
                 :key="dict.value"
@@ -81,8 +116,14 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="紧急程度" prop="urgencyLevel">
-            <el-select v-model="formData.urgencyLevel" style="width: 100%">
+          <el-form-item
+            label="紧急程度"
+            prop="urgencyLevel"
+          >
+            <el-select
+              v-model="formData.urgencyLevel"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in urgencyLevelOptions"
                 :key="dict.value"
@@ -93,7 +134,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="收文日期" prop="receiveTime">
+          <el-form-item
+            label="收文日期"
+            prop="receiveTime"
+          >
             <el-date-picker
               v-model="formData.receiveTime"
               type="datetime"
@@ -104,7 +148,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="收文部门" prop="receiveDeptId">
+          <el-form-item
+            label="收文部门"
+            prop="receiveDeptId"
+          >
             <dept-select
               v-model="formData.receiveDeptId"
               :disabled="!formData.sendId"
@@ -113,12 +160,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="主办人" prop="handlerUserId">
+          <el-form-item
+            label="主办人"
+            prop="handlerUserId"
+          >
             <user-select v-model="formData.handlerUserId" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="领导批示" prop="instruction">
+          <el-form-item
+            label="领导批示"
+            prop="instruction"
+          >
             <el-input
               v-model="formData.instruction"
               placeholder="请输入领导批示"
@@ -128,7 +181,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="办理结果" prop="result">
+          <el-form-item
+            label="办理结果"
+            prop="result"
+          >
             <el-input
               v-model="formData.result"
               placeholder="请输入办理结果"
@@ -138,7 +194,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="办理期限" prop="deadlineTime">
+          <el-form-item
+            label="办理期限"
+            prop="deadlineTime"
+          >
             <el-date-picker
               v-model="formData.deadlineTime"
               type="datetime"
@@ -149,7 +208,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="内容摘要" prop="summary">
+          <el-form-item
+            label="内容摘要"
+            prop="summary"
+          >
             <el-input
               v-model="formData.summary"
               placeholder="请输入内容摘要"
@@ -159,7 +221,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               placeholder="请输入备注"
@@ -169,7 +234,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="附件" prop="fileUrls">
+          <el-form-item
+            label="附件"
+            prop="fileUrls"
+          >
             <upload-file
               v-model="formData.fileUrls"
               :limit="10"
@@ -180,7 +248,10 @@
         </el-col>
         <!-- 正式公文 -->
         <el-col :span="24">
-          <el-form-item label="正式公文" prop="formalFileUrl">
+          <el-form-item
+            label="正式公文"
+            prop="formalFileUrl"
+          >
             <upload-file
               v-model="formData.formalFileUrl"
               :limit="1"
@@ -191,11 +262,18 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -203,7 +281,7 @@ import * as ReceiveApi from '@/api/oa/officialdoc/receive'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import DeptSelect from '@/views/system/dept/components/DeptSelect.vue'
 import UserSelect from '@/views/system/user/components/UserSelect.vue'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { formatDate } from '@/utils/formatTime'
 
 function createDefaultForm() {
@@ -230,7 +308,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaOfficialDocReceiveForm',
-  components: { Dialog, DeptSelect, UserSelect },
+  components: { AppDialog, DeptSelect, UserSelect },
   data() {
     return {
       dialogVisible: false,

@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,9 +12,16 @@
       label-width="150px"
     >
       <el-form-item label="申请单号">
-        <el-input v-model="formData.no" placeholder="保存后自动生成" disabled />
+        <el-input
+          v-model="formData.no"
+          placeholder="保存后自动生成"
+          disabled
+        />
       </el-form-item>
-      <el-form-item label="车辆" prop="vehicleId">
+      <el-form-item
+        label="车辆"
+        prop="vehicleId"
+      >
         <oa-vehicle-select
           v-model="formData.vehicleId"
           :selected-vehicle="formData.vehicleId ? { id: formData.vehicleId, no: formData.vehicleNo } : undefined"
@@ -19,7 +30,10 @@
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="预计出车时间" prop="startTime">
+          <el-form-item
+            label="预计出车时间"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               type="datetime"
@@ -30,7 +44,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="预计回车时间" prop="endTime">
+          <el-form-item
+            label="预计回车时间"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               type="datetime"
@@ -43,7 +60,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="出车地点" prop="startLocation">
+          <el-form-item
+            label="出车地点"
+            prop="startLocation"
+          >
             <el-input
               v-model="formData.startLocation"
               placeholder="请输入出车地点"
@@ -52,15 +72,32 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="预计回车地点" prop="endLocation">
-            <el-input v-model="formData.endLocation" placeholder="请输入回车地点" maxlength="255" />
+          <el-form-item
+            label="预计回车地点"
+            prop="endLocation"
+          >
+            <el-input
+              v-model="formData.endLocation"
+              placeholder="请输入回车地点"
+              maxlength="255"
+            />
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="随行人" prop="passenger">
-        <el-input v-model="formData.passenger" placeholder="请输入随行人" maxlength="500" />
+      <el-form-item
+        label="随行人"
+        prop="passenger"
+      >
+        <el-input
+          v-model="formData.passenger"
+          placeholder="请输入随行人"
+          maxlength="500"
+        />
       </el-form-item>
-      <el-form-item label="用车事由" prop="reason">
+      <el-form-item
+        label="用车事由"
+        prop="reason"
+      >
         <el-input
           v-model="formData.reason"
           type="textarea"
@@ -70,7 +107,10 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           type="textarea"
@@ -80,19 +120,32 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :limit="5" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :limit="5"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as VehicleApplyApi from '@/api/oa/vehicle/apply'
 import OaVehicleSelect from '@/views/oa/vehicle/components/OaVehicleSelect.vue'
 
@@ -115,7 +168,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaVehicleApplyForm',
-  components: { Dialog, OaVehicleSelect },
+  components: { AppDialog, OaVehicleSelect },
   data() {
     return {
       dialogVisible: false,

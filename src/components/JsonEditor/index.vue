@@ -1,5 +1,8 @@
 <template>
-  <div class="json-editor" :style="{ height }">
+  <div
+    class="json-editor"
+    :style="{ height }"
+  >
     <el-input
       v-model="text"
       type="textarea"
@@ -8,7 +11,10 @@
       :class="{ 'is-json-error': hasError }"
       resize="none"
     />
-    <div v-if="hasError" class="json-editor__error">JSON 格式错误：{{ errorMessage }}</div>
+    <div
+      v-if="hasError"
+      class="json-editor__error"
+    >JSON 格式错误：{{ errorMessage }}</div>
   </div>
 </template>
 

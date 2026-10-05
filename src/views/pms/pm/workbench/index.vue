@@ -1,8 +1,14 @@
 <template>
   <div class="app-container pms-workbench">
-    <doc-alert title="PMS 手册（功能开启）" url="https://doc.iocoder.cn/pms/build/" />
+    <doc-alert
+      title="PMS 手册（功能开启）"
+      url="https://doc.iocoder.cn/pms/build/"
+    />
 
-    <el-card class="filter-card" shadow="never">
+    <el-card
+      class="filter-card"
+      shadow="never"
+    >
       <el-form
         ref="queryFormRef"
         :inline="true"
@@ -10,10 +16,19 @@
         class="query-form"
         label-width="68px"
       >
-        <el-form-item label="项目" prop="projectId">
-          <ProjectSelect v-model="queryParams.projectId" @change="handleProjectChange" />
+        <el-form-item
+          label="项目"
+          prop="projectId"
+        >
+          <ProjectSelect
+            v-model="queryParams.projectId"
+            @change="handleProjectChange"
+          />
         </el-form-item>
-        <el-form-item label="事项" prop="name">
+        <el-form-item
+          label="事项"
+          prop="name"
+        >
           <el-input
             v-model="queryParams.name"
             class="filter-control"
@@ -22,15 +37,40 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="queryParams.status" class="filter-control" clearable placeholder="全部状态">
-            <el-option label="未开始" :value="PmsWorkItemStatusType.PENDING" />
-            <el-option label="进行中" :value="PmsWorkItemStatusType.PROCESSING" />
-            <el-option label="已完成" :value="PmsWorkItemStatusType.COMPLETED" />
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
+          <el-select
+            v-model="queryParams.status"
+            class="filter-control"
+            clearable
+            placeholder="全部状态"
+          >
+            <el-option
+              label="未开始"
+              :value="PmsWorkItemStatusType.PENDING"
+            />
+            <el-option
+              label="进行中"
+              :value="PmsWorkItemStatusType.PROCESSING"
+            />
+            <el-option
+              label="已完成"
+              :value="PmsWorkItemStatusType.COMPLETED"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="优先级" prop="priority">
-          <el-select v-model="queryParams.priority" class="filter-control" clearable placeholder="全部优先级">
+        <el-form-item
+          label="优先级"
+          prop="priority"
+        >
+          <el-select
+            v-model="queryParams.priority"
+            class="filter-control"
+            clearable
+            placeholder="全部优先级"
+          >
             <el-option
               v-for="option in priorityOptions"
               :key="option.value"
@@ -39,7 +79,11 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="queryParams.projectId" label="迭代" prop="iterationId">
+        <el-form-item
+          v-if="queryParams.projectId"
+          label="迭代"
+          prop="iterationId"
+        >
           <IterationSelect
             v-model="queryParams.iterationId"
             :project-id="queryParams.projectId"
@@ -47,7 +91,10 @@
             placeholder="全部迭代"
           />
         </el-form-item>
-        <el-form-item label="截止日期" prop="endTime">
+        <el-form-item
+          label="截止日期"
+          prop="endTime"
+        >
           <el-date-picker
             v-model="queryParams.endTime"
             class="filter-control"
@@ -59,17 +106,37 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button @click="handleQuery"><Icon class="button-icon" icon="ep:search" />搜索</el-button>
-          <el-button @click="resetQuery"><Icon class="button-icon" icon="ep:refresh" />重置</el-button>
+          <el-button @click="handleQuery"><Icon
+            class="button-icon"
+            icon="ep:search"
+          />搜索</el-button>
+          <el-button @click="resetQuery"><Icon
+            class="button-icon"
+            icon="ep:refresh"
+          />重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
 
     <el-card shadow="never">
-      <el-tabs v-model="activeTab" class="workbench-tabs" @tab-click="handleTabChange">
-        <el-tab-pane v-for="tab in tabs" :key="tab.value" :name="tab.value">
-          <span slot="label" class="tab-label">
-            <el-badge :hidden="displayCountData[tab.countKey] === 0" :value="displayCountData[tab.countKey]">
+      <el-tabs
+        v-model="activeTab"
+        class="workbench-tabs"
+        @tab-click="handleTabChange"
+      >
+        <el-tab-pane
+          v-for="tab in tabs"
+          :key="tab.value"
+          :name="tab.value"
+        >
+          <span
+            slot="label"
+            class="tab-label"
+          >
+            <el-badge
+              :hidden="displayCountData[tab.countKey] === 0"
+              :value="displayCountData[tab.countKey]"
+            >
               <span>{{ tab.label }}</span>
             </el-badge>
           </span>
@@ -82,15 +149,29 @@
         :data="workItemList"
         show-overflow-tooltip
       >
-        <el-table-column align="center" label="ID" width="90">
+        <el-table-column
+          align="center"
+          label="ID"
+          width="90"
+        >
           <template slot-scope="scope">#{{ scope.row.serialNumber }}</template>
         </el-table-column>
-        <el-table-column label="标题" min-width="240">
+        <el-table-column
+          label="标题"
+          min-width="240"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openWorkItem(scope.row)">{{ scope.row.name }}</el-button>
+            <el-button
+              type="text"
+              @click="openWorkItem(scope.row)"
+            >{{ scope.row.name }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="优先级" width="120">
+        <el-table-column
+          align="center"
+          label="优先级"
+          width="120"
+        >
           <template slot-scope="scope">
             <el-select
               v-if="isQuickEditing(scope.row, 'priority')"
@@ -99,15 +180,28 @@
               @change="handleQuickUpdate(scope.row, 'priority')"
               @keyup.esc.native.stop="cancelQuickEdit"
             >
-              <el-option v-for="option in priorityOptions" :key="option.value" :label="option.label" :value="option.value" />
+              <el-option
+                v-for="option in priorityOptions"
+                :key="option.value"
+                :label="option.label"
+                :value="option.value"
+              />
             </el-select>
-            <el-button v-else-if="scope.row.writeStatus" type="text" @click="startQuickEdit(scope.row, 'priority')">
+            <el-button
+              v-else-if="scope.row.writeStatus"
+              type="text"
+              @click="startQuickEdit(scope.row, 'priority')"
+            >
               {{ getPriorityName(scope.row.priority) }}
             </el-button>
             <span v-else>{{ getPriorityName(scope.row.priority) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="状态" width="140">
+        <el-table-column
+          align="center"
+          label="状态"
+          width="140"
+        >
           <template slot-scope="scope">
             <el-select
               v-if="isQuickEditing(scope.row, 'statusId')"
@@ -124,13 +218,20 @@
                 :value="status.id"
               />
             </el-select>
-            <el-button v-else-if="scope.row.writeStatus" type="text" @click="startQuickEdit(scope.row, 'statusId')">
+            <el-button
+              v-else-if="scope.row.writeStatus"
+              type="text"
+              @click="startQuickEdit(scope.row, 'statusId')"
+            >
               {{ scope.row.statusName }}
             </el-button>
             <span v-else>{{ scope.row.statusName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="处理人" min-width="150">
+        <el-table-column
+          label="处理人"
+          min-width="150"
+        >
           <template slot-scope="scope">
             <el-select
               v-if="isQuickEditing(scope.row, 'assigneeUserId')"
@@ -149,15 +250,31 @@
                 :value="member.userId"
               />
             </el-select>
-            <el-button v-else-if="scope.row.writeStatus" type="text" @click="startQuickEdit(scope.row, 'assigneeUserId')">
+            <el-button
+              v-else-if="scope.row.writeStatus"
+              type="text"
+              @click="startQuickEdit(scope.row, 'assigneeUserId')"
+            >
               {{ scope.row.assigneeUserName || '未分配' }}
             </el-button>
             <span v-else>{{ scope.row.assigneeUserName || '-' }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="创建人" min-width="120" prop="creatorUserName" />
-        <el-table-column label="所属项目" min-width="180" prop="projectName" />
-        <el-table-column align="center" label="截止日期" width="190">
+        <el-table-column
+          label="创建人"
+          min-width="120"
+          prop="creatorUserName"
+        />
+        <el-table-column
+          label="所属项目"
+          min-width="180"
+          prop="projectName"
+        />
+        <el-table-column
+          align="center"
+          label="截止日期"
+          width="190"
+        >
           <template slot-scope="scope">
             <el-date-picker
               v-if="isQuickEditing(scope.row, 'endTime')"
@@ -171,32 +288,72 @@
               @change="handleQuickUpdate(scope.row, 'endTime')"
               @keyup.esc.native.stop="cancelQuickEdit"
             />
-            <el-button v-else-if="scope.row.writeStatus" type="text" @click="startQuickEdit(scope.row, 'endTime')">
+            <el-button
+              v-else-if="scope.row.writeStatus"
+              type="text"
+              @click="startQuickEdit(scope.row, 'endTime')"
+            >
               {{ formatDate(scope.row.endTime) || '未设置' }}
             </el-button>
             <span v-else>{{ formatDate(scope.row.endTime) || '-' }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="创建日期" width="180">
+        <el-table-column
+          align="center"
+          label="创建日期"
+          width="180"
+        >
           <template slot-scope="scope">{{ formatDate(scope.row.createTime) }}</template>
         </el-table-column>
       </el-table>
 
-      <el-table v-else v-loading="loading" :data="iterationList" show-overflow-tooltip>
-        <el-table-column align="center" label="ID" width="100" prop="id" />
-        <el-table-column label="标题" min-width="260">
+      <el-table
+        v-else
+        v-loading="loading"
+        :data="iterationList"
+        show-overflow-tooltip
+      >
+        <el-table-column
+          align="center"
+          label="ID"
+          width="100"
+          prop="id"
+        />
+        <el-table-column
+          label="标题"
+          min-width="260"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openIteration(scope.row)">{{ scope.row.name }}</el-button>
+            <el-button
+              type="text"
+              @click="openIteration(scope.row)"
+            >{{ scope.row.name }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="状态" width="120">
+        <el-table-column
+          align="center"
+          label="状态"
+          width="120"
+        >
           <template slot-scope="scope">{{ getIterationStatusName(scope.row.status) }}</template>
         </el-table-column>
-        <el-table-column label="所属项目" min-width="180" prop="projectName" />
-        <el-table-column align="center" label="开始日期" width="180">
+        <el-table-column
+          label="所属项目"
+          min-width="180"
+          prop="projectName"
+        />
+        <el-table-column
+          align="center"
+          label="开始日期"
+          width="180"
+        >
           <template slot-scope="scope">{{ formatDate(scope.row.startTime) }}</template>
         </el-table-column>
-        <el-table-column align="center" label="截止日期" width="180">
+        <el-table-column
+          align="center"
+          label="截止日期"
+          width="180"
+        >
           <template slot-scope="scope">{{ formatDate(scope.row.endTime) }}</template>
         </el-table-column>
       </el-table>
@@ -210,7 +367,10 @@
       />
     </el-card>
 
-    <WorkItemDetail ref="workItemDetailRef" @success="refreshWorkbench" />
+    <WorkItemDetail
+      ref="workItemDetailRef"
+      @success="refreshWorkbench"
+    />
   </div>
 </template>
 

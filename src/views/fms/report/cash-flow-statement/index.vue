@@ -1,9 +1,19 @@
 <template>
   <div class="app-container fms-cash-flow-statement-page">
-    <doc-alert title="【报表】财务报表" url="https://doc.iocoder.cn/fms/report/" />
+    <doc-alert
+      title="【报表】财务报表"
+      url="https://doc.iocoder.cn/fms/report/"
+    />
 
-    <el-card class="toolbar-card" shadow="never">
-      <el-form v-if="statementAdjustmentMode || adjustmentMode" class="adjustment-toolbar" :inline="true">
+    <el-card
+      class="toolbar-card"
+      shadow="never"
+    >
+      <el-form
+        v-if="statementAdjustmentMode || adjustmentMode"
+        class="adjustment-toolbar"
+        :inline="true"
+      >
         <el-form-item>
           <el-button
             v-if="adjustmentMode && isWritable"
@@ -18,7 +28,11 @@
             :disabled="submitting"
             @click="clearAdjustment"
           >清空并重算</el-button>
-          <el-button v-if="adjustmentMode" :disabled="submitting" @click="closeAdjustment">返回</el-button>
+          <el-button
+            v-if="adjustmentMode"
+            :disabled="submitting"
+            @click="closeAdjustment"
+          >返回</el-button>
           <el-button
             v-if="statementAdjustmentMode && isWritable"
             v-hasPermi="['fms:report:cash-flow-statement:update']"
@@ -55,7 +69,10 @@
           >导出</el-button>
         </el-form-item>
       </el-form>
-      <fms-report-period-bar v-else @query="handleQuery">
+      <fms-report-period-bar
+        v-else
+        @query="handleQuery"
+      >
         <fms-report-print-button
           v-hasPermi="['fms:report:cash-flow-statement:print']"
           :disabled="!queryParams.endMonth"
@@ -81,7 +98,10 @@
       </fms-report-period-bar>
     </el-card>
 
-    <el-card class="report-card" shadow="never">
+    <el-card
+      class="report-card"
+      shadow="never"
+    >
       <fms-report-check-alert
         v-if="!adjustmentMode && !statementAdjustmentMode"
         :report-type="FMS_REPORT_TYPE.CASH_FLOW_STATEMENT"
@@ -110,7 +130,10 @@
         border
         height="calc(100vh - 300px)"
       >
-        <el-table-column label="项目" min-width="480">
+        <el-table-column
+          label="项目"
+          min-width="480"
+        >
           <template slot-scope="scope">
             <div :class="itemClass(scope.row)">
               <span>{{ scope.row.name }}</span>
@@ -133,10 +156,18 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="行次" width="90">
+        <el-table-column
+          align="center"
+          label="行次"
+          width="90"
+        >
           <template slot-scope="scope">{{ scope.row.rowNo || '' }}</template>
         </el-table-column>
-        <el-table-column :label="adjustmentMode ? '本年数' : '本年累计金额'" align="right" min-width="180">
+        <el-table-column
+          :label="adjustmentMode ? '本年数' : '本年累计金额'"
+          align="right"
+          min-width="180"
+        >
           <template slot-scope="scope">
             <el-input-number
               v-if="adjustmentMode && scope.row.editable"
@@ -156,7 +187,11 @@
             <span v-else>{{ formatMoney(scope.row.yearAmount) }}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="adjustmentMode ? '本期数' : '本期金额'" align="right" min-width="180">
+        <el-table-column
+          :label="adjustmentMode ? '本期数' : '本期金额'"
+          align="right"
+          min-width="180"
+        >
           <template slot-scope="scope">
             <el-input-number
               v-if="adjustmentMode && scope.row.editable"
@@ -177,7 +212,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="adjustmentMode" class="adjustment-total">共 {{ adjustmentList.length }} 条</div>
+      <div
+        v-if="adjustmentMode"
+        class="adjustment-total"
+      >共 {{ adjustmentList.length }} 条</div>
     </el-card>
 
     <fms-report-formula-form

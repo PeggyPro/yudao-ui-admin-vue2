@@ -1,19 +1,43 @@
 <template>
   <div>
-    <el-dialog :visible.sync="dialogVisible" append-to-body title="凭证打印" width="500px">
-      <el-form ref="form" :model="formData" :rules="formRules" label-position="top">
-        <el-form-item label="打印类型" prop="paperType">
+    <el-dialog
+      :visible.sync="dialogVisible"
+      append-to-body
+      title="凭证打印"
+      width="500px"
+    >
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="formRules"
+        label-position="top"
+      >
+        <el-form-item
+          label="打印类型"
+          prop="paperType"
+        >
           <el-radio-group v-model="formData.paperType">
             <el-radio label="A4">A4</el-radio>
             <el-radio label="B5">B5</el-radio>
             <el-radio label="CUSTOM">自定义纸张</el-radio>
           </el-radio-group>
-          <div v-if="formData.paperType === 'CUSTOM'" class="inline-fields">
+          <div
+            v-if="formData.paperType === 'CUSTOM'"
+            class="inline-fields"
+          >
             <span>宽度</span>
-            <el-input-number v-model="formData.width" :controls="false" :min="1" />
+            <el-input-number
+              v-model="formData.width"
+              :controls="false"
+              :min="1"
+            />
             <span>毫米</span>
             <span>长度</span>
-            <el-input-number v-model="formData.height" :controls="false" :min="1" />
+            <el-input-number
+              v-model="formData.height"
+              :controls="false"
+              :min="1"
+            />
             <span>毫米</span>
           </div>
         </el-form-item>
@@ -26,26 +50,46 @@
         <el-form-item label="边框调整">
           <div class="inline-fields">
             <span>左</span>
-            <el-input-number v-model="formData.marginLeft" :controls="false" :min="0" />
+            <el-input-number
+              v-model="formData.marginLeft"
+              :controls="false"
+              :min="0"
+            />
             <span>毫米</span>
             <span>上</span>
-            <el-input-number v-model="formData.marginTop" :controls="false" :min="0" />
+            <el-input-number
+              v-model="formData.marginTop"
+              :controls="false"
+              :min="0"
+            />
             <span>毫米</span>
           </div>
         </el-form-item>
         <el-form-item label="字体大小">
           <div class="inline-fields">
-            <el-input-number v-model="formData.fontSize" :controls="false" :min="12" :max="24" />
+            <el-input-number
+              v-model="formData.fontSize"
+              :controls="false"
+              :min="12"
+              :max="24"
+            />
             <span>像素</span>
           </div>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="primary" @click="submitForm">保存并打印</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm"
+        >保存并打印</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
     </el-dialog>
-    <iframe ref="printIframe" class="print-iframe" title="凭证打印" />
+    <iframe
+      ref="printIframe"
+      class="print-iframe"
+      title="凭证打印"
+    />
   </div>
 </template>
 

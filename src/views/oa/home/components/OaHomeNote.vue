@@ -1,13 +1,29 @@
 <template>
-  <oa-home-panel title="我的笔记" v-loading="loading">
+  <oa-home-panel
+    v-loading="loading"
+    title="我的笔记"
+  >
     <template slot="actions">
-      <el-button type="text" @click="$router.push('/oa/note')">更多</el-button>
+      <el-button
+        type="text"
+        @click="$router.push('/oa/note')"
+      >更多</el-button>
     </template>
-    <div v-if="loadError" class="load-error">
+    <div
+      v-if="loadError"
+      class="load-error"
+    >
       加载失败，
-      <el-button type="text" @click="getList">重新加载</el-button>
+      <el-button
+        type="text"
+        @click="getList"
+      >重新加载</el-button>
     </div>
-    <el-empty v-if="list.length === 0" :image-size="56" description="暂无笔记" />
+    <el-empty
+      v-if="list.length === 0"
+      :image-size="56"
+      description="暂无笔记"
+    />
     <div
       v-for="item in list"
       v-else
@@ -20,14 +36,21 @@
       </div>
       <span class="note-date">{{ formatDate(item.createTime, 'MM-DD') }}</span>
     </div>
-    <div v-hasPermi="['oa:note:create']" class="quick-note">
+    <div
+      v-hasPermi="['oa:note:create']"
+      class="quick-note"
+    >
       <el-input
         v-model="quickNote"
         maxlength="255"
         placeholder="输入笔记内容"
         @keyup.enter.native="createQuickNote"
       />
-      <el-button :loading="saving" type="primary" @click="createQuickNote">添加</el-button>
+      <el-button
+        :loading="saving"
+        type="primary"
+        @click="createQuickNote"
+      >添加</el-button>
     </div>
   </oa-home-panel>
 </template>

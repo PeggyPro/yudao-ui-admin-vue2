@@ -1,4 +1,7 @@
-<template><legacy-weixin-channel-form ref="inner" @success="$emit('success')" /></template>
+<template><legacy-weixin-channel-form
+  ref="inner"
+  @success="$emit('success')"
+/></template>
 <script>
 import LegacyWeixinChannelForm from '../weixinChannelForm.vue'
 

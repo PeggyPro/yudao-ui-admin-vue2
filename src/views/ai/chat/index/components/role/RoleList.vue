@@ -1,27 +1,59 @@
 <template>
-  <div ref="list" class="role-list" v-loading="loading" @scroll="handleScroll">
-    <el-empty v-if="!loading && roleList.length === 0" description="暂无角色" :image-size="72" />
-    <el-card v-for="role in roleList" :key="role.id" class="role-card" shadow="hover">
+  <div
+    ref="list"
+    v-loading="loading"
+    class="role-list"
+    @scroll="handleScroll"
+  >
+    <el-empty
+      v-if="!loading && roleList.length === 0"
+      description="暂无角色"
+      :image-size="72"
+    />
+    <el-card
+      v-for="role in roleList"
+      :key="role.id"
+      class="role-card"
+      shadow="hover"
+    >
       <el-dropdown
         v-if="showMore"
         class="role-card__more"
         trigger="click"
         @command="handleMoreClick"
       >
-        <el-button type="text" icon="el-icon-more" />
+        <el-button
+          type="text"
+          icon="el-icon-more"
+        />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="['edit', role]" icon="el-icon-edit">编辑</el-dropdown-item>
-          <el-dropdown-item :command="['delete', role]" icon="el-icon-delete" class="is-danger">
+          <el-dropdown-item
+            :command="['edit', role]"
+            icon="el-icon-edit"
+          >编辑</el-dropdown-item>
+          <el-dropdown-item
+            :command="['delete', role]"
+            icon="el-icon-delete"
+            class="is-danger"
+          >
             删除
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-avatar :size="44" shape="square" :src="role.avatar || defaultAvatar" />
+      <el-avatar
+        :size="44"
+        shape="square"
+        :src="role.avatar || defaultAvatar"
+      />
       <div class="role-card__body">
         <div class="role-card__name">{{ role.name }}</div>
         <div class="role-card__description">{{ role.description || '暂无描述' }}</div>
         <div class="role-card__footer">
-          <el-button type="primary" size="mini" @click="$emit('on-use', role)">使用</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="$emit('on-use', role)"
+          >使用</el-button>
         </div>
       </div>
     </el-card>

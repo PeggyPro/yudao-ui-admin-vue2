@@ -13,7 +13,10 @@
       :prop="`${formItemPrefix}.url`"
       :rules="urlRules"
     >
-      <el-input v-model="setting.url" placeholder="https://example.com/webhook" />
+      <el-input
+        v-model="setting.url"
+        placeholder="https://example.com/webhook"
+      />
     </el-form-item>
     <HttpRequestParamSetting
       :header="setting.header"
@@ -21,7 +24,10 @@
       :form-fields="formFields"
     />
     <template v-if="responseEnable">
-      <el-form-item label="返回值" label-position="top">
+      <el-form-item
+        label="返回值"
+        label-position="top"
+      >
         <el-alert
           title="通过请求返回值，可以修改流程表单的值"
           type="warning"
@@ -29,8 +35,15 @@
           :closable="false"
         />
       </el-form-item>
-      <el-form-item label="返回值映射" label-position="top">
-        <div v-for="(item, index) in setting.response" :key="`response-${index}`" class="http-response-row">
+      <el-form-item
+        label="返回值映射"
+        label-position="top"
+      >
+        <div
+          v-for="(item, index) in setting.response"
+          :key="`response-${index}`"
+          class="http-response-row"
+        >
           <el-select
             v-model="item.key"
             class="http-response-field"
@@ -59,7 +72,11 @@
             @click="deleteResponse(index)"
           />
         </div>
-        <el-button type="text" icon="el-icon-plus" @click="addResponse">添加一行</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-plus"
+          @click="addResponse"
+        >添加一行</el-button>
       </el-form-item>
     </template>
   </div>
@@ -97,9 +114,6 @@ export default {
       ]
     }
   },
-  created() {
-    this.ensureSettingShape()
-  },
   watch: {
     setting: {
       deep: true,
@@ -107,6 +121,9 @@ export default {
         this.ensureSettingShape()
       }
     }
+  },
+  created() {
+    this.ensureSettingShape()
   },
   methods: {
     ensureSettingShape() {

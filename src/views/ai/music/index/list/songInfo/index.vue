@@ -1,11 +1,24 @@
 <template>
-  <el-card shadow="never" class="music-song-info">
-    <el-image :src="songInfo.imageUrl" class="music-song-info__cover" />
+  <el-card
+    shadow="never"
+    class="music-song-info"
+  >
+    <el-image
+      :src="songInfo.imageUrl"
+      class="music-song-info__cover"
+    />
     <div class="music-song-info__title">{{ songInfo.title }}</div>
     <div class="music-song-info__desc">{{ songInfo.desc }}</div>
     <div class="music-song-info__date">{{ songInfo.date }}</div>
-    <el-button size="small" round class="music-song-info__button">信息复用</el-button>
-    <div class="music-song-info__lyric" v-html="songInfo.lyric" />
+    <el-button
+      size="small"
+      round
+      class="music-song-info__button"
+    >信息复用</el-button>
+    <div
+      class="music-song-info__lyric"
+      v-html="songInfo.lyric"
+    />
   </el-card>
 </template>
 

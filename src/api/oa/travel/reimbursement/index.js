@@ -22,7 +22,7 @@ export function updateTravelReimbursement(data) {
 
 // 提交出差报销
 export function submitTravelReimbursement(id) {
-  return request({ url: '/oa/travel-reimbursement/submit', method: 'post', data: { id } })
+  return request({ url: '/oa/travel-reimbursement/submit', method: 'post', data: { id }})
 }
 
 // 撤回出差报销

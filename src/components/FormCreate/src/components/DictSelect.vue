@@ -20,7 +20,11 @@
     v-bind="$attrs"
     @change="handleChange"
   >
-    <el-radio v-for="(dict, index) in dictOptions" :key="index" :label="dict.value">
+    <el-radio
+      v-for="(dict, index) in dictOptions"
+      :key="index"
+      :label="dict.value"
+    >
       {{ dict.label }}
     </el-radio>
   </el-radio-group>
@@ -31,7 +35,11 @@
     v-bind="$attrs"
     @change="handleChange"
   >
-    <el-checkbox v-for="(dict, index) in dictOptions" :key="index" :label="dict.value">
+    <el-checkbox
+      v-for="(dict, index) in dictOptions"
+      :key="index"
+      :label="dict.value"
+    >
       {{ dict.label }}
     </el-checkbox>
   </el-checkbox-group>

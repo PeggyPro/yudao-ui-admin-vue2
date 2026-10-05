@@ -75,7 +75,7 @@
         label="物料/产品"
         align="center"
         prop="itemOrProduct"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         :type="DICT_TYPE.MES_MD_ITEM_OR_PRODUCT"
         :value="scope.row.itemOrProduct"
       /></template></el-table-column>
@@ -87,7 +87,7 @@
         label="状态"
         align="center"
         prop="status"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         :type="DICT_TYPE.COMMON_STATUS"
         :value="scope.row.status"
       /></template></el-table-column>
@@ -96,12 +96,12 @@
         align="center"
         prop="createTime"
         width="180"
-      ><template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
+      ><template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
       <el-table-column
         label="操作"
         align="center"
         width="200"
-      ><template v-slot="scope"><el-button
+      ><template slot-scope="scope"><el-button
         v-hasPermi="['mes:md-item-type:create']"
         type="text"
         @click="openForm('create', undefined, scope.row.id)"

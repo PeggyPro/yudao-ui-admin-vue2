@@ -52,7 +52,7 @@
             label="区域"
             width="360"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-cascader
                 v-model="scope.row.areaIds"
                 :options="areaTree"
@@ -71,7 +71,7 @@
             width="180"
             prop="startCount"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.startCount"
                 :min="1"
@@ -84,7 +84,7 @@
             label="运费(元)"
             prop="startPrice"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.startPrice"
                 :min="1"
@@ -97,7 +97,7 @@
             width="180"
             prop="extraCount"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.extraCount"
                 :min="1"
@@ -110,7 +110,7 @@
             label="续费(元)"
             prop="extraPrice"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.extraPrice"
                 :min="1"
@@ -121,7 +121,7 @@
             label="操作"
             align="center"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-button
                 type="text"
                 size="mini"
@@ -154,7 +154,7 @@
             label="区域"
             width="360"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-cascader
                 v-model="scope.row.areaIds"
                 :options="areaTree"
@@ -172,7 +172,7 @@
             :label="columnTitle.freeCountTitle"
             prop="freeCount"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.freeCount"
                 :min="1"
@@ -184,7 +184,7 @@
             label="包邮金额（元）"
             prop="freePrice"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.freePrice"
                 :min="1"
@@ -195,7 +195,7 @@
             label="操作"
             align="center"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-button
                 type="text"
                 size="mini"

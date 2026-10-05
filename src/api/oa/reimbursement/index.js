@@ -22,5 +22,5 @@ export function updateReimbursement(data) {
 
 // 提交费用报销
 export function submitReimbursement(id, startUserSelectAssignees) {
-  return request({ url: '/oa/reimbursement/submit', method: 'post', data: { id, startUserSelectAssignees } })
+  return request({ url: '/oa/reimbursement/submit', method: 'post', data: { id, startUserSelectAssignees }})
 }

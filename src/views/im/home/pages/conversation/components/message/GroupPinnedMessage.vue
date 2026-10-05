@@ -1,5 +1,5 @@
 <template>
-<!-- 群聊置顶消息：仅群聊 + 有置顶时显示，悬挂在群聊头部下方左上角；不占整行（对齐微信 PC） -->
+  <!-- 群聊置顶消息：仅群聊 + 有置顶时显示，悬挂在群聊头部下方左上角；不占整行（对齐微信 PC） -->
   <div
     v-if="pinnedMessages.length > 0"
     class="im-group-pinned-message relative flex flex-shrink-0 flex-col items-start px-4 pt-1.5 pb-2 bg-[var(--el-fill-color-light)]"
@@ -14,9 +14,7 @@
         :size="14"
         class="flex-shrink-0 text-[var(--el-color-warning)]"
       />
-      <span class="flex-shrink-0 text-[var(--el-text-color-secondary)]"
-        >{{ getSenderName(latest) }}：</span
-      >
+      <span class="flex-shrink-0 text-[var(--el-text-color-secondary)]">{{ getSenderName(latest) }}：</span>
       <span class="flex-1 min-w-0 truncate">{{ getPreview(latest) }}</span>
       <!-- 单条：移除按钮；多条折叠：共 N 条；多条展开：收起箭头 -->
       <span
@@ -73,17 +71,17 @@
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref, watch } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { ImConversationType, ImGroupMemberRole } from '@/views/im/utils/constants';
-import { unpinGroupMessage as apiUnpinGroupMessage } from '@/api/im/group';
-import { getSenderDisplayName, isGroupQuit } from '@/views/im/utils/user';
-import { resolveConversationLastContent } from '@/views/im/utils/conversation';
-import { getCurrentUserId } from '@/views/im/utils/session';
-import { useGroupStore } from '../../../../store/groupStore';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref, watch } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { ImConversationType, ImGroupMemberRole } from '@/views/im/utils/constants'
+import { unpinGroupMessage as apiUnpinGroupMessage } from '@/api/im/group'
+import { getSenderDisplayName, isGroupQuit } from '@/views/im/utils/user'
+import { resolveConversationLastContent } from '@/views/im/utils/conversation'
+import { getCurrentUserId } from '@/views/im/utils/session'
+import { useGroupStore } from '../../../../store/groupStore'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImGroupPinnedMessage'
   },
@@ -97,87 +95,87 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       required: true
     }
   },
-  emits: ["locate"],
+  emits: ['locate'],
   setup(__props, {
     expose: __expose,
     emit: __emit
   }) {
-    __expose();
-    const props = __props;
-    const emit = __emit;
-    const groupStore = useGroupStore();
-    const message = useMessage();
+    __expose()
+    const props = __props
+    const emit = __emit
+    const groupStore = useGroupStore()
+    const message = useMessage()
 
     /** 当前群（含 pinnedMessages） */
-    const group = computed(() => groupStore.getGroup(props.groupId));
-    const expanded = ref(false);
-    const removingId = ref(null);
+    const group = computed(() => groupStore.getGroup(props.groupId))
+    const expanded = ref(false)
+    const removingId = ref(null)
 
     // 切群时重置展开 / 移除中状态：本地 ref 不跟随 groupId，否则上一群"展开"或"移除中"会带到新群
     watch(() => props.groupId, () => {
-      expanded.value = false;
-      removingId.value = null;
-    });
+      expanded.value = false
+      removingId.value = null
+    })
 
     /** 当前群置顶消息列表（直接走 group.value，跟随响应式） */
-    const pinnedMessages = computed(() => group.value?.pinnedMessages ?? []);
+    const pinnedMessages = computed(() => group.value?.pinnedMessages ?? [])
 
     /** 顶部胶囊展示的最新一条（即列表最后一条，pin 顺序追加） */
-    const latest = computed(() => pinnedMessages.value[pinnedMessages.value.length - 1]);
+    const latest = computed(() => pinnedMessages.value[pinnedMessages.value.length - 1])
 
     /** 当前用户是否群主 / 管理员（决定是否显示「移除」入口） */
     const canManage = computed(() => {
       // 历史退群群：本地缓存残留时也不给「移除」入口
       if (isGroupQuit(group.value)) {
-        return false;
+        return false
       }
-      const myId = getCurrentUserId();
-      const role = group.value?.members?.find(m => m.userId === myId)?.role;
-      return role === ImGroupMemberRole.OWNER || role === ImGroupMemberRole.ADMIN;
-    });
+      const myId = getCurrentUserId()
+      const role = group.value?.members?.find(m => m.userId === myId)?.role
+      return role === ImGroupMemberRole.OWNER || role === ImGroupMemberRole.ADMIN
+    })
 
     /** 顶部胶囊点击：单条直接跳转原消息位置；多条切换展开 / 折叠 */
     function handleTopClick() {
       if (pinnedMessages.value.length === 1) {
-        handleLocate(latest.value);
-        return;
+        handleLocate(latest.value)
+        return
       }
-      expanded.value = !expanded.value;
+      expanded.value = !expanded.value
     }
 
     /** 点击置顶消息行 → 触发跳转 + 收起弹出层 */
     function handleLocate(message) {
       if (!message.id) {
-        return;
+        return
       }
-      emit('locate', message.id);
-      expanded.value = false;
+      emit('locate', message.id)
+      expanded.value = false
     }
 
     /** 置顶消息发送人显示名 */
     function getSenderName(message) {
-      return group.value ? getSenderDisplayName(message.senderId, ImConversationType.GROUP, group.value.id) : '';
+      return group.value ? getSenderDisplayName(message.senderId, ImConversationType.GROUP, group.value.id) : ''
     }
 
     /** 置顶消息预览文本：复用会话最后一条摘要逻辑（[图片] / [文件] / 文本等） */
     function getPreview(message) {
-      return group.value ? resolveConversationLastContent(message, ImConversationType.GROUP, group.value.id) : '';
+      return group.value ? resolveConversationLastContent(message, ImConversationType.GROUP, group.value.id) : ''
     }
 
     /** 移除置顶：调后端 API，loading 期间禁止重复点；后端广播 GROUP_MESSAGE_UNPIN 由 dispatcher 自动同步本地 */
     async function handleRemove(pinnedMessage) {
       if (!group.value || !pinnedMessage.id || removingId.value !== null) {
-        return;
+        return
       }
-      removingId.value = pinnedMessage.id;
+      removingId.value = pinnedMessage.id
       try {
         await apiUnpinGroupMessage({
           id: group.value.id,
           messageId: pinnedMessage.id
-        });
-        message.success('已取消置顶');
+        })
+        message.success('已取消置顶')
       } finally {
-        removingId.value = null;
+        removingId.value = null
       }
     }
     const __returned__ = {
@@ -197,15 +195,15 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       getPreview,
       handleRemove,
       Icon
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

@@ -1,17 +1,37 @@
 <template>
-  <el-card shadow="never" class="user-basic-info">
-    <div slot="header" class="card-header"><slot name="header"><span>基本信息</span></slot></div>
+  <el-card
+    shadow="never"
+    class="user-basic-info"
+  >
+    <div
+      slot="header"
+      class="card-header"
+    ><slot name="header"><span>基本信息</span></slot></div>
     <el-row>
-      <el-col :span="5" class="avatar-column">
-        <el-avatar :size="120" :src="user.avatar || undefined" shape="square">{{ avatarText }}</el-avatar>
+      <el-col
+        :span="5"
+        class="avatar-column"
+      >
+        <el-avatar
+          :size="120"
+          :src="user.avatar || undefined"
+          shape="square"
+        >{{ avatarText }}</el-avatar>
       </el-col>
       <el-col :span="19">
-        <el-descriptions :column="2" border size="small">
+        <el-descriptions
+          :column="2"
+          border
+          size="small"
+        >
           <el-descriptions-item label="用户名">{{ user.name || '空' }}</el-descriptions-item>
           <el-descriptions-item label="昵称">{{ user.nickname || '空' }}</el-descriptions-item>
           <el-descriptions-item label="手机号">{{ user.mobile || '空' }}</el-descriptions-item>
           <el-descriptions-item label="邮箱">{{ user.email || '空' }}</el-descriptions-item>
-          <el-descriptions-item label="性别"><dict-tag :type="DICT_TYPE.SYSTEM_USER_SEX" :value="user.sex == null ? 0 : user.sex" /></el-descriptions-item>
+          <el-descriptions-item label="性别"><dict-tag
+            :type="DICT_TYPE.SYSTEM_USER_SEX"
+            :value="user.sex == null ? 0 : user.sex"
+          /></el-descriptions-item>
           <el-descriptions-item label="所在地">{{ user.areaName || '空' }}</el-descriptions-item>
           <el-descriptions-item label="注册 IP">{{ user.registerIp || '空' }}</el-descriptions-item>
           <el-descriptions-item label="生日">{{ user.birthday ? parseTime(user.birthday, '{y}-{m}-{d}') : '空' }}</el-descriptions-item>

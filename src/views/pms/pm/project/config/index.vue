@@ -1,11 +1,18 @@
 <template>
-  <el-card shadow="never" class="app-container" v-loading="loading">
+  <el-card
+    v-loading="loading"
+    shadow="never"
+    class="app-container"
+  >
     <!-- 项目设置标题 -->
     <div class="mb-16px flex items-center gap-12px">
       <div
         class="project-icon"
       >
-        <Icon :icon="project.icon || 'ep:folder'" :size="30" />
+        <Icon
+          :icon="project.icon || 'ep:folder'"
+          :size="30"
+        />
       </div>
       <div class="min-w-0">
         <h2 class="m-0 truncate text-20px font-600">项目设置</h2>
@@ -16,8 +23,14 @@
     </div>
 
     <!-- 项目设置页签 -->
-    <el-tabs v-model="activeTab" @tab-click="handleTabChange">
-      <el-tab-pane label="基本信息" name="basic">
+    <el-tabs
+      v-model="activeTab"
+      @tab-click="handleTabChange"
+    >
+      <el-tab-pane
+        label="基本信息"
+        name="basic"
+      >
         <ProjectBasicInfo
           v-if="project.id"
           :editable="editable"
@@ -25,13 +38,32 @@
           @success="getProject"
         />
       </el-tab-pane>
-      <el-tab-pane label="成员" lazy name="member">
-        <ProjectMemberList v-if="project.id" :editable="editable" :project="project" />
+      <el-tab-pane
+        label="成员"
+        lazy
+        name="member"
+      >
+        <ProjectMemberList
+          v-if="project.id"
+          :editable="editable"
+          :project="project"
+        />
       </el-tab-pane>
-      <el-tab-pane label="项目公告" lazy name="announcement">
-        <ProjectAnnouncementList v-if="project.id" :editable="editable" :project-id="project.id" />
+      <el-tab-pane
+        label="项目公告"
+        lazy
+        name="announcement"
+      >
+        <ProjectAnnouncementList
+          v-if="project.id"
+          :editable="editable"
+          :project-id="project.id"
+        />
       </el-tab-pane>
-      <el-tab-pane label="协作配置" name="configuration">
+      <el-tab-pane
+        label="协作配置"
+        name="configuration"
+      >
         <ProjectCollaborationConfig
           v-if="project.id"
           :project-id="project.id"
@@ -80,7 +112,7 @@ export default {
     initActiveTab() { this.activeTab = String(this.$route.query.tabs || 'basic') },
     close() {
       this.$store.dispatch('tagsView/delView', this.$route)
-      return this.$router.push({ name: 'PmsProjectDetail', params: { id: this.projectId } })
+      return this.$router.push({ name: 'PmsProjectDetail', params: { id: this.projectId }})
     },
     init() {
       if (!this.projectId || Number.isNaN(this.projectId)) {

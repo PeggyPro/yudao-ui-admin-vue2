@@ -1,5 +1,10 @@
 <template>
-  <Dialog v-model="dialogVisible" append-to-body :title="dialogTitle" width="680px">
+  <AppDialog
+    v-model="dialogVisible"
+    append-to-body
+    :title="dialogTitle"
+    width="680px"
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -7,7 +12,10 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="公告内容" prop="content">
+      <el-form-item
+        label="公告内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           :rows="6"
@@ -17,24 +25,31 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
         <UploadFile v-model="formData.fileUrls" />
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as ProjectAnnouncementApi from '@/api/pms/pm/project/announcement'
 import UploadFile from '@/components/UploadFile'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 export default {
   name: 'PmsProjectAnnouncementForm',
-  components: { UploadFile, Dialog },
+  components: { UploadFile, AppDialog },
   data() {
     return { dialogVisible: false, dialogTitle: '', formLoading: false, formType: '',
       formData: { id: undefined, projectId: undefined, content: '', fileUrls: [] },

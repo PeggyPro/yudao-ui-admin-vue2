@@ -2,12 +2,12 @@
  * 带级别/颜色的 console 封装，对齐 Vue3 src/utils/Logger.ts
  * 差异：生产环境（process.env.NODE_ENV === 'production'）下全部静默
  */
-const isArray = function (obj) {
+const isArray = function(obj) {
   return Object.prototype.toString.call(obj) === '[object Array]'
 }
 
 // 与 Vue3 版不同点：生产环境静默，避免线上打印噪音
-const isSilent = (function () {
+const isSilent = (function() {
   try {
     return typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'production'
   } catch (e) {
@@ -15,9 +15,9 @@ const isSilent = (function () {
   }
 })()
 
-const Logger = function () {}
+const Logger = function() {}
 
-Logger.typeColor = function (type) {
+Logger.typeColor = function(type) {
   let color = ''
   switch (type) {
     case 'primary':
@@ -42,7 +42,7 @@ Logger.typeColor = function (type) {
   return color
 }
 
-Logger.print = function (type = 'default', text, back = false) {
+Logger.print = function(type = 'default', text, back = false) {
   if (isSilent) {
     return
   }
@@ -67,11 +67,11 @@ Logger.print = function (type = 'default', text, back = false) {
   }
 }
 
-Logger.printBack = function (type = 'primary', text) {
+Logger.printBack = function(type = 'primary', text) {
   this.print(type, text, true)
 }
 
-Logger.pretty = function (type = 'primary', title, text) {
+Logger.pretty = function(type = 'primary', title, text) {
   if (isSilent) {
     return
   }
@@ -96,23 +96,23 @@ Logger.pretty = function (type = 'primary', title, text) {
   )
 }
 
-Logger.prettyPrimary = function (title, ...text) {
+Logger.prettyPrimary = function(title, ...text) {
   text.forEach((t) => this.pretty('primary', title, t))
 }
 
-Logger.prettySuccess = function (title, ...text) {
+Logger.prettySuccess = function(title, ...text) {
   text.forEach((t) => this.pretty('success', title, t))
 }
 
-Logger.prettyWarn = function (title, ...text) {
+Logger.prettyWarn = function(title, ...text) {
   text.forEach((t) => this.pretty('warn', title, t))
 }
 
-Logger.prettyError = function (title, ...text) {
+Logger.prettyError = function(title, ...text) {
   text.forEach((t) => this.pretty('error', title, t))
 }
 
-Logger.prettyInfo = function (title, ...text) {
+Logger.prettyInfo = function(title, ...text) {
   text.forEach((t) => this.pretty('info', title, t))
 }
 

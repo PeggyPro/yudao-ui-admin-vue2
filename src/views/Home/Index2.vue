@@ -1,8 +1,23 @@
 <template>
   <div class="home2">
-    <el-row :gutter="20" type="flex" justify="space-between">
-      <el-col v-for="item in cardList" :key="item.key" :lg="6" :md="12" :sm="12" :xl="6" :xs="24">
-        <el-card class="mb20" shadow="hover">
+    <el-row
+      :gutter="20"
+      type="flex"
+      justify="space-between"
+    >
+      <el-col
+        v-for="item in cardList"
+        :key="item.key"
+        :lg="6"
+        :md="12"
+        :sm="12"
+        :xl="6"
+        :xs="24"
+      >
+        <el-card
+          class="mb20"
+          shadow="hover"
+        >
           <div class="panel-item">
             <div :class="['panel-item-icon', `panel-item-icon-${item.key}`]">
               <i :class="item.icon" />
@@ -15,20 +30,57 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row :gutter="20" type="flex" justify="space-between">
-      <el-col :lg="10" :md="24" :sm="24" :xl="10" :xs="24">
-        <el-card class="mb20" shadow="hover">
-          <div ref="pieChart" class="chart" style="height: 300px" />
+    <el-row
+      :gutter="20"
+      type="flex"
+      justify="space-between"
+    >
+      <el-col
+        :lg="10"
+        :md="24"
+        :sm="24"
+        :xl="10"
+        :xs="24"
+      >
+        <el-card
+          class="mb20"
+          shadow="hover"
+        >
+          <div
+            ref="pieChart"
+            class="chart"
+            style="height: 300px"
+          />
         </el-card>
       </el-col>
-      <el-col :lg="14" :md="24" :sm="24" :xl="14" :xs="24">
-        <el-card class="mb20" shadow="hover">
-          <div ref="barChart" class="chart" style="height: 300px" />
+      <el-col
+        :lg="14"
+        :md="24"
+        :sm="24"
+        :xl="14"
+        :xs="24"
+      >
+        <el-card
+          class="mb20"
+          shadow="hover"
+        >
+          <div
+            ref="barChart"
+            class="chart"
+            style="height: 300px"
+          />
         </el-card>
       </el-col>
       <el-col :span="24">
-        <el-card class="mb20" shadow="hover">
-          <div ref="lineChart" class="chart" style="height: 350px" />
+        <el-card
+          class="mb20"
+          shadow="hover"
+        >
+          <div
+            ref="lineChart"
+            class="chart"
+            style="height: 350px"
+          />
         </el-card>
       </el-col>
     </el-row>

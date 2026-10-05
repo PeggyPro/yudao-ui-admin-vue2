@@ -28,15 +28,25 @@
 
     <div v-loading="loading">
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="详细资料" name="details">
+        <el-tab-pane
+          label="详细资料"
+          name="details"
+        >
           <dept-details-info
             :dept="dept"
             :leader-user-name="leaderUserName"
             :parent-dept-name="parentDeptName"
           />
         </el-tab-pane>
-        <el-tab-pane label="员工列表" name="employees" lazy>
-          <dept-employee-list v-if="dept.id" :dept-id="dept.id" />
+        <el-tab-pane
+          label="员工列表"
+          name="employees"
+          lazy
+        >
+          <dept-employee-list
+            v-if="dept.id"
+            :dept-id="dept.id"
+          />
         </el-tab-pane>
       </el-tabs>
     </div>

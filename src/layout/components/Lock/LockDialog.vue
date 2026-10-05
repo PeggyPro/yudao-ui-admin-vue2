@@ -8,11 +8,23 @@
     @closed="handleClosed"
   >
     <div class="lock-dialog-user flex flex-col items-center">
-      <img :src="avatar" alt="" class="lock-dialog-avatar" />
+      <img
+        :src="avatar"
+        alt=""
+        class="lock-dialog-avatar"
+      >
       <span class="lock-dialog-name">{{ userName }}</span>
     </div>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="80px">
-      <el-form-item label="锁屏密码" prop="password">
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="80px"
+    >
+      <el-form-item
+        label="锁屏密码"
+        prop="password"
+      >
         <el-input
           v-model="formData.password"
           type="password"
@@ -24,7 +36,10 @@
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button type="primary" @click="handleLock">锁定</el-button>
+      <el-button
+        type="primary"
+        @click="handleLock"
+      >锁定</el-button>
     </div>
   </el-dialog>
 </template>

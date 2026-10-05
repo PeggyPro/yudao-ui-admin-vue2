@@ -1,10 +1,10 @@
 <template>
   <el-dialog
+    v-dialogDrag
     :title="dialogTitle"
     :visible.sync="dialogVisible"
     width="800px"
     append-to-body
-    v-dialogDrag
   >
     <el-form
       ref="form"
@@ -13,14 +13,33 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="公告标题" prop="title">
-        <el-input v-model="formData.title" placeholder="请输入公告标题" />
+      <el-form-item
+        label="公告标题"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          placeholder="请输入公告标题"
+        />
       </el-form-item>
-      <el-form-item label="公告内容" prop="content">
-        <Editor v-model="formData.content" :min-height="192" />
+      <el-form-item
+        label="公告内容"
+        prop="content"
+      >
+        <Editor
+          v-model="formData.content"
+          :min-height="192"
+        />
       </el-form-item>
-      <el-form-item label="公告类型" prop="type">
-        <el-select v-model="formData.type" clearable placeholder="请选择公告类型">
+      <el-form-item
+        label="公告类型"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          clearable
+          placeholder="请选择公告类型"
+        >
           <el-option
             v-for="dict in noticeTypeDictDatas"
             :key="parseInt(dict.value)"
@@ -29,8 +48,15 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="formData.status" clearable placeholder="请选择状态">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="formData.status"
+          clearable
+          placeholder="请选择状态"
+        >
           <el-option
             v-for="dict in statusDictDatas"
             :key="parseInt(dict.value)"
@@ -39,12 +65,26 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" placeholder="请输入备注" type="textarea" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          placeholder="请输入备注"
+          type="textarea"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

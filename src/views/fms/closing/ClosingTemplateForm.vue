@@ -1,22 +1,58 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="920px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="100px">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="920px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="模板名称" prop="name">
-            <el-input v-model="formData.name" maxlength="255" placeholder="请输入模板名称" />
+          <el-form-item
+            label="模板名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              maxlength="255"
+              placeholder="请输入模板名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="模板分类" prop="category">
-            <el-select v-model="formData.category" class="full-width">
-              <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label" :value="item.value" />
+          <el-form-item
+            label="模板分类"
+            prop="category"
+          >
+            <el-select
+              v-model="formData.category"
+              class="full-width"
+            >
+              <el-option
+                v-for="item in categoryOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="显示顺序" prop="sort">
-            <el-input-number v-model="formData.sort" :min="0" :controls="false" class="full-width" />
+          <el-form-item
+            label="显示顺序"
+            prop="sort"
+          >
+            <el-input-number
+              v-model="formData.sort"
+              :min="0"
+              :controls="false"
+              class="full-width"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -34,7 +70,11 @@
         </el-col>
         <el-col :span="7">
           <el-form-item label="取数规则">
-            <el-select v-model="formData.formulaRule" clearable class="full-width">
+            <el-select
+              v-model="formData.formulaRule"
+              clearable
+              class="full-width"
+            >
               <el-option
                 v-for="item in formulaRuleOptions.slice(0, 3)"
                 :key="item.value"
@@ -46,8 +86,17 @@
         </el-col>
         <el-col :span="7">
           <el-form-item label="时间类型">
-            <el-select v-model="formData.timeType" clearable class="full-width">
-              <el-option v-for="item in timeTypeOptions" :key="item.value" :label="item.label" :value="item.value" />
+            <el-select
+              v-model="formData.timeType"
+              clearable
+              class="full-width"
+            >
+              <el-option
+                v-for="item in timeTypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -59,37 +108,89 @@
 
     <div class="rules-header">
       <span>凭证分录规则</span>
-      <el-button type="text" icon="el-icon-plus" @click="addSubjectRule()">添加分录</el-button>
+      <el-button
+        type="text"
+        icon="el-icon-plus"
+        @click="addSubjectRule()"
+      >添加分录</el-button>
     </div>
-    <el-table :data="formData.subjects" border max-height="360px">
-      <el-table-column label="摘要" min-width="180">
-        <template slot-scope="scope"><el-input v-model="scope.row.digest" placeholder="请输入摘要" /></template>
+    <el-table
+      :data="formData.subjects"
+      border
+      max-height="360px"
+    >
+      <el-table-column
+        label="摘要"
+        min-width="180"
+      >
+        <template slot-scope="scope"><el-input
+          v-model="scope.row.digest"
+          placeholder="请输入摘要"
+        /></template>
       </el-table-column>
-      <el-table-column label="借/贷" width="105">
+      <el-table-column
+        label="借/贷"
+        width="105"
+      >
         <template slot-scope="scope">
           <el-select v-model="scope.row.direction">
-            <el-option label="借" :value="FMS_DEBIT_CREDIT_DIRECTION.DEBIT" />
-            <el-option label="贷" :value="FMS_DEBIT_CREDIT_DIRECTION.CREDIT" />
+            <el-option
+              label="借"
+              :value="FMS_DEBIT_CREDIT_DIRECTION.DEBIT"
+            />
+            <el-option
+              label="贷"
+              :value="FMS_DEBIT_CREDIT_DIRECTION.CREDIT"
+            />
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="科目" min-width="280">
-        <template slot-scope="scope"><FmsSubjectSelect v-model="scope.row.subjectId" :options="subjects" class="full-width" /></template>
+      <el-table-column
+        label="科目"
+        min-width="280"
+      >
+        <template slot-scope="scope"><FmsSubjectSelect
+          v-model="scope.row.subjectId"
+          :options="subjects"
+          class="full-width"
+        /></template>
       </el-table-column>
-      <el-table-column label="金额比例%" width="130">
+      <el-table-column
+        label="金额比例%"
+        width="130"
+      >
         <template slot-scope="scope">
-          <el-input-number v-model="scope.row.amountRatio" :min="0.01" :max="100" :controls="false" :precision="2" class="full-width" />
+          <el-input-number
+            v-model="scope.row.amountRatio"
+            :min="0.01"
+            :max="100"
+            :controls="false"
+            :precision="2"
+            class="full-width"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="70" align="center">
+      <el-table-column
+        label="操作"
+        width="70"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="danger-text" @click="formData.subjects.splice(scope.$index, 1)">删除</el-button>
+          <el-button
+            type="text"
+            class="danger-text"
+            @click="formData.subjects.splice(scope.$index, 1)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <div slot="footer">
-      <el-button type="primary" :loading="submitting" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :loading="submitting"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

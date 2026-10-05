@@ -475,7 +475,7 @@ export default {
     },
     handleImportAllInventory() {
       if (!this.formData.warehouseId) { return this.$modal.msgWarning('请先选择仓库') }
-      const load = async () => {
+      const load = async() => {
         this.loading = true
         try {
           const response = await InventoryApi.getInventoryList({

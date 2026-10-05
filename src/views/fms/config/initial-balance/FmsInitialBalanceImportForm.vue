@@ -9,7 +9,11 @@
     <template v-if="result === null">
       <div class="import-section">
         <div class="section-title">一、请下载当前账套的初始余额模板</div>
-        <el-button type="text" :loading="templateLoading" @click="downloadTemplate">
+        <el-button
+          type="text"
+          :loading="templateLoading"
+          @click="downloadTemplate"
+        >
           <i class="el-icon-download" /> 下载《财务初始余额导入模板》
         </el-button>
         <div class="import-tip">模板已带出末级科目；辅助核算项目按“类别:名称/类别:名称”填写</div>
@@ -30,7 +34,10 @@
         >
           <i class="el-icon-upload" />
           <div class="el-upload__text">将文件拖到此处，或<em>点击选择文件</em></div>
-          <div slot="tip" class="el-upload__tip">仅支持 xls、xlsx 格式</div>
+          <div
+            slot="tip"
+            class="el-upload__tip"
+          >仅支持 xls、xlsx 格式</div>
         </el-upload>
       </div>
     </template>
@@ -42,7 +49,10 @@
       :sub-title="'已更新 ' + result + ' 个末级科目'"
     />
 
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <template v-if="result === null">
         <el-button @click="visible = false">取 消</el-button>
         <el-button
@@ -54,7 +64,10 @@
       </template>
       <template v-else>
         <el-button @click="resetImport">继续导入</el-button>
-        <el-button type="primary" @click="visible = false">完 成</el-button>
+        <el-button
+          type="primary"
+          @click="visible = false"
+        >完 成</el-button>
       </template>
     </div>
   </el-dialog>

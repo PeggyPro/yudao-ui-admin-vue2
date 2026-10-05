@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dialog
+    <AppDialog
       v-model="dialogVisible"
       append-to-body
       :title="dialogTitle"
@@ -16,7 +16,10 @@
         :rules="formRules"
         label-width="96px"
       >
-        <el-form-item :label="`${workItemTypeName}标题`" prop="name">
+        <el-form-item
+          :label="`${workItemTypeName}标题`"
+          prop="name"
+        >
           <el-input
             v-model="formData.name"
             maxlength="100"
@@ -25,8 +28,14 @@
         </el-form-item>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="优先级" prop="priority">
-              <el-select v-model="formData.priority" class="full-width">
+            <el-form-item
+              label="优先级"
+              prop="priority"
+            >
+              <el-select
+                v-model="formData.priority"
+                class="full-width"
+              >
                 <el-option
                   v-for="option in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_PRIORITY)"
                   :key="option.value"
@@ -37,7 +46,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="负责人" prop="assigneeUserId">
+            <el-form-item
+              label="负责人"
+              prop="assigneeUserId"
+            >
               <ProjectMemberSelect
                 v-model="formData.assigneeUserId"
                 class="full-width"
@@ -48,7 +60,10 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="开始时间" prop="startTime">
+            <el-form-item
+              label="开始时间"
+              prop="startTime"
+            >
               <el-date-picker
                 v-model="formData.startTime"
                 class="full-width"
@@ -60,7 +75,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="截止时间" prop="endTime">
+            <el-form-item
+              label="截止时间"
+              prop="endTime"
+            >
               <el-date-picker
                 v-model="formData.endTime"
                 class="full-width"
@@ -73,8 +91,14 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col v-if="projectType === PmsProjectType.AGILE" :span="12">
-            <el-form-item label="所属迭代" prop="iterationId">
+          <el-col
+            v-if="projectType === PmsProjectType.AGILE"
+            :span="12"
+          >
+            <el-form-item
+              label="所属迭代"
+              prop="iterationId"
+            >
               <IterationSelect
                 v-model="formData.iterationId"
                 class="full-width"
@@ -83,7 +107,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="projectType === PmsProjectType.AGILE ? 12 : 24">
-            <el-form-item label="父级工作项" prop="parentId">
+            <el-form-item
+              label="父级工作项"
+              prop="parentId"
+            >
               <WorkItemSelect
                 v-model="formData.parentId"
                 class="full-width"
@@ -100,7 +127,10 @@
           :gutter="20"
         >
           <el-col :span="12">
-            <el-form-item label="关联需求" prop="relatedRequirementId">
+            <el-form-item
+              label="关联需求"
+              prop="relatedRequirementId"
+            >
               <WorkItemSelect
                 v-model="formData.relatedRequirementId"
                 class="full-width"
@@ -110,9 +140,18 @@
               />
             </el-form-item>
           </el-col>
-          <el-col v-if="type === PmsWorkItemType.DEFECT" :span="12">
-            <el-form-item label="缺陷类型" prop="defectType">
-              <el-select v-model="formData.defectType" class="full-width">
+          <el-col
+            v-if="type === PmsWorkItemType.DEFECT"
+            :span="12"
+          >
+            <el-form-item
+              label="缺陷类型"
+              prop="defectType"
+            >
+              <el-select
+                v-model="formData.defectType"
+                class="full-width"
+              >
                 <el-option
                   v-for="option in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_DEFECT_TYPE)"
                   :key="option.value"
@@ -125,7 +164,10 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="预估工时" prop="estimatedHours">
+            <el-form-item
+              label="预估工时"
+              prop="estimatedHours"
+            >
               <el-input-number
                 v-model="formData.estimatedHours"
                 class="full-width"
@@ -135,12 +177,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="完成进度" prop="progress">
-              <el-slider v-model="formData.progress" show-input :max="100" :min="0" />
+            <el-form-item
+              label="完成进度"
+              prop="progress"
+            >
+              <el-slider
+                v-model="formData.progress"
+                show-input
+                :max="100"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="参与人" prop="memberUserIds">
+        <el-form-item
+          label="参与人"
+          prop="memberUserIds"
+        >
           <ProjectMemberSelect
             v-model="formData.memberUserIds"
             class="full-width"
@@ -148,37 +201,69 @@
             :project-id="projectId"
           />
         </el-form-item>
-        <el-form-item label="标签" prop="labelIds">
+        <el-form-item
+          label="标签"
+          prop="labelIds"
+        >
           <div class="label-editor">
-            <WorkItemLabelSelect ref="labelSelectRef" v-model="formData.labelIds" class="label-select" />
+            <WorkItemLabelSelect
+              ref="labelSelectRef"
+              v-model="formData.labelIds"
+              class="label-select"
+            />
             <el-button @click="openLabelManage">标签管理</el-button>
           </div>
         </el-form-item>
-        <el-form-item :label="`${workItemTypeName}描述`" prop="description">
-          <Editor v-model="formData.description" :height="240" />
+        <el-form-item
+          :label="`${workItemTypeName}描述`"
+          prop="description"
+        >
+          <Editor
+            v-model="formData.description"
+            :height="240"
+          />
         </el-form-item>
-        <el-form-item label="附件" prop="fileUrls">
+        <el-form-item
+          label="附件"
+          prop="fileUrls"
+        >
           <UploadFile v-model="formData.fileUrls" />
         </el-form-item>
         <template v-if="formType === 'create'">
           <el-form-item label="子工作项">
             <div class="child-list">
-              <div v-for="(childName, index) in formData.childWorkItemNames" :key="index" class="child-row">
+              <div
+                v-for="(childName, index) in formData.childWorkItemNames"
+                :key="index"
+                class="child-row"
+              >
                 <el-input
                   v-model="formData.childWorkItemNames[index]"
                   maxlength="100"
                   placeholder="请输入子工作项标题"
                 />
-                <el-button class="danger-button" type="text" @click="removeChild(index)">删除</el-button>
+                <el-button
+                  class="danger-button"
+                  type="text"
+                  @click="removeChild(index)"
+                >删除</el-button>
               </div>
-              <el-button class="add-child-button" plain icon="el-icon-plus" @click="addChild">
+              <el-button
+                class="add-child-button"
+                plain
+                icon="el-icon-plus"
+                @click="addChild"
+              >
                 添加子工作项
               </el-button>
             </div>
           </el-form-item>
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="实际投入" prop="actualHours">
+              <el-form-item
+                label="实际投入"
+                prop="actualHours"
+              >
                 <el-input-number
                   v-model="formData.actualHours"
                   class="full-width"
@@ -188,7 +273,10 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="剩余工时" prop="remainingHours">
+              <el-form-item
+                label="剩余工时"
+                prop="remainingHours"
+              >
                 <el-input-number
                   v-model="formData.remainingHours"
                   class="full-width"
@@ -201,11 +289,18 @@
         </template>
       </el-form>
       <span slot="footer">
-        <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+        <el-button
+          :disabled="formLoading"
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
-    </Dialog>
-    <WorkItemLabelList ref="labelManageRef" @success="refreshLabelOptions" />
+    </AppDialog>
+    <WorkItemLabelList
+      ref="labelManageRef"
+      @success="refreshLabelOptions"
+    />
   </div>
 </template>
 
@@ -221,7 +316,7 @@ import {
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { getWorkItemTypeName } from '@/views/pms/pm/utils/format'
 import Editor from '@/components/Editor'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UploadFile from '@/components/UploadFile'
 import ProjectMemberSelect from '@/views/pms/pm/project/components/ProjectMemberSelect.vue'
 import IterationSelect from '@/views/pms/pm/iteration/components/IterationSelect.vue'
@@ -248,7 +343,7 @@ export default {
   name: 'PmsWorkItemForm',
   components: {
     Editor,
-    Dialog,
+    AppDialog,
     UploadFile,
     ProjectMemberSelect,
     IterationSelect,

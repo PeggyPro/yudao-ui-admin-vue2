@@ -18,7 +18,7 @@
                 class="material-img"
                 :src="news.thumbUrl"
                 alt=""
-              />
+              >
               <div class="news-content-title">{{ news.title }}</div>
             </div>
             <div
@@ -58,7 +58,7 @@
                   class="material-img"
                   :src="news.thumbUrl"
                   alt=""
-                />
+                >
               </div>
             </div>
             <div class="child">

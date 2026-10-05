@@ -1,9 +1,27 @@
 <template>
-  <el-tooltip :disabled="!multiple || selectedNames.length < 2" :content="selectedNames.join('、')" placement="top">
-    <el-select :value="modelValue" clearable :collapse-tags="multiple" filterable :loading="loading"
-      :multiple="multiple" :placeholder="placeholder" @input="$emit('update:modelValue', $event)"
-      @blur="$emit('blur', $event)" @keyup.esc.native.capture.stop="$emit('keyup', $event)">
-      <el-option v-for="iteration in iterationList" :key="iteration.id" :label="iteration.name" :value="iteration.id" />
+  <el-tooltip
+    :disabled="!multiple || selectedNames.length < 2"
+    :content="selectedNames.join('、')"
+    placement="top"
+  >
+    <el-select
+      :value="modelValue"
+      clearable
+      :collapse-tags="multiple"
+      filterable
+      :loading="loading"
+      :multiple="multiple"
+      :placeholder="placeholder"
+      @input="$emit('update:modelValue', $event)"
+      @blur="$emit('blur', $event)"
+      @keyup.esc.native.capture.stop="$emit('keyup', $event)"
+    >
+      <el-option
+        v-for="iteration in iterationList"
+        :key="iteration.id"
+        :label="iteration.name"
+        :value="iteration.id"
+      />
     </el-select>
   </el-tooltip>
 </template>
@@ -28,7 +46,7 @@ export default {
       return this.iterationList.filter(iteration => ids.includes(iteration.id)).map(iteration => iteration.name)
     }
   },
-  watch: { projectId: { immediate: true, handler: 'getIterationList' } },
+  watch: { projectId: { immediate: true, handler: 'getIterationList' }},
   methods: {
     async getIterationList() {
       this.loading = true

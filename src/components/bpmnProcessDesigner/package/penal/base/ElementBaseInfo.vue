@@ -13,9 +13,11 @@
           href="https://doc.iocoder.cn/bpm/#_3-%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%A4%BA%E4%BE%8B"
           type="danger"
           target="_blank"
-          >如何实现实现会签、或签？</el-link
+        >如何实现实现会签、或签？</el-link>
+        <el-form-item
+          label="流程标识"
+          prop="key"
         >
-        <el-form-item label="流程标识" prop="key">
           <el-input
             v-model="model.key"
             placeholder="请输入流标标识"
@@ -23,7 +25,10 @@
             @change="handleKeyUpdate"
           />
         </el-form-item>
-        <el-form-item label="流程名称" prop="name">
+        <el-form-item
+          label="流程名称"
+          prop="name"
+        >
           <el-input
             v-model="model.name"
             placeholder="请输入流程名称"
@@ -54,22 +59,22 @@
 <script>
 
 export default {
-  name: "ElementBaseInfo",
+  name: 'ElementBaseInfo',
   props: {
     businessObject: Object,
-    model: Object, // 流程模型的数据
+    model: Object // 流程模型的数据
   },
-  data () {
+  data() {
     return {
       elementBaseInfo: {},
       // 流程表单的下拉框的数据
       forms: [],
       // 流程模型的校验
       rules: {
-        key: [{ required: true, message: "流程标识不能为空", trigger: "blur" }],
-        name: [{ required: true, message: "流程名称不能为空", trigger: "blur" }],
+        key: [{ required: true, message: '流程标识不能为空', trigger: 'blur' }],
+        name: [{ required: true, message: '流程名称不能为空', trigger: 'blur' }]
       },
-      baseInfoTimer: null,
+      baseInfoTimer: null
     }
   },
   watch: {
@@ -78,7 +83,7 @@ export default {
       // been resolved.  Without an immediate pass the initial task's ID and
       // name stay blank until the element changes a second time.
       immediate: true,
-      handler: function (val) {
+      handler: function(val) {
         if (val) {
           this.$nextTick(() => this.resetBaseInfo(val))
         }
@@ -89,18 +94,18 @@ export default {
     // mounted for a task/event rather than the root process.
     'model.key': {
       immediate: true,
-      handler () {
+      handler() {
         this.syncRootModel()
       }
     },
     'model.name': {
       immediate: true,
-      handler () {
+      handler() {
         this.syncRootModel()
       }
     }
   },
-  created () {
+  created() {
     // 针对上传的 bpmn 流程图时，需要延迟 1 秒的时间，保证 key 和 name 的更新
     this.baseInfoTimer = setTimeout(() => {
       // The delayed pass covers uploaded BPMN where `model` arrives after the
@@ -109,8 +114,15 @@ export default {
       this.syncRootModel()
     }, 1000)
   },
+  beforeDestroy() {
+    if (this.baseInfoTimer) {
+      clearTimeout(this.baseInfoTimer)
+      this.baseInfoTimer = null
+    }
+    this.bpmnElement = null
+  },
   methods: {
-    isRootProcessElement () {
+    isRootProcessElement() {
       const instances = typeof window !== 'undefined' ? window.bpmnInstances : null
       const selected = this.businessObject ||
         (instances && instances.bpmnElement && instances.bpmnElement.businessObject) ||
@@ -118,7 +130,7 @@ export default {
       const type = selected && selected.$type
       return type === 'bpmn:Process' || type === 'bpmn:Collaboration'
     },
-    syncRootModel () {
+    syncRootModel() {
       if (!this.isRootProcessElement()) return
       const model = this.model || {}
       const instances = typeof window !== 'undefined' ? window.bpmnInstances : null
@@ -133,7 +145,7 @@ export default {
         this.handleNameUpdate(model.name)
       }
     },
-    resetBaseInfo (businessObject) {
+    resetBaseInfo(businessObject) {
       const instances = typeof window !== 'undefined' ? window.bpmnInstances : null
       this.bpmnElement = instances && instances.bpmnElement
       const source = businessObject || (this.bpmnElement && this.bpmnElement.businessObject)
@@ -142,7 +154,7 @@ export default {
       }
       this.elementBaseInfo = JSON.parse(JSON.stringify(source))
     },
-    handleKeyUpdate (value) {
+    handleKeyUpdate(value) {
       // 校验 value 的值，只有 XML NCName 通过的情况下，才进行赋值。否则，会导致流程图报错，无法绘制的问题
       if (!value) {
         return
@@ -158,19 +170,19 @@ export default {
       this.elementBaseInfo['id'] = key
       this.updateBaseInfo('id')
     },
-    handleNameUpdate (value) {
+    handleNameUpdate(value) {
       if (!value) {
         return
       }
       this.elementBaseInfo['name'] = value
       this.updateBaseInfo('name')
     },
-    handleDescriptionUpdate (value) {
+    handleDescriptionUpdate(value) {
       // TODO 芋艿：documentation 暂时无法修改，后续在看看
       // this.elementBaseInfo['documentation'] = value;
       // this.updateBaseInfo('documentation');
     },
-    updateBaseInfo (key) {
+    updateBaseInfo(key) {
       const instances = typeof window !== 'undefined' ? window.bpmnInstances : null
       if (!instances || !instances.modeling) {
         return
@@ -192,7 +204,7 @@ export default {
       const attrObj = Object.create(null)
       attrObj[key] = this.elementBaseInfo[key]
       try {
-        if (key === "id") {
+        if (key === 'id') {
           instances.modeling.updateProperties(element, {
             id: this.elementBaseInfo[key],
             di: { id: `${this.elementBaseInfo[key]}_di` }
@@ -210,13 +222,6 @@ export default {
         }
       }
     }
-  },
-  beforeDestroy () {
-    if (this.baseInfoTimer) {
-      clearTimeout(this.baseInfoTimer)
-      this.baseInfoTimer = null
-    }
-    this.bpmnElement = null
   }
-};
+}
 </script>

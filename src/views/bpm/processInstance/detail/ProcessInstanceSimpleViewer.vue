@@ -1,12 +1,18 @@
 <template>
-  <div v-loading="loading" class="process-viewer">
+  <div
+    v-loading="loading"
+    class="process-viewer"
+  >
     <SimpleProcessViewer
       v-if="simpleModel"
       :flow-node="simpleModel"
       :tasks="renderTasks"
       :process-instance="renderProcessInstance"
     />
-    <el-empty v-else description="暂无仿真流程图" />
+    <el-empty
+      v-else
+      description="暂无仿真流程图"
+    />
   </div>
 </template>
 

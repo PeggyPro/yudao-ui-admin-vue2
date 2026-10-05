@@ -1,11 +1,11 @@
-import { isEmptyVal } from '@/utils/is';
-import { IotRuleSceneActionTypeEnum, IotRuleSceneTriggerConditionTypeEnum, IotRuleSceneTriggerTimeOperatorEnum, IotRuleSceneTriggerTypeEnum, isDeviceTrigger } from './constants';
+import { isEmptyVal } from '@/utils/is'
+import { IotRuleSceneActionTypeEnum, IotRuleSceneTriggerConditionTypeEnum, IotRuleSceneTriggerTimeOperatorEnum, IotRuleSceneTriggerTypeEnum, isDeviceTrigger } from './constants'
 /** 创建 Element Plus 表单必填规则，统一触发方式和错误提示。 */
 const requiredRule = (message) => ({
-    required: true,
-    message,
-    trigger: ['change', 'blur']
-});
+  required: true,
+  message,
+  trigger: ['change', 'blur']
+})
 /**
  * 构建触发器主条件的表单校验规则。
  *
@@ -18,35 +18,35 @@ const requiredRule = (message) => ({
  * @returns Element Plus 表单 rules
  */
 export function buildMainConditionRules(triggerType) {
-    const base = {
-        productId: [requiredRule('请选择产品')],
-        deviceId: [requiredRule('请选择设备')]
-    };
-    // 设备状态变化使用固定状态枚举作为比较值。
-    if (triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_STATE_UPDATE) {
-        return {
-            ...base,
-            operator: [requiredRule('请选择操作符')],
-            value: [requiredRule('请选择设备状态')]
-        };
+  const base = {
+    productId: [requiredRule('请选择产品')],
+    deviceId: [requiredRule('请选择设备')]
+  }
+  // 设备状态变化使用固定状态枚举作为比较值。
+  if (triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_STATE_UPDATE) {
+    return {
+      ...base,
+      operator: [requiredRule('请选择操作符')],
+      value: [requiredRule('请选择设备状态')]
     }
-    if (triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_PROPERTY_POST ||
+  }
+  if (triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_PROPERTY_POST ||
         triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_EVENT_POST ||
         triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_SERVICE_INVOKE) {
-        const rules = {
-            ...base,
-            identifier: [requiredRule('请选择监控项')]
-        };
-        // 事件上报和服务调用只监听是否发生，不需要额外的操作符和比较值。
-        const isEventOrService = triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_EVENT_POST ||
-            triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_SERVICE_INVOKE;
-        if (!isEventOrService) {
-            rules.operator = [requiredRule('请选择操作符')];
-            rules.value = [requiredRule('请填写比较值')];
-        }
-        return rules;
+    const rules = {
+      ...base,
+      identifier: [requiredRule('请选择监控项')]
     }
-    return {};
+    // 事件上报和服务调用只监听是否发生，不需要额外的操作符和比较值。
+    const isEventOrService = triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_EVENT_POST ||
+            triggerType === IotRuleSceneTriggerTypeEnum.DEVICE_SERVICE_INVOKE
+    if (!isEventOrService) {
+      rules.operator = [requiredRule('请选择操作符')]
+      rules.value = [requiredRule('请填写比较值')]
+    }
+    return rules
+  }
+  return {}
 }
 /**
  * 校验单个触发器配置。
@@ -59,54 +59,54 @@ export function buildMainConditionRules(triggerType) {
  * @returns 错误信息，通过则返回 null
  */
 export function validateTriggerItem(trigger, index) {
-    if (!trigger.type) {
-        return `触发器 ${index + 1}: 触发器类型不能为空`;
+  if (!trigger.type) {
+    return `触发器 ${index + 1}: 触发器类型不能为空`
+  }
+  // 设备类触发器都有产品、设备两个基础字段。
+  if (isDeviceTrigger(trigger.type)) {
+    if (!trigger.productId) {
+      return `触发器 ${index + 1}: 产品不能为空`
     }
-    // 设备类触发器都有产品、设备两个基础字段。
-    if (isDeviceTrigger(trigger.type)) {
-        if (!trigger.productId) {
-            return `触发器 ${index + 1}: 产品不能为空`;
-        }
-        if (!trigger.deviceId) {
-            return `触发器 ${index + 1}: 设备不能为空`;
-        }
-        // 设备状态变化不依赖物模型标识符，只校验操作符和状态值。
-        if (trigger.type === IotRuleSceneTriggerTypeEnum.DEVICE_STATE_UPDATE) {
-            if (!trigger.operator) {
-                return `触发器 ${index + 1}: 操作符不能为空`;
-            }
-            if (isEmptyVal(trigger.value)) {
-                return `触发器 ${index + 1}: 设备状态不能为空`;
-            }
-            return null;
-        }
-        if (!trigger.identifier) {
-            return `触发器 ${index + 1}: 物模型标识符不能为空`;
-        }
-        // 属性上报需要比较条件；事件上报、服务调用只需要物模型标识符。
-        const isEventOrService = trigger.type === IotRuleSceneTriggerTypeEnum.DEVICE_EVENT_POST ||
-            trigger.type === IotRuleSceneTriggerTypeEnum.DEVICE_SERVICE_INVOKE;
-        if (!isEventOrService) {
-            if (!trigger.operator) {
-                return `触发器 ${index + 1}: 操作符不能为空`;
-            }
-            if (isEmptyVal(trigger.value)) {
-                return `触发器 ${index + 1}: 参数值不能为空`;
-            }
-        }
-        return null;
+    if (!trigger.deviceId) {
+      return `触发器 ${index + 1}: 设备不能为空`
     }
-    // 定时触发器本身需要 CRON 表达式，附加条件组在下方统一校验。
-    if (trigger.type === IotRuleSceneTriggerTypeEnum.TIMER) {
-        if (!trigger.cronExpression) {
-            return `触发器 ${index + 1}: CRON表达式不能为空`;
-        }
+    // 设备状态变化不依赖物模型标识符，只校验操作符和状态值。
+    if (trigger.type === IotRuleSceneTriggerTypeEnum.DEVICE_STATE_UPDATE) {
+      if (!trigger.operator) {
+        return `触发器 ${index + 1}: 操作符不能为空`
+      }
+      if (isEmptyVal(trigger.value)) {
+        return `触发器 ${index + 1}: 设备状态不能为空`
+      }
+      return null
     }
-    const groupError = validateTriggerConditionGroups(trigger.conditionGroups, index);
-    if (groupError) {
-        return groupError;
+    if (!trigger.identifier) {
+      return `触发器 ${index + 1}: 物模型标识符不能为空`
     }
-    return null;
+    // 属性上报需要比较条件；事件上报、服务调用只需要物模型标识符。
+    const isEventOrService = trigger.type === IotRuleSceneTriggerTypeEnum.DEVICE_EVENT_POST ||
+            trigger.type === IotRuleSceneTriggerTypeEnum.DEVICE_SERVICE_INVOKE
+    if (!isEventOrService) {
+      if (!trigger.operator) {
+        return `触发器 ${index + 1}: 操作符不能为空`
+      }
+      if (isEmptyVal(trigger.value)) {
+        return `触发器 ${index + 1}: 参数值不能为空`
+      }
+    }
+    return null
+  }
+  // 定时触发器本身需要 CRON 表达式，附加条件组在下方统一校验。
+  if (trigger.type === IotRuleSceneTriggerTypeEnum.TIMER) {
+    if (!trigger.cronExpression) {
+      return `触发器 ${index + 1}: CRON表达式不能为空`
+    }
+  }
+  const groupError = validateTriggerConditionGroups(trigger.conditionGroups, index)
+  if (groupError) {
+    return groupError
+  }
+  return null
 }
 /**
  * 构建附加子条件的表单校验规则。
@@ -121,35 +121,35 @@ export function validateTriggerItem(trigger, index) {
  * @returns Element Plus 表单 rules
  */
 export function buildSubConditionRules(conditionType, getOperator) {
-    const rules = {
-        type: [requiredRule('请选择条件类型')]
-    };
-    if (!conditionType) {
-        return rules;
-    }
-    // 设备状态和设备属性都需要先确定具体产品、设备。
-    if (conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS ||
+  const rules = {
+    type: [requiredRule('请选择条件类型')]
+  }
+  if (!conditionType) {
+    return rules
+  }
+  // 设备状态和设备属性都需要先确定具体产品、设备。
+  if (conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS ||
         conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_PROPERTY) {
-        rules.productId = [requiredRule('请选择产品')];
-        rules.deviceId = [requiredRule('请选择设备')];
-    }
-    // 设备状态使用设备在线状态作为比较值。
-    if (conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS) {
-        rules.operator = [requiredRule('请选择操作符')];
-        rules.param = [requiredRule('请选择设备状态')];
-    }
-    // 设备属性需要选择物模型属性，再填写对应的比较值。
-    if (conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_PROPERTY) {
-        rules.identifier = [requiredRule('请选择监控项')];
-        rules.operator = [requiredRule('请选择操作符')];
-        rules.param = [requiredRule('请填写比较值')];
-    }
-    // 当前时间的 param 是否必填取决于具体操作符，例如“今天”不需要额外值。
-    if (conditionType === IotRuleSceneTriggerConditionTypeEnum.CURRENT_TIME) {
-        rules.operator = [requiredRule('请选择时间条件')];
-        rules.param = [createCurrentTimeParamRule(getOperator ?? (() => ''))];
-    }
-    return rules;
+    rules.productId = [requiredRule('请选择产品')]
+    rules.deviceId = [requiredRule('请选择设备')]
+  }
+  // 设备状态使用设备在线状态作为比较值。
+  if (conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS) {
+    rules.operator = [requiredRule('请选择操作符')]
+    rules.param = [requiredRule('请选择设备状态')]
+  }
+  // 设备属性需要选择物模型属性，再填写对应的比较值。
+  if (conditionType === IotRuleSceneTriggerConditionTypeEnum.DEVICE_PROPERTY) {
+    rules.identifier = [requiredRule('请选择监控项')]
+    rules.operator = [requiredRule('请选择操作符')]
+    rules.param = [requiredRule('请填写比较值')]
+  }
+  // 当前时间的 param 是否必填取决于具体操作符，例如“今天”不需要额外值。
+  if (conditionType === IotRuleSceneTriggerConditionTypeEnum.CURRENT_TIME) {
+    rules.operator = [requiredRule('请选择时间条件')]
+    rules.param = [createCurrentTimeParamRule(getOperator ?? (() => ''))]
+  }
+  return rules
 }
 /**
  * 创建当前时间条件的 param 自定义校验规则。
@@ -163,27 +163,27 @@ export function buildSubConditionRules(conditionType, getOperator) {
  * @returns Element Plus 表单项校验规则
  */
 function createCurrentTimeParamRule(getOperator) {
-    return {
-        validator: ((_rule, value) => {
-            const operator = getOperator();
-            // “今天”没有附加输入项，直接通过。
-            if (operator === IotRuleSceneTriggerTimeOperatorEnum.TODAY.value) {
-                return Promise.resolve();
-            }
-            if (isEmptyVal(value)) {
-                return Promise.reject(new Error('请填写时间值'));
-            }
-            // 时间区间需要同时存在开始和结束时间。
-            if (operator === IotRuleSceneTriggerTimeOperatorEnum.BETWEEN_TIME.value) {
-                const parts = String(value).split(',');
-                if (!parts[0]?.trim() || !parts[1]?.trim()) {
-                    return Promise.reject(new Error('请填写开始和结束时间'));
-                }
-            }
-            return Promise.resolve();
-        }),
-        trigger: ['change', 'blur']
-    };
+  return {
+    validator: (_rule, value) => {
+      const operator = getOperator()
+      // “今天”没有附加输入项，直接通过。
+      if (operator === IotRuleSceneTriggerTimeOperatorEnum.TODAY.value) {
+        return Promise.resolve()
+      }
+      if (isEmptyVal(value)) {
+        return Promise.reject(new Error('请填写时间值'))
+      }
+      // 时间区间需要同时存在开始和结束时间。
+      if (operator === IotRuleSceneTriggerTimeOperatorEnum.BETWEEN_TIME.value) {
+        const parts = String(value).split(',')
+        if (!parts[0]?.trim() || !parts[1]?.trim()) {
+          return Promise.reject(new Error('请填写开始和结束时间'))
+        }
+      }
+      return Promise.resolve()
+    },
+    trigger: ['change', 'blur']
+  }
 }
 /**
  * 校验单个附加子条件。
@@ -196,62 +196,62 @@ function createCurrentTimeParamRule(getOperator) {
  * @returns 错误信息，通过则返回 null
  */
 export function validateTriggerCondition(condition, path) {
-    if (!condition.type) {
-        return `${path}: 条件类型不能为空`;
-    }
-    // 设备状态和设备属性都必须先选择产品、设备。
-    if (condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS ||
+  if (!condition.type) {
+    return `${path}: 条件类型不能为空`
+  }
+  // 设备状态和设备属性都必须先选择产品、设备。
+  if (condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS ||
         condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_PROPERTY) {
-        if (!condition.productId) {
-            return `${path}: 产品不能为空`;
-        }
-        if (!condition.deviceId) {
-            return `${path}: 设备不能为空`;
-        }
+    if (!condition.productId) {
+      return `${path}: 产品不能为空`
     }
-    // 设备状态只校验操作符和状态枚举值。
-    if (condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS) {
-        if (!condition.operator) {
-            return `${path}: 操作符不能为空`;
-        }
-        if (isEmptyVal(condition.param)) {
-            return `${path}: 设备状态不能为空`;
-        }
-        return null;
+    if (!condition.deviceId) {
+      return `${path}: 设备不能为空`
     }
-    // 设备属性需要校验物模型标识符、操作符和比较值。
-    if (condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_PROPERTY) {
-        if (!condition.identifier) {
-            return `${path}: 监控项不能为空`;
-        }
-        if (!condition.operator) {
-            return `${path}: 操作符不能为空`;
-        }
-        if (isEmptyVal(condition.param)) {
-            return `${path}: 比较值不能为空`;
-        }
-        return null;
+  }
+  // 设备状态只校验操作符和状态枚举值。
+  if (condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_STATUS) {
+    if (!condition.operator) {
+      return `${path}: 操作符不能为空`
     }
-    // 当前时间按操作符动态判断 param 是否需要填写。
-    if (condition.type === IotRuleSceneTriggerConditionTypeEnum.CURRENT_TIME) {
-        if (!condition.operator) {
-            return `${path}: 时间条件不能为空`;
-        }
-        if (condition.operator === IotRuleSceneTriggerTimeOperatorEnum.TODAY.value) {
-            return null;
-        }
-        if (isEmptyVal(condition.param)) {
-            return `${path}: 时间值不能为空`;
-        }
-        if (condition.operator === IotRuleSceneTriggerTimeOperatorEnum.BETWEEN_TIME.value) {
-            const parts = String(condition.param).split(',');
-            if (!parts[0]?.trim() || !parts[1]?.trim()) {
-                return `${path}: 开始和结束时间不能为空`;
-            }
-        }
-        return null;
+    if (isEmptyVal(condition.param)) {
+      return `${path}: 设备状态不能为空`
     }
-    return null;
+    return null
+  }
+  // 设备属性需要校验物模型标识符、操作符和比较值。
+  if (condition.type === IotRuleSceneTriggerConditionTypeEnum.DEVICE_PROPERTY) {
+    if (!condition.identifier) {
+      return `${path}: 监控项不能为空`
+    }
+    if (!condition.operator) {
+      return `${path}: 操作符不能为空`
+    }
+    if (isEmptyVal(condition.param)) {
+      return `${path}: 比较值不能为空`
+    }
+    return null
+  }
+  // 当前时间按操作符动态判断 param 是否需要填写。
+  if (condition.type === IotRuleSceneTriggerConditionTypeEnum.CURRENT_TIME) {
+    if (!condition.operator) {
+      return `${path}: 时间条件不能为空`
+    }
+    if (condition.operator === IotRuleSceneTriggerTimeOperatorEnum.TODAY.value) {
+      return null
+    }
+    if (isEmptyVal(condition.param)) {
+      return `${path}: 时间值不能为空`
+    }
+    if (condition.operator === IotRuleSceneTriggerTimeOperatorEnum.BETWEEN_TIME.value) {
+      const parts = String(condition.param).split(',')
+      if (!parts[0]?.trim() || !parts[1]?.trim()) {
+        return `${path}: 开始和结束时间不能为空`
+      }
+    }
+    return null
+  }
+  return null
 }
 /**
  * 校验触发器的附加条件组。
@@ -264,23 +264,23 @@ export function validateTriggerCondition(condition, path) {
  * @returns 错误信息，通过则返回 null
  */
 export function validateTriggerConditionGroups(groups, triggerIndex) {
-    if (!groups?.length) {
-        return null;
+  if (!groups?.length) {
+    return null
+  }
+  for (let g = 0; g < groups.length; g++) {
+    const group = groups[g]
+    // 空条件组没有实际过滤条件，提交后语义不明确，需要拦截。
+    if (!group?.length) {
+      return `触发器 ${triggerIndex + 1} 子条件组 ${g + 1}: 至少需要一个条件`
     }
-    for (let g = 0; g < groups.length; g++) {
-        const group = groups[g];
-        // 空条件组没有实际过滤条件，提交后语义不明确，需要拦截。
-        if (!group?.length) {
-            return `触发器 ${triggerIndex + 1} 子条件组 ${g + 1}: 至少需要一个条件`;
-        }
-        for (let c = 0; c < group.length; c++) {
-            const error = validateTriggerCondition(group[c], `触发器 ${triggerIndex + 1} 子条件组 ${g + 1} 条件 ${c + 1}`);
-            if (error) {
-                return error;
-            }
-        }
+    for (let c = 0; c < group.length; c++) {
+      const error = validateTriggerCondition(group[c], `触发器 ${triggerIndex + 1} 子条件组 ${g + 1} 条件 ${c + 1}`)
+      if (error) {
+        return error
+      }
     }
-    return null;
+  }
+  return null
 }
 /**
  * 判断执行器参数是否为空。
@@ -295,20 +295,19 @@ export function validateTriggerConditionGroups(groups, triggerIndex) {
  * @returns 是否为空
  */
 export const isActionParamsEmpty = (params) => {
-    if (!params || !String(params).trim()) {
-        return true;
+  if (!params || !String(params).trim()) {
+    return true
+  }
+  try {
+    const parsed = JSON.parse(String(params))
+    if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+      return Object.keys(parsed).length === 0
     }
-    try {
-        const parsed = JSON.parse(String(params));
-        if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
-            return Object.keys(parsed).length === 0;
-        }
-    }
-    catch {
-        return false;
-    }
-    return false;
-};
+  } catch {
+    return false
+  }
+  return false
+}
 /**
  * 构建设备控制执行器的表单校验规则。
  *
@@ -319,16 +318,16 @@ export const isActionParamsEmpty = (params) => {
  * @returns Element Plus 表单 rules
  */
 export function buildDeviceControlRules(actionType) {
-    const rules = {
-        productId: [requiredRule('请选择产品')],
-        deviceId: [requiredRule('请选择设备')],
-        params: [createParamsRule()]
-    };
-    // 服务调用需要额外选择物模型服务。
-    if (actionType === IotRuleSceneActionTypeEnum.DEVICE_SERVICE_INVOKE) {
-        rules.identifier = [requiredRule('请选择服务')];
-    }
-    return rules;
+  const rules = {
+    productId: [requiredRule('请选择产品')],
+    deviceId: [requiredRule('请选择设备')],
+    params: [createParamsRule()]
+  }
+  // 服务调用需要额外选择物模型服务。
+  if (actionType === IotRuleSceneActionTypeEnum.DEVICE_SERVICE_INVOKE) {
+    rules.identifier = [requiredRule('请选择服务')]
+  }
+  return rules
 }
 /**
  * 构建告警恢复执行器的表单校验规则。
@@ -338,9 +337,9 @@ export function buildDeviceControlRules(actionType) {
  * @returns Element Plus 表单 rules
  */
 export function buildAlertConfigRules() {
-    return {
-        alertConfigId: [requiredRule('请选择告警配置')]
-    };
+  return {
+    alertConfigId: [requiredRule('请选择告警配置')]
+  }
 }
 /**
  * 创建设备控制参数的自定义校验规则。
@@ -352,22 +351,21 @@ export function buildAlertConfigRules() {
  * @returns Element Plus 表单项校验规则
  */
 function createParamsRule() {
-    return {
-        validator: ((_rule, value) => {
-            if (isActionParamsEmpty(value)) {
-                return Promise.reject(new Error('请填写参数配置'));
-            }
-            // 这里只校验 JSON 语法，具体参数结构由物模型参数配置组件负责生成。
-            try {
-                JSON.parse(String(value));
-            }
-            catch {
-                return Promise.reject(new Error('参数格式须为合法 JSON'));
-            }
-            return Promise.resolve();
-        }),
-        trigger: ['change', 'blur']
-    };
+  return {
+    validator: (_rule, value) => {
+      if (isActionParamsEmpty(value)) {
+        return Promise.reject(new Error('请填写参数配置'))
+      }
+      // 这里只校验 JSON 语法，具体参数结构由物模型参数配置组件负责生成。
+      try {
+        JSON.parse(String(value))
+      } catch {
+        return Promise.reject(new Error('参数格式须为合法 JSON'))
+      }
+      return Promise.resolve()
+    },
+    trigger: ['change', 'blur']
+  }
 }
 /**
  * 校验单个执行器配置。
@@ -380,38 +378,37 @@ function createParamsRule() {
  * @returns 错误信息，通过则返回 null
  */
 export function validateActionItem(action, index) {
-    const prefix = `执行器 ${index + 1}`;
-    if (!action.type) {
-        return `${prefix}: 执行器类型不能为空`;
-    }
-    // 设备属性设置和设备服务调用都需要指定设备，并填写物模型参数。
-    if (action.type === IotRuleSceneActionTypeEnum.DEVICE_PROPERTY_SET ||
+  const prefix = `执行器 ${index + 1}`
+  if (!action.type) {
+    return `${prefix}: 执行器类型不能为空`
+  }
+  // 设备属性设置和设备服务调用都需要指定设备，并填写物模型参数。
+  if (action.type === IotRuleSceneActionTypeEnum.DEVICE_PROPERTY_SET ||
         action.type === IotRuleSceneActionTypeEnum.DEVICE_SERVICE_INVOKE) {
-        if (!action.productId) {
-            return `${prefix}: 产品不能为空`;
-        }
-        if (!action.deviceId) {
-            return `${prefix}: 设备不能为空`;
-        }
-        if (action.type === IotRuleSceneActionTypeEnum.DEVICE_SERVICE_INVOKE && !action.identifier) {
-            return `${prefix}: 服务不能为空`;
-        }
-        if (isActionParamsEmpty(action.params)) {
-            return `${prefix}: 参数配置不能为空`;
-        }
-        try {
-            JSON.parse(String(action.params));
-        }
-        catch {
-            return `${prefix}: 参数格式须为合法 JSON`;
-        }
-        return null;
+    if (!action.productId) {
+      return `${prefix}: 产品不能为空`
     }
-    // 告警恢复执行器需要绑定具体告警配置。
-    if (action.type === IotRuleSceneActionTypeEnum.ALERT_RECOVER) {
-        if (!action.alertConfigId) {
-            return `${prefix}: 告警配置不能为空`;
-        }
+    if (!action.deviceId) {
+      return `${prefix}: 设备不能为空`
     }
-    return null;
+    if (action.type === IotRuleSceneActionTypeEnum.DEVICE_SERVICE_INVOKE && !action.identifier) {
+      return `${prefix}: 服务不能为空`
+    }
+    if (isActionParamsEmpty(action.params)) {
+      return `${prefix}: 参数配置不能为空`
+    }
+    try {
+      JSON.parse(String(action.params))
+    } catch {
+      return `${prefix}: 参数格式须为合法 JSON`
+    }
+    return null
+  }
+  // 告警恢复执行器需要绑定具体告警配置。
+  if (action.type === IotRuleSceneActionTypeEnum.ALERT_RECOVER) {
+    if (!action.alertConfigId) {
+      return `${prefix}: 告警配置不能为空`
+    }
+  }
+  return null
 }

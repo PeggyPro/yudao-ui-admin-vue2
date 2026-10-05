@@ -1,9 +1,18 @@
 <template>
   <div class="app-container">
-    <doc-alert title="【PMS】文档与协作" url="https://doc.iocoder.cn/pms/kb/document/" />
+    <doc-alert
+      title="【PMS】文档与协作"
+      url="https://doc.iocoder.cn/pms/kb/document/"
+    />
     <el-row :gutter="20">
-      <el-col :span="4" :xs="24">
-        <el-card class="label-card" shadow="never">
+      <el-col
+        :span="4"
+        :xs="24"
+      >
+        <el-card
+          class="label-card"
+          shadow="never"
+        >
           <div class="label-header">
             <span>文档标签</span>
             <el-button
@@ -19,8 +28,14 @@
             placeholder="请输入标签名称"
             prefix-icon="el-icon-search"
           />
-          <div v-loading="labelLoading" class="label-list-wrap">
-            <el-scrollbar v-if="filteredLabelList.length" class="label-scrollbar">
+          <div
+            v-loading="labelLoading"
+            class="label-list-wrap"
+          >
+            <el-scrollbar
+              v-if="filteredLabelList.length"
+              class="label-scrollbar"
+            >
               <el-button
                 v-for="label in filteredLabelList"
                 :key="label.id"
@@ -29,19 +44,35 @@
                 class="label-button"
                 @click="handleSelectLabel(label.id)"
               >
-                <span class="label-dot" :style="{ backgroundColor: label.color }"></span>
+                <span
+                  class="label-dot"
+                  :style="{ backgroundColor: label.color }"
+                />
                 <span class="label-name">{{ label.name }}</span>
               </el-button>
             </el-scrollbar>
-            <el-empty v-else :image-size="70" description="暂无标签" />
+            <el-empty
+              v-else
+              :image-size="70"
+              description="暂无标签"
+            />
           </div>
         </el-card>
       </el-col>
-      <el-col :span="20" :xs="24">
+      <el-col
+        :span="20"
+        :xs="24"
+      >
         <el-card shadow="never">
-          <div v-if="selectedLabel" class="document-header">
+          <div
+            v-if="selectedLabel"
+            class="document-header"
+          >
             <div>当前标签：{{ selectedLabel.name }}（{{ total }}）</div>
-            <el-button type="text" @click="clearSelectedLabel">清除筛选</el-button>
+            <el-button
+              type="text"
+              @click="clearSelectedLabel"
+            >清除筛选</el-button>
           </div>
           <el-table
             v-if="selectedLabel"
@@ -50,15 +81,29 @@
             :show-overflow-tooltip="true"
             border
           >
-            <el-table-column label="文档标题" min-width="240">
+            <el-table-column
+              label="文档标题"
+              min-width="240"
+            >
               <template slot-scope="scope">
-                <el-link type="primary" @click="openDocumentDetail(scope.row)">
+                <el-link
+                  type="primary"
+                  @click="openDocumentDetail(scope.row)"
+                >
                   {{ scope.row.title }}
                 </el-link>
               </template>
             </el-table-column>
-            <el-table-column label="知识库" min-width="180" prop="libraryName" />
-            <el-table-column label="创建人" prop="creatorUserName" width="130" />
+            <el-table-column
+              label="知识库"
+              min-width="180"
+              prop="libraryName"
+            />
+            <el-table-column
+              label="创建人"
+              prop="creatorUserName"
+              width="130"
+            />
             <el-table-column
               :formatter="dateFormatter"
               align="center"
@@ -67,7 +112,10 @@
               width="180"
             />
           </el-table>
-          <el-empty v-else description="暂无可用标签" />
+          <el-empty
+            v-else
+            description="暂无可用标签"
+          />
           <pagination
             v-if="selectedLabel"
             :limit.sync="queryParams.pageSize"
@@ -78,7 +126,10 @@
         </el-card>
       </el-col>
     </el-row>
-    <knowledge-label-manage-dialog ref="labelManage" @success="getLabelList" />
+    <knowledge-label-manage-dialog
+      ref="labelManage"
+      @success="getLabelList"
+    />
   </div>
 </template>
 

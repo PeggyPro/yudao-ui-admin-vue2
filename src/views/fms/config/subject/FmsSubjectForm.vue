@@ -1,34 +1,97 @@
 <template>
-  <el-dialog :title="title" :visible.sync="visible" width="560px" append-to-body>
-    <el-form ref="form" v-loading="loading" :model="formData" :rules="rules" label-width="112px">
-      <el-alert v-if="formType === 'create' && parentSubjectUsed" type="warning" :closable="false" class="mb12">
+  <el-dialog
+    :title="title"
+    :visible.sync="visible"
+    width="560px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="loading"
+      :model="formData"
+      :rules="rules"
+      label-width="112px"
+    >
+      <el-alert
+        v-if="formType === 'create' && parentSubjectUsed"
+        type="warning"
+        :closable="false"
+        class="mb12"
+      >
         {{
           subjectUsage.childCount > 0
             ? '上级科目已有业务数据和下级科目，当前数据状态不允许继续新增下级'
             : '上级科目已有 ' + subjectUsage.voucherEntryCount + ' 条凭证分录、' + subjectUsage.initialBalanceCount + ' 条初始余额和 ' + subjectUsage.auxiliaryCombinationCount + ' 个辅助核算组合，创建后将全部迁移到新科目'
         }}
       </el-alert>
-      <el-alert v-if="formType === 'update' && (subjectUsage.used || subjectUsage.childCount > 0)" type="warning" :closable="false" class="mb12">
+      <el-alert
+        v-if="formType === 'update' && (subjectUsage.used || subjectUsage.childCount > 0)"
+        type="warning"
+        :closable="false"
+        class="mb12"
+      >
         {{ subjectUsage.used ? '该科目已有业务数据，余额方向不能修改；首次启用辅助核算时，需要为历史数据指定迁移项目' : '该科目已有下级，科目类别、编码和辅助核算不能修改' }}
       </el-alert>
-      <el-form-item label="科目编码" prop="code">
-        <el-input v-model.trim="formData.code" :disabled="codeDisabled" maxlength="64" placeholder="请输入科目编码" @blur="handleCodeBlur" />
+      <el-form-item
+        label="科目编码"
+        prop="code"
+      >
+        <el-input
+          v-model.trim="formData.code"
+          :disabled="codeDisabled"
+          maxlength="64"
+          placeholder="请输入科目编码"
+          @blur="handleCodeBlur"
+        />
         <div class="form-tip">科目级次：{{ subjectCodeRule || '未配置' }}</div>
       </el-form-item>
-      <el-form-item label="科目名称" prop="name">
-        <el-input v-model.trim="formData.name" maxlength="255" placeholder="请输入科目名称" />
+      <el-form-item
+        label="科目名称"
+        prop="name"
+      >
+        <el-input
+          v-model.trim="formData.name"
+          maxlength="255"
+          placeholder="请输入科目名称"
+        />
       </el-form-item>
       <el-form-item label="上级科目">
-        <el-input :value="parentSubject ? parentSubject.code + ' ' + parentSubject.name : '无上级科目'" disabled />
+        <el-input
+          :value="parentSubject ? parentSubject.code + ' ' + parentSubject.name : '无上级科目'"
+          disabled
+        />
       </el-form-item>
-      <el-form-item label="科目类别" prop="category">
-        <el-select v-model="formData.category" :disabled="!!parentSubject || subjectUsage.childCount > 0" style="width: 100%" placeholder="请选择科目类别">
-          <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label" :value="item.value" />
+      <el-form-item
+        label="科目类别"
+        prop="category"
+      >
+        <el-select
+          v-model="formData.category"
+          :disabled="!!parentSubject || subjectUsage.childCount > 0"
+          style="width: 100%"
+          placeholder="请选择科目类别"
+        >
+          <el-option
+            v-for="item in categoryOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="余额方向" prop="balanceDirection">
-        <el-radio-group v-model="formData.balanceDirection" :disabled="subjectUsage.used">
-          <el-radio v-for="item in balanceDirectionOptions" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+      <el-form-item
+        label="余额方向"
+        prop="balanceDirection"
+      >
+        <el-radio-group
+          v-model="formData.balanceDirection"
+          :disabled="subjectUsage.used"
+        >
+          <el-radio
+            v-for="item in balanceDirectionOptions"
+            :key="item.value"
+            :label="item.value"
+          >{{ item.label }}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="辅助核算">
@@ -43,7 +106,12 @@
         />
       </el-form-item>
       <template v-if="auxiliaryMigrationRequired">
-        <el-alert title="请选择历史凭证要迁入的辅助核算项目，该操作不可撤销" type="warning" :closable="false" class="mb12" />
+        <el-alert
+          title="请选择历史凭证要迁入的辅助核算项目，该操作不可撤销"
+          type="warning"
+          :closable="false"
+          class="mb12"
+        />
         <el-form-item
           v-for="(mapping, index) in formData.auxiliaryMappings"
           :key="mapping.typeId"
@@ -70,17 +138,40 @@
         />
       </el-form-item>
       <el-form-item label="数量核算">
-        <el-checkbox v-model="formData.quantityAccounting" :disabled="parentSubjectUsed || subjectUsage.quantityDataCount > 0">启用数量核算</el-checkbox>
+        <el-checkbox
+          v-model="formData.quantityAccounting"
+          :disabled="parentSubjectUsed || subjectUsage.quantityDataCount > 0"
+        >启用数量核算</el-checkbox>
       </el-form-item>
-      <el-form-item v-if="formData.quantityAccounting" label="数量单位" prop="quantityUnit">
-        <el-input v-model.trim="formData.quantityUnit" :disabled="parentSubjectUsed" maxlength="255" placeholder="请输入数量单位" />
+      <el-form-item
+        v-if="formData.quantityAccounting"
+        label="数量单位"
+        prop="quantityUnit"
+      >
+        <el-input
+          v-model.trim="formData.quantityUnit"
+          :disabled="parentSubjectUsed"
+          maxlength="255"
+          placeholder="请输入数量单位"
+        />
       </el-form-item>
       <el-form-item label="现金项">
-        <el-checkbox v-model="formData.cash" :disabled="!!(parentSubject && parentSubject.cash)">现金及现金等价物</el-checkbox>
+        <el-checkbox
+          v-model="formData.cash"
+          :disabled="!!(parentSubject && parentSubject.cash)"
+        >现金及现金等价物</el-checkbox>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="loading" :disabled="loading || parentDataMigrationBlocked" @click="submit">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="loading"
+        :disabled="loading || parentDataMigrationBlocked"
+        @click="submit"
+      >确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </div>
   </el-dialog>

@@ -1,26 +1,72 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="90px">
-      <el-form-item label="字典类型" prop="dictType">
-        <el-input v-model="formData.dictType" disabled />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="90px"
+    >
+      <el-form-item
+        label="字典类型"
+        prop="dictType"
+      >
+        <el-input
+          v-model="formData.dictType"
+          disabled
+        />
       </el-form-item>
-      <el-form-item label="数据标签" prop="label">
-        <el-input v-model="formData.label" placeholder="请输入数据标签" />
+      <el-form-item
+        label="数据标签"
+        prop="label"
+      >
+        <el-input
+          v-model="formData.label"
+          placeholder="请输入数据标签"
+        />
       </el-form-item>
-      <el-form-item label="数据键值" prop="value">
-        <el-input v-model="formData.value" placeholder="请输入数据键值" />
+      <el-form-item
+        label="数据键值"
+        prop="value"
+      >
+        <el-input
+          v-model="formData.value"
+          placeholder="请输入数据键值"
+        />
       </el-form-item>
-      <el-form-item label="显示排序" prop="sort">
-        <el-input-number v-model="formData.sort" controls-position="right" :min="0" />
+      <el-form-item
+        label="显示排序"
+        prop="sort"
+      >
+        <el-input-number
+          v-model="formData.sort"
+          controls-position="right"
+          :min="0"
+        />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
-          <el-radio v-for="dict in statusDictDatas" :key="dict.value" :label="parseInt(dict.value)">
+          <el-radio
+            v-for="dict in statusDictDatas"
+            :key="dict.value"
+            :label="parseInt(dict.value)"
+          >
             {{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="颜色类型" prop="colorType">
+      <el-form-item
+        label="颜色类型"
+        prop="colorType"
+      >
         <el-select v-model="formData.colorType">
           <el-option
             v-for="item in colorTypeOptions"
@@ -30,15 +76,35 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="CSS Class" prop="cssClass">
-        <el-input v-model="formData.cssClass" placeholder="请输入 CSS Class" />
+      <el-form-item
+        label="CSS Class"
+        prop="cssClass"
+      >
+        <el-input
+          v-model="formData.cssClass"
+          placeholder="请输入 CSS Class"
+        />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" placeholder="请输入内容" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入内容"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

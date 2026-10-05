@@ -1,5 +1,11 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="1080px" top="8vh" @closed="resetClosed">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="1080px"
+    top="8vh"
+    @closed="resetClosed"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -11,9 +17,16 @@
       <!-- 基本信息 -->
       <div class="section-title">基本信息</div>
       <el-row :gutter="20">
-        <el-col v-if="formData.type === OA_WORK_REPORT_TYPE.WEEKLY" :span="16">
+        <el-col
+          v-if="formData.type === OA_WORK_REPORT_TYPE.WEEKLY"
+          :span="16"
+        >
           <el-form-item label="汇报周次">
-            <el-select v-model="reportWeek" style="width: 100%" @change="handleWeekChange">
+            <el-select
+              v-model="reportWeek"
+              style="width: 100%"
+              @change="handleWeekChange"
+            >
               <el-option
                 v-for="item in weekOptions"
                 :key="item.value"
@@ -23,7 +36,10 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col v-if="formData.type === OA_WORK_REPORT_TYPE.MONTHLY" :span="8">
+        <el-col
+          v-if="formData.type === OA_WORK_REPORT_TYPE.MONTHLY"
+          :span="8"
+        >
           <el-form-item label="汇报月份">
             <el-date-picker
               v-model="periodValue"
@@ -38,7 +54,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="开始日期" prop="startTime">
+          <el-form-item
+            label="开始日期"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               type="date"
@@ -48,7 +67,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="结束日期" prop="endTime">
+          <el-form-item
+            label="结束日期"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               type="date"
@@ -58,7 +80,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="汇报标题" prop="title">
+      <el-form-item
+        label="汇报标题"
+        prop="title"
+      >
         <el-input
           v-model="formData.title"
           maxlength="255"
@@ -67,7 +92,10 @@
         />
       </el-form-item>
 
-      <el-form-item label="工作总结" prop="summary">
+      <el-form-item
+        label="工作总结"
+        prop="summary"
+      >
         <el-input
           v-model="formData.summary"
           :rows="3"
@@ -77,7 +105,10 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="工作计划" prop="plan">
+      <el-form-item
+        label="工作计划"
+        prop="plan"
+      >
         <el-input
           v-model="formData.plan"
           :rows="3"
@@ -87,7 +118,10 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="问题与协调" prop="problem">
+      <el-form-item
+        label="问题与协调"
+        prop="problem"
+      >
         <el-input
           v-model="formData.problem"
           :rows="3"
@@ -97,7 +131,10 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           :rows="2"
@@ -107,15 +144,34 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <UploadFile v-model="formData.fileUrls" :limit="10" :file-size="20" :disabled="readonly" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <UploadFile
+          v-model="formData.fileUrls"
+          :limit="10"
+          :file-size="20"
+          :disabled="readonly"
+        />
       </el-form-item>
 
       <!-- 已完成工作 -->
       <el-divider content-position="left">已完成工作</el-divider>
-      <el-table :data="formData.workItems" border>
-        <el-table-column type="index" label="序号" width="60" align="center" />
-        <el-table-column label="工作内容" min-width="460">
+      <el-table
+        :data="formData.workItems"
+        border
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="60"
+          align="center"
+        />
+        <el-table-column
+          label="工作内容"
+          min-width="460"
+        >
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.content"
@@ -124,17 +180,34 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="完成进度" width="260">
+        <el-table-column
+          label="完成进度"
+          width="260"
+        >
           <template slot-scope="scope">
             <div class="progress-cell">
-              <el-slider v-if="!readonly" v-model="scope.row.progress" :step="10" class="progress-slider" />
+              <el-slider
+                v-if="!readonly"
+                v-model="scope.row.progress"
+                :step="10"
+                class="progress-slider"
+              />
               <span class="progress-text">{{ scope.row.progress }}%</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column v-if="!readonly" label="操作" width="80" align="center">
+        <el-table-column
+          v-if="!readonly"
+          label="操作"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
-            <el-button type="text" class="danger-text" @click="removeWorkItem(scope.$index)">删除</el-button>
+            <el-button
+              type="text"
+              class="danger-text"
+              @click="removeWorkItem(scope.$index)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -150,9 +223,20 @@
 
       <!-- 工作计划 -->
       <el-divider content-position="left">工作计划</el-divider>
-      <el-table :data="formData.planItems" border>
-        <el-table-column type="index" label="序号" width="60" align="center" />
-        <el-table-column label="计划内容" min-width="720">
+      <el-table
+        :data="formData.planItems"
+        border
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="60"
+          align="center"
+        />
+        <el-table-column
+          label="计划内容"
+          min-width="720"
+        >
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.content"
@@ -161,9 +245,18 @@
             />
           </template>
         </el-table-column>
-        <el-table-column v-if="!readonly" label="操作" width="80" align="center">
+        <el-table-column
+          v-if="!readonly"
+          label="操作"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
-            <el-button type="text" class="danger-text" @click="removePlanItem(scope.$index)">删除</el-button>
+            <el-button
+              type="text"
+              class="danger-text"
+              @click="removePlanItem(scope.$index)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -177,19 +270,27 @@
         @click="addPlanItem"
       >新增计划项</el-button>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button v-if="!readonly" type="primary" :loading="formLoading" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        v-if="!readonly"
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >
         保 存
       </el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import * as WorkReportApi from '@/api/oa/workreport'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UploadFile from '@/components/UploadFile'
 import { OA_WORK_REPORT_TYPE } from '@/views/oa/utils/constants-collab'
 import {
@@ -217,7 +318,7 @@ function createDefaultFormData(reportType) {
 
 export default {
   name: 'OaWorkReportForm',
-  components: { Dialog, UploadFile },
+  components: { AppDialog, UploadFile },
   data() {
     return {
       OA_WORK_REPORT_TYPE,

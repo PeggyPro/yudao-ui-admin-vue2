@@ -1,15 +1,33 @@
 <template>
   <div class="menu-list">
-    <div v-for="(item, index) in property.list" :key="index" class="menu-list-item">
+    <div
+      v-for="(item, index) in property.list"
+      :key="index"
+      class="menu-list-item"
+    >
       <div class="menu-list-main">
-        <el-image v-if="item.iconUrl" class="menu-list-icon" :src="item.iconUrl" />
-        <span class="menu-list-title" :style="{ color: item.titleColor }">{{ item.title }}</span>
+        <el-image
+          v-if="item.iconUrl"
+          class="menu-list-icon"
+          :src="item.iconUrl"
+        />
+        <span
+          class="menu-list-title"
+          :style="{ color: item.titleColor }"
+        >{{ item.title }}</span>
       </div>
       <div class="menu-list-aside">
-        <span class="menu-list-subtitle" :style="{ color: item.subtitleColor }">
+        <span
+          class="menu-list-subtitle"
+          :style="{ color: item.subtitleColor }"
+        >
           {{ item.subtitle }}
         </span>
-        <svg-icon icon-class="ep:arrow-right" color="#000" :size="16" />
+        <svg-icon
+          icon-class="ep:arrow-right"
+          color="#000"
+          :size="16"
+        />
       </div>
     </div>
   </div>

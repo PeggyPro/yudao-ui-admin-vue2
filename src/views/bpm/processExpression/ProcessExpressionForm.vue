@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     @closed="handleClosed"
   >
     <el-form
@@ -11,10 +11,19 @@
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item label="名字" prop="name">
-        <el-input v-model="form.name" placeholder="请输入名字" />
+      <el-form-item
+        label="名字"
+        prop="name"
+      >
+        <el-input
+          v-model="form.name"
+          placeholder="请输入名字"
+        />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="form.status">
           <el-radio
             v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
@@ -25,7 +34,10 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="表达式" prop="expression">
+      <el-form-item
+        label="表达式"
+        prop="expression"
+      >
         <el-input
           v-model="form.expression"
           type="textarea"
@@ -33,17 +45,28 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitForm"
+      >
         确 定
       </el-button>
-      <el-button :disabled="formLoading" @click="dialogVisible = false">取 消</el-button>
+      <el-button
+        :disabled="formLoading"
+        @click="dialogVisible = false"
+      >取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import {
   createProcessExpression,
   getProcessExpression,
@@ -63,7 +86,7 @@ function createDefaultForm() {
 /** 可复用的 BPM 流程表达式表单。 */
 export default {
   name: 'ProcessExpressionForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

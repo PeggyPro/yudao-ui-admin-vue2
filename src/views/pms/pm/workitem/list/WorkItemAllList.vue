@@ -1,7 +1,12 @@
 <template>
   <div class="work-item-all-list">
     <div class="list-toolbar">
-      <el-form ref="queryFormRef" :inline="true" :model="queryParams" class="query-form">
+      <el-form
+        ref="queryFormRef"
+        :inline="true"
+        :model="queryParams"
+        class="query-form"
+      >
         <el-form-item prop="name">
           <el-input
             v-model="queryParams.name"
@@ -13,10 +18,22 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-popover v-model="showFilterPopover" placement="bottom-start" width="420" trigger="click">
-            <el-button slot="reference" icon="el-icon-plus">高级筛选</el-button>
+          <el-popover
+            v-model="showFilterPopover"
+            placement="bottom-start"
+            width="420"
+            trigger="click"
+          >
+            <el-button
+              slot="reference"
+              icon="el-icon-plus"
+            >高级筛选</el-button>
             <div class="advanced-filter">
-              <el-form-item class="filter-item" label="事项类型" prop="types">
+              <el-form-item
+                class="filter-item"
+                label="事项类型"
+                prop="types"
+              >
                 <el-select
                   v-model="queryParams.types"
                   class="full-width"
@@ -25,20 +42,62 @@
                   multiple
                   placeholder="全部类型"
                 >
-                  <el-option v-if="projectType === PmsProjectType.AGILE" label="需求" :value="PmsWorkItemType.REQUIREMENT" />
-                  <el-option label="任务" :value="PmsWorkItemType.TASK" />
-                  <el-option v-if="projectType === PmsProjectType.AGILE" label="缺陷" :value="PmsWorkItemType.DEFECT" />
+                  <el-option
+                    v-if="projectType === PmsProjectType.AGILE"
+                    label="需求"
+                    :value="PmsWorkItemType.REQUIREMENT"
+                  />
+                  <el-option
+                    label="任务"
+                    :value="PmsWorkItemType.TASK"
+                  />
+                  <el-option
+                    v-if="projectType === PmsProjectType.AGILE"
+                    label="缺陷"
+                    :value="PmsWorkItemType.DEFECT"
+                  />
                 </el-select>
               </el-form-item>
-              <el-form-item class="filter-item" label="状态" prop="statuses">
-                <el-select v-model="queryParams.statuses" class="full-width" clearable collapse-tags multiple placeholder="全部状态">
-                  <el-option label="未开始" :value="PmsWorkItemStatusType.PENDING" />
-                  <el-option label="进行中" :value="PmsWorkItemStatusType.PROCESSING" />
-                  <el-option label="已完成" :value="PmsWorkItemStatusType.COMPLETED" />
+              <el-form-item
+                class="filter-item"
+                label="状态"
+                prop="statuses"
+              >
+                <el-select
+                  v-model="queryParams.statuses"
+                  class="full-width"
+                  clearable
+                  collapse-tags
+                  multiple
+                  placeholder="全部状态"
+                >
+                  <el-option
+                    label="未开始"
+                    :value="PmsWorkItemStatusType.PENDING"
+                  />
+                  <el-option
+                    label="进行中"
+                    :value="PmsWorkItemStatusType.PROCESSING"
+                  />
+                  <el-option
+                    label="已完成"
+                    :value="PmsWorkItemStatusType.COMPLETED"
+                  />
                 </el-select>
               </el-form-item>
-              <el-form-item class="filter-item" label="优先级" prop="priorities">
-                <el-select v-model="queryParams.priorities" class="full-width" clearable collapse-tags multiple placeholder="全部优先级">
+              <el-form-item
+                class="filter-item"
+                label="优先级"
+                prop="priorities"
+              >
+                <el-select
+                  v-model="queryParams.priorities"
+                  class="full-width"
+                  clearable
+                  collapse-tags
+                  multiple
+                  placeholder="全部优先级"
+                >
                   <el-option
                     v-for="option in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_PRIORITY)"
                     :key="option.value"
@@ -75,7 +134,11 @@
                   placeholder="不显示所选迭代"
                 />
               </el-form-item>
-              <el-form-item class="filter-item" label="负责人" prop="assigneeUserIds">
+              <el-form-item
+                class="filter-item"
+                label="负责人"
+                prop="assigneeUserIds"
+              >
                 <ProjectMemberSelect
                   v-model="queryParams.assigneeUserIds"
                   class="full-width"
@@ -84,23 +147,41 @@
                   placeholder="全部负责人"
                 />
               </el-form-item>
-              <el-form-item class="filter-item" label="标签" prop="labelIds">
-                <WorkItemLabelSelect v-model="queryParams.labelIds" class="full-width" placeholder="全部标签" />
+              <el-form-item
+                class="filter-item"
+                label="标签"
+                prop="labelIds"
+              >
+                <WorkItemLabelSelect
+                  v-model="queryParams.labelIds"
+                  class="full-width"
+                  placeholder="全部标签"
+                />
               </el-form-item>
-              <el-form-item v-if="!iterationId" prop="unplannedOnly">
+              <el-form-item
+                v-if="!iterationId"
+                prop="unplannedOnly"
+              >
                 <el-checkbox v-model="queryParams.unplannedOnly">只显示未规划事项</el-checkbox>
               </el-form-item>
             </div>
             <div class="filter-actions">
               <el-button @click="resetQuery">清空</el-button>
               <el-button @click="showFilterPopover = false">取消</el-button>
-              <el-button type="primary" @click="handleAdvancedQuery">确认</el-button>
+              <el-button
+                type="primary"
+                @click="handleAdvancedQuery"
+              >确认</el-button>
             </div>
           </el-popover>
         </el-form-item>
       </el-form>
       <div class="toolbar-actions">
-        <el-dropdown v-if="editable" v-hasPermi="['pms:pm:work-item:create']" @command="openCreateForm">
+        <el-dropdown
+          v-if="editable"
+          v-hasPermi="['pms:pm:work-item:create']"
+          @command="openCreateForm"
+        >
           <el-button type="primary">新建<i class="el-icon-arrow-down el-icon--right" /></el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :command="PmsWorkItemType.REQUIREMENT">新建需求</el-dropdown-item>
@@ -108,32 +189,75 @@
             <el-dropdown-item :command="PmsWorkItemType.DEFECT">新建缺陷</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button v-hasPermi="['pms:pm:work-item:export']" @click="handleExport">导出</el-button>
+        <el-button
+          v-hasPermi="['pms:pm:work-item:export']"
+          @click="handleExport"
+        >导出</el-button>
       </div>
     </div>
 
-    <el-table v-loading="loading" :data="workItemList" show-overflow-tooltip>
-      <el-table-column label="编号" width="90">
+    <el-table
+      v-loading="loading"
+      :data="workItemList"
+      show-overflow-tooltip
+    >
+      <el-table-column
+        label="编号"
+        width="90"
+      >
         <template slot-scope="scope">#{{ scope.row.serialNumber }}</template>
       </el-table-column>
-      <el-table-column label="类型" width="80">
+      <el-table-column
+        label="类型"
+        width="80"
+      >
         <template slot-scope="scope">{{ getWorkItemTypeName(scope.row.type) }}</template>
       </el-table-column>
-      <el-table-column label="标题" min-width="240">
+      <el-table-column
+        label="标题"
+        min-width="240"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="openDetail(scope.row)">{{ scope.row.name }}</el-button>
+          <el-button
+            type="text"
+            @click="openDetail(scope.row)"
+          >{{ scope.row.name }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="statusName" width="120" />
-      <el-table-column label="优先级" width="90">
+      <el-table-column
+        label="状态"
+        prop="statusName"
+        width="120"
+      />
+      <el-table-column
+        label="优先级"
+        width="90"
+      >
         <template slot-scope="scope">{{ getPriorityName(scope.row.priority) }}</template>
       </el-table-column>
-      <el-table-column label="负责人" prop="assigneeUserName" width="110" />
-      <el-table-column label="所属迭代" prop="iterationName" min-width="130" />
-      <el-table-column align="center" label="进度" width="140">
+      <el-table-column
+        label="负责人"
+        prop="assigneeUserName"
+        width="110"
+      />
+      <el-table-column
+        label="所属迭代"
+        prop="iterationName"
+        min-width="130"
+      />
+      <el-table-column
+        align="center"
+        label="进度"
+        width="140"
+      >
         <template slot-scope="scope"><el-progress :percentage="scope.row.progress || 0" /></template>
       </el-table-column>
-      <el-table-column :formatter="dateFormatter" label="截止时间" prop="endTime" width="180" />
+      <el-table-column
+        :formatter="dateFormatter"
+        label="截止时间"
+        prop="endTime"
+        width="180"
+      />
     </el-table>
     <pagination
       v-show="total > 0"
@@ -142,8 +266,14 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getWorkItemList"
     />
-    <WorkItemForm ref="formRef" @success="handleDataChanged" />
-    <WorkItemDetail ref="detailRef" @success="handleDataChanged" />
+    <WorkItemForm
+      ref="formRef"
+      @success="handleDataChanged"
+    />
+    <WorkItemDetail
+      ref="detailRef"
+      @success="handleDataChanged"
+    />
   </div>
 </template>
 

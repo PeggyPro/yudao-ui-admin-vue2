@@ -1,8 +1,20 @@
 <template>
   <div>
-    <el-card shadow="never" class="search-card">
-      <el-form ref="queryForm" :inline="true" :model="queryParams" label-width="68px" @submit.native.prevent>
-        <el-form-item label="员工搜索" prop="search">
+    <el-card
+      shadow="never"
+      class="search-card"
+    >
+      <el-form
+        ref="queryForm"
+        :inline="true"
+        :model="queryParams"
+        label-width="68px"
+        @submit.native.prevent
+      >
+        <el-form-item
+          label="员工搜索"
+          prop="search"
+        >
           <el-input
             v-model="queryParams.search"
             clearable
@@ -12,37 +24,90 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
 
     <el-card shadow="never">
-      <el-table v-loading="loading" :data="list" stripe>
-        <el-table-column label="员工姓名" align="center" prop="name" min-width="120" show-overflow-tooltip>
+      <el-table
+        v-loading="loading"
+        :data="list"
+        stripe
+      >
+        <el-table-column
+          label="员工姓名"
+          align="center"
+          prop="name"
+          min-width="120"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
-            <el-link type="primary" :underline="false" @click="openEmployeeDetail(scope.row.id)">
+            <el-link
+              type="primary"
+              :underline="false"
+              @click="openEmployeeDetail(scope.row.id)"
+            >
               {{ scope.row.name }}
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column label="工号" align="center" prop="jobNumber" min-width="120" show-overflow-tooltip>
+        <el-table-column
+          label="工号"
+          align="center"
+          prop="jobNumber"
+          min-width="120"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">{{ scope.row.jobNumber || '-' }}</template>
         </el-table-column>
-        <el-table-column label="部门" align="center" prop="deptName" min-width="140" show-overflow-tooltip>
+        <el-table-column
+          label="部门"
+          align="center"
+          prop="deptName"
+          min-width="140"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">{{ scope.row.deptName || '-' }}</template>
         </el-table-column>
-        <el-table-column label="岗位" align="center" prop="postName" min-width="140" show-overflow-tooltip>
+        <el-table-column
+          label="岗位"
+          align="center"
+          prop="postName"
+          min-width="140"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">{{ scope.row.postName || '-' }}</template>
         </el-table-column>
-        <el-table-column label="聘用形式" align="center" prop="type" width="110">
+        <el-table-column
+          label="聘用形式"
+          align="center"
+          prop="type"
+          width="110"
+        >
           <template slot-scope="scope">
-            <dict-tag v-if="scope.row.type != null" :type="DICT_TYPE.HRM_EMPLOYEE_TYPE" :value="scope.row.type" />
+            <dict-tag
+              v-if="scope.row.type != null"
+              :type="DICT_TYPE.HRM_EMPLOYEE_TYPE"
+              :value="scope.row.type"
+            />
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="入职时间" align="center" prop="entryTime" width="180" :formatter="dateFormatter" />
+        <el-table-column
+          label="入职时间"
+          align="center"
+          prop="entryTime"
+          width="180"
+          :formatter="dateFormatter"
+        />
       </el-table>
       <pagination
         v-show="total > 0"

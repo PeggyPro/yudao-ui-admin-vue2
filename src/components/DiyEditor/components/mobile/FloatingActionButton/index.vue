@@ -1,25 +1,57 @@
 <template>
   <div class="floating-action-button-root">
-    <div class="fab" :class="property.direction === 'horizontal' ? 'horizontal' : 'vertical'">
+    <div
+      class="fab"
+      :class="property.direction === 'horizontal' ? 'horizontal' : 'vertical'"
+    >
       <template v-if="expanded">
-        <div v-for="(item, index) in property.list" :key="index" class="fab-item" @click="handleActive">
-          <el-image :src="item.imgUrl" fit="contain" class="fab-image">
+        <div
+          v-for="(item, index) in property.list"
+          :key="index"
+          class="fab-item"
+          @click="handleActive"
+        >
+          <el-image
+            :src="item.imgUrl"
+            fit="contain"
+            class="fab-image"
+          >
             <template slot="error">
               <div class="image-error">
-                <svg-icon icon-class="ep:picture" :color="item.textColor" />
+                <svg-icon
+                  icon-class="ep:picture"
+                  :color="item.textColor"
+                />
               </div>
             </template>
           </el-image>
-          <span v-if="property.showText" class="fab-text" :style="{ color: item.textColor }">
+          <span
+            v-if="property.showText"
+            class="fab-text"
+            :style="{ color: item.textColor }"
+          >
             {{ item.text }}
           </span>
         </div>
       </template>
-      <el-button type="primary" size="medium" circle @click="handleToggleFab">
-        <svg-icon icon-class="ep:plus" class-name="fab-icon" :class="{ active: expanded }" />
+      <el-button
+        type="primary"
+        size="medium"
+        circle
+        @click="handleToggleFab"
+      >
+        <svg-icon
+          icon-class="ep:plus"
+          class-name="fab-icon"
+          :class="{ active: expanded }"
+        />
       </el-button>
     </div>
-    <div v-if="expanded" class="modal-bg" @click="handleToggleFab" />
+    <div
+      v-if="expanded"
+      class="modal-bg"
+      @click="handleToggleFab"
+    />
   </div>
 </template>
 

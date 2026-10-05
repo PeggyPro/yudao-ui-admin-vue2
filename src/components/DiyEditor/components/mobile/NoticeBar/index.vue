@@ -3,10 +3,21 @@
     class="notice-bar"
     :style="{ backgroundColor: property.backgroundColor, color: property.textColor }"
   >
-    <el-image :src="property.iconUrl" class="notice-icon" />
+    <el-image
+      :src="property.iconUrl"
+      class="notice-icon"
+    />
     <el-divider direction="vertical" />
-    <el-carousel height="24px" direction="vertical" :autoplay="true" class="notice-carousel">
-      <el-carousel-item v-for="(item, index) in property.contents" :key="index">
+    <el-carousel
+      height="24px"
+      direction="vertical"
+      :autoplay="true"
+      class="notice-carousel"
+    >
+      <el-carousel-item
+        v-for="(item, index) in property.contents"
+        :key="index"
+      >
         <div class="notice-content">{{ item.text }}</div>
       </el-carousel-item>
     </el-carousel>

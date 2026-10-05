@@ -1,7 +1,10 @@
 <!-- FMS 账套切换器：恢复账套缓存、切换当前账套，并加载当前会计期间 -->
 <template>
   <div class="fms-account-set-switch-host">
-    <div v-if="isFmsRoute" class="fms-account-set-switch">
+    <div
+      v-if="isFmsRoute"
+      class="fms-account-set-switch"
+    >
       <i class="el-icon-office-building account-set-icon" />
       <el-select
         v-model="selectedAccountSetId"
@@ -22,13 +25,25 @@
           <div class="account-set-option">
             <span>{{ item.companyName }}</span>
             <span class="account-set-tags">
-              <el-tag v-if="item.defaultStatus" effect="plain" size="mini">默认</el-tag>
-              <el-tag v-if="!item.initialized" effect="plain" size="mini" type="info">未初始化</el-tag>
+              <el-tag
+                v-if="item.defaultStatus"
+                effect="plain"
+                size="mini"
+              >默认</el-tag>
+              <el-tag
+                v-if="!item.initialized"
+                effect="plain"
+                size="mini"
+                type="info"
+              >未初始化</el-tag>
             </span>
           </div>
         </el-option>
       </el-select>
-      <span v-if="currentMonthText" class="current-month-text">{{ currentMonthText }}</span>
+      <span
+        v-if="currentMonthText"
+        class="current-month-text"
+      >{{ currentMonthText }}</span>
     </div>
     <fms-account-set-guide ref="accountSetGuide" />
   </div>

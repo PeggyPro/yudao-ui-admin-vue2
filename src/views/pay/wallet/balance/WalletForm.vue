@@ -1,7 +1,19 @@
 <template>
-  <el-dialog title="钱包余额明细" :visible.sync="dialogVisible" width="800px" append-to-body v-dialogDrag>
-    <wallet-transaction-list v-if="dialogVisible" :wallet-id="walletId" />
-    <div slot="footer" class="dialog-footer">
+  <el-dialog
+    v-dialogDrag
+    title="钱包余额明细"
+    :visible.sync="dialogVisible"
+    width="800px"
+    append-to-body
+  >
+    <wallet-transaction-list
+      v-if="dialogVisible"
+      :wallet-id="walletId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

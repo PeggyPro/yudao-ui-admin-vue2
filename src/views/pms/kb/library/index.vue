@@ -1,6 +1,9 @@
 <template>
   <div class="app-container pms-knowledge-library">
-    <doc-alert title="【PMS】知识库管理" url="https://doc.iocoder.cn/pms/kb/library/" />
+    <doc-alert
+      title="【PMS】知识库管理"
+      url="https://doc.iocoder.cn/pms/kb/library/"
+    />
 
     <!-- 搜索 -->
     <el-form
@@ -10,7 +13,10 @@
       size="small"
       @submit.native.prevent
     >
-      <el-form-item label="知识库名称" prop="name">
+      <el-form-item
+        label="知识库名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           clearable
@@ -20,8 +26,15 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['pms:kb:library:create']"
           type="primary"
@@ -40,7 +53,10 @@
       </el-form-item>
     </el-form>
 
-    <el-tabs v-model="activeGroupId" @tab-click="handleGroupQuery">
+    <el-tabs
+      v-model="activeGroupId"
+      @tab-click="handleGroupQuery"
+    >
       <el-tab-pane
         v-for="group in groupList"
         :key="group.id"
@@ -57,16 +73,29 @@
       border
       stripe
     >
-      <el-table-column label="知识库" min-width="260">
+      <el-table-column
+        label="知识库"
+        min-width="260"
+      >
         <template slot-scope="scope">
           <div class="library-info">
-            <el-image class="library-cover" fit="cover" :src="scope.row.coverUrl">
-              <div slot="error" class="library-cover-placeholder">
+            <el-image
+              class="library-cover"
+              fit="cover"
+              :src="scope.row.coverUrl"
+            >
+              <div
+                slot="error"
+                class="library-cover-placeholder"
+              >
                 <i class="el-icon-notebook-2" />
               </div>
             </el-image>
             <div class="library-text">
-              <el-link type="primary" @click="openDetail(scope.row.id)">
+              <el-link
+                type="primary"
+                @click="openDetail(scope.row.id)"
+              >
                 {{ scope.row.name }}
               </el-link>
               <div class="library-description">{{ scope.row.description || '暂无简介' }}</div>
@@ -74,24 +103,52 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="可见范围" width="100">
+      <el-table-column
+        align="center"
+        label="可见范围"
+        width="100"
+      >
         <template slot-scope="scope">
           <el-tag :type="scope.row.openStatus ? 'success' : 'info'">
             {{ scope.row.openStatus ? '公开' : '私有' }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="成员" prop="memberCount" width="90" />
-      <el-table-column align="center" label="文档数" prop="documentCount" width="90" />
-      <el-table-column align="center" label="文件数" prop="fileCount" width="90" />
-      <el-table-column label="创建人" prop="creatorUserName" width="120" />
+      <el-table-column
+        align="center"
+        label="成员"
+        prop="memberCount"
+        width="90"
+      />
+      <el-table-column
+        align="center"
+        label="文档数"
+        prop="documentCount"
+        width="90"
+      />
+      <el-table-column
+        align="center"
+        label="文件数"
+        prop="fileCount"
+        width="90"
+      />
+      <el-table-column
+        label="创建人"
+        prop="creatorUserName"
+        width="120"
+      />
       <el-table-column
         :formatter="dateFormatter"
         label="创建时间"
         prop="createTime"
         width="180"
       />
-      <el-table-column align="center" fixed="right" label="是否关注" width="100">
+      <el-table-column
+        align="center"
+        fixed="right"
+        label="是否关注"
+        width="100"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.favoriteStatus"
@@ -99,7 +156,12 @@
           />
         </template>
       </el-table-column>
-      <el-table-column align="center" fixed="right" label="操作" width="280">
+      <el-table-column
+        align="center"
+        fixed="right"
+        label="操作"
+        width="280"
+      >
         <template slot-scope="scope">
           <div class="library-actions">
             <el-dropdown
@@ -149,11 +211,20 @@
     />
 
     <!-- 新建或修改知识库 -->
-    <knowledge-library-form ref="form" @success="getList" />
+    <knowledge-library-form
+      ref="form"
+      @success="getList"
+    />
     <!-- 新建知识库分组 -->
-    <knowledge-group-form ref="groupForm" @success="handleGroupsChanged" />
+    <knowledge-group-form
+      ref="groupForm"
+      @success="handleGroupsChanged"
+    />
     <!-- 管理知识库分组 -->
-    <knowledge-group-manage-dialog ref="groupManage" @success="handleGroupsChanged" />
+    <knowledge-group-manage-dialog
+      ref="groupManage"
+      @success="handleGroupsChanged"
+    />
   </div>
 </template>
 

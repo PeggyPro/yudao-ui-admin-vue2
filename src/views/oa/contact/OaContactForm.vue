@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="760px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="760px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -10,13 +14,23 @@
       <!-- 基础信息 -->
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="姓名" prop="name">
-            <el-input v-model.trim="formData.name" placeholder="请输入姓名" maxlength="50" />
+          <el-form-item
+            label="姓名"
+            prop="name"
+          >
+            <el-input
+              v-model.trim="formData.name"
+              placeholder="请输入姓名"
+              maxlength="50"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="分类名称">
-            <oa-contact-category-select v-model="formData.categoryId" style="width: 100%" />
+            <oa-contact-category-select
+              v-model="formData.categoryId"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -32,29 +46,55 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model.trim="formData.mobile" placeholder="请输入手机号码" maxlength="20" />
+          <el-form-item
+            label="手机号码"
+            prop="mobile"
+          >
+            <el-input
+              v-model.trim="formData.mobile"
+              placeholder="请输入手机号码"
+              maxlength="20"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model.trim="formData.email" placeholder="请输入邮箱" maxlength="100" />
+          <el-form-item
+            label="邮箱"
+            prop="email"
+          >
+            <el-input
+              v-model.trim="formData.email"
+              placeholder="请输入邮箱"
+              maxlength="100"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="公司电话">
-            <el-input v-model.trim="formData.companyPhone" placeholder="请输入公司电话" maxlength="30" />
+            <el-input
+              v-model.trim="formData.companyPhone"
+              placeholder="请输入公司电话"
+              maxlength="30"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <!-- 扩展信息 -->
       <el-form-item label="公司名称">
-        <el-input v-model.trim="formData.companyName" placeholder="请输入公司名称" maxlength="100" />
+        <el-input
+          v-model.trim="formData.companyName"
+          placeholder="请输入公司名称"
+          maxlength="100"
+        />
       </el-form-item>
       <el-form-item label="联系地址">
-        <el-input v-model.trim="formData.address" placeholder="请输入联系地址" maxlength="255" />
+        <el-input
+          v-model.trim="formData.address"
+          placeholder="请输入联系地址"
+          maxlength="255"
+        />
       </el-form-item>
       <el-form-item label="头像">
         <UploadImg v-model="formData.avatar" />
@@ -70,15 +110,22 @@
       </el-form-item>
     </el-form>
     <!-- 表单操作 -->
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UploadImg from '@/components/UploadImg'
 import * as ContactApi from '@/api/oa/contact'
 import OaContactCategorySelect from './components/OaContactCategorySelect.vue'
@@ -100,7 +147,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaContactForm',
-  components: { Dialog, UploadImg, OaContactCategorySelect },
+  components: { AppDialog, UploadImg, OaContactCategorySelect },
   data() {
     return {
       dialogVisible: false, // 弹窗的是否展示

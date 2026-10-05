@@ -1,14 +1,56 @@
 <!-- MES 设备弹窗选择器 -->
 <template>
-  <el-dialog title="设备选择" :visible.sync="dialogVisible" width="80%" append-to-body>
+  <el-dialog
+    title="设备选择"
+    :visible.sync="dialogVisible"
+    width="80%"
+    append-to-body
+  >
     <el-row :gutter="20">
-      <el-col :span="4" :xs="24"><machinery-type-tree @node-click="handleTypeNodeClick" /></el-col>
-      <el-col :span="20" :xs="24">
-        <el-form :inline="true" :model="queryParams" label-width="85px" size="small" @submit.native.prevent>
-          <el-form-item label="设备编码"><el-input v-model="queryParams.code" placeholder="请输入设备编码" clearable @keyup.enter.native="handleQuery" /></el-form-item>
-          <el-form-item label="设备名称"><el-input v-model="queryParams.name" placeholder="请输入设备名称" clearable @keyup.enter.native="handleQuery" /></el-form-item>
-          <el-form-item label="所属车间"><el-select v-model="queryParams.workshopId" placeholder="请选择所属车间" clearable><el-option v-for="item in workshopList" :key="item.id" :label="item.name" :value="item.id" /></el-select></el-form-item>
-          <el-form-item><el-button icon="el-icon-search" @click="handleQuery">搜索</el-button><el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button></el-form-item>
+      <el-col
+        :span="4"
+        :xs="24"
+      ><machinery-type-tree @node-click="handleTypeNodeClick" /></el-col>
+      <el-col
+        :span="20"
+        :xs="24"
+      >
+        <el-form
+          :inline="true"
+          :model="queryParams"
+          label-width="85px"
+          size="small"
+          @submit.native.prevent
+        >
+          <el-form-item label="设备编码"><el-input
+            v-model="queryParams.code"
+            placeholder="请输入设备编码"
+            clearable
+            @keyup.enter.native="handleQuery"
+          /></el-form-item>
+          <el-form-item label="设备名称"><el-input
+            v-model="queryParams.name"
+            placeholder="请输入设备名称"
+            clearable
+            @keyup.enter.native="handleQuery"
+          /></el-form-item>
+          <el-form-item label="所属车间"><el-select
+            v-model="queryParams.workshopId"
+            placeholder="请选择所属车间"
+            clearable
+          ><el-option
+            v-for="item in workshopList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          /></el-select></el-form-item>
+          <el-form-item><el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button><el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button></el-form-item>
         </el-form>
         <el-table
           ref="table"
@@ -22,20 +64,82 @@
           @row-click="handleRowClick"
           @row-dblclick="handleRowDblClick"
         >
-          <el-table-column v-if="multiple" type="selection" :reserve-selection="true" width="50" align="center" />
-          <el-table-column v-else width="50" align="center"><template v-slot="scope"><el-radio v-model="selectedRadioId" :label="scope.row.id" class="radio-no-label" @change="handleRadioChange(scope.row)" /></template></el-table-column>
-          <el-table-column label="设备编码" align="center" prop="code" width="120" />
-          <el-table-column label="设备名称" align="left" prop="name" min-width="120" />
-          <el-table-column label="品牌" align="left" prop="brand" min-width="120" />
-          <el-table-column label="规格型号" align="left" prop="specification" min-width="120" />
-          <el-table-column label="所属车间" align="center" prop="workshopName" width="120" />
-          <el-table-column label="设备状态" align="center" prop="status" width="100"><template v-slot="scope"><dict-tag :type="MES_DV_MACHINERY_STATUS" :value="scope.row.status" /></template></el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="160"><template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
+          <el-table-column
+            v-if="multiple"
+            type="selection"
+            :reserve-selection="true"
+            width="50"
+            align="center"
+          />
+          <el-table-column
+            v-else
+            width="50"
+            align="center"
+          ><template slot-scope="scope"><el-radio
+            v-model="selectedRadioId"
+            :label="scope.row.id"
+            class="radio-no-label"
+            @change="handleRadioChange(scope.row)"
+          /></template></el-table-column>
+          <el-table-column
+            label="设备编码"
+            align="center"
+            prop="code"
+            width="120"
+          />
+          <el-table-column
+            label="设备名称"
+            align="left"
+            prop="name"
+            min-width="120"
+          />
+          <el-table-column
+            label="品牌"
+            align="left"
+            prop="brand"
+            min-width="120"
+          />
+          <el-table-column
+            label="规格型号"
+            align="left"
+            prop="specification"
+            min-width="120"
+          />
+          <el-table-column
+            label="所属车间"
+            align="center"
+            prop="workshopName"
+            width="120"
+          />
+          <el-table-column
+            label="设备状态"
+            align="center"
+            prop="status"
+            width="100"
+          ><template slot-scope="scope"><dict-tag
+            :type="MES_DV_MACHINERY_STATUS"
+            :value="scope.row.status"
+          /></template></el-table-column>
+          <el-table-column
+            label="创建时间"
+            align="center"
+            prop="createTime"
+            width="160"
+          ><template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
         </el-table>
-        <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+        <pagination
+          v-show="total > 0"
+          :total="total"
+          :page.sync="queryParams.pageNo"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
       </el-col>
     </el-row>
-    <span slot="footer"><el-button type="primary" @click="confirmSelect">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
+    <span slot="footer"><el-button
+      type="primary"
+      @click="confirmSelect"
+    >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
   </el-dialog>
 </template>
 

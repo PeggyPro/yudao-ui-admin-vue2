@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     好友选择面板：用于「新建群聊 / 邀请好友 / 推荐时创建聊天」等好友选择场景
     - 左：搜索 + 好友列表（圆形勾选）
     - 右：已选数标题 + 已选好友列表（按点击顺序）
@@ -13,7 +13,11 @@
     >
       <!-- 搜索框 -->
       <div class="flex-shrink-0 px-3 py-2">
-        <el-input v-model="keyword" placeholder="搜索好友" clearable>
+        <el-input
+          v-model="keyword"
+          placeholder="搜索好友"
+          clearable
+        >
           <template #prefix>
             <Icon icon="ant-design:search-outlined" />
           </template>
@@ -21,7 +25,12 @@
       </div>
 
       <div class="flex-1 min-h-0">
-        <PagedScroller v-if="filtered.length > 0" :items="filtered" :page-size="30" item-key="id">
+        <PagedScroller
+          v-if="filtered.length > 0"
+          :items="filtered"
+          :page-size="30"
+          item-key="id"
+        >
           <template #default="{ item }">
             <div
               :key="(item).id"
@@ -59,7 +68,10 @@
             </div>
           </template>
         </PagedScroller>
-        <div v-else class="py-10 text-13px text-center text-[var(--el-text-color-disabled)]">
+        <div
+          v-else
+          class="py-10 text-13px text-center text-[var(--el-text-color-disabled)]"
+        >
           {{ keyword ? '没有匹配的好友' : '暂无好友' }}
         </div>
       </div>
@@ -115,21 +127,21 @@
         v-if="$slots.footer"
         class="flex-shrink-0 border-t border-t-solid border-[var(--el-border-color-lighter)]"
       >
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import UserAvatar from '../user/UserAvatar.vue';
-import PagedScroller from '../PagedScroller.vue';
-import { useFriendBuckets } from '../../composables/useFriendBuckets';
-import { useSelectedItems } from '../../composables/useSelectedItems';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import UserAvatar from '../user/UserAvatar.vue'
+import PagedScroller from '../PagedScroller.vue'
+import { useFriendBuckets } from '../../composables/useFriendBuckets'
+import { useSelectedItems } from '../../composables/useSelectedItems'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImFriendPickerPanel'
   },
@@ -169,89 +181,89 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       default: 0
     }
   },
-  emits: ["update:selectedIds"],
+  emits: ['update:selectedIds'],
   setup(__props, {
     expose: __expose,
     emit: __emit
   }) {
-    __expose();
-    const props = __props;
-    const emit = __emit;
-    const message = useMessage();
-    const keyword = ref('');
+    __expose()
+    const props = __props
+    const emit = __emit
+    const message = useMessage()
+    const keyword = ref('')
 
     /** id → friend 映射，已选反查 / 三态判定共用，避免每次 O(N) 扫 */
     const byId = computed(() => {
-      const map = new Map();
+      const map = new Map()
       for (const friend of props.friends) {
-        map.set(friend.id, friend);
+        map.set(friend.id, friend)
       }
-      return map;
-    });
+      return map
+    })
 
     /** 三态 id 集合：每次过滤复用 */
-    const hideSet = computed(() => new Set(props.hideIds));
-    const lockedSet = computed(() => new Set(props.lockedIds));
-    const disabledSet = computed(() => new Set(props.disabledIds));
-    const selectedSet = computed(() => new Set(props.selectedIds));
+    const hideSet = computed(() => new Set(props.hideIds))
+    const lockedSet = computed(() => new Set(props.lockedIds))
+    const disabledSet = computed(() => new Set(props.disabledIds))
+    const selectedSet = computed(() => new Set(props.selectedIds))
 
     /** 候选好友：剔除 hideIds（hide 优先级最高） */
-    const candidates = computed(() => props.friends.filter(friend => !hideSet.value.has(friend.id)));
+    const candidates = computed(() => props.friends.filter(friend => !hideSet.value.has(friend.id)))
 
     /** 委托 useFriendBuckets：搜索规则复用，左侧列表按滚动分页渲染 */
     const {
       filtered
-    } = useFriendBuckets(candidates, keyword);
+    } = useFriendBuckets(candidates, keyword)
 
     /** 已选数 + 已选好友列表：三态优先级 + 顺序拼接由 useSelectedItems 统一承担 */
     const {
       selectedCount,
       selectedItems: selectedFriends
-    } = useSelectedItems(() => props.selectedIds, () => props.lockedIds, () => props.disabledIds, () => props.hideIds, byId);
+    } = useSelectedItems(() => props.selectedIds, () => props.lockedIds, () => props.disabledIds, () => props.hideIds, byId)
 
     /** 是否被锁定 */
     function isLocked(friend) {
-      return lockedSet.value.has(friend.id);
+      return lockedSet.value.has(friend.id)
     }
 
     /** 是否被禁用：locked / hide 已被前置过滤，剩下的才算 disabled */
     function isDisabled(friend) {
-      return !lockedSet.value.has(friend.id) && disabledSet.value.has(friend.id);
+      return !lockedSet.value.has(friend.id) && disabledSet.value.has(friend.id)
     }
 
     /** 是否选中：locked 视为永远选中 */
     function isSelected(friend) {
-      return selectedSet.value.has(friend.id);
+      return selectedSet.value.has(friend.id)
     }
 
     /** 圆形勾选指示器的 class：选中 / 锁定走绿底，禁用灰底，未选空心圆 */
     function getCheckClass(friend) {
       if (isLocked(friend) || isSelected(friend)) {
-        return 'bg-[#07c160] border border-solid border-[#07c160]';
+        return 'bg-[#07c160] border border-solid border-[#07c160]'
       }
       if (isDisabled(friend)) {
-        return 'bg-[var(--el-fill-color)] border border-solid border-[var(--el-border-color)]';
+        return 'bg-[var(--el-fill-color)] border border-solid border-[var(--el-border-color)]'
       }
-      return 'border border-solid border-[var(--el-border-color)] bg-[var(--el-bg-color)]';
+      return 'border border-solid border-[var(--el-border-color)] bg-[var(--el-bg-color)]'
     }
 
     /** 切换选中态：locked / disabled 不响应；右栏 × 移除 / 行 click 都走这里 */
     function handleToggle(friend) {
       if (isLocked(friend) || isDisabled(friend)) {
-        return;
+        return
       }
-      const next = [...props.selectedIds];
-      const index = next.indexOf(friend.id);
+      const next = [...props.selectedIds]
+      const index = next.indexOf(friend.id)
       if (index >= 0) {
-        next.splice(index, 1);
+        next.splice(index, 1)
       } else {
         if (props.maxSize > 0 && selectedCount.value >= props.maxSize) {
-          message.error(`最多选择 ${props.maxSize} 位好友`);
-          return;
+          message.error(`最多选择 ${props.maxSize} 位好友`)
+          return
         }
-        next.push(friend.id);
+        next.push(friend.id)
       }
-      emit('update:selectedIds', next);
+      emit('update:selectedIds', next)
     }
     const __returned__ = {
       props,
@@ -275,13 +287,13 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       Icon,
       UserAvatar,
       PagedScroller
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>

@@ -1,4 +1,4 @@
- /**
+/**
  * 操作权限处理
  * Copyright (c) 2019 ruoyi
  */
@@ -7,7 +7,7 @@ import store from '@/store'
 export default {
   inserted(el, binding, vnode) {
     const { value } = binding
-    const all_permission = "*:*:*"; // 全部权限
+    const all_permission = '*:*:*' // 全部权限
     const permissions = store.getters && store.getters.permissions // 用户拥有的权限标识的数组
 
     if (value && value instanceof Array && value.length > 0) {

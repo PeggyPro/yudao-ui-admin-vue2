@@ -82,7 +82,7 @@
       align="center"
       prop="code"
       min-width="120"
-    ><template v-slot="scope"><el-link
+    ><template slot-scope="scope"><el-link
       type="primary"
       @click="openForm('detail', scope.row.id)"
     >{{ scope.row.code }}</el-link></template></el-table-column><el-table-column
@@ -110,7 +110,7 @@
       align="center"
       prop="status"
       min-width="100"
-    ><template v-slot="scope"><dict-tag
+    ><template slot-scope="scope"><dict-tag
       :type="DICT_TYPE.COMMON_STATUS"
       :value="scope.row.status"
     /></template></el-table-column><el-table-column
@@ -118,11 +118,11 @@
       align="center"
       prop="createTime"
       width="180"
-    ><template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column><el-table-column
+    ><template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column><el-table-column
       label="操作"
       align="center"
       width="190"
-    ><template v-slot="scope"><el-button
+    ><template slot-scope="scope"><el-button
       v-hasPermi="['mes:md-workstation:update']"
       type="text"
       @click="openForm('update', scope.row.id)"

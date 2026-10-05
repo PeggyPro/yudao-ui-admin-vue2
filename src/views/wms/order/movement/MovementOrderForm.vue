@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="title"
+  <AppDialog
     v-model="visible"
+    :title="title"
     width="1280px"
     append-to-body
   >
@@ -172,7 +172,7 @@
       :loading="loading"
       @click="submitForm"
     >保 存</el-button><el-button @click="visible = false">取 消</el-button></span></span>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -194,11 +194,11 @@ import {
 import { generateOrderNo } from '@/views/wms/utils/order'
 import WarehouseSelect from '@/views/wms/md/warehouse/components/WarehouseSelect.vue'
 import InventorySelect from './components/InventorySelect.vue'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 export default {
   name: 'WmsMovementOrderForm',
-  components: { Dialog, WarehouseSelect, InventorySelect },
+  components: { AppDialog, WarehouseSelect, InventorySelect },
   data() {
     return {
       visible: false,

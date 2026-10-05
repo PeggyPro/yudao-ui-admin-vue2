@@ -1,17 +1,35 @@
 <template>
   <div class="work-item-subtask-list">
-    <el-divider v-if="showTitle" content-position="left">子工作项</el-divider>
-    <div v-if="editable" class="subtask-create">
+    <el-divider
+      v-if="showTitle"
+      content-position="left"
+    >子工作项</el-divider>
+    <div
+      v-if="editable"
+      class="subtask-create"
+    >
       <el-input
         v-model="newSubtaskName"
         maxlength="100"
         placeholder="输入子工作项标题，按回车保存"
         @keyup.enter.native="handleCreate"
       />
-      <el-button :loading="creating" type="primary" @click="handleCreate">添加</el-button>
+      <el-button
+        :loading="creating"
+        type="primary"
+        @click="handleCreate"
+      >添加</el-button>
     </div>
-    <el-table v-loading="loading" :data="subtaskList" size="small">
-      <el-table-column align="center" label="完成" width="64">
+    <el-table
+      v-loading="loading"
+      :data="subtaskList"
+      size="small"
+    >
+      <el-table-column
+        align="center"
+        label="完成"
+        width="64"
+      >
         <template slot-scope="scope">
           <el-checkbox
             :disabled="!editable || statusSavingId === scope.row.id"
@@ -20,33 +38,65 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="标题" min-width="240">
+      <el-table-column
+        label="标题"
+        min-width="240"
+      >
         <template slot-scope="scope">
-          <div v-if="editingId === scope.row.id" class="subtask-edit">
+          <div
+            v-if="editingId === scope.row.id"
+            class="subtask-edit"
+          >
             <el-input
               v-model="editingName"
               maxlength="100"
               size="small"
               @keyup.enter.native="handleRename(scope.row)"
             />
-            <el-button type="text" @click="handleRename(scope.row)">保存</el-button>
-            <el-button type="text" @click="editingId = undefined">取消</el-button>
+            <el-button
+              type="text"
+              @click="handleRename(scope.row)"
+            >保存</el-button>
+            <el-button
+              type="text"
+              @click="editingId = undefined"
+            >取消</el-button>
           </div>
           <span v-else>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="statusName" width="120" />
-      <el-table-column label="负责人" prop="assigneeUserName" width="110" />
-      <el-table-column v-if="editable" align="center" label="操作" width="120">
+      <el-table-column
+        label="状态"
+        prop="statusName"
+        width="120"
+      />
+      <el-table-column
+        label="负责人"
+        prop="assigneeUserName"
+        width="110"
+      />
+      <el-table-column
+        v-if="editable"
+        align="center"
+        label="操作"
+        width="120"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="startRename(scope.row)">改名</el-button>
+          <el-button
+            type="text"
+            @click="startRename(scope.row)"
+          >改名</el-button>
           <el-popconfirm
             cancel-button-text="取消"
             confirm-button-text="确定"
             :title="`确认删除子工作项“${scope.row.name}”吗？删除后可在回收站恢复。`"
             @confirm="handleRecycle(scope.row)"
           >
-            <el-button slot="reference" class="subtask-delete" type="text">删除</el-button>
+            <el-button
+              slot="reference"
+              class="subtask-delete"
+              type="text"
+            >删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>

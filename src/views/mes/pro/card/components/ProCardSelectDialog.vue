@@ -11,18 +11,30 @@
      label-width="100px"
      size="small"
      @submit.native.prevent
-   ><el-form-item label="流转卡编号" prop="code"><el-input
+   ><el-form-item
+     label="流转卡编号"
+     prop="code"
+   ><el-input
      v-model="queryParams.code"
      placeholder="请输入流转卡编号"
      clearable
      @keyup.enter.native="handleQuery"
-   /></el-form-item><el-form-item label="生产工单" prop="workOrderId"><pro-work-order-select
+   /></el-form-item><el-form-item
+     label="生产工单"
+     prop="workOrderId"
+   ><pro-work-order-select
      v-model="queryParams.workOrderId"
      placeholder="请选择工单"
-   /></el-form-item><el-form-item label="产品物料" prop="itemId"><md-item-select
+   /></el-form-item><el-form-item
+     label="产品物料"
+     prop="itemId"
+   ><md-item-select
      v-model="queryParams.itemId"
      placeholder="请选择产品物料"
-   /></el-form-item><el-form-item label="批次号" prop="batchCode"><el-input
+   /></el-form-item><el-form-item
+     label="批次号"
+     prop="batchCode"
+   ><el-input
      v-model="queryParams.batchCode"
      placeholder="请输入批次号"
      clearable

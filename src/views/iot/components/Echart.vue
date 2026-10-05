@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import '@/views/iot/styles/vue2.css';
+import '@/views/iot/styles/vue2.css'
 import * as echarts from 'echarts'
 
 export default {

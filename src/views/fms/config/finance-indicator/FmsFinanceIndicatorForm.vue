@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="620px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="620px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,10 +11,20 @@
       :rules="formRules"
       label-width="90px"
     >
-      <el-form-item label="指标名称" prop="name">
-        <el-input v-model="formData.name" maxlength="100" placeholder="请输入指标名称" />
+      <el-form-item
+        label="指标名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="100"
+          placeholder="请输入指标名称"
+        />
       </el-form-item>
-      <el-form-item label="指标编码" prop="code">
+      <el-form-item
+        label="指标编码"
+        prop="code"
+      >
         <el-input
           v-model="formData.code"
           :disabled="formType === 'update'"
@@ -18,8 +32,15 @@
           placeholder="请输入指标编码"
         />
       </el-form-item>
-      <el-form-item label="取数报表" prop="type">
-        <el-select v-model="formData.type" placeholder="请选择取数报表" style="width: 100%">
+      <el-form-item
+        label="取数报表"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          placeholder="请选择取数报表"
+          style="width: 100%"
+        >
           <el-option
             v-for="dict in getIntDictOptions(DICT_TYPE.FMS_FINANCE_INDICATOR_TYPE)"
             :key="dict.value"
@@ -29,9 +50,15 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="formula">
-        <span slot="label" class="formula-label">
+        <span
+          slot="label"
+          class="formula-label"
+        >
           指标公式
-          <el-tooltip content="支持报表行次公式（L1+L2-L3）或报表科目公式 JSON" placement="top">
+          <el-tooltip
+            content="支持报表行次公式（L1+L2-L3）或报表科目公式 JSON"
+            placement="top"
+          >
             <i class="el-icon-question formula-help" />
           </el-tooltip>
         </span>
@@ -44,10 +71,19 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input-number v-model="formData.sort" :min="0" />
+      <el-form-item
+        label="排序"
+        prop="sort"
+      >
+        <el-input-number
+          v-model="formData.sort"
+          :min="0"
+        />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
           <el-radio
             v-for="dict in getIntDictOptions(DICT_TYPE.COMMON_STATUS)"
@@ -57,11 +93,18 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :loading="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :loading="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -69,11 +112,11 @@ import { FmsFinanceIndicatorApi } from '@/api/fms/config/finance-indicator'
 import { CommonStatusEnum } from '@/utils/constants'
 import { DICT_TYPE, getDictDatas } from '@/utils/dict'
 import { FMS_FINANCE_INDICATOR_TYPE } from '@/views/fms/utils/constants'
-import Dialog from '@/components/Dialog/index.vue'
+import AppDialog from '@/components/Dialog/index.vue'
 
 export default {
   name: 'FmsFinanceIndicatorForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       DICT_TYPE,

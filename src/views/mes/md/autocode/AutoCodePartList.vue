@@ -24,7 +24,7 @@
         align="center"
         prop="type"
         width="120"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         :type="DICT_TYPE.MES_MD_AUTO_CODE_PART_TYPE"
         :value="scope.row.type"
       /></template></el-table-column>
@@ -63,7 +63,7 @@
         align="center"
         prop="cycleFlag"
         width="100"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
         :value="scope.row.cycleFlag"
       /></template></el-table-column>
@@ -72,7 +72,7 @@
         align="center"
         prop="cycleMethod"
         width="120"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         v-if="scope.row.cycleFlag"
         :type="DICT_TYPE.MES_MD_AUTO_CODE_CYCLE_METHOD"
         :value="scope.row.cycleMethod"
@@ -88,7 +88,7 @@
         align="center"
         width="150"
         fixed="right"
-      ><template v-slot="scope"><el-button
+      ><template slot-scope="scope"><el-button
         type="text"
         @click="openForm('update', scope.row.id)"
       >编辑</el-button><el-button

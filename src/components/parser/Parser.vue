@@ -1,7 +1,7 @@
 <script>
 import { deepClone } from '@/utils/index'
 import render from '@/components/render/render.js'
-import {getAccessToken} from "@/utils/auth";
+import { getAccessToken } from '@/utils/auth'
 
 const ruleTrigger = {
   'el-input': 'blur',
@@ -35,8 +35,8 @@ const layouts = {
     let child = renderChildren.apply(this, arguments)
     if (scheme.type === 'flex') {
       child = <el-row type={scheme.type} justify={scheme.justify} align={scheme.align}>
-              {child}
-            </el-row>
+        {child}
+      </el-row>
     }
     return (
       <el-col span={scheme.span}>
@@ -72,8 +72,8 @@ function renderFrom(h) {
 
 function formBtns(h) {
   return <el-col>
-    <el-form-item size="large">
-      <el-button type="primary" onClick={this.submitForm}>提交</el-button>
+    <el-form-item size='large'>
+      <el-button type='primary' onClick={this.submitForm}>提交</el-button>
       <el-button onClick={this.resetForm}>重置</el-button>
     </el-form-item>
   </el-col>
@@ -95,12 +95,12 @@ function renderFormItem(h, elementList) {
       // 回显图片
       scheme['file-list'] = (val || []).map(url => ({ name: url, url }))
       // 上传地址 + 请求头
-      scheme.action = process.env.VUE_APP_BASE_API + "/admin-api/infra/file/upload"
-      scheme.headers = { Authorization: "Bearer " + getAccessToken() }
+      scheme.action = process.env.VUE_APP_BASE_API + '/admin-api/infra/file/upload'
+      scheme.headers = { Authorization: 'Bearer ' + getAccessToken() }
       // 注意 on-success 不能绑定箭头函数！！！
-      scheme['on-success'] = function (response, file, fileList) {
+      scheme['on-success'] = function(response, file, fileList) {
         if (response.code !== 0) {
-          return;
+          return
         }
         // 添加到 data 中
         const prev = data[vModel] || []
@@ -112,7 +112,7 @@ function renderFormItem(h, elementList) {
         that.$refs[that.formConf.formRef].validateField(vModel)
       }
       // 注意 on-remove 不能绑定箭头函数！！！
-      scheme['on-remove'] = function (file, fileList) {
+      scheme['on-remove'] = function(file, fileList) {
         // 移除从 data 中
         const prev = data[vModel] || []
         const index = prev.indexOf(file.response.data)

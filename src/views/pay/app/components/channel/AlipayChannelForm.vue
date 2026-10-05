@@ -1,4 +1,7 @@
-<template><legacy-alipay-channel-form ref="inner" @success="$emit('success')" /></template>
+<template><legacy-alipay-channel-form
+  ref="inner"
+  @success="$emit('success')"
+/></template>
 <script>
 import LegacyAlipayChannelForm from '../alipayChannelForm.vue'
 

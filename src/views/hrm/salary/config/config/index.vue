@@ -19,7 +19,10 @@
       >
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="计薪周期开始日" prop="cycleStartDay">
+            <el-form-item
+              label="计薪周期开始日"
+              prop="cycleStartDay"
+            >
               <el-input-number
                 v-model="formData.cycleStartDay"
                 :disabled="initialized"
@@ -41,9 +44,15 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="!initialized" :gutter="20">
+        <el-row
+          v-if="!initialized"
+          :gutter="20"
+        >
           <el-col :span="12">
-            <el-form-item label="薪资启用月份" prop="startYearMonth">
+            <el-form-item
+              label="薪资启用月份"
+              prop="startYearMonth"
+            >
               <el-date-picker
                 v-model="formData.startYearMonth"
                 :disabled="initialized"
@@ -55,7 +64,10 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="对应社保自然月" prop="socialSecurityMonthType">
+        <el-form-item
+          label="对应社保自然月"
+          prop="socialSecurityMonthType"
+        >
           <el-radio-group v-model="formData.socialSecurityMonthType">
             <el-radio
               v-for="item in HrmSalarySocialSecurityMonthTypeOptions"
@@ -72,7 +84,10 @@
             :disabled="loading"
             @click="submitForm"
           >保存</el-button>
-          <el-button icon="el-icon-refresh" @click="loadConfig">重置</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="loadConfig"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>

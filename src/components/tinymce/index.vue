@@ -1,5 +1,8 @@
 <template>
-  <textarea :id="tinymceId" style="visibility: hidden" />
+  <textarea
+    :id="tinymceId"
+    style="visibility: hidden"
+  />
 </template>
 
 <script>

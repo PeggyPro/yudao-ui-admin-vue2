@@ -7,10 +7,17 @@
     <!-- 数据区与图标区分开，窄屏时优先保留数据 -->
     <div class="home-card__main">
       <div class="home-card__title">我的联系人</div>
-      <div v-if="loadError" class="home-card__error" @click.stop="getList">
+      <div
+        v-if="loadError"
+        class="home-card__error"
+        @click.stop="getList"
+      >
         加载失败，点击重试
       </div>
-      <div v-else class="home-card__value">{{ count }}</div>
+      <div
+        v-else
+        class="home-card__value"
+      >{{ count }}</div>
       <div class="home-card__desc">本人持有的联系人</div>
     </div>
     <div class="home-card__icon"><i class="el-icon-postcard" /></div>

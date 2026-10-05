@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="720px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="720px"
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -8,13 +12,23 @@
       label-width="92px"
     >
       <!-- 迭代基本信息 -->
-      <el-form-item label="迭代名称" prop="name">
-        <el-input v-model="formData.name" maxlength="100" placeholder="请输入迭代名称" />
+      <el-form-item
+        label="迭代名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="100"
+          placeholder="请输入迭代名称"
+        />
       </el-form-item>
       <!-- 迭代周期 -->
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="开始时间" prop="startTime">
+          <el-form-item
+            label="开始时间"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               style="width: 100%"
@@ -26,7 +40,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="结束时间" prop="endTime">
+          <el-form-item
+            label="结束时间"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               style="width: 100%"
@@ -38,10 +55,20 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="迭代目标" prop="target">
-        <el-input v-model="formData.target" maxlength="255" placeholder="请输入迭代目标" />
+      <el-form-item
+        label="迭代目标"
+        prop="target"
+      >
+        <el-input
+          v-model="formData.target"
+          maxlength="255"
+          placeholder="请输入迭代目标"
+        />
       </el-form-item>
-      <el-form-item label="负责人" prop="ownerUserId">
+      <el-form-item
+        label="负责人"
+        prop="ownerUserId"
+      >
         <el-select
           v-model="formData.ownerUserId"
           style="width: 100%"
@@ -57,7 +84,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="迭代描述" prop="description">
+      <el-form-item
+        label="迭代描述"
+        prop="description"
+      >
         <el-input
           v-model="formData.description"
           :rows="4"
@@ -69,20 +99,24 @@
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as IterationApi from '@/api/pms/pm/iteration'
 import * as ProjectMemberApi from '@/api/pms/pm/project/member'
 
 export default {
   name: 'PmsIterationForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, dialogTitle: '', formLoading: false, formType: '',

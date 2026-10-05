@@ -1,20 +1,20 @@
 import axios from 'axios'
-import {Message, MessageBox, Notification} from 'element-ui'
+import { Message, MessageBox, Notification } from 'element-ui'
 import store from '@/store'
-import {getAccessToken, getRefreshToken, getTenantId, setToken, getVisitTenantId} from '@/utils/auth'
+import { getAccessToken, getRefreshToken, getTenantId, setToken, getVisitTenantId } from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
-import {getPath, getTenantEnable} from "@/utils/ruoyi";
-import {refreshToken} from "@/api/login";
+import { getPath, getTenantEnable } from '@/utils/ruoyi'
+import { refreshToken } from '@/api/login'
 import { ApiEncrypt } from '@/utils/encrypt'
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
 const ignoreMsgs = [
-  "无效的刷新令牌", // 刷新令牌被删除时，不用提示
-  "刷新令牌已过期" // 使用刷新令牌，刷新获取新的访问令牌时，结果因为过期失败，此时需要忽略。否则，会导致继续 401，无法跳转到登出界面
+  '无效的刷新令牌', // 刷新令牌被删除时，不用提示
+  '刷新令牌已过期' // 使用刷新令牌，刷新获取新的访问令牌时，结果因为过期失败，此时需要忽略。否则，会导致继续 401，无法跳转到登出界面
 ]
 
 // 是否显示重新登录
-export let isRelogin = { show: false };
+export const isRelogin = { show: false }
 // Axios 无感知刷新令牌，参考 https://www.dashingdog.cn/article/11 与 https://segmentfault.com/a/1190000020210980 实现
 // 请求队列
 let requestList = []
@@ -29,7 +29,7 @@ const service = axios.create({
   // 超时
   timeout: 30000,
   // 禁用 Cookie 等信息
-  withCredentials: false,
+  withCredentials: false
 })
 // request拦截器
 service.interceptors.request.use(config => {
@@ -40,9 +40,9 @@ service.interceptors.request.use(config => {
   }
   // 设置租户
   if (getTenantEnable()) {
-    const tenantId = getTenantId();
+    const tenantId = getTenantId()
     if (tenantId) {
-      config.headers['tenant-id'] = tenantId;
+      config.headers['tenant-id'] = tenantId
     }
     // 只有登录时，才设置 visit-tenant-id 访问租户
     const visitTenantId = getVisitTenantId()
@@ -52,25 +52,25 @@ service.interceptors.request.use(config => {
   }
   // get请求映射params参数
   if (config.method === 'get' && config.params) {
-    let url = config.url + '?';
+    let url = config.url + '?'
     for (const propName of Object.keys(config.params)) {
-      const value = config.params[propName];
+      const value = config.params[propName]
       const part = encodeURIComponent(propName) + '='
-      if (value !== null && typeof(value) !== "undefined") {
+      if (value !== null && typeof (value) !== 'undefined') {
         if (typeof value === 'object') {
           for (const key of Object.keys(value)) {
-            let params = propName + '[' + key + ']';
+            const params = propName + '[' + key + ']'
             const subPart = encodeURIComponent(params) + '='
-            url += subPart + encodeURIComponent(value[key]) + "&";
+            url += subPart + encodeURIComponent(value[key]) + '&'
           }
         } else {
-          url += part + encodeURIComponent(value) + "&";
+          url += part + encodeURIComponent(value) + '&'
         }
       }
     }
-    url = url.slice(0, -1);
-    config.params = {};
-    config.url = url;
+    url = url.slice(0, -1)
+    config.params = {}
+    config.url = url
   }
   // 是否 API 加密
   if ((config.headers || {}).isEncrypt) {
@@ -88,8 +88,8 @@ service.interceptors.request.use(config => {
   }
   return config
 }, error => {
-    console.log(error)
-    Promise.reject(error)
+  console.log(error)
+  Promise.reject(error)
 })
 
 // 响应拦截器
@@ -117,14 +117,14 @@ service.interceptors.response.use(async res => {
     try {
       // 解密响应数据
       data = ApiEncrypt.decryptResponse(data)
-      res.data = data;
+      res.data = data
     } catch (error) {
       console.error('响应数据解密失败:', error)
       throw new Error('响应数据解密失败: ' + error.message)
     }
   }
 
-  const code = data.code || 200;
+  const code = data.code || 200
   // 获取错误信息
   const msg = data.msg || errorCode[code] || errorCode['default']
 
@@ -133,10 +133,10 @@ service.interceptors.response.use(async res => {
   } else if (code === 401) {
     // 如果未认证，并且未进行刷新令牌，说明可能是访问令牌过期了
     if (!isRefreshToken) {
-      isRefreshToken = true;
+      isRefreshToken = true
       // 1. 如果获取不到刷新令牌，则只能执行登出操作
       if (!getRefreshToken()) {
-        return handleAuthorized();
+        return handleAuthorized()
       }
       // 2. 进行刷新访问令牌
       try {
@@ -145,11 +145,11 @@ service.interceptors.response.use(async res => {
         setToken(refreshTokenRes.data)
         requestList.forEach(cb => cb())
         return service(res.config)
-      } catch (e) {// 为什么需要 catch 异常呢？刷新失败时，请求因为 Promise.reject 触发异常。
+      } catch (e) { // 为什么需要 catch 异常呢？刷新失败时，请求因为 Promise.reject 触发异常。
         // 2.2 刷新失败，只回放队列的请求
         requestList.forEach(cb => cb())
         // 提示是否要登出。即不回放当前请求！不然会形成递归
-        return handleAuthorized();
+        return handleAuthorized()
       } finally {
         requestList = []
         isRefreshToken = false
@@ -181,11 +181,11 @@ service.interceptors.response.use(async res => {
       type: 'error',
       duration: 0,
       dangerouslyUseHTMLString: true,
-      message: '<div>演示模式，无法进行写操作</div>'
-        + '<div> &nbsp; </div>'
-        + '<div>参考 https://doc.iocoder.cn/ 教程</div>'
-        + '<div> &nbsp; </div>'
-        + '<div>5 分钟搭建本地环境</div>',
+      message: '<div>演示模式，无法进行写操作</div>' +
+        '<div> &nbsp; </div>' +
+        '<div>参考 https://doc.iocoder.cn/ 教程</div>' +
+        '<div> &nbsp; </div>' +
+        '<div>5 分钟搭建本地环境</div>'
     })
     return Promise.reject(new Error(msg))
   } else if (code !== 200) {
@@ -201,28 +201,28 @@ service.interceptors.response.use(async res => {
     return res.data
   }
 }, error => {
-    console.log('err' + error)
-    let {message} = error;
-    if (message === "Network Error") {
-      message = "后端接口连接异常";
-    } else if (message.includes("timeout")) {
-      message = "系统接口请求超时";
-    } else if (message.includes("Request failed with status code")) {
-      message = "系统接口" + message.substr(message.length - 3) + "异常";
-    }
-    Message({
-      message: message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
+  console.log('err' + error)
+  let { message } = error
+  if (message === 'Network Error') {
+    message = '后端接口连接异常'
+  } else if (message.includes('timeout')) {
+    message = '系统接口请求超时'
+  } else if (message.includes('Request failed with status code')) {
+    message = '系统接口' + message.substr(message.length - 3) + '异常'
   }
+  Message({
+    message: message,
+    type: 'error',
+    duration: 5 * 1000
+  })
+  return Promise.reject(error)
+}
 )
 
 export function getBaseHeader() {
   const headers = {
-    'Authorization': "Bearer " + getAccessToken(),
-    'tenant-id': getTenantId(),
+    'Authorization': 'Bearer ' + getAccessToken(),
+    'tenant-id': getTenantId()
   }
   // 如果已登录且存在访问租户ID，添加 visit-tenant-id 请求头
   const visitTenantId = getVisitTenantId()
@@ -235,20 +235,20 @@ export function getBaseHeader() {
 
 function handleAuthorized() {
   if (!isRelogin.show) {
-    isRelogin.show = true;
+    isRelogin.show = true
     MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }
+      confirmButtonText: '重新登录',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }
     ).then(() => {
-      isRelogin.show = false;
+      isRelogin.show = false
       store.dispatch('LogOut').then(() => {
-        location.href = getPath('/index');
+        location.href = getPath('/index')
       })
     }).catch(() => {
-      isRelogin.show = false;
-    });
+      isRelogin.show = false
+    })
   }
   return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
 }

@@ -1,10 +1,23 @@
 <template>
   <div class="app-container oa-work-report">
     <!-- 汇报类型与搜索工作栏 -->
-    <el-tabs v-model="activeType" class="report-tabs" @tab-click="handleTypeChange">
-      <el-tab-pane label="工作日报" :name="String(OA_WORK_REPORT_TYPE.DAILY)" />
-      <el-tab-pane label="工作周报" :name="String(OA_WORK_REPORT_TYPE.WEEKLY)" />
-      <el-tab-pane label="工作月报" :name="String(OA_WORK_REPORT_TYPE.MONTHLY)" />
+    <el-tabs
+      v-model="activeType"
+      class="report-tabs"
+      @tab-click="handleTypeChange"
+    >
+      <el-tab-pane
+        label="工作日报"
+        :name="String(OA_WORK_REPORT_TYPE.DAILY)"
+      />
+      <el-tab-pane
+        label="工作周报"
+        :name="String(OA_WORK_REPORT_TYPE.WEEKLY)"
+      />
+      <el-tab-pane
+        label="工作月报"
+        :name="String(OA_WORK_REPORT_TYPE.MONTHLY)"
+      />
     </el-tabs>
 
     <!-- 搜索工作栏 -->
@@ -17,7 +30,10 @@
       class="query-form"
       @submit.native.prevent
     >
-      <el-form-item label="单据编号" prop="no">
+      <el-form-item
+        label="单据编号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入单据编号"
@@ -26,7 +42,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="汇报状态" prop="status">
+      <el-form-item
+        label="汇报状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择汇报状态"
@@ -41,8 +60,14 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="申请部门" prop="deptId">
-        <dept-select v-model="queryParams.deptId" style="width: 240px" />
+      <el-form-item
+        label="申请部门"
+        prop="deptId"
+      >
+        <dept-select
+          v-model="queryParams.deptId"
+          style="width: 240px"
+        />
       </el-form-item>
       <el-form-item
         v-if="activeType === String(OA_WORK_REPORT_TYPE.WEEKLY)"
@@ -70,7 +95,10 @@
           placeholder="请选择汇报月份"
         />
       </el-form-item>
-      <el-form-item label="开始日期" prop="startTime">
+      <el-form-item
+        label="开始日期"
+        prop="startTime"
+      >
         <el-date-picker
           v-model="queryParams.startTime"
           type="date"
@@ -79,7 +107,10 @@
           placeholder="请选择开始日期"
         />
       </el-form-item>
-      <el-form-item label="结束日期" prop="endTime">
+      <el-form-item
+        label="结束日期"
+        prop="endTime"
+      >
         <el-date-picker
           v-model="queryParams.endTime"
           type="date"
@@ -88,7 +119,10 @@
           placeholder="请选择结束日期"
         />
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           style="width: 240px"
@@ -99,8 +133,15 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:work-report:create']"
           type="primary"
@@ -112,22 +153,51 @@
     </el-form>
 
     <!-- 工作汇报列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="单据编号" prop="no" width="185" show-overflow-tooltip>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="单据编号"
+        prop="no"
+        width="185"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="link-button" @click="openForm('detail', scope.row.id)">
+          <el-button
+            type="text"
+            class="link-button"
+            @click="openForm('detail', scope.row.id)"
+          >
             {{ scope.row.no }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="status" align="center" width="90">
+      <el-table-column
+        label="状态"
+        prop="status"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_WORK_REPORT_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_WORK_REPORT_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="汇报类型" align="center" width="100">
+      <el-table-column
+        label="汇报类型"
+        align="center"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_WORK_REPORT_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_WORK_REPORT_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -137,17 +207,49 @@
         align="center"
         width="120"
       />
-      <el-table-column label="汇报标题" prop="title" min-width="220" show-overflow-tooltip>
+      <el-table-column
+        label="汇报标题"
+        prop="title"
+        min-width="220"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="link-button" @click="openForm('detail', scope.row.id)">
+          <el-button
+            type="text"
+            class="link-button"
+            @click="openForm('detail', scope.row.id)"
+          >
             {{ scope.row.title }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="开始日期" prop="startTime" :formatter="dateFormatter2" align="center" width="120" />
-      <el-table-column label="结束日期" prop="endTime" :formatter="dateFormatter2" align="center" width="120" />
-      <el-table-column label="申请人" prop="userName" align="center" width="120" />
-      <el-table-column label="申请部门" prop="deptName" align="center" width="130" show-overflow-tooltip />
+      <el-table-column
+        label="开始日期"
+        prop="startTime"
+        :formatter="dateFormatter2"
+        align="center"
+        width="120"
+      />
+      <el-table-column
+        label="结束日期"
+        prop="endTime"
+        :formatter="dateFormatter2"
+        align="center"
+        width="120"
+      />
+      <el-table-column
+        label="申请人"
+        prop="userName"
+        align="center"
+        width="120"
+      />
+      <el-table-column
+        label="申请部门"
+        prop="deptName"
+        align="center"
+        width="130"
+        show-overflow-tooltip
+      />
       <el-table-column
         label="创建时间"
         prop="createTime"
@@ -155,7 +257,12 @@
         align="center"
         width="180"
       />
-      <el-table-column label="操作" align="center" width="210" fixed="right">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="210"
+        fixed="right"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:work-report:update']"
@@ -190,7 +297,10 @@
     />
 
     <!-- 工作汇报表单 -->
-    <oa-work-report-form ref="formRef" @success="getList" />
+    <oa-work-report-form
+      ref="formRef"
+      @success="getList"
+    />
   </div>
 </template>
 

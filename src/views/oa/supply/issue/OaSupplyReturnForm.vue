@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="'归还确认 - ' + (item.itemName || '')" v-model="dialogVisible" width="550px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="'归还确认 - ' + (item.itemName || '')"
+    width="550px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,15 +12,29 @@
       label-width="100px"
     >
       <el-form-item label="物品名称">
-        <el-input :value="item.itemName" disabled />
+        <el-input
+          :value="item.itemName"
+          disabled
+        />
       </el-form-item>
       <el-form-item label="实发数量">
-        <el-input-number :value="item.issuedQuantity" disabled style="width: 100%" />
+        <el-input-number
+          :value="item.issuedQuantity"
+          disabled
+          style="width: 100%"
+        />
       </el-form-item>
       <el-form-item label="已归还数量">
-        <el-input-number :value="item.returnedQuantity" disabled style="width: 100%" />
+        <el-input-number
+          :value="item.returnedQuantity"
+          disabled
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="本次归还" prop="quantity">
+      <el-form-item
+        label="本次归还"
+        prop="quantity"
+      >
         <el-input-number
           v-model="formData.quantity"
           placeholder="请输入归还数量"
@@ -26,7 +44,10 @@
           :max="(item.issuedQuantity || 0) - (item.returnedQuantity || 0)"
         />
       </el-form-item>
-      <el-form-item label="归还备注" prop="returnRemark">
+      <el-form-item
+        label="归还备注"
+        prop="returnRemark"
+      >
         <el-input
           v-model="formData.returnRemark"
           placeholder="请输入归还备注"
@@ -36,8 +57,15 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </dialog-component>

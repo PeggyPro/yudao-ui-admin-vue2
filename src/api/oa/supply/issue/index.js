@@ -12,5 +12,5 @@ export function issueSupplyApplyItem(data) {
 
 // 确认归还用品
 export function returnSupplyApplyItem(id, quantity, returnRemark) {
-  return request({ url: '/oa/supply-issue/return', method: 'put', data: { id, quantity, returnRemark } })
+  return request({ url: '/oa/supply-issue/return', method: 'put', data: { id, quantity, returnRemark }})
 }

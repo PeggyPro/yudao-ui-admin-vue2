@@ -1,8 +1,17 @@
 <template>
   <div class="app-container oa-mail-account">
     <!-- 搜索 -->
-    <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px" @submit.native.prevent>
-      <el-form-item label="邮箱地址" prop="mail">
+    <el-form
+      ref="queryForm"
+      :model="queryParams"
+      :inline="true"
+      label-width="68px"
+      @submit.native.prevent
+    >
+      <el-form-item
+        label="邮箱地址"
+        prop="mail"
+      >
         <el-input
           v-model="queryParams.mail"
           placeholder="请输入邮箱地址"
@@ -11,8 +20,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable style="width: 240px">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+          style="width: 240px"
+        >
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -22,8 +39,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:mail-account:create']"
           type="primary"
@@ -37,24 +61,51 @@
     </el-form>
 
     <!-- 我的账号 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="邮箱" prop="mail" min-width="220" />
-      <el-table-column label="邮箱服务" min-width="150">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="邮箱"
+        prop="mail"
+        min-width="220"
+      />
+      <el-table-column
+        label="邮箱服务"
+        min-width="150"
+      >
         <template slot-scope="scope">
           {{ (providers.find(item => item.id === scope.row.providerId) || {}).name }}
         </template>
       </el-table-column>
-      <el-table-column label="默认" width="100">
+      <el-table-column
+        label="默认"
+        width="100"
+      >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.defaultStatus" type="success">默认</el-tag>
+          <el-tag
+            v-if="scope.row.defaultStatus"
+            type="success"
+          >默认</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
+      <el-table-column
+        label="状态"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="300">
+      <el-table-column
+        label="操作"
+        width="300"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:mail-account:update']"
@@ -96,7 +147,10 @@
     </el-table>
 
     <!-- 绑定 / 修改弹窗 -->
-    <mail-account-form ref="form" @success="getList" />
+    <mail-account-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

@@ -10,10 +10,19 @@
       @submit.native.prevent
     >
       <el-form-item label="日程范围">
-        <el-checkbox v-model="queryParams.includeMine" @change="handleQuery">我的日程</el-checkbox>
-        <el-checkbox v-model="queryParams.includeReceived" @change="handleQuery">共享给我</el-checkbox>
+        <el-checkbox
+          v-model="queryParams.includeMine"
+          @change="handleQuery"
+        >我的日程</el-checkbox>
+        <el-checkbox
+          v-model="queryParams.includeReceived"
+          @change="handleQuery"
+        >共享给我</el-checkbox>
       </el-form-item>
-      <el-form-item label="标题" prop="title">
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入日程标题"
@@ -22,7 +31,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="日程类型" prop="type">
+      <el-form-item
+        label="日程类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择日程类型"
@@ -37,7 +49,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="优先级" prop="priority">
+      <el-form-item
+        label="优先级"
+        prop="priority"
+      >
         <el-select
           v-model="queryParams.priority"
           placeholder="请选择优先级"
@@ -53,8 +68,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:schedule:create']"
           type="primary"
@@ -68,12 +90,24 @@
     <!-- 日程日历 -->
     <div class="calendar-toolbar">
       <div class="calendar-toolbar__left">
-        <el-button size="small" @click="changePeriod(-1)">上一{{ viewLabel }}</el-button>
-        <el-button size="small" @click="calendarDate = new Date()">今天</el-button>
-        <el-button size="small" @click="changePeriod(1)">下一{{ viewLabel }}</el-button>
+        <el-button
+          size="small"
+          @click="changePeriod(-1)"
+        >上一{{ viewLabel }}</el-button>
+        <el-button
+          size="small"
+          @click="calendarDate = new Date()"
+        >今天</el-button>
+        <el-button
+          size="small"
+          @click="changePeriod(1)"
+        >下一{{ viewLabel }}</el-button>
         <span class="calendar-title">{{ calendarTitle }}</span>
       </div>
-      <el-radio-group v-model="calendarView" size="small">
+      <el-radio-group
+        v-model="calendarView"
+        size="small"
+      >
         <el-radio-button label="month">月</el-radio-button>
         <el-radio-button label="week">周</el-radio-button>
         <el-radio-button label="day">日</el-radio-button>
@@ -85,8 +119,14 @@
       v-loading="calendarLoading"
       class="oa-schedule-calendar__month"
     >
-      <template slot="dateCell" slot-scope="{ data }">
-        <div class="calendar-cell" @click.stop="handleCalendarDateChange(data.day)">
+      <template
+        slot="dateCell"
+        slot-scope="{ data }"
+      >
+        <div
+          class="calendar-cell"
+          @click.stop="handleCalendarDateChange(data.day)"
+        >
           <div class="calendar-cell__day">{{ data.day.slice(8) }}</div>
           <button
             v-for="schedule in getCalendarDaySchedules(data.day).slice(0, 3)"
@@ -111,7 +151,11 @@
         </div>
       </template>
     </el-calendar>
-    <div v-else v-loading="calendarLoading" class="calendar-week">
+    <div
+      v-else
+      v-loading="calendarLoading"
+      class="calendar-week"
+    >
       <div
         class="calendar-week__grid"
         :style="{ gridTemplateColumns: 'repeat(' + visibleDates.length + ', minmax(140px, 1fr))' }"
@@ -121,7 +165,11 @@
           :key="date"
           class="calendar-week__column"
         >
-          <el-button type="text" class="calendar-week__date" @click="openDay(date)">
+          <el-button
+            type="text"
+            class="calendar-week__date"
+            @click="openDay(date)"
+          >
             {{ dayjs(date).format('MM-DD') }} {{ OA_WEEKDAY_NAMES[dayjs(date).day()] }}
           </el-button>
           <el-empty
@@ -149,9 +197,15 @@
     </div>
 
     <!-- 添加或修改日程对话框 -->
-    <oa-schedule-form ref="formRef" @success="getCalendarList" />
+    <oa-schedule-form
+      ref="formRef"
+      @success="getCalendarList"
+    />
     <!-- 日程详情对话框 -->
-    <oa-schedule-detail ref="detailRef" @edit="openForm('update', $event)" />
+    <oa-schedule-detail
+      ref="detailRef"
+      @edit="openForm('update', $event)"
+    />
   </div>
 </template>
 

@@ -4,7 +4,7 @@
       :src="Picture"
       class="picture-select"
       @click="selectAndUpload"
-    />
+    >
   </div>
 </template>
 

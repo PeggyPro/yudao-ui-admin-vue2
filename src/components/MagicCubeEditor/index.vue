@@ -2,7 +2,10 @@
   <div class="magic-cube-editor">
     <table class="cube-table">
       <tbody>
-        <tr v-for="(rowCubes, row) in cubes" :key="row">
+        <tr
+          v-for="(rowCubes, row) in cubes"
+          :key="row"
+        >
           <td
             v-for="(cube, col) in rowCubes"
             :key="col"

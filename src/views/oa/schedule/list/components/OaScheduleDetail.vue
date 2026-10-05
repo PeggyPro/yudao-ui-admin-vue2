@@ -1,15 +1,29 @@
 <template>
-  <Dialog title="日程详情" v-model="dialogVisible" width="800px">
+  <AppDialog
+    v-model="dialogVisible"
+    title="日程详情"
+    width="800px"
+  >
     <div v-loading="detailLoading">
       <!-- 日程信息 -->
-      <el-descriptions v-if="detail" :column="1" border>
+      <el-descriptions
+        v-if="detail"
+        :column="1"
+        border
+      >
         <el-descriptions-item label="日程标题">{{ detail.title }}</el-descriptions-item>
         <el-descriptions-item label="创建人">{{ detail.creatorName }}</el-descriptions-item>
         <el-descriptions-item label="日程类型">
-          <dict-tag :type="DICT_TYPE.OA_SCHEDULE_TYPE" :value="detail.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_SCHEDULE_TYPE"
+            :value="detail.type"
+          />
         </el-descriptions-item>
         <el-descriptions-item label="优先级">
-          <dict-tag :type="DICT_TYPE.OA_PRIORITY" :value="detail.priority" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PRIORITY"
+            :value="detail.priority"
+          />
         </el-descriptions-item>
         <el-descriptions-item label="开始时间">
           {{ formatDate(detail.startTime) }}
@@ -18,7 +32,10 @@
           {{ formatDate(detail.endTime) }}
         </el-descriptions-item>
         <el-descriptions-item label="日程提醒">
-          <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="detail.remind" />
+          <dict-tag
+            :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+            :value="detail.remind"
+          />
         </el-descriptions-item>
         <el-descriptions-item label="日程描述">
           <div class="description-text">{{ detail.description }}</div>
@@ -26,11 +43,24 @@
       </el-descriptions>
 
       <!-- 参与人阅读情况 -->
-      <div v-if="detail" class="participants">
+      <div
+        v-if="detail"
+        class="participants"
+      >
         <div class="participants-title">参与人阅读情况</div>
-        <el-table :data="detail.participants || []" border>
-          <el-table-column label="参与人" prop="userName" min-width="140" />
-          <el-table-column label="阅读状态" width="100">
+        <el-table
+          :data="detail.participants || []"
+          border
+        >
+          <el-table-column
+            label="参与人"
+            prop="userName"
+            min-width="140"
+          />
+          <el-table-column
+            label="阅读状态"
+            width="100"
+          >
             <template slot-scope="scope">
               <el-tag :type="scope.row.readStatus ? 'success' : 'info'">
                 {{ scope.row.readStatus ? '已读' : '未读' }}
@@ -46,7 +76,10 @@
         </el-table>
       </div>
     </div>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button
         v-if="detail && String(detail.creator) === String($store.getters.userId)"
         v-hasPermi="['oa:schedule:update']"
@@ -56,18 +89,18 @@
       >修 改</el-button>
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as ScheduleApi from '@/api/oa/schedule'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE } from '@/utils/dict'
 import { formatDate, dateFormatter } from '@/utils/formatTime'
 
 export default {
   name: 'OaScheduleDetail',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       DICT_TYPE,

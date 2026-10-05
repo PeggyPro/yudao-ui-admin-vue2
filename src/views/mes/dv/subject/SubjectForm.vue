@@ -1,39 +1,104 @@
 <!-- MES 点检保养项目表单 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="800px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="项目编码" prop="code">
-            <el-input v-model="formData.code" placeholder="请输入项目编码">
-              <el-button slot="append" @click="generateCode">生成</el-button>
+          <el-form-item
+            label="项目编码"
+            prop="code"
+          >
+            <el-input
+              v-model="formData.code"
+              placeholder="请输入项目编码"
+            >
+              <el-button
+                slot="append"
+                @click="generateCode"
+              >生成</el-button>
             </el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12"><el-form-item label="项目名称" prop="name"><el-input v-model="formData.name" placeholder="请输入项目名称" /></el-form-item></el-col>
+        <el-col :span="12"><el-form-item
+          label="项目名称"
+          prop="name"
+        ><el-input
+          v-model="formData.name"
+          placeholder="请输入项目名称"
+        /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="项目类型" prop="type">
+          <el-form-item
+            label="项目类型"
+            prop="type"
+          >
             <el-radio-group v-model="formData.type">
-              <el-radio v-for="dict in subjectTypeOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
+              <el-radio
+                v-for="dict in subjectTypeOptions"
+                :key="dict.value"
+                :label="dict.value"
+              >{{ dict.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="状态" prop="status">
+          <el-form-item
+            label="状态"
+            prop="status"
+          >
             <el-radio-group v-model="formData.status">
-              <el-radio v-for="dict in statusOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio>
+              <el-radio
+                v-for="dict in statusOptions"
+                :key="dict.value"
+                :label="dict.value"
+              >{{ dict.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="项目内容" prop="content"><el-input v-model="formData.content" type="textarea" placeholder="请输入项目内容" /></el-form-item>
-      <el-form-item label="标准" prop="standard"><el-input v-model="formData.standard" type="textarea" placeholder="请输入标准" /></el-form-item>
-      <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+      <el-form-item
+        label="项目内容"
+        prop="content"
+      ><el-input
+        v-model="formData.content"
+        type="textarea"
+        placeholder="请输入项目内容"
+      /></el-form-item>
+      <el-form-item
+        label="标准"
+        prop="standard"
+      ><el-input
+        v-model="formData.standard"
+        type="textarea"
+        placeholder="请输入标准"
+      /></el-form-item>
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
+        v-model="formData.remark"
+        type="textarea"
+        placeholder="请输入备注"
+      /></el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

@@ -1,14 +1,26 @@
 <template>
   <oa-home-panel title="任务完成情况">
     <template slot="actions">
-      <el-button type="text" @click="$router.push('/oa/task/my')">查看任务</el-button>
+      <el-button
+        type="text"
+        @click="$router.push('/oa/task/my')"
+      >查看任务</el-button>
     </template>
 
     <!-- 我的任务状态 -->
-    <div v-loading="loading" class="status-block">
-      <div v-if="loadError" class="load-error">
+    <div
+      v-loading="loading"
+      class="status-block"
+    >
+      <div
+        v-if="loadError"
+        class="load-error"
+      >
         加载失败，
-        <el-button type="text" @click="getList">重新加载</el-button>
+        <el-button
+          type="text"
+          @click="getList"
+        >重新加载</el-button>
       </div>
       <div class="section-title">我的任务</div>
       <div
@@ -17,7 +29,10 @@
         class="status-row"
       >
         <span class="status-label">
-          <dict-tag :type="DICT_TYPE.OA_TASK_STATUS" :value="item.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_TASK_STATUS"
+            :value="item.status"
+          />
         </span>
         <el-progress
           class="status-progress"
@@ -31,13 +46,27 @@
 
     <!-- 任务完成排行独立加载，不等待状态统计 -->
     <div v-loading="rankingLoading">
-      <div v-if="rankingError" class="load-error">
+      <div
+        v-if="rankingError"
+        class="load-error"
+      >
         加载失败，
-        <el-button type="text" @click="getRankingList">重新加载</el-button>
+        <el-button
+          type="text"
+          @click="getRankingList"
+        >重新加载</el-button>
       </div>
       <div class="section-title">任务完成排行（按发布人）</div>
-      <el-empty v-if="taskRankings.length === 0" :image-size="60" description="暂无完成记录" />
-      <oa-home-chart v-else :options="rankingOptions" height="240px" />
+      <el-empty
+        v-if="taskRankings.length === 0"
+        :image-size="60"
+        description="暂无完成记录"
+      />
+      <oa-home-chart
+        v-else
+        :options="rankingOptions"
+        height="240px"
+      />
     </div>
   </oa-home-panel>
 </template>

@@ -7,8 +7,14 @@
       append-to-body
       @close="handleClose"
     >
-      <div ref="container" class="hot-zone-container">
-        <el-image :src="imgUrl" class="hot-zone-image" />
+      <div
+        ref="container"
+        class="hot-zone-container"
+      >
+        <el-image
+          :src="imgUrl"
+          class="hot-zone-image"
+        />
         <div
           v-for="(item, hotZoneIndex) in formData"
           :key="hotZoneIndex"
@@ -39,17 +45,34 @@
         </div>
       </div>
       <div slot="footer">
-        <el-button type="primary" plain @click="handleAdd">
-          <svg-icon icon-class="ep:plus" class-name="button-icon" />
+        <el-button
+          type="primary"
+          plain
+          @click="handleAdd"
+        >
+          <svg-icon
+            icon-class="ep:plus"
+            class-name="button-icon"
+          />
           添加热区
         </el-button>
-        <el-button type="primary" plain @click="handleSubmit">
-          <svg-icon icon-class="ep:check" class-name="button-icon" />
+        <el-button
+          type="primary"
+          plain
+          @click="handleSubmit"
+        >
+          <svg-icon
+            icon-class="ep:check"
+            class-name="button-icon"
+          />
           确定
         </el-button>
       </div>
     </el-dialog>
-    <AppLinkSelectDialog ref="appLinkDialog" @appLinkChange="handleAppLinkChange" />
+    <AppLinkSelectDialog
+      ref="appLinkDialog"
+      @appLinkChange="handleAppLinkChange"
+    />
   </div>
 </template>
 

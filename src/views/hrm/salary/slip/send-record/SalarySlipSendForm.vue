@@ -447,7 +447,9 @@ export default {
         })
         this.$modal.msgSuccess(this.$t('common.createSuccess'))
         await this.loadTemplates(response.data)
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     async handleDeleteTemplate(id) {
       if (!id) return
@@ -456,7 +458,9 @@ export default {
         await deleteSalarySlipTemplate(id)
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.loadTemplates()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     getTemplateOptions() {
       return this.$refs.templateEditor ? this.$refs.templateEditor.getNormalizedOptions() : []

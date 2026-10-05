@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body :title="dialogTitle" width="560px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    :title="dialogTitle"
+    width="560px"
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -7,7 +12,11 @@
       :rules="formRules"
       label-width="88px"
     >
-      <el-form-item v-if="formType === 'create'" label="项目成员" prop="userIds">
+      <el-form-item
+        v-if="formType === 'create'"
+        label="项目成员"
+        prop="userIds"
+      >
         <UserSelectV2
           v-model="formData.userIds"
           :disabled-ids="existingUserIds"
@@ -15,16 +24,29 @@
           placeholder="请选择需要加入项目的用户"
         />
       </el-form-item>
-      <el-form-item v-else label="项目成员">
+      <el-form-item
+        v-else
+        label="项目成员"
+      >
         <div class="flex items-center gap-8px">
-          <el-avatar :size="30" :src="currentMember && currentMember.avatar">
+          <el-avatar
+            :size="30"
+            :src="currentMember && currentMember.avatar"
+          >
             {{ currentMember && currentMember.nickname && currentMember.nickname.slice(0, 1) }}
           </el-avatar>
           <span>{{ currentMember && currentMember.nickname || `用户 #${currentMember && currentMember.userId}` }}</span>
         </div>
       </el-form-item>
-      <el-form-item label="权限级别" prop="level">
-        <el-select v-model="formData.level" style="width: 100%" placeholder="请选择权限级别">
+      <el-form-item
+        label="权限级别"
+        prop="level"
+      >
+        <el-select
+          v-model="formData.level"
+          style="width: 100%"
+          placeholder="请选择权限级别"
+        >
           <el-option
             v-for="option in assignableLevelOptions"
             :key="option.value"
@@ -35,7 +57,11 @@
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
   </el-dialog>

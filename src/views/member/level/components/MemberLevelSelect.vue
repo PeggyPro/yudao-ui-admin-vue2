@@ -7,9 +7,18 @@
     class="member-level-select"
     @input="$emit('input', $event)"
   >
-    <el-option v-for="level in levels" :key="level.id" :label="level.name" :value="level.id">
+    <el-option
+      v-for="level in levels"
+      :key="level.id"
+      :label="level.name"
+      :value="level.id"
+    >
       <span class="level-option">
-        <el-avatar v-if="level.icon" :src="level.icon" :size="24" />
+        <el-avatar
+          v-if="level.icon"
+          :src="level.icon"
+          :size="24"
+        />
         <span>{{ level.name }}</span>
       </span>
     </el-option>

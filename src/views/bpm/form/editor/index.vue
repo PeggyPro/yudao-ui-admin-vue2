@@ -7,7 +7,10 @@
   duplicating the form-create lifecycle.
 -->
 <template>
-  <BpmFormEditorImpl v-bind="$attrs" v-on="$listeners" />
+  <BpmFormEditorImpl
+    v-bind="$attrs"
+    v-on="$listeners"
+  />
 </template>
 
 <script>

@@ -7,7 +7,11 @@
           {{ library && library.description ? library.description : '暂无简介' }}
         </div>
       </div>
-      <el-button class="search-button" type="primary" @click="$emit('search')">
+      <el-button
+        class="search-button"
+        type="primary"
+        @click="$emit('search')"
+      >
         <i class="el-icon-search" />搜索文档
       </el-button>
       <el-dropdown @command="handleMoreCommand">
@@ -21,15 +25,29 @@
             v-hasPermi="['pms:kb:library:update']"
             command="member"
           >成员管理</el-dropdown-item>
-          <el-dropdown-item v-if="library && library.exitStatus" command="exit" divided>
+          <el-dropdown-item
+            v-if="library && library.exitStatus"
+            command="exit"
+            divided
+          >
             退出知识库
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-tabs v-model="activeTab" class="content-tabs" @tab-click="handleTabChange">
-      <el-tab-pane label="全部文档" name="all" />
-      <el-tab-pane label="我关注的" name="favorite" />
+    <el-tabs
+      v-model="activeTab"
+      class="content-tabs"
+      @tab-click="handleTabChange"
+    >
+      <el-tab-pane
+        label="全部文档"
+        name="all"
+      />
+      <el-tab-pane
+        label="我关注的"
+        name="favorite"
+      />
     </el-tabs>
     <div v-loading="favoriteLoading">
       <el-table
@@ -47,7 +65,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="right" width="100">
+        <el-table-column
+          align="right"
+          width="100"
+        >
           <template slot-scope="scope">
             <span class="content-type">{{ getKnowledgeTreeNodeTypeName(scope.row) }}</span>
           </template>

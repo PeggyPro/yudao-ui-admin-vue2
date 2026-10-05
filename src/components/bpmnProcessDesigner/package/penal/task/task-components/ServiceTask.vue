@@ -1,37 +1,97 @@
 <template>
   <div class="service-task-config">
-    <el-form-item label="执行类型" prop="executeType">
-      <el-select v-model="serviceTaskForm.executeType" style="width: 100%" @change="handleExecuteTypeChange">
-        <el-option label="Java 类" value="class" />
-        <el-option label="表达式" value="expression" />
-        <el-option label="代理表达式" value="delegateExpression" />
-        <el-option label="HTTP 调用" value="http" />
+    <el-form-item
+      label="执行类型"
+      prop="executeType"
+    >
+      <el-select
+        v-model="serviceTaskForm.executeType"
+        style="width: 100%"
+        @change="handleExecuteTypeChange"
+      >
+        <el-option
+          label="Java 类"
+          value="class"
+        />
+        <el-option
+          label="表达式"
+          value="expression"
+        />
+        <el-option
+          label="代理表达式"
+          value="delegateExpression"
+        />
+        <el-option
+          label="HTTP 调用"
+          value="http"
+        />
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="serviceTaskForm.executeType === 'class'" label="Java 类" prop="class">
-      <el-input v-model="serviceTaskForm.class" clearable @change="updateElementTask" />
+    <el-form-item
+      v-if="serviceTaskForm.executeType === 'class'"
+      label="Java 类"
+      prop="class"
+    >
+      <el-input
+        v-model="serviceTaskForm.class"
+        clearable
+        @change="updateElementTask"
+      />
     </el-form-item>
-    <el-form-item v-if="serviceTaskForm.executeType === 'expression'" label="表达式" prop="expression">
-      <el-input v-model="serviceTaskForm.expression" clearable @change="updateElementTask" />
+    <el-form-item
+      v-if="serviceTaskForm.executeType === 'expression'"
+      label="表达式"
+      prop="expression"
+    >
+      <el-input
+        v-model="serviceTaskForm.expression"
+        clearable
+        @change="updateElementTask"
+      />
     </el-form-item>
-    <el-form-item v-if="serviceTaskForm.executeType === 'delegateExpression'" label="代理表达式" prop="delegateExpression">
-      <el-input v-model="serviceTaskForm.delegateExpression" clearable @change="updateElementTask" />
+    <el-form-item
+      v-if="serviceTaskForm.executeType === 'delegateExpression'"
+      label="代理表达式"
+      prop="delegateExpression"
+    >
+      <el-input
+        v-model="serviceTaskForm.delegateExpression"
+        clearable
+        @change="updateElementTask"
+      />
     </el-form-item>
 
     <template v-if="serviceTaskForm.executeType === 'http'">
-      <el-form-item label="请求方法" prop="requestMethod">
-        <el-radio-group v-model="httpTaskForm.requestMethod" @change="updateHttpExtensions">
+      <el-form-item
+        label="请求方法"
+        prop="requestMethod"
+      >
+        <el-radio-group
+          v-model="httpTaskForm.requestMethod"
+          @change="updateHttpExtensions"
+        >
           <el-radio-button label="GET">GET</el-radio-button>
           <el-radio-button label="POST">POST</el-radio-button>
           <el-radio-button label="PUT">PUT</el-radio-button>
           <el-radio-button label="DELETE">DELETE</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="请求地址" prop="requestUrl">
-        <el-input v-model="httpTaskForm.requestUrl" clearable placeholder="请输入请求地址" @change="updateHttpExtensions" />
+      <el-form-item
+        label="请求地址"
+        prop="requestUrl"
+      >
+        <el-input
+          v-model="httpTaskForm.requestUrl"
+          clearable
+          placeholder="请输入请求地址"
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
-      <el-form-item label="请求头" prop="requestHeaders">
+      <el-form-item
+        label="请求头"
+        prop="requestHeaders"
+      >
         <div class="http-header-control">
           <el-input
             v-model="httpTaskForm.requestHeaders"
@@ -40,26 +100,68 @@
             readonly
             placeholder="点击右侧编辑按钮添加请求头"
           />
-          <el-button type="primary" icon="el-icon-edit" @click="headerEditorVisible = true">编辑</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            @click="headerEditorVisible = true"
+          >编辑</el-button>
         </div>
       </el-form-item>
-      <el-form-item label="禁止重定向" prop="disallowRedirects">
-        <el-switch v-model="httpTaskForm.disallowRedirects" @change="updateHttpExtensions" />
+      <el-form-item
+        label="禁止重定向"
+        prop="disallowRedirects"
+      >
+        <el-switch
+          v-model="httpTaskForm.disallowRedirects"
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
-      <el-form-item label="忽略异常" prop="ignoreException">
-        <el-switch v-model="httpTaskForm.ignoreException" @change="updateHttpExtensions" />
+      <el-form-item
+        label="忽略异常"
+        prop="ignoreException"
+      >
+        <el-switch
+          v-model="httpTaskForm.ignoreException"
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
-      <el-form-item label="保存返回变量" prop="saveResponseParameters">
-        <el-switch v-model="httpTaskForm.saveResponseParameters" @change="updateHttpExtensions" />
+      <el-form-item
+        label="保存返回变量"
+        prop="saveResponseParameters"
+      >
+        <el-switch
+          v-model="httpTaskForm.saveResponseParameters"
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
-      <el-form-item label="是否瞬间变量" prop="saveResponseParametersTransient">
-        <el-switch v-model="httpTaskForm.saveResponseParametersTransient" @change="updateHttpExtensions" />
+      <el-form-item
+        label="是否瞬间变量"
+        prop="saveResponseParametersTransient"
+      >
+        <el-switch
+          v-model="httpTaskForm.saveResponseParametersTransient"
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
-      <el-form-item label="返回变量前缀" prop="resultVariablePrefix">
-        <el-input v-model="httpTaskForm.resultVariablePrefix" clearable @change="updateHttpExtensions" />
+      <el-form-item
+        label="返回变量前缀"
+        prop="resultVariablePrefix"
+      >
+        <el-input
+          v-model="httpTaskForm.resultVariablePrefix"
+          clearable
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
-      <el-form-item label="保存为 JSON 变量" label-width="120px" prop="saveResponseVariableAsJson">
-        <el-switch v-model="httpTaskForm.saveResponseVariableAsJson" @change="updateHttpExtensions" />
+      <el-form-item
+        label="保存为 JSON 变量"
+        label-width="120px"
+        prop="saveResponseVariableAsJson"
+      >
+        <el-switch
+          v-model="httpTaskForm.saveResponseVariableAsJson"
+          @change="updateHttpExtensions"
+        />
       </el-form-item>
     </template>
 
@@ -117,15 +219,15 @@ const DEFAULT_HTTP_FORM = {
 export default {
   name: 'ServiceTask',
   components: { HttpHeaderEditor },
-  props: {
-    id: String,
-    type: String
-  },
   inject: {
     prefix: {
       from: 'prefix',
       default: 'flowable'
     }
+  },
+  props: {
+    id: String,
+    type: String
   },
   data() {
     return {
@@ -166,6 +268,9 @@ export default {
         this.updateHttpExtensions()
       }
     }
+  },
+  beforeDestroy() {
+    this.bpmnElement = null
   },
   methods: {
     getBpmnInstances() {
@@ -375,9 +480,6 @@ export default {
       this.httpTaskForm.requestHeaders = headers || ''
       this.updateHttpExtensions()
     }
-  },
-  beforeDestroy() {
-    this.bpmnElement = null
   }
 }
 </script>

@@ -1,17 +1,34 @@
 <template>
   <div class="app-container mp-menu-page">
-    <doc-alert title="公众号菜单" url="https://doc.iocoder.cn/mp/menu/" />
+    <doc-alert
+      title="公众号菜单"
+      url="https://doc.iocoder.cn/mp/menu/"
+    />
 
-    <el-card shadow="never" class="query-card">
-      <el-form ref="queryForm" :inline="true" label-width="68px" size="small">
-        <el-form-item label="公众号" prop="accountId">
+    <el-card
+      shadow="never"
+      class="query-card"
+    >
+      <el-form
+        ref="queryForm"
+        :inline="true"
+        label-width="68px"
+        size="small"
+      >
+        <el-form-item
+          label="公众号"
+          prop="accountId"
+        >
           <wx-account-select @change="onAccountChanged" />
         </el-form-item>
       </el-form>
     </el-card>
 
     <el-card shadow="never">
-      <div v-loading="loading" class="clearfix public-account-management">
+      <div
+        v-loading="loading"
+        class="clearfix public-account-management"
+      >
         <div class="left">
           <div class="weixin-hd">
             <div class="weixin-title">{{ accountName }}</div>
@@ -45,7 +62,10 @@
           </div>
         </div>
 
-        <div v-if="showRightPanel" class="right">
+        <div
+          v-if="showRightPanel"
+          class="right"
+        >
           <menu-editor
             ref="menuEditor"
             v-model="activeMenu"
@@ -54,7 +74,10 @@
             @delete="onDeleteMenu"
           />
         </div>
-        <div v-else class="right"><p>请选择菜单配置</p></div>
+        <div
+          v-else
+          class="right"
+        ><p>请选择菜单配置</p></div>
       </div>
     </el-card>
   </div>

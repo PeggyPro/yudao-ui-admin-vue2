@@ -2,21 +2,51 @@
   <div class="app-container">
     <!-- 表单设计器 -->
     <div class="fc-designer-wrapper">
-      <fc-designer class="my-designer" ref="designer" :config="designerConfig">
+      <fc-designer
+        ref="designer"
+        class="my-designer"
+        :config="designerConfig"
+      >
         <template slot="handle">
-          <el-button size="small" type="primary" plain @click="showJson">生成JSON</el-button>
-          <el-button size="small" type="success" plain @click="showOption">生成Options</el-button>
-          <el-button size="small" type="danger" plain @click="showTemplate">生成组件</el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            @click="showJson"
+          >生成JSON</el-button>
+          <el-button
+            size="small"
+            type="success"
+            plain
+            @click="showOption"
+          >生成Options</el-button>
+          <el-button
+            size="small"
+            type="danger"
+            plain
+            @click="showTemplate"
+          >生成组件</el-button>
         </template>
       </fc-designer>
     </div>
 
     <!-- 弹窗：表单预览 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px" append-to-body>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="800px"
+      append-to-body
+    >
       <div v-if="dialogVisible">
-        <el-button style="float: right" @click="copy">复制</el-button>
+        <el-button
+          style="float: right"
+          @click="copy"
+        >复制</el-button>
         <el-scrollbar style="height: 560px">
-          <pre><code class="hljs" v-dompurify-html="highlightedCode"></code></pre>
+          <pre><code
+v-dompurify-html="highlightedCode"
+                     class="hljs"
+          /></pre>
         </el-scrollbar>
       </div>
     </el-dialog>
@@ -72,7 +102,7 @@ export default {
       formType: -1,
       // 表单数据
       formData: ''
-    };
+    }
   },
   computed: {
     highlightedCode() {
@@ -81,46 +111,46 @@ export default {
     // 预览文本：JSON / Options 序列化为字符串，组件直接展示模板字符串
     formDataText() {
       if (this.formType === 2) {
-        return this.formData;
+        return this.formData
       }
       if (typeof this.formData === 'string') {
-        return this.formData;
+        return this.formData
       }
-      return JSON.stringify(this.formData, null, 2);
+      return JSON.stringify(this.formData, null, 2)
     }
   },
   mounted() {
     this.$nextTick(() => {
-      useFormCreateDesigner(this.$refs.designer);
-    });
+      useFormCreateDesigner(this.$refs.designer)
+    })
   },
   methods: {
     /** 打开弹窗 */
     openModel(title) {
-      this.dialogVisible = true;
-      this.dialogTitle = title;
+      this.dialogVisible = true
+      this.dialogTitle = title
     },
     /** 生成 JSON */
     showJson() {
-      this.openModel('生成 JSON');
-      this.formType = 0;
-      this.formData = this.$refs.designer.getRule();
+      this.openModel('生成 JSON')
+      this.formType = 0
+      this.formData = this.$refs.designer.getRule()
     },
     /** 生成 Options */
     showOption() {
-      this.openModel('生成 Options');
-      this.formType = 1;
-      this.formData = this.$refs.designer.getOption();
+      this.openModel('生成 Options')
+      this.formType = 1
+      this.formData = this.$refs.designer.getOption()
     },
     /** 生成组件 */
     showTemplate() {
-      this.openModel('生成组件');
-      this.formType = 2;
-      this.formData = this.makeTemplate();
+      this.openModel('生成组件')
+      this.formType = 2
+      this.formData = this.makeTemplate()
     },
     makeTemplate() {
-      const rule = this.$refs.designer.getRule();
-      const opt = this.$refs.designer.getOption();
+      const rule = this.$refs.designer.getRule()
+      const opt = this.$refs.designer.getOption()
       return `<template>
   <form-create
     v-model="fApi"
@@ -145,25 +175,25 @@ export default {
     }
   }
 }
-<\/script>`;
+<\/script>`
     },
     /** 复制 */
     copy() {
-      const textToCopy = this.formDataText;
-      const textarea = document.createElement('textarea');
-      textarea.value = textToCopy;
-      document.body.appendChild(textarea);
-      textarea.select();
+      const textToCopy = this.formDataText
+      const textarea = document.createElement('textarea')
+      textarea.value = textToCopy
+      document.body.appendChild(textarea)
+      textarea.select()
       try {
-        document.execCommand('copy');
-        this.$modal.msgSuccess('复制成功');
+        document.execCommand('copy')
+        this.$modal.msgSuccess('复制成功')
       } catch (e) {
-        this.$modal.msgError('复制失败');
+        this.$modal.msgError('复制失败')
       }
-      document.body.removeChild(textarea);
+      document.body.removeChild(textarea)
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

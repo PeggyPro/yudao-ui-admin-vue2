@@ -1,7 +1,15 @@
 <!-- MES 计量单位选择器：纯下拉，前端按名称和编码过滤 -->
 <template>
-  <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-    <div v-if="selectedItem" slot="content" class="unit-tooltip">
+  <el-tooltip
+    :disabled="!selectedItem"
+    placement="top"
+    :open-delay="500"
+  >
+    <div
+      v-if="selectedItem"
+      slot="content"
+      class="unit-tooltip"
+    >
       <div>编码：{{ selectedItem.code || '-' }}</div>
       <div>名称：{{ selectedItem.name || '-' }}</div>
       <div>是否主单位：{{ selectedItem.primaryFlag ? '是' : '否' }}</div>
@@ -22,9 +30,19 @@
       @input="updateValue"
       @change="handleChange"
     >
-      <el-option v-for="item in filteredList" :key="item.id" :label="item.name" :value="item.id">
+      <el-option
+        v-for="item in filteredList"
+        :key="item.id"
+        :label="item.name"
+        :value="item.id"
+      >
         <span>{{ item.name }}</span>
-        <el-tag v-if="item.code" size="mini" type="info" class="code-tag">
+        <el-tag
+          v-if="item.code"
+          size="mini"
+          type="info"
+          class="code-tag"
+        >
           编号: {{ item.code }}
         </el-tag>
       </el-option>

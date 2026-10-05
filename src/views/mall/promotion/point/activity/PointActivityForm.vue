@@ -75,7 +75,7 @@
               align="center"
               width="110"
             >
-              <template v-slot="scope">￥{{ fenToYuan(scope.row.price) }}</template>
+              <template slot-scope="scope">￥{{ fenToYuan(scope.row.price) }}</template>
             </el-table-column>
             <el-table-column
               label="商品库存"
@@ -88,7 +88,7 @@
               align="center"
               min-width="168"
             >
-              <template v-slot="scope">
+              <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.productConfig.stock"
                   :min="0"
@@ -103,7 +103,7 @@
               align="center"
               min-width="168"
             >
-              <template v-slot="scope">
+              <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.productConfig.count"
                   :min="0"
@@ -117,7 +117,7 @@
               align="center"
               min-width="168"
             >
-              <template v-slot="scope">
+              <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.productConfig.point"
                   :min="0"
@@ -131,7 +131,7 @@
               align="center"
               min-width="168"
             >
-              <template v-slot="scope">
+              <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.productConfig.price"
                   :min="0"

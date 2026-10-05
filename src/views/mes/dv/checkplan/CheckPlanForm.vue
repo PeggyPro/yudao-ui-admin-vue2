@@ -1,29 +1,139 @@
 <!-- MES 点检保养方案表单 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="960px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px" :disabled="isDetail">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="960px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+      :disabled="isDetail"
+    >
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="方案编码" prop="code"><el-input v-model="formData.code" placeholder="请输入方案编码"><el-button slot="append" @click="generateCode">生成</el-button></el-input></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="方案名称" prop="name"><el-input v-model="formData.name" placeholder="请输入方案名称" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="方案类型" prop="type"><el-select v-model="formData.type" placeholder="请选择方案类型" class="full-width"><el-option v-for="dict in subjectTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" /></el-select></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="方案编码"
+          prop="code"
+        ><el-input
+          v-model="formData.code"
+          placeholder="请输入方案编码"
+        ><el-button
+          slot="append"
+          @click="generateCode"
+        >生成</el-button></el-input></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="方案名称"
+          prop="name"
+        ><el-input
+          v-model="formData.name"
+          placeholder="请输入方案名称"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="方案类型"
+          prop="type"
+        ><el-select
+          v-model="formData.type"
+          placeholder="请选择方案类型"
+          class="full-width"
+        ><el-option
+          v-for="dict in subjectTypeOptions"
+          :key="dict.value"
+          :label="dict.label"
+          :value="dict.value"
+        /></el-select></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="周期数量" prop="cycleCount"><el-input-number v-model="formData.cycleCount" :min="1" controls-position="right" class="full-width" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="周期类型" prop="cycleType"><el-select v-model="formData.cycleType" placeholder="请选择周期类型" class="full-width"><el-option v-for="dict in cycleTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" /></el-select></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="状态" prop="status"><dict-tag :type="MES_DV_CHECK_PLAN_STATUS" :value="formData.status" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="周期数量"
+          prop="cycleCount"
+        ><el-input-number
+          v-model="formData.cycleCount"
+          :min="1"
+          controls-position="right"
+          class="full-width"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="周期类型"
+          prop="cycleType"
+        ><el-select
+          v-model="formData.cycleType"
+          placeholder="请选择周期类型"
+          class="full-width"
+        ><el-option
+          v-for="dict in cycleTypeOptions"
+          :key="dict.value"
+          :label="dict.label"
+          :value="dict.value"
+        /></el-select></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="状态"
+          prop="status"
+        ><dict-tag
+          :type="MES_DV_CHECK_PLAN_STATUS"
+          :value="formData.status"
+        /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="开始日期" prop="startDate"><el-date-picker v-model="formData.startDate" type="date" value-format="timestamp" placeholder="请选择开始日期" class="full-width" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="结束日期" prop="endDate"><el-date-picker v-model="formData.endDate" type="date" value-format="timestamp" placeholder="请选择结束日期" class="full-width" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="开始日期"
+          prop="startDate"
+        ><el-date-picker
+          v-model="formData.startDate"
+          type="date"
+          value-format="timestamp"
+          placeholder="请选择开始日期"
+          class="full-width"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="结束日期"
+          prop="endDate"
+        ><el-date-picker
+          v-model="formData.endDate"
+          type="date"
+          value-format="timestamp"
+          placeholder="请选择结束日期"
+          class="full-width"
+        /></el-form-item></el-col>
       </el-row>
-      <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
+        v-model="formData.remark"
+        type="textarea"
+        placeholder="请输入备注"
+      /></el-form-item>
     </el-form>
-    <el-tabs v-if="formData.id" v-model="activeTab">
-      <el-tab-pane label="设备清单" name="machinery"><check-plan-machinery-list :plan-id="formData.id" :form-type="formType" /></el-tab-pane>
-      <el-tab-pane label="保养项目" name="subject"><check-plan-subject-list :plan-id="formData.id" :form-type="formType" /></el-tab-pane>
+    <el-tabs
+      v-if="formData.id"
+      v-model="activeTab"
+    >
+      <el-tab-pane
+        label="设备清单"
+        name="machinery"
+      ><check-plan-machinery-list
+        :plan-id="formData.id"
+        :form-type="formType"
+      /></el-tab-pane>
+      <el-tab-pane
+        label="保养项目"
+        name="subject"
+      ><check-plan-subject-list
+        :plan-id="formData.id"
+        :form-type="formType"
+      /></el-tab-pane>
     </el-tabs>
     <span slot="footer">
-      <el-button v-if="!isDetail" type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        v-if="!isDetail"
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">{{ isDetail ? '关 闭' : '取 消' }}</el-button>
     </span>
   </el-dialog>

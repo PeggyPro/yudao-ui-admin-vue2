@@ -11,7 +11,11 @@
       }"
       @click="handleActive(index)"
     >
-      <el-image :src="item.imgUrl" fit="contain" class="popover-image">
+      <el-image
+        :src="item.imgUrl"
+        fit="contain"
+        class="popover-image"
+      >
         <template slot="error">
           <div class="image-error"><svg-icon icon-class="ep:picture" /></div>
         </template>

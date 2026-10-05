@@ -27,7 +27,7 @@ export function updateTravelApply(data) {
 
 // 提交出差申请
 export function submitTravelApply(id) {
-  return request({ url: '/oa/travel-apply/submit', method: 'post', data: { id } })
+  return request({ url: '/oa/travel-apply/submit', method: 'post', data: { id }})
 }
 
 // 撤回出差申请

@@ -1,5 +1,9 @@
 <template>
-  <el-alert v-if="enable()" type="success" show-icon>
+  <el-alert
+    v-if="enable()"
+    type="success"
+    show-icon
+  >
     <template slot="title">
       <div @click="goToUrl">{{ '【' + title + '】文档地址：' + url }}</div>
     </template>
@@ -7,23 +11,23 @@
 </template>
 
 <script>
-import {getDocEnable} from "@/utils/ruoyi";
+import { getDocEnable } from '@/utils/ruoyi'
 
 export default {
-  name: "DocAlert",
+  name: 'DocAlert',
   props: {
     title: String,
-    url: String,
+    url: String
   },
   methods: {
-    enable: function () {
-      return getDocEnable();
+    enable: function() {
+      return getDocEnable()
     },
     goToUrl: function() {
-      window.open(this.url);
+      window.open(this.url)
     }
   }
-};
+}
 </script>
 <style scoped>
 .el-alert--success.is-light {

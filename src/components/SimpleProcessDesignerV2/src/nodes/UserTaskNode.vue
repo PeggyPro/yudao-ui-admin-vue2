@@ -15,34 +15,58 @@
             >
               <span
                 :class="`iconfont ${currentNode.type === NodeType.TRANSACTOR_NODE ? 'icon-transactor' : 'icon-approve'}`"
-              >
-              </span>
+              />
             </div>
             <input
               v-if="!readonly && showInput"
+              v-model="currentNode.name"
+              v-mountedFocus
               type="text"
               class="editable-title-input"
-              @blur="blurEvent()"
-              v-mountedFocus
-              v-model="currentNode.name"
               :placeholder="currentNode.name"
-            />
-            <div v-else class="node-title" @click="clickTitle">
+              @blur="blurEvent()"
+            >
+            <div
+              v-else
+              class="node-title"
+              @click="clickTitle"
+            >
               {{ currentNode.name }}
             </div>
           </div>
-          <div class="node-content" @click="nodeClick">
-            <div class="node-text" :title="currentNode.showText" v-if="currentNode.showText">
+          <div
+            class="node-content"
+            @click="nodeClick"
+          >
+            <div
+              v-if="currentNode.showText"
+              class="node-text"
+              :title="currentNode.showText"
+            >
               {{ currentNode.showText }}
             </div>
-            <div class="node-text" v-else>
+            <div
+              v-else
+              class="node-text"
+            >
               {{ NODE_DEFAULT_TEXT.get(currentNode.type) }}
             </div>
-            <svg-icon icon-class="ep:arrow-right-bold" v-if="!readonly" />
+            <svg-icon
+              v-if="!readonly"
+              icon-class="ep:arrow-right-bold"
+            />
           </div>
-          <div v-if="!readonly" class="node-toolbar">
+          <div
+            v-if="!readonly"
+            class="node-toolbar"
+          >
             <div class="toolbar-icon">
-              <svg-icon color="#0089ff" icon-class="ep:circle-close-filled" :size="18" @click="deleteNode" />
+              <svg-icon
+                color="#0089ff"
+                icon-class="ep:circle-close-filled"
+                :size="18"
+                @click="deleteNode"
+              />
             </div>
           </div>
         </div>
@@ -68,7 +92,12 @@
       append-to-body
     >
       <el-row>
-        <el-table :data="selectTasks" size="small" border header-cell-class-name="table-header-gray">
+        <el-table
+          :data="selectTasks"
+          size="small"
+          border
+          header-cell-class-name="table-header-gray"
+        >
           <el-table-column
             label="序号"
             header-align="center"
@@ -76,13 +105,21 @@
             type="index"
             width="50"
           />
-          <el-table-column label="审批人" min-width="100" align="center">
-            <template v-slot="scope">
+          <el-table-column
+            label="审批人"
+            min-width="100"
+            align="center"
+          >
+            <template slot-scope="scope">
               {{ (scope.row.assigneeUser && scope.row.assigneeUser.nickname) || (scope.row.ownerUser && scope.row.ownerUser.nickname) }}
             </template>
           </el-table-column>
-          <el-table-column label="部门" min-width="100" align="center">
-            <template v-slot="scope">
+          <el-table-column
+            label="部门"
+            min-width="100"
+            align="center"
+          >
+            <template slot-scope="scope">
               {{ (scope.row.assigneeUser && scope.row.assigneeUser.deptName) || (scope.row.ownerUser && scope.row.ownerUser.deptName) }}
             </template>
           </el-table-column>
@@ -100,14 +137,32 @@
             prop="endTime"
             min-width="140"
           />
-          <el-table-column align="center" label="审批状态" prop="status" min-width="90">
-            <template v-slot="scope">
-              <dict-tag :type="DICT_TYPE.BPM_TASK_STATUS" :value="scope.row.status" />
+          <el-table-column
+            align="center"
+            label="审批状态"
+            prop="status"
+            min-width="90"
+          >
+            <template slot-scope="scope">
+              <dict-tag
+                :type="DICT_TYPE.BPM_TASK_STATUS"
+                :value="scope.row.status"
+              />
             </template>
           </el-table-column>
-          <el-table-column align="center" label="审批建议" prop="reason" min-width="120" />
-          <el-table-column align="center" label="耗时" prop="durationInMillis" width="100">
-            <template v-slot="scope">
+          <el-table-column
+            align="center"
+            label="审批建议"
+            prop="reason"
+            min-width="120"
+          />
+          <el-table-column
+            align="center"
+            label="耗时"
+            prop="durationInMillis"
+            width="100"
+          >
+            <template slot-scope="scope">
               {{ formatPast2(scope.row.durationInMillis) }}
             </template>
           </el-table-column>

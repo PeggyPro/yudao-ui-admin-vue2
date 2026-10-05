@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     表情面板（多 tab）：emoji / 个人表情 / N 个系统表情包
     - 对齐微信 PC：底部 tab 栏切换面板内容；emoji 保持 Unicode（仍由 TEXT 通道发送）
     - 个人表情 / 系统表情走 FACE 内容类型，通过 select-face 事件由调用方走 sendRaw 发送
@@ -15,7 +15,10 @@
     <!-- 主内容区：高度固定 + 各 tab 用 v-show 切换，避免每次切 tab 重建 scrollbar 造成滚动位置丢失 -->
     <div class="relative h-[300px] overflow-hidden">
       <!-- emoji 网格 -->
-      <el-scrollbar v-show="activeTab === FACE_TAB.EMOJI" height="300px">
+      <el-scrollbar
+        v-show="activeTab === FACE_TAB.EMOJI"
+        height="300px"
+      >
         <div class="grid grid-cols-10 gap-0.5 p-2">
           <button
             v-for="emoji in IM_EMOJI_LIST"
@@ -30,7 +33,11 @@
       </el-scrollbar>
 
       <!-- 个人表情：5 列方格，无名字标签；末尾「+」上传 -->
-      <el-scrollbar v-if="isFullMode" v-show="activeTab === FACE_TAB.MINE" height="300px">
+      <el-scrollbar
+        v-if="isFullMode"
+        v-show="activeTab === FACE_TAB.MINE"
+        height="300px"
+      >
         <div class="grid grid-cols-5 gap-2 p-3">
           <!-- 上传入口固定放第一格；dashed border 与表情格子区分视觉语义，对齐 el-upload 观感 -->
           <button
@@ -58,7 +65,7 @@
               :alt="item.name || '表情'"
               class="max-w-full max-h-full object-contain"
               draggable="false"
-            />
+            >
           </div>
           <div
             v-if="!faceStore.faceUserItems.length"
@@ -93,7 +100,7 @@
                   :alt="item.name || '表情'"
                   class="max-w-full max-h-full object-contain"
                   draggable="false"
-                />
+                >
               </div>
               <div
                 class="h-4 text-xs text-[var(--el-text-color-secondary)] truncate w-full text-center leading-4"
@@ -117,7 +124,11 @@
       v-if="isFullMode"
       class="flex flex-shrink-0 items-center gap-1 px-2 py-1.5 border-t border-t-solid border-[var(--el-border-color-lighter)]"
     >
-      <el-tooltip content="Emoji 表情" placement="top" :show-after="300">
+      <el-tooltip
+        content="Emoji 表情"
+        placement="top"
+        :show-after="300"
+      >
         <button
           class="inline-flex items-center justify-center w-[30px] h-[30px] border-none rounded bg-transparent cursor-pointer transition-colors hover:bg-[var(--el-fill-color)]"
           :class="
@@ -128,10 +139,17 @@
           type="button"
           @click="activeTab = FACE_TAB.EMOJI"
         >
-          <Icon icon="ant-design:smile-outlined" :size="18" />
+          <Icon
+            icon="ant-design:smile-outlined"
+            :size="18"
+          />
         </button>
       </el-tooltip>
-      <el-tooltip content="个人表情" placement="top" :show-after="300">
+      <el-tooltip
+        content="个人表情"
+        placement="top"
+        :show-after="300"
+      >
         <button
           class="inline-flex items-center justify-center w-[30px] h-[30px] border-none rounded bg-transparent cursor-pointer transition-colors hover:bg-[var(--el-fill-color)]"
           :class="
@@ -142,7 +160,10 @@
           type="button"
           @click="activeTab = FACE_TAB.MINE"
         >
-          <Icon icon="ant-design:heart-outlined" :size="18" />
+          <Icon
+            icon="ant-design:heart-outlined"
+            :size="18"
+          />
         </button>
       </el-tooltip>
       <el-tooltip
@@ -168,8 +189,12 @@
             :alt="pack.name"
             class="w-[18px] h-[18px] object-contain"
             draggable="false"
+          >
+          <Icon
+            v-else
+            icon="ant-design:appstore-outlined"
+            :size="18"
           />
-          <Icon v-else icon="ant-design:appstore-outlined" :size="18" />
         </button>
       </el-tooltip>
     </div>
@@ -182,19 +207,19 @@
       accept="image/*"
       hidden
       @change="onUploadPicked"
-    />
+    >
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, onUnmounted, ref, watch } from 'vue';
-import { Message as ElMessage } from 'element-ui';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { updateFile } from '@/api/infra/file';
-import { useFaceStore } from '@/views/im/home/store/faceStore';
-import { IM_EMOJI_LIST } from '@/views/im/utils/emoji';
-import { probeImageSize } from '@/views/im/utils/image';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
+import { Message as ElMessage } from 'element-ui'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { updateFile } from '@/api/infra/file'
+import { useFaceStore } from '@/views/im/home/store/faceStore'
+import { IM_EMOJI_LIST } from '@/views/im/utils/emoji'
+import { probeImageSize } from '@/views/im/utils/image'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImFacePicker'
   },
@@ -213,39 +238,39 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       default: 'full'
     }
   },
-  emits: ["update:visible", "select-emoji", "select-face"],
+  emits: ['update:visible', 'select-emoji', 'select-face'],
   setup(__props, {
     expose: __expose,
     emit: __emit
   }) {
-    __expose();
+    __expose()
 
     /** 面板模式 */
-    const props = __props;
-    const emit = __emit;
-    const rootRef = ref(null);
-    const uploadInputRef = ref(null);
-    const faceStore = useFaceStore();
+    const props = __props
+    const emit = __emit
+    const rootRef = ref(null)
+    const uploadInputRef = ref(null)
+    const faceStore = useFaceStore()
 
     /** tab 标识常量；pack:N 类用 packTabKey() 拼出，避免散落字符串字面量 */
     const FACE_TAB = {
       EMOJI: 'emoji',
       MINE: 'mine'
-    };
-    const packTabKey = packId => `pack:${packId}`;
+    }
+    const packTabKey = packId => `pack:${packId}`
 
     /** 当前激活的 tab */
-    const activeTab = ref(FACE_TAB.EMOJI);
+    const activeTab = ref(FACE_TAB.EMOJI)
 
     /** 是否完整模式（含个人 / 系统包 tab） */
-    const isFullMode = computed(() => props.mode === 'full');
+    const isFullMode = computed(() => props.mode === 'full')
 
     /** 上传中标记，避免连续点击触发并发上传 */
-    const uploading = ref(false);
+    const uploading = ref(false)
 
     /** 选 emoji 字符：插到输入框；选完不关面板，方便用户连发多个 */
     function handleSelectEmoji(emoji) {
-      emit('select-emoji', emoji);
+      emit('select-emoji', emoji)
     }
 
     /** 选个人表情：直接发；点完关面板，对齐微信 */
@@ -255,8 +280,8 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
         width: item.width,
         height: item.height,
         name: item.name
-      });
-      emit('update:visible', false);
+      })
+      emit('update:visible', false)
     }
 
     /** 选系统表情包内表情：直接发；点完关面板 */
@@ -266,91 +291,91 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
         width: item.width,
         height: item.height,
         name: item.name
-      });
-      emit('update:visible', false);
+      })
+      emit('update:visible', false)
     }
 
     /** 长按 / 右键删除个人表情 */
     async function handleDeleteUserItem(item) {
       if (!confirm('确认删除该表情？')) {
-        return;
+        return
       }
-      await faceStore.removeFaceUserItem(item.id);
+      await faceStore.removeFaceUserItem(item.id)
     }
 
     /** 点 + 触发文件选择 */
     function onUploadClick() {
-      uploadInputRef.value?.click();
+      uploadInputRef.value?.click()
     }
 
     /** 文件选完即上传，成功后写入 faceStore 个人表情列表 */
     async function onUploadPicked(e) {
-      const input = e.target;
-      const file = input.files?.[0];
-      input.value = '';
+      const input = e.target
+      const file = input.files?.[0]
+      input.value = ''
       if (!file) {
-        return;
+        return
       }
-      uploading.value = true;
-      let size;
+      uploading.value = true
+      let size
       try {
-        size = await probeImageSize(file);
+        size = await probeImageSize(file)
       } catch (err) {
-        console.warn('[IM] 解析个人表情失败', err);
-        ElMessage.error('图片解析失败');
-        uploading.value = false;
-        return;
+        console.warn('[IM] 解析个人表情失败', err)
+        ElMessage.error('图片解析失败')
+        uploading.value = false
+        return
       }
       try {
-        const form = new FormData();
-        form.append('file', file);
-        const url = (await updateFile(form)).data;
+        const form = new FormData()
+        form.append('file', file)
+        const url = (await updateFile(form)).data
         if (!url) {
-          ElMessage.error('上传失败');
-          return;
+          ElMessage.error('上传失败')
+          return
         }
         const payload = {
           url,
           width: size.width,
           height: size.height
-        };
-        await faceStore.addFaceUserItem(payload);
+        }
+        await faceStore.addFaceUserItem(payload)
       } catch (error) {
-        console.warn('[IM FacePicker] 上传个人表情失败', error);
-        ElMessage.error('上传失败');
+        console.warn('[IM FacePicker] 上传个人表情失败', error)
+        ElMessage.error('上传失败')
       } finally {
-        uploading.value = false;
+        uploading.value = false
       }
     }
 
     /** 面板展开时拉数据 + 挂全局 click；mode='emoji' 时不拉系统包 / 个人表情 */
     watch(() => props.visible, visible => {
       if (visible) {
-        document.addEventListener('click', handleDocumentClick);
+        document.addEventListener('click', handleDocumentClick)
         if (isFullMode.value) {
           // 系统包通常已被 home onMounted 预拉过；ensureXxx 内部 promise 缓存避免重复请求
-          void faceStore.ensureFacePackList();
-          void faceStore.ensureFaceUserItemList();
+          void faceStore.ensureFacePackList()
+          void faceStore.ensureFaceUserItemList()
         }
       } else {
-        document.removeEventListener('click', handleDocumentClick);
+        document.removeEventListener('click', handleDocumentClick)
       }
     }, {
       immediate: true
-    });
+    })
 
     /** 点击面板外部关闭 */
     function handleDocumentClick(e) {
       if (!props.visible || !rootRef.value) {
-        return;
+        return
       }
       if (!rootRef.value.contains(e.target)) {
-        emit('update:visible', false);
+        emit('update:visible', false)
       }
     }
     onUnmounted(() => {
-      document.removeEventListener('click', handleDocumentClick);
-    });
+      document.removeEventListener('click', handleDocumentClick)
+    })
     const __returned__ = {
       props,
       emit,
@@ -371,17 +396,17 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       handleDocumentClick,
       Icon,
       get IM_EMOJI_LIST() {
-        return IM_EMOJI_LIST;
+        return IM_EMOJI_LIST
       }
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

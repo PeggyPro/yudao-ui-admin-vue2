@@ -1,5 +1,8 @@
 <template>
-  <div ref="contentDetailWrap" class="content-detail-wrap-container">
+  <div
+    ref="contentDetailWrap"
+    class="content-detail-wrap-container"
+  >
     <sticky :offset="offset">
       <div class="content-detail-wrap-header">
         <div class="content-detail-wrap-header__back">
@@ -19,7 +22,10 @@
       </div>
     </sticky>
     <div class="content-detail-wrap-body-wrapper">
-      <el-card class="content-detail-wrap-body" shadow="never">
+      <el-card
+        class="content-detail-wrap-body"
+        shadow="never"
+      >
         <slot />
       </el-card>
     </div>

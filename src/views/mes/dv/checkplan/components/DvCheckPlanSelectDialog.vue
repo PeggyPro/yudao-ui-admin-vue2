@@ -1,11 +1,45 @@
 <!-- MES 点检保养方案弹窗选择器 -->
 <template>
-  <el-dialog title="点检方案选择" :visible.sync="dialogVisible" width="70%" append-to-body>
-    <el-alert v-if="type != null || status != null" :title="alertTitle" type="info" :closable="false" show-icon class="filter-alert" />
-    <el-form :inline="true" :model="queryParams" label-width="85px" size="small" @submit.native.prevent>
-      <el-form-item label="计划编号"><el-input v-model="queryParams.code" placeholder="请输入计划编号" clearable @keyup.enter.native="handleQuery" /></el-form-item>
-      <el-form-item label="计划名称"><el-input v-model="queryParams.name" placeholder="请输入计划名称" clearable @keyup.enter.native="handleQuery" /></el-form-item>
-      <el-form-item><el-button icon="el-icon-search" @click="handleQuery">搜索</el-button><el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button></el-form-item>
+  <el-dialog
+    title="点检方案选择"
+    :visible.sync="dialogVisible"
+    width="70%"
+    append-to-body
+  >
+    <el-alert
+      v-if="type != null || status != null"
+      :title="alertTitle"
+      type="info"
+      :closable="false"
+      show-icon
+      class="filter-alert"
+    />
+    <el-form
+      :inline="true"
+      :model="queryParams"
+      label-width="85px"
+      size="small"
+      @submit.native.prevent
+    >
+      <el-form-item label="计划编号"><el-input
+        v-model="queryParams.code"
+        placeholder="请输入计划编号"
+        clearable
+        @keyup.enter.native="handleQuery"
+      /></el-form-item>
+      <el-form-item label="计划名称"><el-input
+        v-model="queryParams.name"
+        placeholder="请输入计划名称"
+        clearable
+        @keyup.enter.native="handleQuery"
+      /></el-form-item>
+      <el-form-item><el-button
+        icon="el-icon-search"
+        @click="handleQuery"
+      >搜索</el-button><el-button
+        icon="el-icon-refresh"
+        @click="resetQuery"
+      >重置</el-button></el-form-item>
     </el-form>
     <el-table
       ref="table"
@@ -19,18 +53,85 @@
       @row-click="handleRowClick"
       @row-dblclick="handleRowDblClick"
     >
-      <el-table-column v-if="multiple" type="selection" :reserve-selection="true" width="50" align="center" />
-      <el-table-column v-else width="50" align="center"><template v-slot="scope"><el-radio v-model="selectedRadioId" :label="scope.row.id" class="radio-no-label" @change="handleRadioChange(scope.row)" /></template></el-table-column>
-      <el-table-column label="计划编码" align="center" prop="code" width="200" />
-      <el-table-column label="计划名称" align="left" prop="name" min-width="150" />
-      <el-table-column label="计划类型" align="center" prop="type" width="120"><template v-slot="scope"><dict-tag :type="MES_DV_SUBJECT_TYPE" :value="scope.row.type" /></template></el-table-column>
-      <el-table-column label="开始日期" align="center" prop="startDate" width="120"><template v-slot="scope">{{ parseTime(scope.row.startDate, '{y}-{m}-{d}') }}</template></el-table-column>
-      <el-table-column label="结束日期" align="center" prop="endDate" width="120"><template v-slot="scope">{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</template></el-table-column>
-      <el-table-column label="频率" align="center" width="120"><template v-slot="scope">{{ scope.row.cycleCount }} <dict-tag :type="MES_DV_CYCLE_TYPE" :value="scope.row.cycleType" /></template></el-table-column>
-      <el-table-column label="状态" align="center" prop="status" width="100"><template v-slot="scope"><dict-tag :type="MES_DV_CHECK_PLAN_STATUS" :value="scope.row.status" /></template></el-table-column>
+      <el-table-column
+        v-if="multiple"
+        type="selection"
+        :reserve-selection="true"
+        width="50"
+        align="center"
+      />
+      <el-table-column
+        v-else
+        width="50"
+        align="center"
+      ><template slot-scope="scope"><el-radio
+        v-model="selectedRadioId"
+        :label="scope.row.id"
+        class="radio-no-label"
+        @change="handleRadioChange(scope.row)"
+      /></template></el-table-column>
+      <el-table-column
+        label="计划编码"
+        align="center"
+        prop="code"
+        width="200"
+      />
+      <el-table-column
+        label="计划名称"
+        align="left"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="计划类型"
+        align="center"
+        prop="type"
+        width="120"
+      ><template slot-scope="scope"><dict-tag
+        :type="MES_DV_SUBJECT_TYPE"
+        :value="scope.row.type"
+      /></template></el-table-column>
+      <el-table-column
+        label="开始日期"
+        align="center"
+        prop="startDate"
+        width="120"
+      ><template slot-scope="scope">{{ parseTime(scope.row.startDate, '{y}-{m}-{d}') }}</template></el-table-column>
+      <el-table-column
+        label="结束日期"
+        align="center"
+        prop="endDate"
+        width="120"
+      ><template slot-scope="scope">{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</template></el-table-column>
+      <el-table-column
+        label="频率"
+        align="center"
+        width="120"
+      ><template slot-scope="scope">{{ scope.row.cycleCount }} <dict-tag
+        :type="MES_DV_CYCLE_TYPE"
+        :value="scope.row.cycleType"
+      /></template></el-table-column>
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+        width="100"
+      ><template slot-scope="scope"><dict-tag
+        :type="MES_DV_CHECK_PLAN_STATUS"
+        :value="scope.row.status"
+      /></template></el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
-    <span slot="footer"><el-button type="primary" @click="confirmSelect">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+    <span slot="footer"><el-button
+      type="primary"
+      @click="confirmSelect"
+    >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
   </el-dialog>
 </template>
 

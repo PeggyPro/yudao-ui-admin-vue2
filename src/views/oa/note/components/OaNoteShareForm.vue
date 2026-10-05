@@ -1,28 +1,46 @@
 <template>
   <!-- 笔记共享设置，独立于内容编辑 -->
-  <Dialog title="共享笔记" v-model="dialogVisible" width="600px">
-    <el-form v-loading="formLoading" label-width="80px">
+  <AppDialog
+    v-model="dialogVisible"
+    title="共享笔记"
+    width="600px"
+  >
+    <el-form
+      v-loading="formLoading"
+      label-width="80px"
+    >
       <el-form-item label="笔记标题">{{ title }}</el-form-item>
       <el-form-item label="共享给">
-        <user-select-v2 v-model="receiverUserIds" multiple placeholder="请选择共享接收人" />
+        <user-select-v2
+          v-model="receiverUserIds"
+          multiple
+          placeholder="请选择共享接收人"
+        />
       </el-form-item>
       <div class="share-tip">清空接收人后保存，将取消这篇笔记的全部共享。</div>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as NoteApi from '@/api/oa/note'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 
 export default {
   name: 'OaNoteShareForm',
-  components: { Dialog, UserSelectV2 },
+  components: { AppDialog, UserSelectV2 },
   data() {
     return {
       dialogVisible: false,

@@ -1,6 +1,13 @@
 <template>
-  <el-card v-if="visible" shadow="never" :body-style="collapsed ? { padding: '0' } : undefined">
-    <div slot="header" class="panel-header">
+  <el-card
+    v-if="visible"
+    shadow="never"
+    :body-style="collapsed ? { padding: '0' } : undefined"
+  >
+    <div
+      slot="header"
+      class="panel-header"
+    >
       <span>{{ title }}</span>
       <div class="panel-actions">
         <slot name="actions" />
@@ -9,7 +16,11 @@
           :aria-label="(collapsed ? '展开' : '收起') + title"
           @click="collapsed = !collapsed"
         >{{ collapsed ? '▼' : '▲' }}</el-button>
-        <el-button type="text" :aria-label="'关闭' + title" @click="visible = false">✕</el-button>
+        <el-button
+          type="text"
+          :aria-label="'关闭' + title"
+          @click="visible = false"
+        >✕</el-button>
       </div>
     </div>
     <div v-if="!collapsed"><slot /></div>

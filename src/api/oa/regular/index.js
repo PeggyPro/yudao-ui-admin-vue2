@@ -22,5 +22,5 @@ export function updateRegularApply(data) {
 
 // 提交转正申请
 export function submitRegularApply(id, startUserSelectAssignees) {
-  return request({ url: '/oa/regular-apply/submit', method: 'post', data: { id, startUserSelectAssignees } })
+  return request({ url: '/oa/regular-apply/submit', method: 'post', data: { id, startUserSelectAssignees }})
 }

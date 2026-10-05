@@ -1,6 +1,12 @@
 <template>
-  <el-card shadow="never" class="home-card">
-    <div slot="header" class="home-card__title">上月薪资概况</div>
+  <el-card
+    shadow="never"
+    class="home-card"
+  >
+    <div
+      slot="header"
+      class="home-card__title"
+    >上月薪资概况</div>
     <div class="salary-layout">
       <div class="salary-survey">
         <button
@@ -16,8 +22,16 @@
         </button>
       </div>
       <div class="salary-chart-wrap">
-        <div v-if="hasDeptData" ref="chart" class="salary-chart" />
-        <el-empty v-else :image-size="72" description="暂无数据" />
+        <div
+          v-if="hasDeptData"
+          ref="chart"
+          class="salary-chart"
+        />
+        <el-empty
+          v-else
+          :image-size="72"
+          description="暂无数据"
+        />
       </div>
     </div>
   </el-card>

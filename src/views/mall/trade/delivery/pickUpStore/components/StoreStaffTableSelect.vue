@@ -105,7 +105,7 @@
                 @change="handleCheckAll"
               />
             </template>
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-checkbox
                 v-model="checkedStatus[scope.row.id]"
                 @change="handleCheckOne($event, scope.row, true)"
@@ -146,7 +146,7 @@
             align="center"
             prop="status"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <dict-tag
                 :type="DICT_TYPE.COMMON_STATUS"
                 :value="scope.row.status"
@@ -159,7 +159,7 @@
             prop="createTime"
             width="180"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
           </el-table-column>

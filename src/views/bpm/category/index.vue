@@ -1,75 +1,200 @@
 <template>
   <div class="app-container">
-    <doc-alert title="工作流手册" url="https://doc.iocoder.cn/bpm/" />
+    <doc-alert
+      title="工作流手册"
+      url="https://doc.iocoder.cn/bpm/"
+    />
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="分类名" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入分类名" clearable @keyup.enter.native="handleQuery"
-                  style="width: 240px" />
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="分类名"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入分类名"
+          clearable
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="分类标志" prop="code">
-        <el-input v-model="queryParams.code" placeholder="请输入分类标志" clearable @keyup.enter.native="handleQuery"
-                  style="width: 240px" />
+      <el-form-item
+        label="分类标志"
+        prop="code"
+      >
+        <el-input
+          v-model="queryParams.code"
+          placeholder="请输入分类标志"
+          clearable
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="分类状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择分类状态" clearable style="width: 240px">
-          <el-option v-for="dict in this.getDictDatas(DICT_TYPE.COMMON_STATUS)"
-                     :key="dict.value" :label="dict.label" :value="dict.value"/>
+      <el-form-item
+        label="分类状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择分类状态"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss"
-                        type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"
-                        :default-time="['00:00:00', '23:59:59']" />
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
+        <el-date-picker
+          v-model="queryParams.createTime"
+          style="width: 240px"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="['00:00:00', '23:59:59']"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['bpm:category:create']">新增</el-button>
+        <el-button
+          v-hasPermi="['bpm:category:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+        >新增</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="分类编号" align="center" prop="id" />
-      <el-table-column label="分类名" align="center" prop="name" />
-      <el-table-column label="分类标志" align="center" prop="code" />
-      <el-table-column label="分类描述" align="center" prop="description" show-overflow-tooltip />
-      <el-table-column label="分类状态" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="分类编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="分类名"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="分类标志"
+        align="center"
+        prop="code"
+      />
+      <el-table-column
+        label="分类描述"
+        align="center"
+        prop="description"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="分类状态"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="分类排序" align="center" prop="sort" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="分类排序"
+        align="center"
+        prop="sort"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['bpm:category:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['bpm:category:delete']">删除</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['bpm:category:update']"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+          >修改</el-button>
+          <el-button
+            v-hasPermi="['bpm:category:delete']"
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
 
     <!-- 表单弹窗：添加/修改。表单自身负责详情加载、校验和提交。 -->
-    <CategoryForm ref="categoryForm" @success="getList" />
+    <CategoryForm
+      ref="categoryForm"
+      @success="getList"
+    />
   </div>
 </template>
 

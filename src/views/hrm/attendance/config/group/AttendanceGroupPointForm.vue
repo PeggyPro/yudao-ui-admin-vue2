@@ -1,59 +1,107 @@
 <template>
   <div>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="640px" append-to-body>
-      <el-form ref="form" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="地点名称" prop="name">
-        <el-input v-model="formData.name" maxlength="50" placeholder="请输入地点名称" />
-      </el-form-item>
-      <el-form-item label="打卡地址" prop="address">
-        <el-input v-model="formData.address" maxlength="255" placeholder="请选择或输入地址" />
-      </el-form-item>
-      <el-form-item label="经纬度" required>
-        <div class="coordinate-row">
-          <el-form-item prop="longitude" class="coordinate-item">
-            <el-input-number
-              v-model="formData.longitude"
-              :controls="false"
-              :min="-180"
-              :max="180"
-              :precision="6"
-              class="form-control"
-              placeholder="经度"
-            />
-          </el-form-item>
-          <el-form-item prop="latitude" class="coordinate-item">
-            <el-input-number
-              v-model="formData.latitude"
-              :controls="false"
-              :min="-90"
-              :max="90"
-              :precision="6"
-              class="form-control"
-              placeholder="纬度"
-            />
-          </el-form-item>
-          <el-button type="primary" @click="openMap">地图选点</el-button>
-        </div>
-      </el-form-item>
-      <el-form-item label="打卡范围" prop="radius">
-        <div class="radius-row">
-          <el-select v-model="formData.radius" class="radius-select">
-            <el-option
-              v-for="radius in pointRadiusOptions"
-              :key="radius"
-              :label="`${radius} 米`"
-              :value="radius"
-            />
-          </el-select>
-        </div>
-      </el-form-item>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="640px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="formRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="地点名称"
+          prop="name"
+        >
+          <el-input
+            v-model="formData.name"
+            maxlength="50"
+            placeholder="请输入地点名称"
+          />
+        </el-form-item>
+        <el-form-item
+          label="打卡地址"
+          prop="address"
+        >
+          <el-input
+            v-model="formData.address"
+            maxlength="255"
+            placeholder="请选择或输入地址"
+          />
+        </el-form-item>
+        <el-form-item
+          label="经纬度"
+          required
+        >
+          <div class="coordinate-row">
+            <el-form-item
+              prop="longitude"
+              class="coordinate-item"
+            >
+              <el-input-number
+                v-model="formData.longitude"
+                :controls="false"
+                :min="-180"
+                :max="180"
+                :precision="6"
+                class="form-control"
+                placeholder="经度"
+              />
+            </el-form-item>
+            <el-form-item
+              prop="latitude"
+              class="coordinate-item"
+            >
+              <el-input-number
+                v-model="formData.latitude"
+                :controls="false"
+                :min="-90"
+                :max="90"
+                :precision="6"
+                class="form-control"
+                placeholder="纬度"
+              />
+            </el-form-item>
+            <el-button
+              type="primary"
+              @click="openMap"
+            >地图选点</el-button>
+          </div>
+        </el-form-item>
+        <el-form-item
+          label="打卡范围"
+          prop="radius"
+        >
+          <div class="radius-row">
+            <el-select
+              v-model="formData.radius"
+              class="radius-select"
+            >
+              <el-option
+                v-for="radius in pointRadiusOptions"
+                :key="radius"
+                :label="`${radius} 米`"
+                :value="radius"
+              />
+            </el-select>
+          </div>
+        </el-form-item>
       </el-form>
       <span slot="footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
-    <MapDialog ref="mapDialog" @confirm="handleMapConfirm" />
+    <MapDialog
+      ref="mapDialog"
+      @confirm="handleMapConfirm"
+    />
   </div>
 </template>
 

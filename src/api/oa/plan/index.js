@@ -32,5 +32,5 @@ export function deletePlan(id) {
 
 // 点评工作计划
 export function addPlanComment(id, comment) {
-  return request({ url: '/oa/plan/add-comment', method: 'put', data: { id, comment } })
+  return request({ url: '/oa/plan/add-comment', method: 'put', data: { id, comment }})
 }

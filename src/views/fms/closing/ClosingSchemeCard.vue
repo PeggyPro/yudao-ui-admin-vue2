@@ -23,7 +23,10 @@
       <div class="amount-value">{{ formatMoney(balance) }}</div>
       <div class="amount-footer">
         <span>金额</span>
-        <span v-if="voucherIds.length" class="voucher-links">
+        <span
+          v-if="voucherIds.length"
+          class="voucher-links"
+        >
           <el-link
             v-for="voucherId in voucherIds"
             :key="voucherId"

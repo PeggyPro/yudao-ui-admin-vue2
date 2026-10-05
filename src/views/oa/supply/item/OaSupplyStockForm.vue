@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="'入库 - ' + (item.name || '')" v-model="dialogVisible" width="550px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="'入库 - ' + (item.name || '')"
+    width="550px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,11 +11,21 @@
       :rules="formRules"
       label-width="100px"
     >
-      <el-form-item label="物品名称"><el-input :value="item.name" disabled /></el-form-item>
+      <el-form-item label="物品名称"><el-input
+        :value="item.name"
+        disabled
+      /></el-form-item>
       <el-form-item label="当前库存">
-        <el-input-number :value="item.stockQuantity" disabled style="width: 100%" />
+        <el-input-number
+          :value="item.stockQuantity"
+          disabled
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="入库数量" prop="quantity">
+      <el-form-item
+        label="入库数量"
+        prop="quantity"
+      >
         <el-input-number
           v-model="formData.quantity"
           placeholder="请输入入库数量"
@@ -21,8 +35,15 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </dialog-component>

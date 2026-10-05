@@ -1,5 +1,5 @@
 <template>
-  <Dialog
+  <AppDialog
     v-model="dialogVisible"
     :title="dialogTitle"
     width="960px"
@@ -71,8 +71,8 @@
       ><WmBatchSelect
         v-model="formData.batchId"
         :item-id="formData.itemId"
-        @change="handleBatchChange"
         disabled
+        @change="handleBatchChange"
       /></el-form-item></el-col></el-row>
     </el-form>
     <div
@@ -83,7 +83,7 @@
       :disabled="formLoading"
       @click="submitForm"
     >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -94,7 +94,7 @@ import WmWarehouseLocationSelect from '@/views/mes/wm/warehouse/components/WmWar
 import WmWarehouseAreaSelect from '@/views/mes/wm/warehouse/components/WmWarehouseAreaSelect.vue'
 import ProductSalesMaterialStockSelect from './components/ProductSalesMaterialStockSelect.vue'
 import WmBatchSelect from '@/views/mes/wm/batch/components/WmBatchSelect.vue'
-import Dialog from '@/components/Dialog/index.vue'
+import AppDialog from '@/components/Dialog/index.vue'
 
 function defaultFormData() {
   return {
@@ -108,7 +108,7 @@ function defaultFormData() {
 export default {
   name: 'ProductSalesDetailForm',
   components: {
-    Dialog,
+    AppDialog,
     WmBatchSelect,
     MdItemSelect,
     WmWarehouseSelect,

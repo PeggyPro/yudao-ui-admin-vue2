@@ -1,7 +1,12 @@
 <!-- 排班日历 - 按个人视图 -->
 <template>
   <div>
-    <el-form :inline="true" label-width="80px" size="small" @submit.native.prevent>
+    <el-form
+      :inline="true"
+      label-width="80px"
+      size="small"
+      @submit.native.prevent
+    >
       <el-form-item label="人员">
         <user-select-v2
           v-model="userId"
@@ -11,13 +16,23 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="onUserQuery">查询</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="onUserQuery"
+        >查询</el-button>
       </el-form-item>
     </el-form>
 
     <calendar-legend />
-    <el-calendar v-model="currentDate" v-loading="loading">
-      <template slot="dateCell" slot-scope="{ data }">
+    <el-calendar
+      v-model="currentDate"
+      v-loading="loading"
+    >
+      <template
+        slot="dateCell"
+        slot-scope="{ data }"
+      >
         <calendar-date-cell
           :day="data.day"
           :holiday-set="holidaySet"

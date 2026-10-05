@@ -1,17 +1,29 @@
 <template>
-  <div v-loading="loading || commentLoading" class="comment-list">
+  <div
+    v-loading="loading || commentLoading"
+    class="comment-list"
+  >
     <div class="comment-header">
       <span class="comment-title">流程评论</span>
       <span class="comment-count">共 {{ comments.length }} 条</span>
     </div>
-    <el-empty v-if="comments.length === 0" description="暂无评论" />
-    <div v-else class="comment-timeline">
+    <el-empty
+      v-if="comments.length === 0"
+      description="暂无评论"
+    />
+    <div
+      v-else
+      class="comment-timeline"
+    >
       <div
         v-for="(comment, index) in comments"
         :key="comment.id"
         class="comment-item"
       >
-        <div v-if="index < comments.length - 1" class="comment-line" />
+        <div
+          v-if="index < comments.length - 1"
+          class="comment-line"
+        />
         <div
           class="comment-icon"
           :style="{ backgroundColor: getCommentColor(comment.type) }"
@@ -21,14 +33,27 @@
         <div class="comment-content">
           <div class="comment-row">
             <div class="comment-user">
-              <el-avatar v-if="comment.user && comment.user.avatar" :size="28" :src="comment.user.avatar" />
-              <el-avatar v-else :size="28">
+              <el-avatar
+                v-if="comment.user && comment.user.avatar"
+                :size="28"
+                :src="comment.user.avatar"
+              />
+              <el-avatar
+                v-else
+                :size="28"
+              >
                 {{ getUserInitial(comment.user) }}
               </el-avatar>
               <span>{{ getUserName(comment.user) }}</span>
             </div>
-            <dict-tag :type="DICT_TYPE.BPM_COMMENT_TYPE" :value="comment.type" />
-            <div v-if="comment.task && comment.task.name" class="comment-task">
+            <dict-tag
+              :type="DICT_TYPE.BPM_COMMENT_TYPE"
+              :value="comment.type"
+            />
+            <div
+              v-if="comment.task && comment.task.name"
+              class="comment-task"
+            >
               <i class="el-icon-connection" />
               <span>任务</span>
               <strong>{{ comment.task.name }}</strong>

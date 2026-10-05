@@ -1,7 +1,13 @@
 <template>
   <div class="app-container fms-ledger-page">
-    <doc-alert title="【账簿】账簿管理" url="https://doc.iocoder.cn/fms/ledger/" />
-    <el-card class="ledger-toolbar" shadow="never">
+    <doc-alert
+      title="【账簿】账簿管理"
+      url="https://doc.iocoder.cn/fms/ledger/"
+    />
+    <el-card
+      class="ledger-toolbar"
+      shadow="never"
+    >
       <FmsLedgerSearchBar
         :end-month="queryParams.endMonth"
         :export-loading="exportLoading"
@@ -18,19 +24,85 @@
       />
     </el-card>
     <el-card shadow="never">
-      <el-table id="fms-multi-column-ledger-table" v-loading="loading || accountSetLoading" :data="result.rows" :row-class-name="getRowClassName" border stripe height="calc(100vh - 285px)">
-        <el-table-column align="center" label="日期" prop="accountDate" width="110" fixed="left" />
-        <el-table-column align="center" label="凭证字号" width="110" fixed="left"><template slot-scope="scope"><el-button v-if="scope.row.voucherId" v-hasPermi="['fms:voucher:query']" type="text" @click="openVoucher(scope.row)">{{ scope.row.voucherNumber }}</el-button></template></el-table-column>
-        <el-table-column label="摘要" min-width="160" prop="digest" fixed="left" />
-        <el-table-column align="right" label="借方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.debitAmount) }}</template></el-table-column>
-        <el-table-column align="right" label="贷方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.creditAmount) }}</template></el-table-column>
-        <el-table-column align="center" label="方向" prop="balanceDirection" width="70" />
-        <el-table-column align="right" label="余额" width="130"><template slot-scope="scope">{{ formatMoney(scope.row.balance) }}</template></el-table-column>
-        <el-table-column v-if="debitColumns.length" align="center" label="借方">
-          <el-table-column v-for="column in debitColumns" :key="column.subjectId" align="right" :label="column.subjectCode + '/' + column.subjectName" min-width="145"><template slot-scope="scope">{{ formatMoney(getColumnAmount(scope.row, column.subjectId)) }}</template></el-table-column>
+      <el-table
+        id="fms-multi-column-ledger-table"
+        v-loading="loading || accountSetLoading"
+        :data="result.rows"
+        :row-class-name="getRowClassName"
+        border
+        stripe
+        height="calc(100vh - 285px)"
+      >
+        <el-table-column
+          align="center"
+          label="日期"
+          prop="accountDate"
+          width="110"
+          fixed="left"
+        />
+        <el-table-column
+          align="center"
+          label="凭证字号"
+          width="110"
+          fixed="left"
+        ><template slot-scope="scope"><el-button
+          v-if="scope.row.voucherId"
+          v-hasPermi="['fms:voucher:query']"
+          type="text"
+          @click="openVoucher(scope.row)"
+        >{{ scope.row.voucherNumber }}</el-button></template></el-table-column>
+        <el-table-column
+          label="摘要"
+          min-width="160"
+          prop="digest"
+          fixed="left"
+        />
+        <el-table-column
+          align="right"
+          label="借方"
+          width="125"
+        ><template slot-scope="scope">{{ formatMoney(scope.row.debitAmount) }}</template></el-table-column>
+        <el-table-column
+          align="right"
+          label="贷方"
+          width="125"
+        ><template slot-scope="scope">{{ formatMoney(scope.row.creditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="方向"
+          prop="balanceDirection"
+          width="70"
+        />
+        <el-table-column
+          align="right"
+          label="余额"
+          width="130"
+        ><template slot-scope="scope">{{ formatMoney(scope.row.balance) }}</template></el-table-column>
+        <el-table-column
+          v-if="debitColumns.length"
+          align="center"
+          label="借方"
+        >
+          <el-table-column
+            v-for="column in debitColumns"
+            :key="column.subjectId"
+            align="right"
+            :label="column.subjectCode + '/' + column.subjectName"
+            min-width="145"
+          ><template slot-scope="scope">{{ formatMoney(getColumnAmount(scope.row, column.subjectId)) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column v-if="creditColumns.length" align="center" label="贷方">
-          <el-table-column v-for="column in creditColumns" :key="column.subjectId" align="right" :label="column.subjectCode + '/' + column.subjectName" min-width="145"><template slot-scope="scope">{{ formatMoney(getColumnAmount(scope.row, column.subjectId)) }}</template></el-table-column>
+        <el-table-column
+          v-if="creditColumns.length"
+          align="center"
+          label="贷方"
+        >
+          <el-table-column
+            v-for="column in creditColumns"
+            :key="column.subjectId"
+            align="right"
+            :label="column.subjectCode + '/' + column.subjectName"
+            min-width="145"
+          ><template slot-scope="scope">{{ formatMoney(getColumnAmount(scope.row, column.subjectId)) }}</template></el-table-column>
         </el-table-column>
       </el-table>
     </el-card>

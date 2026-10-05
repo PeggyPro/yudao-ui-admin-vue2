@@ -1,5 +1,8 @@
 <template>
-  <div v-if="segments && segments.length" class="message-knowledge">
+  <div
+    v-if="segments && segments.length"
+    class="message-knowledge"
+  >
     <div class="message-knowledge__title">
       <i class="el-icon-document" />
       知识引用
@@ -22,7 +25,10 @@
       width="600px"
       append-to-body
     >
-      <div v-if="selectedDocument" class="knowledge-detail">
+      <div
+        v-if="selectedDocument"
+        class="knowledge-detail"
+      >
         <div
           v-for="segment in selectedDocument.segments"
           :key="segment.id"

@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-1 flex-col min-w-0 bg-[var(--el-fill-color-light)]">
+  <div class="flex flex-1 flex-col min-w-0 bg-[var(--el-fill-color-light)]">
     <template v-if="conversationStore.activeConversation">
       <!-- 顶部 header：第一行群名 + 右侧图标，第二行嵌入置顶气泡（仅群聊 + 有置顶） -->
       <div
@@ -30,7 +30,10 @@
           </span>
           <div class="flex gap-3 items-center">
             <!-- 聊天历史 -->
-            <el-tooltip content="聊天历史" placement="bottom">
+            <el-tooltip
+              content="聊天历史"
+              placement="bottom"
+            >
               <Icon
                 icon="ep:chat-dot-round"
                 :size="20"
@@ -59,19 +62,29 @@
                   class="flex items-center gap-2.5 px-3 py-2 rounded cursor-pointer text-sm text-[var(--el-text-color-primary)] hover:bg-[var(--el-fill-color-light)]"
                   @click="startPrivateCall(ImRtcCallMediaType.VOICE)"
                 >
-                  <Icon icon="ant-design:phone-outlined" :size="16" />
+                  <Icon
+                    icon="ant-design:phone-outlined"
+                    :size="16"
+                  />
                   <span>语音通话</span>
                 </div>
                 <div
                   class="flex items-center gap-2.5 px-3 py-2 rounded cursor-pointer text-sm text-[var(--el-text-color-primary)] hover:bg-[var(--el-fill-color-light)]"
                   @click="startPrivateCall(ImRtcCallMediaType.VIDEO)"
                 >
-                  <Icon icon="ant-design:video-camera-outlined" :size="16" />
+                  <Icon
+                    icon="ant-design:video-camera-outlined"
+                    :size="16"
+                  />
                   <span>视频通话</span>
                 </div>
               </div>
             </el-popover>
-            <el-tooltip v-else-if="!isQuitGroup" content="通话" placement="bottom">
+            <el-tooltip
+              v-else-if="!isQuitGroup"
+              content="通话"
+              placement="bottom"
+            >
               <Icon
                 icon="ant-design:phone-outlined"
                 :size="20"
@@ -124,10 +137,17 @@
             <span
               class="inline-flex items-center justify-center w-4 h-4 rounded-full text-white bg-[var(--el-color-warning)] flex-shrink-0"
             >
-              <Icon icon="ant-design:user-outlined" :size="11" />
+              <Icon
+                icon="ant-design:user-outlined"
+                :size="11"
+              />
             </span>
             <span>对方还不是你的朋友</span>
-            <Icon icon="ep:arrow-right" :size="12" class="text-[var(--el-text-color-secondary)]" />
+            <Icon
+              icon="ep:arrow-right"
+              :size="12"
+              class="text-[var(--el-text-color-secondary)]"
+            />
           </div>
         </div>
       </div>
@@ -179,8 +199,14 @@
             class="message-panel__jump-bottom sticky bottom-3 left-1/2 inline-flex gap-1.5 items-center w-fit mx-auto px-3.5 py-1.5 text-xs text-[#409eff] bg-[var(--el-bg-color-overlay)] rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer hover:text-white hover:bg-[#409eff]"
             @click="scrollToBottom(true)"
           >
-            <Icon icon="ant-design:down-outlined" :size="14" />
-            <span v-if="newMessageCount > 0" class="font-medium">
+            <Icon
+              icon="ant-design:down-outlined"
+              :size="14"
+            />
+            <span
+              v-if="newMessageCount > 0"
+              class="font-medium"
+            >
               {{ newMessageCount > 99 ? '99+' : newMessageCount }} 条新消息
             </span>
             <span v-else>回到底部</span>
@@ -189,43 +215,58 @@
       </div>
 
       <!-- 底部：输入框（频道单向消息无需输入框）；多选模式底栏作为浮层盖在上面，保持下方输入框尺寸不变 -->
-      <div v-if="!isChannel" class="relative">
+      <div
+        v-if="!isChannel"
+        class="relative"
+      >
         <MessageInput />
-        <MessageMultiSelectBar v-if="multiSelect.state.active" class="absolute inset-0 z-10" />
+        <MessageMultiSelectBar
+          v-if="multiSelect.state.active"
+          class="absolute inset-0 z-10"
+        />
       </div>
 
       <!-- 右侧信息抽屉：群聊 / 私聊各自一份 -->
       <ConversationGroupSide
         v-if="isGroup"
         :model-value="sideVisible"
-        @update:modelValue="sideVisible = $event"
         :group="groupInfo"
         :conversation="conversationStore.activeConversation"
         :members="groupMembers"
+        @update:modelValue="sideVisible = $event"
         @reload="reloadGroupData"
         @open-history="historyDialogRef?.open()"
       />
       <ConversationPrivateSide
         v-else
         :model-value="sideVisible"
-        @update:modelValue="sideVisible = $event"
         :conversation="conversationStore.activeConversation"
         :friend="privateFriend"
+        @update:modelValue="sideVisible = $event"
         @open-history="historyDialogRef?.open()"
       />
 
       <!-- 历史消息抽屉 -->
-      <MessageHistory ref="historyDialogRef" @locate="handleLocate" />
+      <MessageHistory
+        ref="historyDialogRef"
+        @locate="handleLocate"
+      />
 
       <!-- 转发弹窗 / 合并消息详情：在 MessagePanel 子树内挂载，子组件通过 inject 触发 -->
       <MessageForwardDialog ref="forwardDialogRef" />
       <MessageMergeDetailDialog ref="mergeDetailDialogRef" />
 
       <!-- 禁言时长选择弹窗 -->
-      <GroupMuteMemberDialog ref="muteMemberDialogRef" @success="reloadGroupData" />
+      <GroupMuteMemberDialog
+        ref="muteMemberDialogRef"
+        @success="reloadGroupData"
+      />
 
       <!-- 群通话成员选择弹窗 -->
-      <RtcCallMemberPickerDialog ref="callMemberPickerRef" @success="onCallMemberPicked" />
+      <RtcCallMemberPickerDialog
+        ref="callMemberPickerRef"
+        @success="onCallMemberPicked"
+      />
     </template>
     <div
       v-else
@@ -236,42 +277,42 @@
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { ref, watch, nextTick, computed, provide } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { useConversationStore } from '../../../../store/conversationStore';
-import { useFriendStore } from '../../../../store/friendStore';
-import { useImUiStore } from '../../../../store/uiStore';
-import { getMemberDisplayName, isGroupQuit } from '@/views/im/utils/user';
-import { useGroupStore } from '../../../../store/groupStore';
-import MessageItem from './MessageItem.vue';
-import MessageInput from '../input/MessageInput.vue';
-import MessageMultiSelectBar from '../input/MessageMultiSelectBar.vue';
-import MessageForwardDialog from './forward/MessageForwardDialog.vue';
-import MessageMergeDetailDialog from './forward/MessageMergeDetailDialog.vue';
-import { IM_FORWARD_DIALOG_KEY, IM_MERGE_DETAIL_DIALOG_KEY, IM_RTC_REDIAL_KEY } from './forward/keys';
-import { useMessageMultiSelect } from '../../../../composables/useMessageMultiSelect';
-import { useVoicePlayer } from '../../../../composables/useVoicePlayer';
-import MessageHistory from './MessageHistory.vue';
-import ConversationGroupSide from '../conversation/ConversationGroupSide.vue';
-import GroupPinnedMessage from './GroupPinnedMessage.vue';
-import GroupRequestPending from './GroupRequestPending.vue';
-import ConversationPrivateSide from '../conversation/ConversationPrivateSide.vue';
-import GroupMuteMemberDialog from '../../../../components/group/GroupMuteMemberDialog.vue';
-import RtcCallMemberPickerDialog from '../../../../components/rtc/RtcCallMemberPickerDialog.vue';
-import RtcGroupCallBanner from '../../../../components/rtc/RtcGroupCallBanner.vue';
-import { createCall, leaveCall } from '@/api/im/rtc';
-import { ImRtcCallMediaType, ImRtcCallStatus, ImConversationType } from '@/views/im/utils/constants';
-import { resolveCallEndReasonText } from '@/views/im/utils/message';
-import { getClientConversationId } from '@/views/im/utils/db';
-import { getCurrentUserId } from '@/views/im/utils/session';
-import { getGroupDisplayName } from '@/views/im/utils/user';
-import { useRtcStore } from '../../../../store/rtcStore';
-import { useMessageStore } from '../../../../store/messageStore';
-const BOTTOM_THRESHOLD = 80; // "是否停留在底部"的阈值：距离底部 < 80px 视为底部
+import { defineComponent as _defineComponent } from 'vue'
+import { ref, watch, nextTick, computed, provide } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { useConversationStore } from '../../../../store/conversationStore'
+import { useFriendStore } from '../../../../store/friendStore'
+import { useImUiStore } from '../../../../store/uiStore'
+import { getMemberDisplayName, isGroupQuit } from '@/views/im/utils/user'
+import { useGroupStore } from '../../../../store/groupStore'
+import MessageItem from './MessageItem.vue'
+import MessageInput from '../input/MessageInput.vue'
+import MessageMultiSelectBar from '../input/MessageMultiSelectBar.vue'
+import MessageForwardDialog from './forward/MessageForwardDialog.vue'
+import MessageMergeDetailDialog from './forward/MessageMergeDetailDialog.vue'
+import { IM_FORWARD_DIALOG_KEY, IM_MERGE_DETAIL_DIALOG_KEY, IM_RTC_REDIAL_KEY } from './forward/keys'
+import { useMessageMultiSelect } from '../../../../composables/useMessageMultiSelect'
+import { useVoicePlayer } from '../../../../composables/useVoicePlayer'
+import MessageHistory from './MessageHistory.vue'
+import ConversationGroupSide from '../conversation/ConversationGroupSide.vue'
+import GroupPinnedMessage from './GroupPinnedMessage.vue'
+import GroupRequestPending from './GroupRequestPending.vue'
+import ConversationPrivateSide from '../conversation/ConversationPrivateSide.vue'
+import GroupMuteMemberDialog from '../../../../components/group/GroupMuteMemberDialog.vue'
+import RtcCallMemberPickerDialog from '../../../../components/rtc/RtcCallMemberPickerDialog.vue'
+import RtcGroupCallBanner from '../../../../components/rtc/RtcGroupCallBanner.vue'
+import { createCall, leaveCall } from '@/api/im/rtc'
+import { ImRtcCallMediaType, ImRtcCallStatus, ImConversationType } from '@/views/im/utils/constants'
+import { resolveCallEndReasonText } from '@/views/im/utils/message'
+import { getClientConversationId } from '@/views/im/utils/db'
+import { getCurrentUserId } from '@/views/im/utils/session'
+import { getGroupDisplayName } from '@/views/im/utils/user'
+import { useRtcStore } from '../../../../store/rtcStore'
+import { useMessageStore } from '../../../../store/messageStore'
+const BOTTOM_THRESHOLD = 80 // "是否停留在底部"的阈值：距离底部 < 80px 视为底部
 
-const __sfc__ = /*@__PURE__*/_defineComponent({
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImMessagePanel'
   },
@@ -295,70 +336,70 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
-    const conversationStore = useConversationStore();
-    const messageStore = useMessageStore();
-    const friendStore = useFriendStore();
-    const uiStore = useImUiStore();
-    const groupStore = useGroupStore();
-    const message = useMessage();
-    const rtcStore = useRtcStore();
-    const listRef = ref();
+    __expose()
+    const conversationStore = useConversationStore()
+    const messageStore = useMessageStore()
+    const friendStore = useFriendStore()
+    const uiStore = useImUiStore()
+    const groupStore = useGroupStore()
+    const message = useMessage()
+    const rtcStore = useRtcStore()
+    const listRef = ref()
 
     // ==================== 转发 / 合并消息详情：本地 dialog 浮层 ====================
     // MessageItem / MessageMultiSelectBar / MessageHistory 通过 inject 触发；不挂全局 store
 
-    const forwardDialogRef = ref();
-    const mergeDetailDialogRef = ref();
-    provide(IM_FORWARD_DIALOG_KEY, opts => forwardDialogRef.value?.open(opts));
-    provide(IM_MERGE_DETAIL_DIALOG_KEY, content => mergeDetailDialogRef.value?.open(content));
+    const forwardDialogRef = ref()
+    const mergeDetailDialogRef = ref()
+    provide(IM_FORWARD_DIALOG_KEY, opts => forwardDialogRef.value?.open(opts))
+    provide(IM_MERGE_DETAIL_DIALOG_KEY, content => mergeDetailDialogRef.value?.open(content))
     provide(IM_RTC_REDIAL_KEY, mediaType => {
       if (isPrivate.value) {
-        void startPrivateCall(mediaType);
+        void startPrivateCall(mediaType)
       }
-    }); // 私聊 RTC_CALL_END 气泡点击重拨；MessageItem 注入后调用
+    }) // 私聊 RTC_CALL_END 气泡点击重拨；MessageItem 注入后调用
 
     // ==================== 多选模式 ====================
     // 模块级单例 state（composable）；本组件仅做切会话退出 + template 显隐判定
 
-    const multiSelect = useMessageMultiSelect();
-    const voicePlayer = useVoicePlayer();
+    const multiSelect = useMessageMultiSelect()
+    const voicePlayer = useVoicePlayer()
 
     /** 切会话退出多选 + 停语音；避免上一会话的勾选 / 播放态泄漏到新会话（type+targetId 一起监听，私聊与群聊 id 同号时也能触发） */
     watch(() => [conversationStore.activeConversation?.type, conversationStore.activeConversation?.targetId], () => {
-      multiSelect.exit();
-      voicePlayer.stop();
-    });
+      multiSelect.exit()
+      voicePlayer.stop()
+    })
     const messages = computed(() => {
-      const conversation = conversationStore.activeConversation;
-      return conversation ? messageStore.getMessages(getClientConversationId(conversation.type, conversation.targetId)) : [];
-    });
-    const isGroup = computed(() => conversationStore.activeConversation?.type === ImConversationType.GROUP);
-    const isPrivate = computed(() => conversationStore.activeConversation?.type === ImConversationType.PRIVATE);
-    const isChannel = computed(() => conversationStore.activeConversation?.type === ImConversationType.CHANNEL);
+      const conversation = conversationStore.activeConversation
+      return conversation ? messageStore.getMessages(getClientConversationId(conversation.type, conversation.targetId)) : []
+    })
+    const isGroup = computed(() => conversationStore.activeConversation?.type === ImConversationType.GROUP)
+    const isPrivate = computed(() => conversationStore.activeConversation?.type === ImConversationType.PRIVATE)
+    const isChannel = computed(() => conversationStore.activeConversation?.type === ImConversationType.CHANNEL)
 
     /** 当前激活会话是否历史退群群：禁群通话、隐藏群申请横幅等操作入口；聊天历史、群名头像照常展示 */
     const isQuitGroup = computed(() => {
-      const conversation = conversationStore.activeConversation;
-      return conversation?.type === ImConversationType.GROUP && isGroupQuit(groupStore.getGroup(conversation.targetId));
-    });
+      const conversation = conversationStore.activeConversation
+      return conversation?.type === ImConversationType.GROUP && isGroupQuit(groupStore.getGroup(conversation.targetId))
+    })
 
     /** 私聊会话且对端不是有效好友（本端 friend 记录缺失或 DISABLE）；单边删除语义下「被对方删除」不触发本端横幅 */
     const showNotFriendBanner = computed(() => {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation || conversation.type !== ImConversationType.PRIVATE) {
-        return false;
+        return false
       }
-      return !friendStore.isActiveFriend(conversation.targetId);
-    });
+      return !friendStore.isActiveFriend(conversation.targetId)
+    })
 
     /** 点击「对方还不是你的朋友」胶囊：打开 UserInfoCard，引导用户重新添加 */
     function handleNotFriendClick(event) {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation) {
-        return;
+        return
       }
-      const rect = event.currentTarget.getBoundingClientRect();
+      const rect = event.currentTarget.getBoundingClientRect()
       uiStore.openUserInfoCard({
         id: conversation.targetId,
         nickname: conversation.name,
@@ -366,7 +407,7 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       }, {
         x: rect.left,
         y: rect.bottom + 4
-      });
+      })
     }
 
     /**
@@ -376,22 +417,22 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      * 而 groupInfo.memberCount 跟群信息一起来，能更早显示人数避免"先空再蹦"
      */
     const headerMemberCount = computed(() => {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation || conversation.type !== ImConversationType.GROUP) {
-        return 0;
+        return 0
       }
-      const group = groupStore.getGroup(conversation.targetId);
-      return group?.memberCount ?? group?.members?.length ?? 0;
-    });
+      const group = groupStore.getGroup(conversation.targetId)
+      return group?.memberCount ?? group?.members?.length ?? 0
+    })
 
     /** 顶部副标题：仅当群备注 ≠ 原群名时显示原群名（对齐微信 PC 双行 header） */
     const headerSubtitle = computed(() => {
-      const remark = groupInfo.value?.groupRemark;
-      const name = groupInfo.value?.name;
-      return remark && name && remark !== name ? name : '';
-    });
-    const showJumpToBottom = ref(false); // 当前是否已不在底部（显示"回到底部"按钮）
-    const newMessageCount = ref(0); // 不在底部期间累计的新消息数
+      const remark = groupInfo.value?.groupRemark
+      const name = groupInfo.value?.name
+      return remark && name && remark !== name ? name : ''
+    })
+    const showJumpToBottom = ref(false) // 当前是否已不在底部（显示"回到底部"按钮）
+    const newMessageCount = ref(0) // 不在底部期间累计的新消息数
 
     /**
      * 当前激活的群详情：优先 groupStore（带详细字段），未加载完时用 activeConversation 兜底
@@ -401,13 +442,13 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      * 必须等 store 就位才有值（这些字段在 conversation 里没有）
      */
     const groupInfo = computed(() => {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation || conversation.type !== ImConversationType.GROUP) {
-        return undefined;
+        return undefined
       }
-      const group = groupStore.getGroup(conversation.targetId);
-      const selfMember = group?.members?.find(member => member.userId === getCurrentUserId());
-      const showGroupName = group ? getGroupDisplayName(group) : conversation.name;
+      const group = groupStore.getGroup(conversation.targetId)
+      const selfMember = group?.members?.find(member => member.userId === getCurrentUserId())
+      const showGroupName = group ? getGroupDisplayName(group) : conversation.name
       return {
         id: conversation.targetId,
         name: group?.name || conversation.name,
@@ -419,19 +460,19 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
         ownerId: group?.ownerUserId,
         memberCount: group?.memberCount,
         joinApproval: group?.joinApproval
-      };
-    });
+      }
+    })
 
     // 群成员列表：直接取 groupStore 缓存，map 成 GroupMemberLite 给下游消费（@-mention / 邀请等）
     const groupMembers = computed(() => {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation || conversation.type !== ImConversationType.GROUP) {
-        return [];
+        return []
       }
-      const group = groupStore.getGroup(conversation.targetId);
+      const group = groupStore.getGroup(conversation.targetId)
       return (group?.members || []).map(member => {
         // 显示名走「好友备注 > 群备注 > 真实昵称」三级；头像走 nickname 保稳定
-        const friend = friendStore.getFriend(member.userId);
+        const friend = friendStore.getFriend(member.userId)
         return {
           userId: member.userId,
           showName: getMemberDisplayName(member, friend),
@@ -439,9 +480,9 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
           avatar: member.avatar,
           status: member.status,
           role: member.role
-        };
-      });
-    });
+        }
+      })
+    })
 
     /** 切换到群会话时同步群信息 + 成员 */
     async function ensureGroupData(groupId) {
@@ -449,153 +490,153 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       await groupStore.fetchGroupInfo(groupId).catch(error => {
         console.warn('[IM MessagePanel] fetchGroupInfo 失败', {
           groupId
-        }, error);
-      });
+        }, error)
+      })
       if (isGroupQuit(groupStore.getGroup(groupId))) {
-        return;
+        return
       }
 
       // 先从 IDB 同步加载群成员，让首帧立即出成员名 / 头像
       await groupStore.loadGroupMemberList(groupId).catch(error => {
         console.warn('[IM MessagePanel] loadGroupMemberList 失败', {
           groupId
-        }, error);
-        return null;
-      });
-      const group = groupStore.getGroup(groupId);
+        }, error)
+        return null
+      })
+      const group = groupStore.getGroup(groupId)
       if (!group?.membersLoaded || group.membersExpired) {
         groupStore.fetchGroupMemberList(groupId).catch(error => {
           console.warn('[IM MessagePanel] fetchGroupMemberList 失败', {
             groupId
-          }, error);
-        });
+          }, error)
+        })
       }
     }
 
     /** 群信息抽屉里点"刷新"：强拉一次最新群元数据 + 群成员 */
     function reloadGroupData() {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation || conversation.type !== ImConversationType.GROUP) {
-        return;
+        return
       }
-      void groupStore.fetchGroupInfo(conversation.targetId, true);
+      void groupStore.fetchGroupInfo(conversation.targetId, true)
       void groupStore.fetchGroupMemberList(conversation.targetId, true).catch(error => {
-        console.warn('[IM MessagePanel] 强制刷新群成员失败', error);
-      });
+        console.warn('[IM MessagePanel] 强制刷新群成员失败', error)
+      })
     }
 
     /** 历史消息抽屉 ref：「聊天历史」icon / 抽屉「查找聊天内容」入口都调 open() 触发 */
-    const historyDialogRef = ref();
-    const sideVisible = ref(false); // 信息抽屉开关：群聊 / 私聊共用一个 ref
-    const muteMemberDialogRef = ref();
-    const callMemberPickerRef = ref();
+    const historyDialogRef = ref()
+    const sideVisible = ref(false) // 信息抽屉开关：群聊 / 私聊共用一个 ref
+    const muteMemberDialogRef = ref()
+    const callMemberPickerRef = ref()
     /** 群通话发起：成员选择弹窗打开期间临时持有的 mediaType */
-    const pendingMediaType = ref(null);
+    const pendingMediaType = ref(null)
 
     /** 消息右键菜单「禁言」→ 打开时长选择弹窗 */
     function handleMuteMember(groupId, userId, displayName) {
-      muteMemberDialogRef.value?.open(groupId, userId, displayName);
+      muteMemberDialogRef.value?.open(groupId, userId, displayName)
     }
 
     /** 信息抽屉的 toggle：跟 header 上 3 点图标按钮共用 */
     function toggleSide() {
-      sideVisible.value = !sideVisible.value;
+      sideVisible.value = !sideVisible.value
     }
 
     /** 私聊通话入口：popover 触发；点 语音 / 视频 直接发起 */
-    const callPopoverVisible = ref(false);
-    const callInviting = ref(false); // 通话发起中
+    const callPopoverVisible = ref(false)
+    const callInviting = ref(false) // 通话发起中
     async function startPrivateCall(mediaType) {
-      callPopoverVisible.value = false;
-      const conversation = conversationStore.activeConversation;
+      callPopoverVisible.value = false
+      const conversation = conversationStore.activeConversation
       if (!conversation) {
-        return;
+        return
       }
       await doInvite({
         conversationType: ImConversationType.PRIVATE,
         mediaType,
         inviteeIds: [conversation.targetId]
-      });
+      })
     }
 
     /** 群通话入口：默认语音直接弹选人；与微信群通话一致，进通话后用户按需开摄像头 */
     function handleGroupCall() {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation) {
-        return;
+        return
       }
-      pendingMediaType.value = ImRtcCallMediaType.VOICE;
+      pendingMediaType.value = ImRtcCallMediaType.VOICE
       callMemberPickerRef.value?.open({
         groupId: conversation.targetId,
         mode: 'invite'
-      });
+      })
     }
 
     /** 选人弹窗确认；带选中 ID 发起群通话 */
     async function onCallMemberPicked(selectedIds) {
-      const conversation = conversationStore.activeConversation;
-      const mediaType = pendingMediaType.value;
-      pendingMediaType.value = null;
+      const conversation = conversationStore.activeConversation
+      const mediaType = pendingMediaType.value
+      pendingMediaType.value = null
       if (!conversation || mediaType == null || selectedIds.length === 0) {
-        return;
+        return
       }
       await doInvite({
         conversationType: ImConversationType.GROUP,
         mediaType,
         groupId: conversation.targetId,
         inviteeIds: selectedIds
-      });
+      })
     }
 
     /** 实际调 create 接口；统一处理成功 / ENDED（如忙线立即结束） */
     async function doInvite(reqVO) {
       if (callInviting.value) {
-        return;
+        return
       }
       if (rtcStore.isActive) {
-        message.warning('当前已有通话');
-        return;
+        message.warning('当前已有通话')
+        return
       }
-      callInviting.value = true;
-      const userId = getCurrentUserId();
+      callInviting.value = true
+      const userId = getCurrentUserId()
       try {
-        const data = (await createCall(reqVO)).data;
+        const data = (await createCall(reqVO)).data
         if (getCurrentUserId() !== userId || rtcStore.isActive && rtcStore.call?.room !== data.room) {
           if (getCurrentUserId() === userId) {
-            await leaveCall(data.room).catch(() => undefined);
+            await leaveCall(data.room).catch(() => undefined)
           }
-          return;
+          return
         }
         // 后端已 INSERT + 立即 end（如忙线）：toast 提示，不进 INVITING 阶段；chat tip 由 RTC_CALL_END 推送写入消息流
         if (data.status === ImRtcCallStatus.ENDED) {
-          message.warning(resolveCallEndReasonText(data.endReason));
-          return;
+          message.warning(resolveCallEndReasonText(data.endReason))
+          return
         }
         // 正常进入 INVITING 阶段：走 store 逻辑发起通话，后续状态更新 / 消息流更新由 RTC 模块监听推送处理
-        rtcStore.startInviting(data);
+        rtcStore.startInviting(data)
       } catch (error) {
-        console.warn('[IM MessagePanel] 发起通话失败', error);
+        console.warn('[IM MessagePanel] 发起通话失败', error)
       } finally {
-        callInviting.value = false;
+        callInviting.value = false
       }
     }
 
     /** 当前私聊对应的好友（抽屉头部展示用） */
     const privateFriend = computed(() => {
-      const conversation = conversationStore.activeConversation;
+      const conversation = conversationStore.activeConversation
       if (!conversation || conversation.type !== ImConversationType.PRIVATE) {
-        return undefined;
+        return undefined
       }
-      return friendStore.getFriend(conversation.targetId);
-    });
+      return friendStore.getFriend(conversation.targetId)
+    })
 
     /** 计算距离底部的像素 */
     function distanceFromBottom() {
-      const el = listRef.value;
+      const el = listRef.value
       if (!el) {
-        return 0;
+        return 0
       }
-      return el.scrollHeight - el.scrollTop - el.clientHeight;
+      return el.scrollHeight - el.scrollTop - el.clientHeight
     }
 
     /**
@@ -604,11 +645,11 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      * - 不在底部：显示"回到底部"浮窗，新消息会累计到 newMessageCount
      */
     function handleScroll() {
-      const dist = distanceFromBottom();
-      const atBottom = dist <= BOTTOM_THRESHOLD;
-      showJumpToBottom.value = !atBottom;
+      const dist = distanceFromBottom()
+      const atBottom = dist <= BOTTOM_THRESHOLD
+      showJumpToBottom.value = !atBottom
       if (atBottom) {
-        newMessageCount.value = 0;
+        newMessageCount.value = 0
       }
     }
 
@@ -620,36 +661,36 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
     async function scrollToBottom(smooth = false) {
       // 1. 滚到当前 scrollHeight 的底部（图片 / 视频还在加载时只是大致到底）
       // 1.1 等 v-for 把新消息真正渲染进 DOM 后再算 scrollHeight，否则差最后一条的位置
-      await nextTick();
+      await nextTick()
       if (!listRef.value) {
-        return;
+        return
       }
       // 1.2 触发滚动；smooth 仅 user 主动点「回到底部」用，初始 / 自动滚走 auto 避免动画拖拽感
       listRef.value.scrollTo({
         top: listRef.value.scrollHeight,
         behavior: smooth ? 'smooth' : 'auto'
-      });
-      newMessageCount.value = 0;
-      showJumpToBottom.value = false;
+      })
+      newMessageCount.value = 0
+      showJumpToBottom.value = false
       // 1.3 记下「期望停下的 scrollTop」；图片 / 视频加载完底部会上移，scrollTop 没动就说明用户没手动滚走
       //     不能用 distanceFromBottom 判断：底部上移会让 distance 变大，被误判为「用户滚走了」直接放弃补滚
-      const expectedScrollTop = listRef.value.scrollHeight - listRef.value.clientHeight;
+      const expectedScrollTop = listRef.value.scrollHeight - listRef.value.clientHeight
 
       // 2. 等媒体加载完后补滚到真实底部
       // 2.1 等容器内未加载完的图片 / 视频元数据；加载完后 scrollHeight 会增长到真实底部
-      await waitMediaSettled();
+      await waitMediaSettled()
       if (!listRef.value) {
-        return;
+        return
       }
       // 2.2 仅在用户没手动滚走时（scrollTop 仍贴近 expectedScrollTop）才补滚，避免等待期间用户上翻被打断
       if (Math.abs(listRef.value.scrollTop - expectedScrollTop) > BOTTOM_THRESHOLD) {
-        return;
+        return
       }
       // 2.3 补滚到新底部
       listRef.value.scrollTo({
         top: listRef.value.scrollHeight,
         behavior: 'auto'
-      });
+      })
     }
 
     /**
@@ -660,55 +701,55 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
     function waitMediaSettled() {
       // 1. 收集容器内未加载完的图片 / 视频
       if (!listRef.value) {
-        return Promise.resolve();
+        return Promise.resolve()
       }
       // 1.1 一次扫 img + video，按 element 类型分别看「complete / readyState」过滤 pending
-      const pendingMedia = Array.from(listRef.value.querySelectorAll('img, video')).filter(el => el instanceof HTMLImageElement ? !el.complete : el.readyState < 1);
+      const pendingMedia = Array.from(listRef.value.querySelectorAll('img, video')).filter(el => el instanceof HTMLImageElement ? !el.complete : el.readyState < 1)
       // 1.2 没有 pending 直接返回，省掉 Promise.race / setTimeout 闭包构造
       if (pendingMedia.length === 0) {
-        return Promise.resolve();
+        return Promise.resolve()
       }
 
       // 2. 等所有 pending 资源 load / error，最长 2s 兜底
       // 2.1 每个 element 都监听对应 loadedEvent + error，任一触发即 resolve（不让单条失败卡 race）
       const loadAll = Promise.all(pendingMedia.map(el => new Promise(resolve => {
-        const loadedEvent = el instanceof HTMLImageElement ? 'load' : 'loadedmetadata';
+        const loadedEvent = el instanceof HTMLImageElement ? 'load' : 'loadedmetadata'
         el.addEventListener(loadedEvent, () => resolve(), {
           once: true
-        });
+        })
         el.addEventListener('error', () => resolve(), {
           once: true
-        });
-      }))).then(() => undefined);
+        })
+      }))).then(() => undefined)
       // 2.2 2s 超时兜底，防止超大资源 / 网络挂起把整个滚动跟进永久卡住
-      const timeout = new Promise(resolve => setTimeout(resolve, 2000));
-      return Promise.race([loadAll, timeout]);
+      const timeout = new Promise(resolve => setTimeout(resolve, 2000))
+      return Promise.race([loadAll, timeout])
     }
 
     /** 加载并定位当前会话的未读 @ 消息 */
     async function handleLocateMention() {
-      const messageId = conversationStore.consumeActiveMentionMessageId();
-      const conversation = conversationStore.activeConversation;
+      const messageId = conversationStore.consumeActiveMentionMessageId()
+      const conversation = conversationStore.activeConversation
       if (!messageId || !conversation) {
-        return;
+        return
       }
-      const clientConversationId = getClientConversationId(conversation.type, conversation.targetId);
+      const clientConversationId = getClientConversationId(conversation.type, conversation.targetId)
       for (let guard = 0; guard < 50; guard++) {
-        const loadedMessages = messageStore.getMessages(clientConversationId);
+        const loadedMessages = messageStore.getMessages(clientConversationId)
         if (loadedMessages.some(item => item.id === messageId)) {
-          break;
+          break
         }
         const {
           hasMore
-        } = await messageStore.loadMoreMessageList(clientConversationId, 50);
+        } = await messageStore.loadMoreMessageList(clientConversationId, 50)
         if (messageStore.getMessages(clientConversationId).some(item => item.id === messageId)) {
-          break;
+          break
         }
         if (!hasMore) {
-          break;
+          break
         }
       }
-      await handleLocate(messageId);
+      await handleLocate(messageId)
     }
 
     /**
@@ -722,25 +763,25 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      */
     async function handleLocate(messageId) {
       if (!messageId) {
-        return;
+        return
       }
-      await nextTick();
+      await nextTick()
       if (!listRef.value) {
-        return;
+        return
       }
-      const target = listRef.value.querySelector(`[data-message-id="${messageId}"]`);
+      const target = listRef.value.querySelector(`[data-message-id="${messageId}"]`)
       if (!target) {
-        message.warning('原消息不在视野');
-        return;
+        message.warning('原消息不在视野')
+        return
       }
       target.scrollIntoView({
         behavior: 'smooth',
         block: 'center'
-      });
-      target.classList.add('message-panel__message-anchor--highlight');
+      })
+      target.classList.add('message-panel__message-anchor--highlight')
       setTimeout(() => {
-        target.classList.remove('message-panel__message-anchor--highlight');
-      }, 1600);
+        target.classList.remove('message-panel__message-anchor--highlight')
+      }, 1600)
     }
 
     /**
@@ -750,20 +791,20 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      */
     watch(() => messages.value.length, (newLen, oldLen) => {
       // 仅处理新增（delta > 0）；删除 / 撤回让 length 减少时不动滚动状态
-      const delta = (newLen || 0) - (oldLen || 0);
+      const delta = (newLen || 0) - (oldLen || 0)
       if (delta <= 0) {
-        return;
+        return
       }
       // 用 BOTTOM_THRESHOLD（80px）做容差：用户稍微往上翻几行就视作"不在底部"，
       // 否则一直 auto-scroll 会把人正在读的内容顶走，体验糟糕
-      const dist = distanceFromBottom();
+      const dist = distanceFromBottom()
       if (dist <= BOTTOM_THRESHOLD) {
-        scrollToBottom();
+        scrollToBottom()
       } else {
-        newMessageCount.value += delta;
-        showJumpToBottom.value = true;
+        newMessageCount.value += delta
+        showJumpToBottom.value = true
       }
-    });
+    })
 
     /**
      * 切换会话：清空"在不在底部"相关状态、强制滚到底部、群会话预拉资料
@@ -772,18 +813,18 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      */
     watch(() => [conversationStore.activeConversation?.type, conversationStore.activeConversation?.targetId], ([type, targetId]) => {
       // 切会话时上一会话的「未读累计 + 浮窗显示」必须清掉，否则会带到新会话里看起来很突兀
-      newMessageCount.value = 0;
-      showJumpToBottom.value = false;
+      newMessageCount.value = 0
+      showJumpToBottom.value = false
       // 抽屉里展示的群信息 / 好友信息属于上一会话，切会话时统一关掉
-      sideVisible.value = false;
-      scrollToBottom();
+      sideVisible.value = false
+      scrollToBottom()
       // 仅群聊预拉详情 / 成员（私聊对端在首屏 fetchFriendList 时就拉了）
       if (targetId && type === ImConversationType.GROUP) {
-        ensureGroupData(targetId);
+        ensureGroupData(targetId)
       }
     }, {
       immediate: true
-    });
+    })
     const __returned__ = {
       conversationStore,
       messageStore,
@@ -848,17 +889,17 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       RtcCallMemberPickerDialog,
       RtcGroupCallBanner,
       get ImRtcCallMediaType() {
-        return ImRtcCallMediaType;
+        return ImRtcCallMediaType
       }
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

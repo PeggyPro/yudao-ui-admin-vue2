@@ -1,7 +1,10 @@
 <!-- MES 班组列表 -->
 <template>
   <div class="app-container">
-    <doc-alert title="【排班】班组设置、节假日设置" url="https://doc.iocoder.cn/mes/cal/team/" />
+    <doc-alert
+      title="【排班】班组设置、节假日设置"
+      url="https://doc.iocoder.cn/mes/cal/team/"
+    />
 
     <el-form
       ref="queryForm"
@@ -11,20 +14,54 @@
       size="small"
       @submit.native.prevent
     >
-      <el-form-item label="班组编码" prop="code">
-        <el-input v-model="queryParams.code" placeholder="请输入班组编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="班组编码"
+        prop="code"
+      >
+        <el-input
+          v-model="queryParams.code"
+          placeholder="请输入班组编码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="班组名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入班组名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="班组名称"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入班组名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="班组类型" prop="calendarType">
-        <el-select v-model="queryParams.calendarType" placeholder="请选择班组类型" clearable>
-          <el-option v-for="dict in calendarTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+      <el-form-item
+        label="班组类型"
+        prop="calendarType"
+      >
+        <el-select
+          v-model="queryParams.calendarType"
+          placeholder="请选择班组类型"
+          clearable
+        >
+          <el-option
+            v-for="dict in calendarTypeOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['mes:cal-team:create']"
           type="primary"
@@ -43,24 +80,64 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="班组编码" align="center" prop="code" min-width="120">
-        <template v-slot="scope">
-          <el-button type="text" @click="openForm('detail', scope.row.id)">{{ scope.row.code }}</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="班组编码"
+        align="center"
+        prop="code"
+        min-width="120"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="openForm('detail', scope.row.id)"
+          >{{ scope.row.code }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="班组名称" align="center" prop="name" min-width="150" />
-      <el-table-column label="班组类型" align="center" prop="calendarType" min-width="100">
-        <template v-slot="scope">
-          <dict-tag :type="MES_CAL_CALENDAR_TYPE" :value="scope.row.calendarType" />
+      <el-table-column
+        label="班组名称"
+        align="center"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="班组类型"
+        align="center"
+        prop="calendarType"
+        min-width="100"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="MES_CAL_CALENDAR_TYPE"
+            :value="scope.row.calendarType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" min-width="150" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        min-width="150"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="150">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="150"
+      >
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['mes:cal-team:update']"
             type="text"
@@ -84,7 +161,10 @@
       @pagination="getList"
     />
 
-    <cal-team-form ref="form" @success="getList" />
+    <cal-team-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

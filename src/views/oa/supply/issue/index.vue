@@ -13,7 +13,10 @@
         label-width="80px"
         @submit.native.prevent
       >
-        <el-form-item label="物品名称" prop="itemName">
+        <el-form-item
+          label="物品名称"
+          prop="itemName"
+        >
           <el-input
             v-model="queryParams.itemName"
             placeholder="请输入物品名称"
@@ -22,7 +25,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="申请人" prop="creatorName">
+        <el-form-item
+          label="申请人"
+          prop="creatorName"
+        >
           <el-input
             v-model="queryParams.creatorName"
             placeholder="请输入申请人"
@@ -31,7 +37,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="管理类型" prop="manageType">
+        <el-form-item
+          label="管理类型"
+          prop="manageType"
+        >
           <el-select
             v-model="queryParams.manageType"
             placeholder="请选择管理类型"
@@ -46,7 +55,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="使用类型" prop="useType">
+        <el-form-item
+          label="使用类型"
+          prop="useType"
+        >
           <el-select
             v-model="queryParams.useType"
             placeholder="请选择使用类型"
@@ -61,7 +73,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="申请时间" prop="createTime">
+        <el-form-item
+          label="申请时间"
+          prop="createTime"
+        >
           <el-date-picker
             v-model="queryParams.createTime"
             type="daterange"
@@ -74,41 +89,128 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </content-wrap>
     <!-- 列表 -->
     <content-wrap>
-      <el-table v-loading="loading" :data="list" border stripe>
-        <el-table-column label="申请单号" prop="no" min-width="160" />
-        <el-table-column label="申请人" prop="creatorName" min-width="100" />
-        <el-table-column label="申请部门" prop="deptName" min-width="120" />
-        <el-table-column label="使用类型" width="100" align="center">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        stripe
+      >
+        <el-table-column
+          label="申请单号"
+          prop="no"
+          min-width="160"
+        />
+        <el-table-column
+          label="申请人"
+          prop="creatorName"
+          min-width="100"
+        />
+        <el-table-column
+          label="申请部门"
+          prop="deptName"
+          min-width="120"
+        />
+        <el-table-column
+          label="使用类型"
+          width="100"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_USE_TYPE" :value="scope.row.useType" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_USE_TYPE"
+              :value="scope.row.useType"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="物品名称" prop="itemName" min-width="140" />
-        <el-table-column label="规格型号" prop="model" min-width="100" />
-        <el-table-column label="计量单位" prop="unit" width="80" align="center" />
-        <el-table-column label="管理类型" width="100" align="center">
+        <el-table-column
+          label="物品名称"
+          prop="itemName"
+          min-width="140"
+        />
+        <el-table-column
+          label="规格型号"
+          prop="model"
+          min-width="100"
+        />
+        <el-table-column
+          label="计量单位"
+          prop="unit"
+          width="80"
+          align="center"
+        />
+        <el-table-column
+          label="管理类型"
+          width="100"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE" :value="scope.row.manageType" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE"
+              :value="scope.row.manageType"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="申请数量" prop="applyQuantity" width="80" align="center" />
-        <el-table-column label="实发数量" prop="issuedQuantity" width="80" align="center" />
-        <el-table-column label="已归还" prop="returnedQuantity" width="80" align="center" />
-        <el-table-column label="状态" width="120" align="center">
+        <el-table-column
+          label="申请数量"
+          prop="applyQuantity"
+          width="80"
+          align="center"
+        />
+        <el-table-column
+          label="实发数量"
+          prop="issuedQuantity"
+          width="80"
+          align="center"
+        />
+        <el-table-column
+          label="已归还"
+          prop="returnedQuantity"
+          width="80"
+          align="center"
+        />
+        <el-table-column
+          label="状态"
+          width="120"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_ITEM_STATUS" :value="scope.row.status" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_ITEM_STATUS"
+              :value="scope.row.status"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="发放人" prop="issueUserName" min-width="100" />
-        <el-table-column label="发放时间" prop="issueTime" :formatter="dateFormatter" width="180" />
-        <el-table-column label="操作" fixed="right" width="80" align="center">
+        <el-table-column
+          label="发放人"
+          prop="issueUserName"
+          min-width="100"
+        />
+        <el-table-column
+          label="发放时间"
+          prop="issueTime"
+          :formatter="dateFormatter"
+          width="180"
+        />
+        <el-table-column
+          label="操作"
+          fixed="right"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.status === 0"
@@ -137,9 +239,15 @@
       />
     </content-wrap>
     <!-- 发放弹窗 -->
-    <oa-supply-issue-form ref="issueForm" @success="getList" />
+    <oa-supply-issue-form
+      ref="issueForm"
+      @success="getList"
+    />
     <!-- 归还弹窗 -->
-    <oa-supply-return-form ref="returnForm" @success="getList" />
+    <oa-supply-return-form
+      ref="returnForm"
+      @success="getList"
+    />
   </div>
 </template>
 

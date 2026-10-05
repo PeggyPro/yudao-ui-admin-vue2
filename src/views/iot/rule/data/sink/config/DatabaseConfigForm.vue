@@ -1,56 +1,85 @@
 <template>
-<div class="iot-vue2-root">
+  <div class="iot-vue2-root">
 
-  <el-form-item label="JDBC 地址" prop="config.jdbcUrl">
-    <el-input
-      v-model="config.jdbcUrl"
-      placeholder="请输入JDBC连接地址，如：jdbc:mysql://localhost:3306/iot_data"
-    />
-  </el-form-item>
-  <el-form-item label="用户名" prop="config.username">
-    <el-input v-model="config.username" placeholder="请输入数据库用户名" />
-  </el-form-item>
-  <el-form-item label="密码" prop="config.password">
-    <el-input
-      v-model="config.password"
-      placeholder="请输入数据库密码"
-      show-password
-      type="password"
-    />
-  </el-form-item>
-  <el-form-item label="目标表名" prop="config.tableName">
-    <div style="display: flex; align-items: center; gap: 12px; width: 100%">
-      <el-input v-model="config.tableName" placeholder="目标表名" style="width: 240px" />
-      <el-button type="text" @click="toggleSqlTip">
-        <i :class="showSqlTip ? 'el-icon-arrow-up mr-1' : 'el-icon-document mr-1'"></i>
-        {{ showSqlTip ? '收起表结构提示' : '查看表结构提示' }}
-      </el-button>
-    </div>
-  </el-form-item>
-
-  <!-- Redesigned Terminal-style SQL snippet -->
-  <el-collapse-transition>
-    <div v-show="showSqlTip" class="terminal-card">
-      <div class="terminal-header">
-        <div class="terminal-dots">
-          <div class="dot red"></div>
-          <div class="dot yellow"></div>
-          <div class="dot green"></div>
-        </div>
-        <div class="terminal-title">Initialization Required</div>
-        <button class="terminal-copy-btn" type="button" @click="handleCopySQL">
-          <i :class="isCopied ? 'el-icon-check copy-icon' : 'el-icon-document-copy copy-icon'"></i>
-          {{ isCopied ? '已复制' : 'Copy SQL' }}
-        </button>
+    <el-form-item
+      label="JDBC 地址"
+      prop="config.jdbcUrl"
+    >
+      <el-input
+        v-model="config.jdbcUrl"
+        placeholder="请输入JDBC连接地址，如：jdbc:mysql://localhost:3306/iot_data"
+      />
+    </el-form-item>
+    <el-form-item
+      label="用户名"
+      prop="config.username"
+    >
+      <el-input
+        v-model="config.username"
+        placeholder="请输入数据库用户名"
+      />
+    </el-form-item>
+    <el-form-item
+      label="密码"
+      prop="config.password"
+    >
+      <el-input
+        v-model="config.password"
+        placeholder="请输入数据库密码"
+        show-password
+        type="password"
+      />
+    </el-form-item>
+    <el-form-item
+      label="目标表名"
+      prop="config.tableName"
+    >
+      <div style="display: flex; align-items: center; gap: 12px; width: 100%">
+        <el-input
+          v-model="config.tableName"
+          placeholder="目标表名"
+          style="width: 240px"
+        />
+        <el-button
+          type="text"
+          @click="toggleSqlTip"
+        >
+          <i :class="showSqlTip ? 'el-icon-arrow-up mr-1' : 'el-icon-document mr-1'" />
+          {{ showSqlTip ? '收起表结构提示' : '查看表结构提示' }}
+        </el-button>
       </div>
-      <div class="terminal-body">
-        <div class="terminal-desc">
-          ✨ 目标数据库必须包含以下结构的表，才能正常接收数据流转的消息：
+    </el-form-item>
+
+    <!-- Redesigned Terminal-style SQL snippet -->
+    <el-collapse-transition>
+      <div
+        v-show="showSqlTip"
+        class="terminal-card"
+      >
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <div class="dot red" />
+            <div class="dot yellow" />
+            <div class="dot green" />
+          </div>
+          <div class="terminal-title">Initialization Required</div>
+          <button
+            class="terminal-copy-btn"
+            type="button"
+            @click="handleCopySQL"
+          >
+            <i :class="isCopied ? 'el-icon-check copy-icon' : 'el-icon-document-copy copy-icon'" />
+            {{ isCopied ? '已复制' : 'Copy SQL' }}
+          </button>
         </div>
-        <div class="terminal-code-wrapper">
-          <pre
-            class="terminal-code"
-          ><code><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="identifier">iot_device_message_sink</span> (
+        <div class="terminal-body">
+          <div class="terminal-desc">
+            ✨ 目标数据库必须包含以下结构的表，才能正常接收数据流转的消息：
+          </div>
+          <div class="terminal-code-wrapper">
+            <pre
+              class="terminal-code"
+            ><code><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="identifier">iot_device_message_sink</span> (
     <span class="identifier">id</span> <span class="type">VARCHAR</span>(64) <span class="kw">NOT NULL COMMENT</span> <span class="string">'消息ID'</span>,
     <span class="identifier">device_id</span> <span class="type">BIGINT</span> <span class="kw">NOT NULL COMMENT</span> <span class="string">'设备编号'</span>,
     <span class="identifier">tenant_id</span> <span class="type">BIGINT</span> <span class="kw">NOT NULL DEFAULT</span> <span class="num">0</span> <span class="kw">COMMENT</span> <span class="string">'租户编号'</span>,
@@ -61,21 +90,21 @@
     <span class="kw">PRIMARY KEY</span> (<span class="identifier">id</span>) <span class="kw">USING BTREE</span>,
     <span class="kw">INDEX</span> <span class="identifier">idx_create_time</span> (<span class="identifier">create_time</span> <span class="kw">ASC</span>) <span class="kw">USING BTREE</span>
 ) <span class="kw">ENGINE</span> = <span class="identifier">InnoDB</span> <span class="kw">CHARACTER SET</span> = <span class="identifier">utf8mb4</span> <span class="kw">COLLATE</span> = <span class="identifier">utf8mb4_unicode_ci</span> <span class="kw">COMMENT</span> = <span class="string">'IoT 设备消息流转目标表'</span>;</code></pre>
+          </div>
         </div>
       </div>
-    </div>
-  </el-collapse-transition>
+    </el-collapse-transition>
 
-</div>
+  </div>
 </template>
 <script>
-import '@/views/iot/styles/vue2.css';
-import { createIotMessage } from '@/views/iot/utils/ui';
-import { defineComponent as _defineComponent } from 'vue';
-import { onMounted, ref } from 'vue';
-import { IotDataSinkTypeEnum } from '@/api/iot/rule/data/sink';
-import { useClipboard, useVModel } from '@/views/iot/utils/composables';
-import { isEmpty } from '@/utils/is';
+import '@/views/iot/styles/vue2.css'
+import { createIotMessage } from '@/views/iot/utils/ui'
+import { defineComponent as _defineComponent } from 'vue'
+import { onMounted, ref } from 'vue'
+import { IotDataSinkTypeEnum } from '@/api/iot/rule/data/sink'
+import { useClipboard, useVModel } from '@/views/iot/utils/composables'
+import { isEmpty } from '@/utils/is'
 const rawSQL = `CREATE TABLE iot_device_message_sink (
     id VARCHAR(64) NOT NULL COMMENT '消息ID',
     device_id BIGINT NOT NULL COMMENT '设备编号',
@@ -86,52 +115,52 @@ const rawSQL = `CREATE TABLE iot_device_message_sink (
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     PRIMARY KEY (id) USING BTREE,
     INDEX idx_create_time (create_time ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'IoT 设备消息流转目标表';`;
-export default /*@__PURE__*/ _defineComponent({
-    ...{ name: 'DatabaseConfigForm' },
-    __name: 'DatabaseConfigForm',
-    props: {
-        value: { type: null, required: true }
-    },
-    emits: ['input'],
-    setup(__props, { expose: __expose, emit: __emit }) {
-        __expose();
-        const props = __props;
-        const emit = __emit;
-        const config = useVModel(props, 'value', emit);
-        const message = createIotMessage();
-        const isCopied = ref(false);
-        const showSqlTip = ref(false);
-        const { copy } = useClipboard();
-        const toggleSqlTip = () => {
-            showSqlTip.value = !showSqlTip.value;
-        };
-        const handleCopySQL = async () => {
-            await copy(rawSQL);
-            isCopied.value = true;
-            message.success('建表 SQL 已复制到剪贴板');
-            setTimeout(() => {
-                isCopied.value = false;
-            }, 2000);
-        };
-        /** 组件初始化 */
-        onMounted(() => {
-            if (!isEmpty(config.value)) {
-                return;
-            }
-            config.value = {
-                type: IotDataSinkTypeEnum.DATABASE + '', // 序列化成对应类型时使用
-                jdbcUrl: '',
-                username: '',
-                password: '',
-                tableName: 'iot_device_message_sink'
-            };
-        });
-        const __returned__ = { props, emit, config, message, rawSQL, isCopied, showSqlTip, copy, toggleSqlTip, handleCopySQL };
-        Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true });
-        return __returned__;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'IoT 设备消息流转目标表';`
+export default /* @__PURE__*/ _defineComponent({
+  ...{ name: 'DatabaseConfigForm' },
+  __name: 'DatabaseConfigForm',
+  props: {
+    value: { type: null, required: true }
+  },
+  emits: ['input'],
+  setup(__props, { expose: __expose, emit: __emit }) {
+    __expose()
+    const props = __props
+    const emit = __emit
+    const config = useVModel(props, 'value', emit)
+    const message = createIotMessage()
+    const isCopied = ref(false)
+    const showSqlTip = ref(false)
+    const { copy } = useClipboard()
+    const toggleSqlTip = () => {
+      showSqlTip.value = !showSqlTip.value
     }
-});
+    const handleCopySQL = async() => {
+      await copy(rawSQL)
+      isCopied.value = true
+      message.success('建表 SQL 已复制到剪贴板')
+      setTimeout(() => {
+        isCopied.value = false
+      }, 2000)
+    }
+    /** 组件初始化 */
+    onMounted(() => {
+      if (!isEmpty(config.value)) {
+        return
+      }
+      config.value = {
+        type: IotDataSinkTypeEnum.DATABASE + '', // 序列化成对应类型时使用
+        jdbcUrl: '',
+        username: '',
+        password: '',
+        tableName: 'iot_device_message_sink'
+      }
+    })
+    const __returned__ = { props, emit, config, message, rawSQL, isCopied, showSqlTip, copy, toggleSqlTip, handleCopySQL }
+    Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+    return __returned__
+  }
+})
 
 </script>
 <style scoped>

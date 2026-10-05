@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="800px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="800px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -10,8 +15,15 @@
       <!-- 基础信息 -->
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-form-item label="笔记类型" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择笔记类型" style="width: 100%">
+          <el-form-item
+            label="笔记类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择笔记类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -22,8 +34,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="优先级" prop="priority">
-            <el-select v-model="formData.priority" placeholder="请选择优先级" style="width: 100%">
+          <el-form-item
+            label="优先级"
+            prop="priority"
+          >
+            <el-select
+              v-model="formData.priority"
+              placeholder="请选择优先级"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in priorityOptions"
                 :key="item.value"
@@ -34,13 +53,22 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="笔记目录" prop="categoryId">
-            <oa-note-category-select v-model="formData.categoryId" style="width: 100%" />
+          <el-form-item
+            label="笔记目录"
+            prop="categoryId"
+          >
+            <oa-note-category-select
+              v-model="formData.categoryId"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <!-- 笔记内容 -->
-      <el-form-item label="笔记标题" prop="title">
+      <el-form-item
+        label="笔记标题"
+        prop="title"
+      >
         <el-input
           v-model="formData.title"
           placeholder="请输入笔记标题"
@@ -48,23 +76,37 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="笔记内容" prop="content">
-        <Editor ref="editorRef" v-model="formData.content" height="280px" />
+      <el-form-item
+        label="笔记内容"
+        prop="content"
+      >
+        <Editor
+          ref="editorRef"
+          v-model="formData.content"
+          height="280px"
+        />
       </el-form-item>
       <el-form-item label="附件">
         <UploadFile v-model="formData.fileUrls" />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as NoteApi from '@/api/oa/note'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import Editor from '@/components/Editor'
 import UploadFile from '@/components/UploadFile'
 import OaNoteCategorySelect from './components/OaNoteCategorySelect.vue'
@@ -85,7 +127,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaNoteForm',
-  components: { Dialog, Editor, UploadFile, OaNoteCategorySelect },
+  components: { AppDialog, Editor, UploadFile, OaNoteCategorySelect },
   data() {
     return {
       dialogVisible: false,

@@ -9,7 +9,6 @@ export function createChannel(data) {
   })
 }
 
-
 // 更新支付渠道
 export function updateChannel(data) {
   return request({
@@ -32,10 +31,10 @@ export function getChannel(appId, code) {
   return request({
     url: '/pay/channel/get',
     method: 'get',
-    params:{
+    params: {
       appId,
       code
-    },
+    }
   })
 }
 

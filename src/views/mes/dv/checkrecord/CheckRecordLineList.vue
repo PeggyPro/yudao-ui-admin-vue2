@@ -1,23 +1,121 @@
 <!-- MES 设备点检记录明细列表 -->
 <template>
   <div>
-    <el-row v-if="!disabled" class="operation-row"><el-button type="primary" plain icon="el-icon-plus" @click="openForm('create')">添加明细</el-button></el-row>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="项目编码" align="center" prop="subjectCode" /><el-table-column label="项目名称" align="center" prop="subjectName" />
-      <el-table-column label="检查内容" align="center" prop="subjectContent" /><el-table-column label="检查标准" align="center" prop="subjectStandard" />
-      <el-table-column label="点检结果" align="center" prop="checkStatus"><template v-slot="scope"><dict-tag :type="MES_DV_CHECK_RESULT" :value="scope.row.checkStatus" /></template></el-table-column>
-      <el-table-column label="异常描述" align="center" prop="checkResult" />
-      <el-table-column v-if="!disabled" label="操作" align="center" width="130"><template v-slot="scope"><el-button type="text" size="mini" @click="openForm('update', scope.row)">编辑</el-button><el-button type="text" size="mini" @click="handleDelete(scope.row.id)">删除</el-button></template></el-table-column>
+    <el-row
+      v-if="!disabled"
+      class="operation-row"
+    ><el-button
+      type="primary"
+      plain
+      icon="el-icon-plus"
+      @click="openForm('create')"
+    >添加明细</el-button></el-row>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="项目编码"
+        align="center"
+        prop="subjectCode"
+      /><el-table-column
+        label="项目名称"
+        align="center"
+        prop="subjectName"
+      />
+      <el-table-column
+        label="检查内容"
+        align="center"
+        prop="subjectContent"
+      /><el-table-column
+        label="检查标准"
+        align="center"
+        prop="subjectStandard"
+      />
+      <el-table-column
+        label="点检结果"
+        align="center"
+        prop="checkStatus"
+      ><template slot-scope="scope"><dict-tag
+        :type="MES_DV_CHECK_RESULT"
+        :value="scope.row.checkStatus"
+      /></template></el-table-column>
+      <el-table-column
+        label="异常描述"
+        align="center"
+        prop="checkResult"
+      />
+      <el-table-column
+        v-if="!disabled"
+        label="操作"
+        align="center"
+        width="130"
+      ><template slot-scope="scope"><el-button
+        type="text"
+        size="mini"
+        @click="openForm('update', scope.row)"
+      >编辑</el-button><el-button
+        type="text"
+        size="mini"
+        @click="handleDelete(scope.row.id)"
+      >删除</el-button></template></el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
-    <el-dialog :title="formTitle" :visible.sync="formVisible" width="500px" append-to-body>
-      <el-form ref="form" :model="formData" :rules="formRules" label-width="80px">
-        <el-form-item label="点检项目" prop="subjectId"><dv-subject-select v-model="formData.subjectId" /></el-form-item>
-        <el-form-item label="点检结果" prop="checkStatus"><el-radio-group v-model="formData.checkStatus"><el-radio v-for="dict in resultOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio></el-radio-group></el-form-item>
-        <el-form-item v-if="formData.checkStatus === MesDvCheckResultEnum.ABNORMAL" label="异常描述" prop="checkResult"><el-input v-model="formData.checkResult" type="textarea" placeholder="请输入异常描述" /></el-form-item>
-        <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+    <el-dialog
+      :title="formTitle"
+      :visible.sync="formVisible"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="formRules"
+        label-width="80px"
+      >
+        <el-form-item
+          label="点检项目"
+          prop="subjectId"
+        ><dv-subject-select v-model="formData.subjectId" /></el-form-item>
+        <el-form-item
+          label="点检结果"
+          prop="checkStatus"
+        ><el-radio-group v-model="formData.checkStatus"><el-radio
+          v-for="dict in resultOptions"
+          :key="dict.value"
+          :label="dict.value"
+        >{{ dict.label }}</el-radio></el-radio-group></el-form-item>
+        <el-form-item
+          v-if="formData.checkStatus === MesDvCheckResultEnum.ABNORMAL"
+          label="异常描述"
+          prop="checkResult"
+        ><el-input
+          v-model="formData.checkResult"
+          type="textarea"
+          placeholder="请输入异常描述"
+        /></el-form-item>
+        <el-form-item
+          label="备注"
+          prop="remark"
+        ><el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        /></el-form-item>
       </el-form>
-      <span slot="footer"><el-button @click="formVisible = false">取 消</el-button><el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button></span>
+      <span slot="footer"><el-button @click="formVisible = false">取 消</el-button><el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button></span>
     </el-dialog>
   </div>
 </template>

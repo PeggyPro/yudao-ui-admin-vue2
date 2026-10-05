@@ -1,8 +1,18 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="凭证模板库" width="680px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="凭证模板库"
+    width="680px"
+  >
     <el-form :inline="true">
       <el-form-item label="模板分类">
-        <el-select v-model="categoryId" clearable placeholder="全部分类" style="width: 200px">
+        <el-select
+          v-model="categoryId"
+          clearable
+          placeholder="全部分类"
+          style="width: 200px"
+        >
           <el-option
             v-for="item in categories"
             :key="item.id"
@@ -20,14 +30,35 @@
       stripe
       @row-dblclick="selectTemplate"
     >
-      <el-table-column label="分类" min-width="180" prop="categoryName" show-overflow-tooltip />
-      <el-table-column label="模板名称" min-width="260" prop="name" show-overflow-tooltip />
-      <el-table-column align="center" label="分录数" width="90">
+      <el-table-column
+        label="分类"
+        min-width="180"
+        prop="categoryName"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="模板名称"
+        min-width="260"
+        prop="name"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        align="center"
+        label="分录数"
+        width="90"
+      >
         <template slot-scope="scope">{{ (scope.row.entries || []).length }}</template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="130">
+      <el-table-column
+        align="center"
+        label="操作"
+        width="130"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="selectTemplate(scope.row)">套用</el-button>
+          <el-button
+            type="text"
+            @click="selectTemplate(scope.row)"
+          >套用</el-button>
           <el-button
             v-if="isWritable"
             v-hasPermi="['fms:config:voucher-template:delete']"

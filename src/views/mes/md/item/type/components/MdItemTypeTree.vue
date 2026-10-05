@@ -1,8 +1,24 @@
 <!-- MES 物料分类树面板 -->
 <template>
   <div>
-    <el-input v-model="filterText" placeholder="搜索分类" clearable prefix-icon="el-icon-search" class="filter" />
-    <el-tree ref="tree" :data="treeData" :props="treeProps" :expand-on-click-node="false" :filter-node-method="filterNode" default-expand-all highlight-current node-key="id" @node-click="handleNodeClick" />
+    <el-input
+      v-model="filterText"
+      placeholder="搜索分类"
+      clearable
+      prefix-icon="el-icon-search"
+      class="filter"
+    />
+    <el-tree
+      ref="tree"
+      :data="treeData"
+      :props="treeProps"
+      :expand-on-click-node="false"
+      :filter-node-method="filterNode"
+      default-expand-all
+      highlight-current
+      node-key="id"
+      @node-click="handleNodeClick"
+    />
   </div>
 </template>
 

@@ -1,8 +1,19 @@
 <template>
   <div class="app-container">
-    <doc-alert title="【PMS】文档与协作" url="https://doc.iocoder.cn/pms/kb/document/" />
-    <el-form ref="queryForm" :inline="true" :model="queryParams" label-width="68px">
-      <el-form-item label="关键字" prop="keyword">
+    <doc-alert
+      title="【PMS】文档与协作"
+      url="https://doc.iocoder.cn/pms/kb/document/"
+    />
+    <el-form
+      ref="queryForm"
+      :inline="true"
+      :model="queryParams"
+      label-width="68px"
+    >
+      <el-form-item
+        label="关键字"
+        prop="keyword"
+      >
         <el-input
           v-model="queryParams.keyword"
           clearable
@@ -11,21 +22,30 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="知识库" prop="libraryId">
+      <el-form-item
+        label="知识库"
+        prop="libraryId"
+      >
         <knowledge-library-select
           v-model="queryParams.libraryId"
           placeholder="请选择知识库"
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="创建人" prop="creatorUserId">
+      <el-form-item
+        label="创建人"
+        prop="creatorUserId"
+      >
         <user-select
           v-model="queryParams.creatorUserId"
           placeholder="请选择创建人"
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="更新时间" prop="updateTime">
+      <el-form-item
+        label="更新时间"
+        prop="updateTime"
+      >
         <el-date-picker
           v-model="queryParams.updateTime"
           :default-time="['00:00:00', '23:59:59']"
@@ -38,33 +58,70 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" border stripe>
-      <el-table-column label="文档标题" min-width="280">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      border
+      stripe
+    >
+      <el-table-column
+        label="文档标题"
+        min-width="280"
+      >
         <template slot-scope="scope">
-          <el-link type="primary" @click="openDocumentDetail(scope.row)">
+          <el-link
+            type="primary"
+            @click="openDocumentDetail(scope.row)"
+          >
             {{ scope.row.title }}
           </el-link>
-          <span v-if="scope.row.fileSize != null" class="file-size">
+          <span
+            v-if="scope.row.fileSize != null"
+            class="file-size"
+          >
             （{{ formatKnowledgeFileSize(scope.row.fileSize) }}）
           </span>
           <div
             v-if="scope.row.contentSummary"
             v-dompurify-html="highlightSummary(scope.row.contentSummary)"
             class="content-summary"
-          ></div>
+          />
         </template>
       </el-table-column>
-      <el-table-column label="知识库" min-width="180" prop="libraryName" />
-      <el-table-column align="center" label="类型" width="130">
+      <el-table-column
+        label="知识库"
+        min-width="180"
+        prop="libraryName"
+      />
+      <el-table-column
+        align="center"
+        label="类型"
+        width="130"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.PMS_KNOWLEDGE_DOCUMENT_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.PMS_KNOWLEDGE_DOCUMENT_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="创建人" prop="creatorUserName" width="130" />
+      <el-table-column
+        label="创建人"
+        prop="creatorUserName"
+        width="130"
+      />
       <el-table-column
         :formatter="dateFormatter"
         align="center"

@@ -4,6 +4,6 @@ import request from '@/utils/request'
 export function getSkuOptionList() {
   return request({
     url: '/product/sku/get-option-list',
-    method: 'get',
+    method: 'get'
   })
 }

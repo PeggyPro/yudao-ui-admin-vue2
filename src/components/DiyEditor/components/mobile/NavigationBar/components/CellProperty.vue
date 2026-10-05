@@ -9,66 +9,132 @@
         class="cell-cube"
         @hotAreaSelected="handleHotAreaSelected"
       />
-      <img v-if="isMp" alt="" class="mp-capsule" src="@/assets/imgs/diy/app-nav-bar-mp.svg" />
+      <img
+        v-if="isMp"
+        alt=""
+        class="mp-capsule"
+        src="@/assets/imgs/diy/app-nav-bar-mp.svg"
+      >
     </div>
     <template v-for="(cell, cellIndex) in cellList">
-      <div v-if="selectedHotAreaIndex === cellIndex" :key="cellIndex">
-        <el-form-item :prop="getCellProp(cellIndex, 'type')" label="类型">
-          <el-radio-group v-model="cell.type" @change="handleHotAreaSelected(cell, cellIndex)">
+      <div
+        v-if="selectedHotAreaIndex === cellIndex"
+        :key="cellIndex"
+      >
+        <el-form-item
+          :prop="getCellProp(cellIndex, 'type')"
+          label="类型"
+        >
+          <el-radio-group
+            v-model="cell.type"
+            @change="handleHotAreaSelected(cell, cellIndex)"
+          >
             <el-radio label="text">文字</el-radio>
             <el-radio label="image">图片</el-radio>
             <el-radio label="search">搜索框</el-radio>
           </el-radio-group>
         </el-form-item>
         <template v-if="cell.type === 'text'">
-          <el-form-item :prop="getCellProp(cellIndex, 'text')" label="内容">
-            <el-input v-model="cell.text" maxlength="10" show-word-limit />
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'text')"
+            label="内容"
+          >
+            <el-input
+              v-model="cell.text"
+              maxlength="10"
+              show-word-limit
+            />
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'textColor')" label="颜色">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'textColor')"
+            label="颜色"
+          >
             <ColorInput v-model="cell.textColor" />
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'url')" label="链接">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'url')"
+            label="链接"
+          >
             <AppLinkInput v-model="cell.url" />
           </el-form-item>
         </template>
         <template v-else-if="cell.type === 'image'">
-          <el-form-item :prop="getCellProp(cellIndex, 'imgUrl')" label="图片">
-            <UploadImg v-model="cell.imgUrl" :limit="1" height="56px" width="56px">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'imgUrl')"
+            label="图片"
+          >
+            <UploadImg
+              v-model="cell.imgUrl"
+              :limit="1"
+              height="56px"
+              width="56px"
+            >
               <template slot="tip">建议尺寸 56*56</template>
             </UploadImg>
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'url')" label="链接">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'url')"
+            label="链接"
+          >
             <AppLinkInput v-model="cell.url" />
           </el-form-item>
         </template>
         <template v-else>
-          <el-form-item :prop="getCellProp(cellIndex, 'backgroundColor')" label="框体颜色">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'backgroundColor')"
+            label="框体颜色"
+          >
             <ColorInput v-model="cell.backgroundColor" />
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'textColor')" label="文本颜色">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'textColor')"
+            label="文本颜色"
+          >
             <ColorInput v-model="cell.textColor" />
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'placeholder')" label="提示文字">
-            <el-input v-model="cell.placeholder" maxlength="10" show-word-limit />
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'placeholder')"
+            label="提示文字"
+          >
+            <el-input
+              v-model="cell.placeholder"
+              maxlength="10"
+              show-word-limit
+            />
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'placeholderPosition')" label="文本位置">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'placeholderPosition')"
+            label="文本位置"
+          >
             <el-radio-group v-model="cell.placeholderPosition">
-              <el-tooltip content="居左" placement="top">
+              <el-tooltip
+                content="居左"
+                placement="top"
+              >
                 <el-radio-button label="left">
                   <svg-icon icon-class="ant-design:align-left-outlined" />
                 </el-radio-button>
               </el-tooltip>
-              <el-tooltip content="居中" placement="top">
+              <el-tooltip
+                content="居中"
+                placement="top"
+              >
                 <el-radio-button label="center">
                   <svg-icon icon-class="ant-design:align-center-outlined" />
                 </el-radio-button>
               </el-tooltip>
             </el-radio-group>
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'showScan')" label="扫一扫">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'showScan')"
+            label="扫一扫"
+          >
             <el-switch v-model="cell.showScan" />
           </el-form-item>
-          <el-form-item :prop="getCellProp(cellIndex, 'borderRadius')" label="圆角">
+          <el-form-item
+            :prop="getCellProp(cellIndex, 'borderRadius')"
+            label="圆角"
+          >
             <el-slider
               v-model="cell.borderRadius"
               :max="100"

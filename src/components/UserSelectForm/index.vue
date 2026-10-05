@@ -6,7 +6,10 @@
     append-to-body
     @closed="resetForm"
   >
-    <el-row :gutter="16" v-loading="formLoading">
+    <el-row
+      v-loading="formLoading"
+      :gutter="16"
+    >
       <el-col :span="6">
         <el-card
           shadow="never"

@@ -1,8 +1,19 @@
 <template>
-  <el-popover placement="bottom-end" trigger="hover" width="360">
-    <el-button slot="reference" type="text">快捷键</el-button>
+  <el-popover
+    placement="bottom-end"
+    trigger="hover"
+    width="360"
+  >
+    <el-button
+      slot="reference"
+      type="text"
+    >快捷键</el-button>
     <div class="shortcut-title">凭证录入快捷键</div>
-    <div v-for="item in shortcuts" :key="item.name" class="shortcut-row">
+    <div
+      v-for="item in shortcuts"
+      :key="item.name"
+      class="shortcut-row"
+    >
       <span>{{ item.name }}</span>
       <kbd>{{ item.key }}</kbd>
     </div>

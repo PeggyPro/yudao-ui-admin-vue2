@@ -1,6 +1,21 @@
 <template>
-  <el-select :value="value" :clearable="clearable" :disabled="disabled" :filterable="filterable" :loading="loading" :multiple="multiple" :placeholder="placeholder" class="fms-currency-select" @input="handleInput">
-    <el-option v-for="item in currencyList" :key="item.id" :label="item.code + ' ' + item.name" :value="item.id" />
+  <el-select
+    :value="value"
+    :clearable="clearable"
+    :disabled="disabled"
+    :filterable="filterable"
+    :loading="loading"
+    :multiple="multiple"
+    :placeholder="placeholder"
+    class="fms-currency-select"
+    @input="handleInput"
+  >
+    <el-option
+      v-for="item in currencyList"
+      :key="item.id"
+      :label="item.code + ' ' + item.name"
+      :value="item.id"
+    />
   </el-select>
 </template>
 

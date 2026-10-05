@@ -1,17 +1,65 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="560px" v-dialogDrag append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="form" :rules="rules" label-width="150px">
-      <el-form-item label="套餐名" prop="name"><el-input v-model="form.name" placeholder="请输入套餐名" /></el-form-item>
-      <el-form-item label="支付金额(元)" prop="payPrice"><el-input-number v-model="form.payPrice" :min="0" :precision="2" :step="0.01" /></el-form-item>
-      <el-form-item label="赠送金额(元)" prop="bonusPrice"><el-input-number v-model="form.bonusPrice" :min="0" :precision="2" :step="0.01" /></el-form-item>
-      <el-form-item label="开启状态" prop="status">
+  <el-dialog
+    v-dialogDrag
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="560px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="form"
+      :rules="rules"
+      label-width="150px"
+    >
+      <el-form-item
+        label="套餐名"
+        prop="name"
+      ><el-input
+        v-model="form.name"
+        placeholder="请输入套餐名"
+      /></el-form-item>
+      <el-form-item
+        label="支付金额(元)"
+        prop="payPrice"
+      ><el-input-number
+        v-model="form.payPrice"
+        :min="0"
+        :precision="2"
+        :step="0.01"
+      /></el-form-item>
+      <el-form-item
+        label="赠送金额(元)"
+        prop="bonusPrice"
+      ><el-input-number
+        v-model="form.bonusPrice"
+        :min="0"
+        :precision="2"
+        :step="0.01"
+      /></el-form-item>
+      <el-form-item
+        label="开启状态"
+        prop="status"
+      >
         <el-radio-group v-model="form.status">
-          <el-radio v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)" :key="dict.value" :label="toNumber(dict.value)">{{ dict.label }}</el-radio>
+          <el-radio
+            v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
+            :key="dict.value"
+            :label="toNumber(dict.value)"
+          >{{ dict.label }}</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="close">取 消</el-button>
     </div>
   </el-dialog>

@@ -8,19 +8,40 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-        <div v-if="selectedItem" slot="content" class="subject-tooltip">
+      <el-tooltip
+        :disabled="!selectedItem"
+        placement="top"
+        :open-delay="500"
+      >
+        <div
+          v-if="selectedItem"
+          slot="content"
+          class="subject-tooltip"
+        >
           <div>编码：{{ selectedItem.code }}</div>
           <div>名称：{{ selectedItem.name }}</div>
           <div>内容：{{ selectedItem.content || '-' }}</div>
           <div>标准：{{ selectedItem.standard || '-' }}</div>
         </div>
-        <el-input :value="displayLabel" :placeholder="placeholder" :disabled="disabled" readonly>
-          <i slot="suffix" :class="showClear ? 'el-icon-circle-close' : 'el-icon-search'" />
+        <el-input
+          :value="displayLabel"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          readonly
+        >
+          <i
+            slot="suffix"
+            :class="showClear ? 'el-icon-circle-close' : 'el-icon-search'"
+          />
         </el-input>
       </el-tooltip>
     </div>
-    <dv-subject-select-dialog ref="dialog" :multiple="false" :subject-type="subjectType" @selected="handleSelected" />
+    <dv-subject-select-dialog
+      ref="dialog"
+      :multiple="false"
+      :subject-type="subjectType"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 

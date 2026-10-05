@@ -23,15 +23,25 @@
           borderBottomRightRadius: property.borderRadiusBottom + 'px'
         }"
       >
-        <div v-if="property.badge.show" class="badge">
-          <el-image fit="cover" :src="property.badge.imgUrl" class="badge-image" />
+        <div
+          v-if="property.badge.show"
+          class="badge"
+        >
+          <el-image
+            fit="cover"
+            :src="property.badge.imgUrl"
+            class="badge-image"
+          />
         </div>
         <el-image
           fit="cover"
           :src="spu.picUrl"
           :style="{ width: imageSize, height: imageSize }"
         />
-        <div class="product-info" :class="{ 'two-column-info': columns === 2 }">
+        <div
+          class="product-info"
+          :class="{ 'two-column-info': columns === 2 }"
+        >
           <div
             v-if="property.fields.name.show"
             class="product-name"

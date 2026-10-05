@@ -97,7 +97,7 @@
         prop="avatar"
         width="70"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-avatar :src="scope.row.avatar" />
         </template>
       </el-table-column>
@@ -159,7 +159,7 @@
         prop="brokerageEnabled"
         min-width="105"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-switch
             v-model="scope.row.brokerageEnabled"
             :disabled="!checkPermi(['trade:brokerage-user:update-brokerage-enable'])"
@@ -195,7 +195,7 @@
         fixed="right"
         width="150"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-dropdown
             v-hasPermi="[
               'trade:brokerage-user:user-query',

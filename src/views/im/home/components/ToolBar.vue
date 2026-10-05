@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     ToolBar：IM 左侧工具栏
     布局：顶部头像 → 中间三 Tab（消息/好友/群聊）→ 底部设置
   -->
@@ -7,7 +7,10 @@
     class="flex flex-col items-center w-14 pt-4 pb-3 gap-2 flex-shrink-0 select-none bg-[#2b2b2b]"
   >
     <!-- 顶部用户头像，点击跳个人中心；走 UserAvatar 统一首字 / 哈希配色规则 -->
-    <div class="mb-2 cursor-pointer" @click="goProfile">
+    <div
+      class="mb-2 cursor-pointer"
+      @click="goProfile"
+    >
       <UserAvatar
         :url="userStore.getUser?.avatar"
         :name="userStore.getUser?.nickname"
@@ -31,7 +34,10 @@
           :max="99"
           class="tool-bar__badge"
         >
-          <Icon :icon="item.icon" :size="22" />
+          <Icon
+            :icon="item.icon"
+            :size="22"
+          />
         </el-badge>
         <el-badge
           v-else-if="item.name === 'ImHomeContact' && unhandledRequestCount > 0"
@@ -39,9 +45,16 @@
           :max="99"
           class="tool-bar__badge"
         >
-          <Icon :icon="item.icon" :size="22" />
+          <Icon
+            :icon="item.icon"
+            :size="22"
+          />
         </el-badge>
-        <Icon v-else :icon="item.icon" :size="22" />
+        <Icon
+          v-else
+          :icon="item.icon"
+          :size="22"
+        />
       </div>
     </div>
 
@@ -51,22 +64,25 @@
         class="flex items-center justify-center w-10 h-10 rounded-lg text-[#a0a0a0] cursor-pointer transition-all hover:text-white hover:bg-white/10"
         @click="goProfile"
       >
-        <Icon icon="ant-design:setting-outlined" :size="22" />
+        <Icon
+          icon="ant-design:setting-outlined"
+          :size="22"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed } from 'vue';
-import router from '@/router';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useUserStore } from '@/views/im/home/store/userStore';
-import { useConversationStore } from '../store/conversationStore';
-import { useFriendStore } from '../store/friendStore';
-import { useImUiStore } from '../store/uiStore';
-import UserAvatar from './user/UserAvatar.vue';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed } from 'vue'
+import router from '@/router'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useUserStore } from '@/views/im/home/store/userStore'
+import { useConversationStore } from '../store/conversationStore'
+import { useFriendStore } from '../store/friendStore'
+import { useImUiStore } from '../store/uiStore'
+import UserAvatar from './user/UserAvatar.vue'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImToolBar'
   },
@@ -78,14 +94,14 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
-    const route = router.currentRoute;
-    const userStore = useUserStore();
-    const conversationStore = useConversationStore();
-    const friendStore = useFriendStore();
-    const uiStore = useImUiStore();
-    const totalUnread = computed(() => conversationStore.getTotalUnreadCount); // 消息 Tab 的红点：所有非免打扰会话的未读总和
-    const unhandledRequestCount = computed(() => friendStore.getUnhandledRequestCount); // 通讯录 Tab 的红点：未处理好友申请数（接收方=我）
+    __expose()
+    const route = router.currentRoute
+    const userStore = useUserStore()
+    const conversationStore = useConversationStore()
+    const friendStore = useFriendStore()
+    const uiStore = useImUiStore()
+    const totalUnread = computed(() => conversationStore.getTotalUnreadCount) // 消息 Tab 的红点：所有非免打扰会话的未读总和
+    const unhandledRequestCount = computed(() => friendStore.getUnhandledRequestCount) // 通讯录 Tab 的红点：未处理好友申请数（接收方=我）
 
     const tabs = [{
       name: 'ImHomeConversation',
@@ -93,28 +109,28 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
     }, {
       name: 'ImHomeContact',
       icon: 'mingcute:contacts-line'
-    }]; // 两个主 Tab；用路由 name 而非 path，避免前缀 / 嵌套调整后失效
+    }] // 两个主 Tab；用路由 name 而非 path，避免前缀 / 嵌套调整后失效
 
     /** 当前路由是否命中 Tab：直接比对 route.name */
-    const isActive = name => route.name === name;
+    const isActive = name => route.name === name
 
     /** 切换 Tab：当前已选中时，消息 Tab 触发"滚动到下一个未读"（对齐微信 PC），其它 Tab 无动作 */
     const goTab = name => {
       if (route.name === name) {
         if (name === 'ImHomeConversation') {
-          uiStore.requestNextUnreadJump();
+          uiStore.requestNextUnreadJump()
         }
-        return;
+        return
       }
       router.push({
         name
-      });
-    };
+      })
+    }
 
     /** 跳转个人中心（路由 name=Profile） */
     const goProfile = () => router.push({
       name: 'Profile'
-    });
+    })
     const __returned__ = {
       route,
       router,
@@ -130,15 +146,15 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       goProfile,
       Icon,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

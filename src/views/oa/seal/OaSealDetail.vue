@@ -1,8 +1,19 @@
 <template>
-  <dialog-component title="印章详情" v-model="dialogVisible" width="900px">
+  <dialog-component
+    v-model="dialogVisible"
+    title="印章详情"
+    width="900px"
+  >
     <!-- 印章信息 -->
-    <el-descriptions v-loading="detailLoading" :column="2" border>
-      <el-descriptions-item label="所属部门" :span="2">
+    <el-descriptions
+      v-loading="detailLoading"
+      :column="2"
+      border
+    >
+      <el-descriptions-item
+        label="所属部门"
+        :span="2"
+      >
         {{ detailData.deptName }}
       </el-descriptions-item>
       <el-descriptions-item label="印章编号">{{ detailData.no }}</el-descriptions-item>
@@ -20,13 +31,22 @@
       </el-descriptions-item>
       <el-descriptions-item label="备注">{{ detailData.remark }}</el-descriptions-item>
       <el-descriptions-item label="状态">
-        <dict-tag :type="DICT_TYPE.OA_SEAL_STATUS" :value="detailData.status === undefined || detailData.status === null ? '' : detailData.status" />
+        <dict-tag
+          :type="DICT_TYPE.OA_SEAL_STATUS"
+          :value="detailData.status === undefined || detailData.status === null ? '' : detailData.status"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="类型">
-        <dict-tag :type="DICT_TYPE.OA_SEAL_TYPE" :value="detailData.type === undefined || detailData.type === null ? '' : detailData.type" />
+        <dict-tag
+          :type="DICT_TYPE.OA_SEAL_TYPE"
+          :value="detailData.type === undefined || detailData.type === null ? '' : detailData.type"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="分类">
-        <dict-tag :type="DICT_TYPE.OA_SEAL_CATEGORY" :value="detailData.category === undefined || detailData.category === null ? '' : detailData.category" />
+        <dict-tag
+          :type="DICT_TYPE.OA_SEAL_CATEGORY"
+          :value="detailData.category === undefined || detailData.category === null ? '' : detailData.category"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="照片">
         <el-image
@@ -38,7 +58,10 @@
         />
       </el-descriptions-item>
     </el-descriptions>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
   </dialog-component>

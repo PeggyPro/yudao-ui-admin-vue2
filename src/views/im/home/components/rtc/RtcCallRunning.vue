@@ -10,7 +10,7 @@
       v-if="reconnecting"
       class="inline-flex absolute top-3 left-1/2 z-10 gap-2 items-center px-3.5 py-1.5 text-13px text-[#ffd45e] rounded-full -translate-x-1/2 bg-[rgba(255,196,0,0.18)]"
     >
-      <span class="reconnect-dot w-2 h-2 rounded-full bg-[#ffd45e]"></span>
+      <span class="reconnect-dot w-2 h-2 rounded-full bg-[#ffd45e]" />
       网络不佳，正在重连……
     </div>
     <div class="flex relative flex-1 justify-center items-center">
@@ -30,15 +30,21 @@
 
       <!-- 1v1 视频：远端铺底 + 本地缩略 -->
       <template v-else-if="isVideo">
-        <div v-show="hasRemoteVideo" class="absolute inset-0">
+        <div
+          v-show="hasRemoteVideo"
+          class="absolute inset-0"
+        >
           <video
             :ref="remoteVideoRef"
             class="object-cover w-full h-full"
             autoplay
             playsinline
-          ></video>
+          />
         </div>
-        <div v-if="!hasRemoteVideo" class="flex z-[1] flex-col gap-4 items-center">
+        <div
+          v-if="!hasRemoteVideo"
+          class="flex z-[1] flex-col gap-4 items-center"
+        >
           <UserAvatar
             :url="peerAvatar"
             :name="peerNickname"
@@ -59,7 +65,7 @@
             autoplay
             muted
             playsinline
-          ></video>
+          />
         </div>
       </template>
 
@@ -82,7 +88,7 @@
         :ref="remoteAudioRef"
         autoplay
         :muted="!speakerEnabled"
-      ></audio>
+      />
     </div>
 
     <!-- 底部操作区：麦克风 / 扬声器 / 摄像头 / (群聊：共享屏幕 / 添加成员) / 挂断 -->
@@ -166,7 +172,10 @@
           <span
             class="flex justify-center items-center w-[52px] h-[52px] text-white rounded-full bg-white/15"
           >
-            <Icon icon="ant-design:plus-outlined" :size="22" />
+            <Icon
+              icon="ant-design:plus-outlined"
+              :size="22"
+            />
           </span>
           <span class="text-xs text-white/70 whitespace-nowrap">添加成员</span>
         </div>
@@ -179,7 +188,11 @@
         <span
           class="flex justify-center items-center w-[52px] h-[52px] text-white rounded-full bg-[#f04a4a]"
         >
-          <Icon icon="ant-design:phone-outlined" :size="22" class="rotate-[135deg]" />
+          <Icon
+            icon="ant-design:phone-outlined"
+            :size="22"
+            class="rotate-[135deg]"
+          />
         </span>
         <span class="text-xs text-white/70 whitespace-nowrap">挂断</span>
       </div>
@@ -188,14 +201,14 @@
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, onUnmounted, ref, watch } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import UserAvatar from '../user/UserAvatar.vue';
-import RtcCallParticipantTile from './RtcCallParticipantTile.vue';
-import { formatCallDuration } from '@/views/im/utils/time';
-import { useMediaStreamElement } from '../../composables/useMediaStreamElement';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import UserAvatar from '../user/UserAvatar.vue'
+import RtcCallParticipantTile from './RtcCallParticipantTile.vue'
+import { formatCallDuration } from '@/views/im/utils/time'
+import { useMediaStreamElement } from '../../composables/useMediaStreamElement'
+export default /* #__PURE__*/_defineComponent({
   components: {
     Icon,
     UserAvatar,
@@ -267,49 +280,49 @@ export default /*#__PURE__*/_defineComponent({
   setup(__props, {
     expose
   }) {
-    expose();
-    const props = __props;
+    expose()
+    const props = __props
 
     /** 网格列数；按人数自适应；返回 UnoCSS class 字面量让 JIT 扫描器静态识别 */
     const gridColsClass = computed(() => {
-      const n = props.participants.length;
-      if (n <= 1) return 'grid-cols-1';
-      if (n <= 4) return 'grid-cols-2';
-      return 'grid-cols-3';
-    });
-    const localVideoRef = useMediaStreamElement(() => props.localStream);
-    const remoteVideoRef = useMediaStreamElement(() => props.remoteVideoStream);
-    const remoteAudioRef = useMediaStreamElement(() => props.remoteAudioStream);
+      const n = props.participants.length
+      if (n <= 1) return 'grid-cols-1'
+      if (n <= 4) return 'grid-cols-2'
+      return 'grid-cols-3'
+    })
+    const localVideoRef = useMediaStreamElement(() => props.localStream)
+    const remoteVideoRef = useMediaStreamElement(() => props.remoteVideoStream)
+    const remoteAudioRef = useMediaStreamElement(() => props.remoteAudioStream)
 
     /** 1v1 视频：是否有远端视频流 */
-    const hasRemoteVideo = computed(() => !props.isGroup && !!props.remoteVideoStream);
+    const hasRemoteVideo = computed(() => !props.isGroup && !!props.remoteVideoStream)
 
     /** 通话时长；仅 1v1 语音视图需要展示，其它视图不启 tick */
-    const now = ref(Date.now());
-    let tick = 0;
+    const now = ref(Date.now())
+    let tick = 0
     watch(() => props.isGroup || props.isVideo, suppressTick => {
       if (suppressTick) {
         if (tick) {
-          clearInterval(tick);
-          tick = 0;
+          clearInterval(tick)
+          tick = 0
         }
-        return;
+        return
       }
-      now.value = Date.now();
+      now.value = Date.now()
       tick = window.setInterval(() => {
-        now.value = Date.now();
-      }, 1000);
+        now.value = Date.now()
+      }, 1000)
     }, {
       immediate: true
-    });
+    })
     onUnmounted(() => {
       if (tick) {
-        clearInterval(tick);
+        clearInterval(tick)
       }
-    });
+    })
 
     /** 通话时长 MM:SS / HH:MM:SS */
-    const formattedDuration = computed(() => formatCallDuration(Math.floor((now.value - props.startedAt) / 1000)));
+    const formattedDuration = computed(() => formatCallDuration(Math.floor((now.value - props.startedAt) / 1000)))
     const __returned__ = {
       props,
       gridColsClass,
@@ -323,14 +336,14 @@ export default /*#__PURE__*/_defineComponent({
       Icon,
       UserAvatar,
       RtcCallParticipantTile
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped>
 

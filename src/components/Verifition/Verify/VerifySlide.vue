@@ -10,11 +10,23 @@
         :style="{width: setSize.imgWidth,
                  height: setSize.imgHeight,}"
       >
-        <img :src="backImgBase?('data:image/png;base64,'+backImgBase):defaultImg" alt="" style="width:100%;height:100%;display:block">
-        <div v-show="showRefresh" class="verify-refresh" @click="refresh"><i class="iconfont icon-refresh" />
+        <img
+          :src="backImgBase?('data:image/png;base64,'+backImgBase):defaultImg"
+          alt=""
+          style="width:100%;height:100%;display:block"
+        >
+        <div
+          v-show="showRefresh"
+          class="verify-refresh"
+          @click="refresh"
+        ><i class="iconfont icon-refresh" />
         </div>
         <transition name="tips">
-          <span v-if="tipWords" class="verify-tips" :class="passFlag ?'suc-bg':'err-bg'">{{ tipWords }}</span>
+          <span
+            v-if="tipWords"
+            class="verify-tips"
+            :class="passFlag ?'suc-bg':'err-bg'"
+          >{{ tipWords }}</span>
         </transition>
       </div>
     </div>
@@ -25,12 +37,18 @@
                height: barSize.height,
                'line-height':barSize.height}"
     >
-      <span class="verify-msg" v-text="text" />
+      <span
+        class="verify-msg"
+        v-text="text"
+      />
       <div
         class="verify-left-bar"
         :style="{width: (leftBarWidth!==undefined)?leftBarWidth: barSize.height, height: barSize.height, 'border-color': leftBarBorderColor, transaction: transitionWidth}"
       >
-        <span class="verify-msg" v-text="finishText" />
+        <span
+          class="verify-msg"
+          v-text="finishText"
+        />
         <div
           class="verify-move-block"
           :style="{width: barSize.height, height: barSize.height, 'background-color': moveBlockBackgroundColor, left: moveBlockLeft, transition: transitionLeft}"
@@ -50,7 +68,11 @@
                      'background-size': setSize.imgWidth + ' ' + setSize.imgHeight,
             }"
           >
-            <img :src="'data:image/png;base64,'+blockBackImgBase" alt="" style="width:100%;height:100%;display:block">
+            <img
+              :src="'data:image/png;base64,'+blockBackImgBase"
+              alt=""
+              style="width:100%;height:100%;display:block"
+            >
           </div>
         </div>
       </div>
@@ -71,7 +93,7 @@ export default {
   name: 'VerifySlide',
   props: {
     captchaType: {
-      type: String,
+      type: String
     },
     type: {
       type: String,
@@ -257,7 +279,7 @@ export default {
           x = e.touches[0].pageX
         }
         const bar_area_left = this.barArea.getBoundingClientRect().left
-        let move_block_left = x - bar_area_left  // 小方块相对于父元素的left值
+        let move_block_left = x - bar_area_left // 小方块相对于父元素的left值
         if (move_block_left >= this.barArea.offsetWidth - parseInt(parseInt(this.blockSize.width) / 2) - 2) {
           move_block_left = this.barArea.offsetWidth - parseInt(parseInt(this.blockSize.width) / 2) - 2
         }
@@ -357,7 +379,7 @@ export default {
       const data = {
         captchaType: this.captchaType,
         clientUid: localStorage.getItem('slider'),
-        ts: Date.now(), // 现在的时间戳
+        ts: Date.now() // 现在的时间戳
       }
       reqGet(data).then(res => {
         if (res.repCode === '0000') {
@@ -375,8 +397,8 @@ export default {
           this.blockBackImgBase = null
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

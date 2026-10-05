@@ -1,8 +1,20 @@
 <template>
-  <Dialog v-model="dialogVisible" title="开始迭代" width="520px">
+  <AppDialog
+    v-model="dialogVisible"
+    title="开始迭代"
+    width="520px"
+  >
     <!-- 迭代周期 -->
-    <el-form ref="formRef" :model="formData" :rules="formRules" label-width="92px">
-      <el-form-item label="迭代周期" prop="timeRange">
+    <el-form
+      ref="formRef"
+      :model="formData"
+      :rules="formRules"
+      label-width="92px"
+    >
+      <el-form-item
+        label="迭代周期"
+        prop="timeRange"
+      >
         <el-date-picker
           v-model="formData.timeRange"
           style="width: 100%"
@@ -15,19 +27,23 @@
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as IterationApi from '@/api/pms/pm/iteration'
 
 export default {
   name: 'PmsIterationStartForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, formLoading: false, iterationId: 0,

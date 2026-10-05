@@ -32,17 +32,17 @@
     >
       {{ roleLabel }}
     </span>
-    <slot></slot>
+    <slot />
   </div>
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed } from 'vue';
-import UserAvatar from '../user/UserAvatar.vue';
-import { ImGroupMemberRole } from '../../../utils/constants';
-import { DICT_TYPE, getDictLabel } from '@/utils/dict';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed } from 'vue'
+import UserAvatar from '../user/UserAvatar.vue'
+import { ImGroupMemberRole } from '../../../utils/constants'
+import { DICT_TYPE, getDictLabel } from '@/utils/dict'
+export default /* #__PURE__*/_defineComponent({
   components: {
     UserAvatar
   },
@@ -66,37 +66,37 @@ export default /*#__PURE__*/_defineComponent({
   setup(__props, {
     expose
   }) {
-    expose();
-    const props = __props;
-    const avatarSize = computed(() => Math.ceil(props.height * 0.75));
+    expose()
+    const props = __props
+    const avatarSize = computed(() => Math.ceil(props.height * 0.75))
 
     /** 角色标签文案：普通成员不显示，其余取 im_group_member_role 字典 label */
     const roleLabel = computed(() => {
       if (props.member.role == null || props.member.role === ImGroupMemberRole.NORMAL) {
-        return '';
+        return ''
       }
-      return getDictLabel(DICT_TYPE.IM_GROUP_MEMBER_ROLE, props.member.role);
-    });
+      return getDictLabel(DICT_TYPE.IM_GROUP_MEMBER_ROLE, props.member.role)
+    })
 
     /** 角色标签样式：群主用主色；管理员用次要色 */
     const roleLabelClass = computed(() => {
       if (props.member.role === ImGroupMemberRole.OWNER) {
-        return 'text-[var(--el-color-primary)] bg-[var(--el-color-primary-light-9)]';
+        return 'text-[var(--el-color-primary)] bg-[var(--el-color-primary-light-9)]'
       }
-      return 'text-[var(--el-color-info)] bg-[var(--el-fill-color)]';
-    });
+      return 'text-[var(--el-color-info)] bg-[var(--el-fill-color)]'
+    })
     const __returned__ = {
       props,
       avatarSize,
       roleLabel,
       roleLabelClass,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>

@@ -9,7 +9,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="所在周" prop="startDate">
+      <el-form-item
+        label="所在周"
+        prop="startDate"
+      >
         <el-date-picker
           v-model="queryParams.startDate"
           type="date"
@@ -19,22 +22,52 @@
           style="width: 220px"
         />
       </el-form-item>
-      <el-form-item label="员工" prop="userId">
-        <user-select-v2 v-model="queryParams.userId" style="width: 220px" />
+      <el-form-item
+        label="员工"
+        prop="userId"
+      >
+        <user-select-v2
+          v-model="queryParams.userId"
+          style="width: 220px"
+        />
       </el-form-item>
       <el-form-item>
         <el-button @click="handlePreviousWeek">上一周</el-button>
         <el-button @click="handleCurrentWeek">本周</el-button>
         <el-button @click="handleNextWeek">下一周</el-button>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 周报列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="员工" prop="userName" align="center" fixed="left" width="120" />
-      <el-table-column label="部门" prop="deptName" align="center" fixed="left" width="120" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="员工"
+        prop="userName"
+        align="center"
+        fixed="left"
+        width="120"
+      />
+      <el-table-column
+        label="部门"
+        prop="deptName"
+        align="center"
+        fixed="left"
+        width="120"
+      />
       <el-table-column
         v-for="(day, index) in weekDays"
         :key="day.date"
@@ -75,7 +108,10 @@
       </el-table-column>
     </el-table>
     <!-- 修改考勤记录 -->
-    <oa-attendance-form ref="attendanceForm" @success="getList" />
+    <oa-attendance-form
+      ref="attendanceForm"
+      @success="getList"
+    />
   </div>
 </template>
 

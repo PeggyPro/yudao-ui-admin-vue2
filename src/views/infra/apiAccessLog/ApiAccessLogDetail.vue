@@ -1,12 +1,25 @@
 <template>
-  <el-dialog title="API 访问日志详细" :visible.sync="visible" width="800px" append-to-body>
-    <el-descriptions v-loading="loading" :column="1" border size="small">
+  <el-dialog
+    title="API 访问日志详细"
+    :visible.sync="visible"
+    width="800px"
+    append-to-body
+  >
+    <el-descriptions
+      v-loading="loading"
+      :column="1"
+      border
+      size="small"
+    >
       <el-descriptions-item label="日志主键">{{ detailData.id || '-' }}</el-descriptions-item>
       <el-descriptions-item label="链路追踪">{{ detailData.traceId || '-' }}</el-descriptions-item>
       <el-descriptions-item label="应用名">{{ detailData.applicationName || '-' }}</el-descriptions-item>
       <el-descriptions-item label="用户信息">
         {{ detailData.userId || '-' }}
-        <dict-tag :type="DICT_TYPE.USER_TYPE" :value="detailData.userType" />
+        <dict-tag
+          :type="DICT_TYPE.USER_TYPE"
+          :value="detailData.userType"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="用户 IP">{{ detailData.userIp || '-' }}</el-descriptions-item>
       <el-descriptions-item label="用户 UA">{{ detailData.userAgent || '-' }}</el-descriptions-item>
@@ -27,10 +40,16 @@
       <el-descriptions-item label="操作模块">{{ detailData.operateModule || '-' }}</el-descriptions-item>
       <el-descriptions-item label="操作名">{{ detailData.operateName || '-' }}</el-descriptions-item>
       <el-descriptions-item label="操作类型">
-        <dict-tag :type="DICT_TYPE.INFRA_OPERATE_TYPE" :value="detailData.operateType" />
+        <dict-tag
+          :type="DICT_TYPE.INFRA_OPERATE_TYPE"
+          :value="detailData.operateType"
+        />
       </el-descriptions-item>
     </el-descriptions>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="visible = false">关 闭</el-button>
     </div>
   </el-dialog>

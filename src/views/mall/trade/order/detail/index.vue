@@ -88,8 +88,8 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label"><span class="reminder-label">提醒: </span></template>
-          买家付款成功后，货款将直接进入您的商户号（微信、支付宝）<br />
-          请及时关注你发出的包裹状态，确保可以配送至买家手中 <br />
+          买家付款成功后，货款将直接进入您的商户号（微信、支付宝）<br>
+          请及时关注你发出的包裹状态，确保可以配送至买家手中 <br>
           如果买家表示没收到货或货物有问题，请及时联系买家处理，友好协商
         </el-descriptions-item>
       </el-descriptions>
@@ -108,7 +108,7 @@
                   prop="spuName"
                   width="auto"
                 >
-                  <template v-slot="{ row }">
+                  <template slot-scope="{ row }">
                     {{ row.spuName }}
                     <el-tag
                       v-for="property in row.properties"
@@ -124,7 +124,7 @@
                   prop="price"
                   width="150"
                 >
-                  <template v-slot="{ row }">{{ fenToYuan(row.price) }}元</template>
+                  <template slot-scope="{ row }">{{ fenToYuan(row.price) }}元</template>
                 </el-table-column>
                 <el-table-column
                   label="数量"
@@ -136,14 +136,14 @@
                   prop="payPrice"
                   width="150"
                 >
-                  <template v-slot="{ row }">{{ fenToYuan(row.payPrice) }}元</template>
+                  <template slot-scope="{ row }">{{ fenToYuan(row.payPrice) }}元</template>
                 </el-table-column>
                 <el-table-column
                   label="售后状态"
                   prop="afterSaleStatus"
                   width="120"
                 >
-                  <template v-slot="{ row }">
+                  <template slot-scope="{ row }">
                     <dict-tag
                       :type="DICT_TYPE.TRADE_ORDER_ITEM_AFTER_SALE_STATUS"
                       :value="row.afterSaleStatus"

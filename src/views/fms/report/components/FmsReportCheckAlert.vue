@@ -7,7 +7,10 @@
     show-icon
   >
     <template slot="title">{{ passed ? reportName + '检查通过' : reportName + '检查发现问题' }}</template>
-    <div v-if="!passed" class="check-details">
+    <div
+      v-if="!passed"
+      class="check-details"
+    >
       <div v-if="result.balanced === false && reportType !== FMS_REPORT_TYPE.INCOME_STATEMENT">
         资产负债表不平衡：年初差额
         {{ formatCheckAmount(result.openingDifferenceAmount) }}，期末差额
@@ -21,15 +24,24 @@
       <div v-if="result.balanced === false && reportType === FMS_REPORT_TYPE.INCOME_STATEMENT">
         净利润与未分配利润变动不一致，勾稽差额
         {{ formatCheckAmount(result.differenceAmount) }}
-        <el-button type="text" @click="$router.push('/fms/report/balance-sheet')">查看资产负债表</el-button>
+        <el-button
+          type="text"
+          @click="$router.push('/fms/report/balance-sheet')"
+        >查看资产负债表</el-button>
       </div>
       <div v-if="result.initialBalanceBalanced === false">
         初始余额试算不平衡
-        <el-button type="text" @click="$router.push('/fms/config/initial-balance')">处理初始余额</el-button>
+        <el-button
+          type="text"
+          @click="$router.push('/fms/config/initial-balance')"
+        >处理初始余额</el-button>
       </div>
       <div v-if="result.profitLossTransferred === false">
         查询期间存在尚未结转的损益余额
-        <el-button type="text" @click="$router.push('/fms/closing/period')">前往结转损益</el-button>
+        <el-button
+          type="text"
+          @click="$router.push('/fms/closing/period')"
+        >前往结转损益</el-button>
       </div>
       <div v-if="unmappedSubjects.length">
         {{ unmappedSubjects.length }} 个一级科目尚未纳入报表公式：{{ unmappedSubjectText }}

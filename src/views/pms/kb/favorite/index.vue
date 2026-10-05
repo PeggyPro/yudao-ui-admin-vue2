@@ -1,25 +1,67 @@
 <template>
   <div class="app-container">
-    <doc-alert title="【PMS】文档与协作" url="https://doc.iocoder.cn/pms/kb/document/" />
+    <doc-alert
+      title="【PMS】文档与协作"
+      url="https://doc.iocoder.cn/pms/kb/document/"
+    />
 
-    <el-tabs v-model="activeType" @tab-click="handleTypeChange">
-      <el-tab-pane label="全部" name="all" />
-      <el-tab-pane label="知识库" name="1" />
-      <el-tab-pane label="文档" name="3" />
-      <el-tab-pane label="文件夹" name="2" />
-      <el-tab-pane label="文件" name="4" />
+    <el-tabs
+      v-model="activeType"
+      @tab-click="handleTypeChange"
+    >
+      <el-tab-pane
+        label="全部"
+        name="all"
+      />
+      <el-tab-pane
+        label="知识库"
+        name="1"
+      />
+      <el-tab-pane
+        label="文档"
+        name="3"
+      />
+      <el-tab-pane
+        label="文件夹"
+        name="2"
+      />
+      <el-tab-pane
+        label="文件"
+        name="4"
+      />
     </el-tabs>
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" border stripe>
-      <el-table-column label="名称" min-width="260">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      border
+      stripe
+    >
+      <el-table-column
+        label="名称"
+        min-width="260"
+      >
         <template slot-scope="scope">
-          <el-link type="primary" @click="openItem(scope.row)">
-            <svg-icon class="item-icon" :icon-class="getKnowledgeObjectIcon(scope.row.type)" />
+          <el-link
+            type="primary"
+            @click="openItem(scope.row)"
+          >
+            <svg-icon
+              class="item-icon"
+              :icon-class="getKnowledgeObjectIcon(scope.row.type)"
+            />
             {{ scope.row.name }}
           </el-link>
-          <div v-if="scope.row.description" class="secondary-text">
+          <div
+            v-if="scope.row.description"
+            class="secondary-text"
+          >
             {{ scope.row.description }}
           </div>
-          <div v-if="scope.row.fileType || scope.row.fileSize != null" class="secondary-text">
+          <div
+            v-if="scope.row.fileType || scope.row.fileSize != null"
+            class="secondary-text"
+          >
             <span v-if="scope.row.fileType">{{ scope.row.fileType.toUpperCase() }}</span>
             <span v-if="scope.row.fileType && scope.row.fileSize != null"> · </span>
             <span v-if="scope.row.fileSize != null">
@@ -28,10 +70,17 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="类型" width="100">
+      <el-table-column
+        label="类型"
+        width="100"
+      >
         <template slot-scope="scope">{{ getKnowledgeObjectTypeName(scope.row.type) }}</template>
       </el-table-column>
-      <el-table-column label="所属知识库" min-width="180" prop="libraryName" />
+      <el-table-column
+        label="所属知识库"
+        min-width="180"
+        prop="libraryName"
+      />
       <el-table-column
         :formatter="dateFormatter"
         align="center"
@@ -46,9 +95,17 @@
         prop="createTime"
         width="180"
       />
-      <el-table-column align="center" fixed="right" label="是否关注" width="100">
+      <el-table-column
+        align="center"
+        fixed="right"
+        label="是否关注"
+        width="100"
+      >
         <template slot-scope="scope">
-          <el-switch :value="true" @change="handleCancelFavorite(scope.row)" />
+          <el-switch
+            :value="true"
+            @change="handleCancelFavorite(scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>

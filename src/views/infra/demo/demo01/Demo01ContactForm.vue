@@ -1,32 +1,74 @@
 <template>
   <div class="app-container">
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="45%" v-dialogDrag append-to-body>
-      <el-form ref="formRef" :model="formData" :rules="formRules" v-loading="formLoading" label-width="100px">
-        <el-form-item label="名字" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入名字" />
+    <el-dialog
+      v-dialogDrag
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="45%"
+      append-to-body
+    >
+      <el-form
+        ref="formRef"
+        v-loading="formLoading"
+        :model="formData"
+        :rules="formRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="名字"
+          prop="name"
+        >
+          <el-input
+            v-model="formData.name"
+            placeholder="请输入名字"
+          />
         </el-form-item>
-        <el-form-item label="性别" prop="sex">
+        <el-form-item
+          label="性别"
+          prop="sex"
+        >
           <el-radio-group v-model="formData.sex">
-            <el-radio v-for="dict in this.getDictDatas(DICT_TYPE.SYSTEM_USER_SEX)"
-                      :key="dict.value" :label="parseInt(dict.value)"
+            <el-radio
+              v-for="dict in getDictDatas(DICT_TYPE.SYSTEM_USER_SEX)"
+              :key="dict.value"
+              :label="parseInt(dict.value)"
             >
-              {{dict.label}}
+              {{ dict.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="出生年" prop="birthday">
-          <el-date-picker clearable v-model="formData.birthday" type="date" value-format="timestamp" placeholder="选择出生年" />
+        <el-form-item
+          label="出生年"
+          prop="birthday"
+        >
+          <el-date-picker
+            v-model="formData.birthday"
+            clearable
+            type="date"
+            value-format="timestamp"
+            placeholder="选择出生年"
+          />
         </el-form-item>
         <el-form-item label="简介">
-          <Editor v-model="formData.description" :min-height="192"/>
+          <Editor
+            v-model="formData.description"
+            :min-height="192"
+          />
         </el-form-item>
         <el-form-item label="头像">
-          <ImageUpload v-model="formData.avatar"/>
+          <ImageUpload v-model="formData.avatar" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm" :disabled="formLoading">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          :disabled="formLoading"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -34,19 +76,19 @@
 </template>
 
 <script>
-import * as Demo01ContactApi from '@/api/infra/demo/demo01';
-import ImageUpload from '@/components/ImageUpload';
-import Editor from '@/components/Editor';
+import * as Demo01ContactApi from '@/api/infra/demo/demo01'
+import ImageUpload from '@/components/ImageUpload'
+import Editor from '@/components/Editor'
 export default {
-  name: "Demo01ContactForm",
+  name: 'Demo01ContactForm',
   components: {
     ImageUpload,
-    Editor,
+    Editor
   },
   data() {
     return {
       // 弹出层标题
-      dialogTitle: "",
+      dialogTitle: '',
       // 是否显示弹出层
       dialogVisible: false,
       // 表单的加载中：1）修改时的数据加载；2）提交的按钮禁用
@@ -58,57 +100,57 @@ export default {
         sex: undefined,
         birthday: undefined,
         description: undefined,
-        avatar: undefined,
+        avatar: undefined
       },
       // 表单校验
       formRules: {
         name: [{ required: true, message: '名字不能为空', trigger: 'blur' }],
         sex: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
         birthday: [{ required: true, message: '出生年不能为空', trigger: 'blur' }],
-        description: [{ required: true, message: '简介不能为空', trigger: 'blur' }],
-      },
-    };
+        description: [{ required: true, message: '简介不能为空', trigger: 'blur' }]
+      }
+    }
   },
   methods: {
     /** 打开弹窗 */
     async open(id) {
-      this.dialogVisible = true;
-      this.reset();
-      this.dialogTitle = "新增示例联系人";
+      this.dialogVisible = true
+      this.reset()
+      this.dialogTitle = '新增示例联系人'
       // 修改时，设置数据
       if (id) {
-        this.formLoading = true;
+        this.formLoading = true
         try {
-          const res = await Demo01ContactApi.getDemo01Contact(id);
-          this.formData = res.data;
-          this.dialogTitle = "修改示例联系人";
+          const res = await Demo01ContactApi.getDemo01Contact(id)
+          this.formData = res.data
+          this.dialogTitle = '修改示例联系人'
         } finally {
-          this.formLoading = false;
+          this.formLoading = false
         }
       }
     },
     /** 提交按钮 */
     async submitForm() {
       // 校验主表
-      await this.$refs["formRef"].validate();
-      this.formLoading = true;
+      await this.$refs['formRef'].validate()
+      this.formLoading = true
       try {
-        const data = this.formData;
+        const data = this.formData
         // 修改的提交
         if (data.id) {
-          await Demo01ContactApi.updateDemo01Contact(data);
-          this.$modal.msgSuccess("修改成功");
-          this.dialogVisible = false;
-          this.$emit('success');
-          return;
+          await Demo01ContactApi.updateDemo01Contact(data)
+          this.$modal.msgSuccess('修改成功')
+          this.dialogVisible = false
+          this.$emit('success')
+          return
         }
         // 添加的提交
-        await Demo01ContactApi.createDemo01Contact(data);
-        this.$modal.msgSuccess("新增成功");
-        this.dialogVisible = false;
-        this.$emit('success');
+        await Demo01ContactApi.createDemo01Contact(data)
+        this.$modal.msgSuccess('新增成功')
+        this.dialogVisible = false
+        this.$emit('success')
       } finally {
-        this.formLoading = false;
+        this.formLoading = false
       }
     },
     /** 表单重置 */
@@ -119,10 +161,10 @@ export default {
         sex: undefined,
         birthday: undefined,
         description: undefined,
-        avatar: undefined,
-      };
-      this.resetForm("formRef");
+        avatar: undefined
+      }
+      this.resetForm('formRef')
     }
   }
-};
+}
 </script>

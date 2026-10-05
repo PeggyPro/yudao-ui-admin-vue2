@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     群消息已读状态
     - 标签形态：展示「N 已读」或「全部已读」；点击弹出 popover 用 tab 列出已读 / 未读成员
     - 渲染条件：仅在群聊、自己发送、receiptStatus !== NO_RECEIPT 时挂出（由 MessageItem 把关）
@@ -21,11 +21,26 @@
       </span>
     </template>
 
-    <el-tabs v-model="activeTab" stretch>
-      <el-tab-pane :label="`已读(${readMembers.length})`" name="read">
-        <PagedScroller :items="readMembers" :page-size="20" item-key="userId" class="h-75">
+    <el-tabs
+      v-model="activeTab"
+      stretch
+    >
+      <el-tab-pane
+        :label="`已读(${readMembers.length})`"
+        name="read"
+      >
+        <PagedScroller
+          :items="readMembers"
+          :page-size="20"
+          item-key="userId"
+          class="h-75"
+        >
           <template #default="{ item }">
-            <GroupMember :member="item" :height="40" :clickable="false" />
+            <GroupMember
+              :member="item"
+              :height="40"
+              :clickable="false"
+            />
           </template>
         </PagedScroller>
         <div
@@ -35,10 +50,22 @@
           {{ groupMembers.length === 0 ? '群成员未加载' : '暂无已读' }}
         </div>
       </el-tab-pane>
-      <el-tab-pane :label="`未读(${unreadMembers.length})`" name="unread">
-        <PagedScroller :items="unreadMembers" :page-size="20" item-key="userId" class="h-75">
+      <el-tab-pane
+        :label="`未读(${unreadMembers.length})`"
+        name="unread"
+      >
+        <PagedScroller
+          :items="unreadMembers"
+          :page-size="20"
+          item-key="userId"
+          class="h-75"
+        >
           <template #default="{ item }">
-            <GroupMember :member="item" :height="40" :clickable="false" />
+            <GroupMember
+              :member="item"
+              :height="40"
+              :clickable="false"
+            />
           </template>
         </PagedScroller>
         <div
@@ -52,15 +79,15 @@
   </el-popover>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import { getGroupReadUsers as apiGetGroupReadUsers } from '@/api/im/message/group';
-import { CommonStatusEnum } from '@/utils/constants';
-import { ImConversationType, ImMessageReceiptStatus } from '../../../../../utils/constants';
-import { useMessageStore } from '../../../../store/messageStore';
-import GroupMember from '../../../../components/group/GroupMember.vue';
-import PagedScroller from '../../../../components/PagedScroller.vue';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import { getGroupReadUsers as apiGetGroupReadUsers } from '@/api/im/message/group'
+import { CommonStatusEnum } from '@/utils/constants'
+import { ImConversationType, ImMessageReceiptStatus } from '../../../../../utils/constants'
+import { useMessageStore } from '../../../../store/messageStore'
+import GroupMember from '../../../../components/group/GroupMember.vue'
+import PagedScroller from '../../../../components/PagedScroller.vue'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImMessageReadStatus'
   },
@@ -86,15 +113,15 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
-    const props = __props;
-    const messageStore = useMessageStore();
+    __expose()
+    const props = __props
+    const messageStore = useMessageStore()
 
     // popover 开关：show 时拉已读名单，关闭后保留 readUserIds 缓存（重开同一条消息不再请求）
-    const popVisible = ref(false);
-    const activeTab = ref('read');
+    const popVisible = ref(false)
+    const activeTab = ref('read')
     // 服务端返回的"已读这条消息的 userId 列表"，未读靠 visibleMembers 减去这份得到
-    const readUserIds = ref([]);
+    const readUserIds = ref([])
 
     /**
      * 标签文案：
@@ -104,11 +131,11 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      */
     const label = computed(() => {
       if (props.message.receiptStatus === ImMessageReceiptStatus.DONE) {
-        return '全部已读';
+        return '全部已读'
       }
-      const readCount = props.message.readCount || 0;
-      return readCount > 0 ? `${readCount} 人已读` : '未读';
-    });
+      const readCount = props.message.readCount || 0
+      return readCount > 0 ? `${readCount} 人已读` : '未读'
+    })
 
     /**
      * 这条消息"应该被谁看到"的可见成员集合（已读 / 未读两个 tab 共用基底）
@@ -120,16 +147,16 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      * 3. 已退群（status === DISABLE）：他读没读已经不关心，UI 不展示
      */
     const visibleMembers = computed(() => {
-      const receiverUserIds = props.message.receiverUserIds;
-      const isDirected = !!receiverUserIds && receiverUserIds.length > 0;
-      return props.groupMembers.filter(member => member.status !== CommonStatusEnum.DISABLE && member.userId !== props.message.senderId && (!isDirected || receiverUserIds.includes(member.userId)));
-    });
+      const receiverUserIds = props.message.receiverUserIds
+      const isDirected = !!receiverUserIds && receiverUserIds.length > 0
+      return props.groupMembers.filter(member => member.status !== CommonStatusEnum.DISABLE && member.userId !== props.message.senderId && (!isDirected || receiverUserIds.includes(member.userId)))
+    })
 
     /** 已读 = 可见成员 ∩ readUserIds */
-    const readMembers = computed(() => visibleMembers.value.filter(member => readUserIds.value.includes(member.userId)));
+    const readMembers = computed(() => visibleMembers.value.filter(member => readUserIds.value.includes(member.userId)))
 
     /** 未读 = 可见成员 − readUserIds */
-    const unreadMembers = computed(() => visibleMembers.value.filter(member => !readUserIds.value.includes(member.userId)));
+    const unreadMembers = computed(() => visibleMembers.value.filter(member => !readUserIds.value.includes(member.userId)))
 
     /**
      * 拉取已读用户 id 列表
@@ -144,27 +171,27 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      */
     async function loadReadUsers() {
       if (!props.message.id) {
-        return;
+        return
       }
       try {
         const userIds = (await apiGetGroupReadUsers({
           groupId: props.groupId,
           messageId: props.message.id
-        })).data;
-        readUserIds.value = userIds || [];
-        const readCount = readUserIds.value.length;
+        })).data
+        readUserIds.value = userIds || []
+        const readCount = readUserIds.value.length
         // 全可见成员都已读 → 更新为 DONE，让外面 label 直接命中「全部已读」分支；
         // 否则只更新 readCount，receiptStatus 维持不变（PENDING）
-        const allRead = readCount > 0 && readCount >= visibleMembers.value.length;
+        const allRead = readCount > 0 && readCount >= visibleMembers.value.length
         await messageStore.applyMessageReadReceipt({
           conversationType: ImConversationType.GROUP,
           targetId: props.groupId,
           groupMessageId: props.message.id,
           readCount,
           receiptStatus: allRead ? ImMessageReceiptStatus.DONE : undefined
-        });
+        })
       } catch (error) {
-        console.error('[IM] 拉取群已读列表失败:', error);
+        console.error('[IM] 拉取群已读列表失败:', error)
       }
     }
     const __returned__ = {
@@ -180,13 +207,13 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       loadReadUsers,
       GroupMember,
       PagedScroller
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>

@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,23 +13,50 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="所属部门" prop="deptId">
-            <dept-select v-model="formData.deptId" style="width: 100%" />
+          <el-form-item
+            label="所属部门"
+            prop="deptId"
+          >
+            <dept-select
+              v-model="formData.deptId"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="物品名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入物品名称" maxlength="128" />
+          <el-form-item
+            label="物品名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入物品名称"
+              maxlength="128"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="物品编码" prop="no">
-            <el-input v-model="formData.no" placeholder="请输入物品编码" maxlength="64" />
+          <el-form-item
+            label="物品编码"
+            prop="no"
+          >
+            <el-input
+              v-model="formData.no"
+              placeholder="请输入物品编码"
+              maxlength="64"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="类别" prop="category">
-            <el-select v-model="formData.category" placeholder="请选择类别" style="width: 100%">
+          <el-form-item
+            label="类别"
+            prop="category"
+          >
+            <el-select
+              v-model="formData.category"
+              placeholder="请选择类别"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in categoryOptions"
                 :key="dict.value"
@@ -36,8 +67,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="管理类型" prop="manageType">
-            <el-select v-model="formData.manageType" placeholder="请选择管理类型" style="width: 100%">
+          <el-form-item
+            label="管理类型"
+            prop="manageType"
+          >
+            <el-select
+              v-model="formData.manageType"
+              placeholder="请选择管理类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in manageTypeOptions"
                 :key="dict.value"
@@ -48,17 +86,32 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="规格型号" prop="model">
-            <el-input v-model="formData.model" placeholder="请输入规格型号" />
+          <el-form-item
+            label="规格型号"
+            prop="model"
+          >
+            <el-input
+              v-model="formData.model"
+              placeholder="请输入规格型号"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="计量单位" prop="unit">
-            <el-input v-model="formData.unit" placeholder="请输入计量单位" />
+          <el-form-item
+            label="计量单位"
+            prop="unit"
+          >
+            <el-input
+              v-model="formData.unit"
+              placeholder="请输入计量单位"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="参考单价" prop="referencePrice">
+          <el-form-item
+            label="参考单价"
+            prop="referencePrice"
+          >
             <el-input-number
               v-model="formData.referencePrice"
               placeholder="请输入参考单价"
@@ -69,7 +122,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="库存数量" prop="stockQuantity">
+          <el-form-item
+            label="库存数量"
+            prop="stockQuantity"
+          >
             <el-input-number
               v-model="formData.stockQuantity"
               placeholder="请输入库存数量"
@@ -80,7 +136,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="最低库存预警" prop="minStockQuantity">
+          <el-form-item
+            label="最低库存预警"
+            prop="minStockQuantity"
+          >
             <el-input-number
               v-model="formData.minStockQuantity"
               placeholder="请输入最低库存预警值"
@@ -91,12 +150,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="物品图片" prop="picUrl">
+          <el-form-item
+            label="物品图片"
+            prop="picUrl"
+          >
             <upload-img v-model="formData.picUrl" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="状态" prop="status">
+          <el-form-item
+            label="状态"
+            prop="status"
+          >
             <el-radio-group v-model="formData.status">
               <el-radio :label="0">正常</el-radio>
               <el-radio :label="1">停用</el-radio>
@@ -104,7 +169,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="排序" prop="sort">
+          <el-form-item
+            label="排序"
+            prop="sort"
+          >
             <el-input-number
               v-model="formData.sort"
               placeholder="请输入排序"
@@ -114,7 +182,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               type="textarea"
@@ -126,8 +197,15 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </dialog-component>

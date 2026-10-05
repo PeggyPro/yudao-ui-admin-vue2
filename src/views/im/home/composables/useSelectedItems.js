@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 /**
  * 三态选择面板的「已选数 + 已选项列表」派生
@@ -13,54 +13,54 @@ import { computed } from 'vue';
  * Panel 内部的 isLocked / isDisabled / isSelected 等模板判定函数仍各自维护，本 composable 只承担派生量
  */
 export function useSelectedItems(selectedIds, lockedIds, disabledIds, hideIds, byId) {
-  const hideSet = computed(() => new Set(hideIds()));
-  const disabledSet = computed(() => new Set(disabledIds()));
+  const hideSet = computed(() => new Set(hideIds()))
+  const disabledSet = computed(() => new Set(disabledIds()))
   const selectedCount = computed(() => {
-    const merged = new Set();
+    const merged = new Set()
     for (const id of selectedIds()) {
       if (hideSet.value.has(id) || disabledSet.value.has(id)) {
-        continue;
+        continue
       }
-      merged.add(id);
+      merged.add(id)
     }
     // locked 仅被 hide 过滤；契约里 locked 胜过 disabled，确保锁定项始终计入
     for (const id of lockedIds()) {
       if (hideSet.value.has(id)) {
-        continue;
+        continue
       }
-      merged.add(id);
+      merged.add(id)
     }
-    return merged.size;
-  });
+    return merged.size
+  })
   const selectedItems = computed(() => {
-    const seen = new Set();
-    const result = [];
+    const seen = new Set()
+    const result = []
     // locked 在前；仅被 hide 过滤
     for (const id of lockedIds()) {
       if (seen.has(id) || hideSet.value.has(id)) {
-        continue;
+        continue
       }
-      const item = byId.value.get(id);
+      const item = byId.value.get(id)
       if (item) {
-        seen.add(id);
-        result.push(item);
+        seen.add(id)
+        result.push(item)
       }
     }
     // selectedIds 紧随；额外过滤 disabled
     for (const id of selectedIds()) {
       if (seen.has(id) || disabledSet.value.has(id) || hideSet.value.has(id)) {
-        continue;
+        continue
       }
-      const item = byId.value.get(id);
+      const item = byId.value.get(id)
       if (item) {
-        seen.add(id);
-        result.push(item);
+        seen.add(id)
+        result.push(item)
       }
     }
-    return result;
-  });
+    return result
+  })
   return {
     selectedCount,
     selectedItems
-  };
+  }
 }

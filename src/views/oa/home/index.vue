@@ -7,15 +7,33 @@
       <oa-home-discussion-count v-if="checkPermi(['oa:discussion:query'])" />
       <oa-home-task-count />
     </div>
-    <el-row :gutter="16" class="home-panels">
-      <el-col :lg="16" :md="24">
-        <oa-home-announcement v-if="checkPermi(['oa:announcement:query'])" class="panel-gap" />
+    <el-row
+      :gutter="16"
+      class="home-panels"
+    >
+      <el-col
+        :lg="16"
+        :md="24"
+      >
+        <oa-home-announcement
+          v-if="checkPermi(['oa:announcement:query'])"
+          class="panel-gap"
+        />
         <oa-home-plan v-if="checkPermi(['oa:plan:query'])" />
       </el-col>
-      <el-col :lg="8" :md="24">
+      <el-col
+        :lg="8"
+        :md="24"
+      >
         <oa-home-task-statistics />
-        <oa-home-calendar v-if="checkPermi(['oa:schedule:query'])" class="panel-gap" />
-        <oa-home-note v-if="checkPermi(['oa:note:query'])" class="panel-gap" />
+        <oa-home-calendar
+          v-if="checkPermi(['oa:schedule:query'])"
+          class="panel-gap"
+        />
+        <oa-home-note
+          v-if="checkPermi(['oa:note:query'])"
+          class="panel-gap"
+        />
       </el-col>
     </el-row>
   </div>

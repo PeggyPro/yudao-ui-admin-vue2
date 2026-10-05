@@ -177,7 +177,9 @@ export default {
         await deleteSalarySlipSendRecord(id)
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     }
   }
 }

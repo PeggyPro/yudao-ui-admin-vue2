@@ -120,7 +120,7 @@
         min-width="130"
         prop="productScope"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_PRODUCT_SCOPE"
             :value="scope.row.productScope"
@@ -133,7 +133,7 @@
         min-width="110"
         prop="discount"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_DISCOUNT_TYPE"
             :value="scope.row.discountType"
@@ -147,7 +147,7 @@
         min-width="100"
         prop="takeType"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_COUPON_TAKE_TYPE"
             :value="scope.row.takeType"
@@ -184,7 +184,7 @@
         align="center"
         prop="status"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
             :active-value="CommonStatusEnum.ENABLE"
@@ -199,7 +199,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -210,7 +210,7 @@
         fixed="right"
         width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:coupon-template:update']"
             size="mini"

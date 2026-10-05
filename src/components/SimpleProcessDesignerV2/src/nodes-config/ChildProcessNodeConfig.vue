@@ -7,13 +7,32 @@
     :before-close="handleBeforeClose"
   >
     <div class="child-config">
-      <el-form ref="form" :model="draft" :rules="rules" label-position="top" size="small">
-        <el-form-item label="节点名称" prop="name">
-          <el-input v-model="draft.name" maxlength="30" show-word-limit />
+      <el-form
+        ref="form"
+        :model="draft"
+        :rules="rules"
+        label-position="top"
+        size="small"
+      >
+        <el-form-item
+          label="节点名称"
+          prop="name"
+        >
+          <el-input
+            v-model="draft.name"
+            maxlength="30"
+            show-word-limit
+          />
         </el-form-item>
-        <el-card shadow="never" class="setting-card">
+        <el-card
+          shadow="never"
+          class="setting-card"
+        >
           <div slot="header">子流程</div>
-          <el-form-item label="选择子流程" prop="calledProcessDefinitionKey">
+          <el-form-item
+            label="选择子流程"
+            prop="calledProcessDefinitionKey"
+          >
             <el-select
               v-model="draft.calledProcessDefinitionKey"
               filterable
@@ -30,124 +49,347 @@
                 here made Element UI emit duplicate-key warnings and could
                 reuse the wrong option after a refresh.
               -->
-              <el-option v-for="(item, index) in childProcessOptions" :key="index" :label="item.name || item.key" :value="item.key" />
+              <el-option
+                v-for="(item, index) in childProcessOptions"
+                :key="index"
+                :label="item.name || item.key"
+                :value="item.key"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item label="子流程名称" prop="calledProcessDefinitionName">
-            <el-input v-model="draft.calledProcessDefinitionName" placeholder="选择流程后自动填充，也可手工填写" />
+          <el-form-item
+            label="子流程名称"
+            prop="calledProcessDefinitionName"
+          >
+            <el-input
+              v-model="draft.calledProcessDefinitionName"
+              placeholder="选择流程后自动填充，也可手工填写"
+            />
           </el-form-item>
           <el-form-item label="是否异步">
-            <el-switch v-model="draft.async" active-text="异步" inactive-text="同步" />
+            <el-switch
+              v-model="draft.async"
+              active-text="异步"
+              inactive-text="同步"
+            />
           </el-form-item>
           <el-form-item label="自动跳过子流程发起节点">
-            <el-switch v-model="draft.skipStartUserNode" active-text="跳过" inactive-text="不跳过" />
+            <el-switch
+              v-model="draft.skipStartUserNode"
+              active-text="跳过"
+              inactive-text="不跳过"
+            />
           </el-form-item>
         </el-card>
 
-        <el-card shadow="never" class="setting-card">
+        <el-card
+          shadow="never"
+          class="setting-card"
+        >
           <div slot="header">变量传递</div>
           <div class="variable-title">主流程 → 子流程</div>
-          <div v-for="(item, index) in draft.inVariables" :key="`in-${index}`" class="variable-row">
-            <el-select v-model="item.source" filterable allow-create placeholder="主流程字段">
-              <el-option v-for="field in parentFieldOptions" :key="`p-${field.field}`" :label="field.title" :value="field.field" />
+          <div
+            v-for="(item, index) in draft.inVariables"
+            :key="`in-${index}`"
+            class="variable-row"
+          >
+            <el-select
+              v-model="item.source"
+              filterable
+              allow-create
+              placeholder="主流程字段"
+            >
+              <el-option
+                v-for="field in parentFieldOptions"
+                :key="`p-${field.field}`"
+                :label="field.title"
+                :value="field.field"
+              />
             </el-select>
             <span class="arrow">→</span>
-            <el-select v-model="item.target" filterable allow-create placeholder="子流程字段">
-              <el-option v-for="field in childFieldOptions" :key="`c-${field.field}`" :label="field.title" :value="field.field" />
+            <el-select
+              v-model="item.target"
+              filterable
+              allow-create
+              placeholder="子流程字段"
+            >
+              <el-option
+                v-for="field in childFieldOptions"
+                :key="`c-${field.field}`"
+                :label="field.title"
+                :value="field.field"
+              />
             </el-select>
-            <el-button type="text" icon="el-icon-delete" title="删除" @click="removeVariable(draft.inVariables, index)" />
+            <el-button
+              type="text"
+              icon="el-icon-delete"
+              title="删除"
+              @click="removeVariable(draft.inVariables, index)"
+            />
           </div>
-          <el-button type="text" icon="el-icon-plus" @click="addVariable(draft.inVariables)">添加一行</el-button>
+          <el-button
+            type="text"
+            icon="el-icon-plus"
+            @click="addVariable(draft.inVariables)"
+          >添加一行</el-button>
 
           <template v-if="!draft.async">
             <div class="variable-title out-title">子流程 → 主流程</div>
-            <div v-for="(item, index) in draft.outVariables" :key="`out-${index}`" class="variable-row">
-              <el-select v-model="item.source" filterable allow-create placeholder="子流程字段">
-                <el-option v-for="field in childFieldOptions" :key="`co-${field.field}`" :label="field.title" :value="field.field" />
+            <div
+              v-for="(item, index) in draft.outVariables"
+              :key="`out-${index}`"
+              class="variable-row"
+            >
+              <el-select
+                v-model="item.source"
+                filterable
+                allow-create
+                placeholder="子流程字段"
+              >
+                <el-option
+                  v-for="field in childFieldOptions"
+                  :key="`co-${field.field}`"
+                  :label="field.title"
+                  :value="field.field"
+                />
               </el-select>
               <span class="arrow">→</span>
-              <el-select v-model="item.target" filterable allow-create placeholder="主流程字段">
-                <el-option v-for="field in parentFieldOptions" :key="`po-${field.field}`" :label="field.title" :value="field.field" />
+              <el-select
+                v-model="item.target"
+                filterable
+                allow-create
+                placeholder="主流程字段"
+              >
+                <el-option
+                  v-for="field in parentFieldOptions"
+                  :key="`po-${field.field}`"
+                  :label="field.title"
+                  :value="field.field"
+                />
               </el-select>
-              <el-button type="text" icon="el-icon-delete" title="删除" @click="removeVariable(draft.outVariables, index)" />
+              <el-button
+                type="text"
+                icon="el-icon-delete"
+                title="删除"
+                @click="removeVariable(draft.outVariables, index)"
+              />
             </div>
-            <el-button type="text" icon="el-icon-plus" @click="addVariable(draft.outVariables)">添加一行</el-button>
+            <el-button
+              type="text"
+              icon="el-icon-plus"
+              @click="addVariable(draft.outVariables)"
+            >添加一行</el-button>
           </template>
         </el-card>
 
-        <el-card shadow="never" class="setting-card">
+        <el-card
+          shadow="never"
+          class="setting-card"
+        >
           <div slot="header">子流程发起人</div>
-          <el-form-item label="发起人来源" prop="startUserSetting.type">
-            <el-radio-group v-model="draft.startUserSetting.type" @change="startUserTypeChanged">
-              <el-radio v-for="item in startUserTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+          <el-form-item
+            label="发起人来源"
+            prop="startUserSetting.type"
+          >
+            <el-radio-group
+              v-model="draft.startUserSetting.type"
+              @change="startUserTypeChanged"
+            >
+              <el-radio
+                v-for="item in startUserTypes"
+                :key="item.value"
+                :label="item.value"
+              >{{ item.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="Number(draft.startUserSetting.type) === ChildProcessStartUserTypeEnum.FROM_FORM" label="发起人表单字段" prop="startUserSetting.formField">
-            <el-select v-model="draft.startUserSetting.formField" filterable allow-create clearable style="width: 100%">
-              <el-option v-for="field in parentUserFields" :key="field.field" :label="field.title" :value="field.field" />
+          <el-form-item
+            v-if="Number(draft.startUserSetting.type) === ChildProcessStartUserTypeEnum.FROM_FORM"
+            label="发起人表单字段"
+            prop="startUserSetting.formField"
+          >
+            <el-select
+              v-model="draft.startUserSetting.formField"
+              filterable
+              allow-create
+              clearable
+              style="width: 100%"
+            >
+              <el-option
+                v-for="field in parentUserFields"
+                :key="field.field"
+                :label="field.title"
+                :value="field.field"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item label="发起人为空时" prop="startUserSetting.emptyType">
+          <el-form-item
+            label="发起人为空时"
+            prop="startUserSetting.emptyType"
+          >
             <el-radio-group v-model="draft.startUserSetting.emptyType">
-              <el-radio v-for="item in startUserEmptyTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+              <el-radio
+                v-for="item in startUserEmptyTypes"
+                :key="item.value"
+                :label="item.value"
+              >{{ item.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-card>
 
-        <el-card shadow="never" class="setting-card">
+        <el-card
+          shadow="never"
+          class="setting-card"
+        >
           <div slot="header">超时设置</div>
           <el-form-item label="启用超时">
-            <el-switch v-model="draft.timeoutSetting.enable" @change="timeoutEnabledChanged" />
+            <el-switch
+              v-model="draft.timeoutSetting.enable"
+              @change="timeoutEnabledChanged"
+            />
           </el-form-item>
           <template v-if="draft.timeoutSetting.enable">
-            <el-form-item label="时间类型" prop="timeoutSetting.type">
-              <el-radio-group v-model="draft.timeoutSetting.type" @change="timeoutTypeChanged">
-                <el-radio-button v-for="item in delayTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio-button>
+            <el-form-item
+              label="时间类型"
+              prop="timeoutSetting.type"
+            >
+              <el-radio-group
+                v-model="draft.timeoutSetting.type"
+                @change="timeoutTypeChanged"
+              >
+                <el-radio-button
+                  v-for="item in delayTypes"
+                  :key="item.value"
+                  :label="item.value"
+                >{{ item.label }}</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="Number(draft.timeoutSetting.type) === DelayTypeEnum.FIXED_TIME_DURATION" label="超时时长" prop="timeoutDuration">
-              <el-input-number v-model="draft.timeoutDuration" :min="1" :precision="0" />
-              <el-select v-model="draft.timeoutUnit" class="unit-select">
-                <el-option v-for="item in timeUnitTypes" :key="item.value" :label="item.label" :value="item.value" />
+            <el-form-item
+              v-if="Number(draft.timeoutSetting.type) === DelayTypeEnum.FIXED_TIME_DURATION"
+              label="超时时长"
+              prop="timeoutDuration"
+            >
+              <el-input-number
+                v-model="draft.timeoutDuration"
+                :min="1"
+                :precision="0"
+              />
+              <el-select
+                v-model="draft.timeoutUnit"
+                class="unit-select"
+              >
+                <el-option
+                  v-for="item in timeUnitTypes"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </el-form-item>
-            <el-form-item v-else label="超时日期时间" prop="timeoutDateTime">
-              <el-date-picker v-model="draft.timeoutDateTime" type="datetime" value-format="yyyy-MM-dd'T'HH:mm:ss" placeholder="请选择日期和时间" style="width: 100%" />
+            <el-form-item
+              v-else
+              label="超时日期时间"
+              prop="timeoutDateTime"
+            >
+              <el-date-picker
+                v-model="draft.timeoutDateTime"
+                type="datetime"
+                value-format="yyyy-MM-dd'T'HH:mm:ss"
+                placeholder="请选择日期和时间"
+                style="width: 100%"
+              />
             </el-form-item>
           </template>
         </el-card>
 
-        <el-card shadow="never" class="setting-card">
+        <el-card
+          shadow="never"
+          class="setting-card"
+        >
           <div slot="header">多实例设置</div>
           <el-form-item label="启用多实例">
-            <el-switch v-model="draft.multiInstanceSetting.enable" @change="multiEnabledChanged" />
+            <el-switch
+              v-model="draft.multiInstanceSetting.enable"
+              @change="multiEnabledChanged"
+            />
           </el-form-item>
           <template v-if="draft.multiInstanceSetting.enable">
             <el-form-item label="执行方式">
-              <el-switch v-model="draft.multiInstanceSetting.sequential" active-text="串行" inactive-text="并行" />
+              <el-switch
+                v-model="draft.multiInstanceSetting.sequential"
+                active-text="串行"
+                inactive-text="并行"
+              />
             </el-form-item>
-            <el-form-item label="完成比例（%）" prop="multiInstanceSetting.approveRatio">
-              <el-input-number v-model="draft.multiInstanceSetting.approveRatio" :min="10" :max="100" :step="10" />
+            <el-form-item
+              label="完成比例（%）"
+              prop="multiInstanceSetting.approveRatio"
+            >
+              <el-input-number
+                v-model="draft.multiInstanceSetting.approveRatio"
+                :min="10"
+                :max="100"
+                :step="10"
+              />
             </el-form-item>
-            <el-form-item label="实例来源" prop="multiInstanceSetting.sourceType">
-              <el-select v-model="draft.multiInstanceSetting.sourceType" style="width: 100%" @change="multiSourceChanged">
-                <el-option v-for="item in multiSourceTypes" :key="item.value" :label="item.label" :value="item.value" />
+            <el-form-item
+              label="实例来源"
+              prop="multiInstanceSetting.sourceType"
+            >
+              <el-select
+                v-model="draft.multiInstanceSetting.sourceType"
+                style="width: 100%"
+                @change="multiSourceChanged"
+              >
+                <el-option
+                  v-for="item in multiSourceTypes"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </el-form-item>
-            <el-form-item label="来源值" prop="multiInstanceSetting.source">
-              <el-input-number v-if="Number(draft.multiInstanceSetting.sourceType) === ChildProcessMultiInstanceSourceTypeEnum.FIXED_QUANTITY" v-model="multiSourceNumber" :min="1" :precision="0" />
-              <el-select v-else v-model="draft.multiInstanceSetting.source" filterable allow-create style="width: 100%">
-                <el-option v-for="field in multiSourceFields" :key="field.field" :label="field.title" :value="field.field" />
+            <el-form-item
+              label="来源值"
+              prop="multiInstanceSetting.source"
+            >
+              <el-input-number
+                v-if="Number(draft.multiInstanceSetting.sourceType) === ChildProcessMultiInstanceSourceTypeEnum.FIXED_QUANTITY"
+                v-model="multiSourceNumber"
+                :min="1"
+                :precision="0"
+              />
+              <el-select
+                v-else
+                v-model="draft.multiInstanceSetting.source"
+                filterable
+                allow-create
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="field in multiSourceFields"
+                  :key="field.field"
+                  :label="field.title"
+                  :value="field.field"
+                />
               </el-select>
             </el-form-item>
           </template>
         </el-card>
       </el-form>
-      <el-alert v-if="loadError" :title="loadError" type="warning" show-icon :closable="false" />
+      <el-alert
+        v-if="loadError"
+        :title="loadError"
+        type="warning"
+        show-icon
+        :closable="false"
+      />
     </div>
     <div class="drawer-footer">
       <el-button @click="cancelConfig">取 消</el-button>
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
     </div>
   </el-drawer>
 </template>
@@ -176,10 +418,10 @@ function asBoolean(value) {
 
 export default {
   name: 'ChildProcessNodeConfig',
-  props: { flowNode: { type: Object, required: true } },
   inject: {
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) }
   },
+  props: { flowNode: { type: Object, required: true }},
   data() {
     return {
       visible: false,

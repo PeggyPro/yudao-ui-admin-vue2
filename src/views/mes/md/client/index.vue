@@ -14,31 +14,93 @@
       size="small"
       @submit.native.prevent
     >
-      <el-form-item label="客户编码" prop="code">
-        <el-input v-model="queryParams.code" placeholder="请输入客户编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="客户编码"
+        prop="code"
+      >
+        <el-input
+          v-model="queryParams.code"
+          placeholder="请输入客户编码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="客户名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入客户名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="客户名称"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入客户名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="客户简称" prop="nickname">
-        <el-input v-model="queryParams.nickname" placeholder="请输入客户简称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="客户简称"
+        prop="nickname"
+      >
+        <el-input
+          v-model="queryParams.nickname"
+          placeholder="请输入客户简称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="英文名称" prop="englishName">
-        <el-input v-model="queryParams.englishName" placeholder="请输入客户英文名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="英文名称"
+        prop="englishName"
+      >
+        <el-input
+          v-model="queryParams.englishName"
+          placeholder="请输入客户英文名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="客户类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择客户类型" clearable>
-          <el-option v-for="dict in clientTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+      <el-form-item
+        label="客户类型"
+        prop="type"
+      >
+        <el-select
+          v-model="queryParams.type"
+          placeholder="请选择客户类型"
+          clearable
+        >
+          <el-option
+            v-for="dict in clientTypeOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
-          <el-option v-for="dict in statusOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['mes:md-client:create']"
           type="primary"
@@ -64,32 +126,88 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="客户编码" align="center" prop="code">
-        <template v-slot="scope">
-          <el-button type="text" @click="openForm('detail', scope.row.id)">{{ scope.row.code }}</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="客户编码"
+        align="center"
+        prop="code"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="openForm('detail', scope.row.id)"
+          >{{ scope.row.code }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="客户名称" align="center" prop="name" width="150" />
-      <el-table-column label="客户简称" align="center" prop="nickname" />
-      <el-table-column label="客户类型" align="center" prop="type">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.MES_CLIENT_TYPE" :value="scope.row.type" />
+      <el-table-column
+        label="客户名称"
+        align="center"
+        prop="name"
+        width="150"
+      />
+      <el-table-column
+        label="客户简称"
+        align="center"
+        prop="nickname"
+      />
+      <el-table-column
+        label="客户类型"
+        align="center"
+        prop="type"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.MES_CLIENT_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="客户电话" align="center" prop="telephone" />
-      <el-table-column label="联系人1" align="center" prop="contact1Name" />
-      <el-table-column label="联系人1-电话" align="center" prop="contact1Telephone" />
-      <el-table-column label="状态" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="客户电话"
+        align="center"
+        prop="telephone"
+      />
+      <el-table-column
+        label="联系人1"
+        align="center"
+        prop="contact1Name"
+      />
+      <el-table-column
+        label="联系人1-电话"
+        align="center"
+        prop="contact1Telephone"
+      />
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="150">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="150"
+      >
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['mes:md-client:update']"
             type="text"
@@ -113,8 +231,14 @@
       @pagination="getList"
     />
 
-    <md-client-form ref="form" @success="getList" />
-    <md-client-import-form ref="importForm" @success="getList" />
+    <md-client-form
+      ref="form"
+      @success="getList"
+    />
+    <md-client-import-form
+      ref="importForm"
+      @success="getList"
+    />
   </div>
 </template>
 

@@ -1,5 +1,8 @@
 <template>
-  <div :class="{'hidden':hidden}" class="pagination-container">
+  <div
+    :class="{'hidden':hidden}"
+    class="pagination-container"
+  >
     <el-pagination
       :background="background"
       :current-page.sync="currentPage"
@@ -63,7 +66,7 @@ export default {
   },
   data() {
     return {
-    };
+    }
   },
   computed: {
     currentPage: {

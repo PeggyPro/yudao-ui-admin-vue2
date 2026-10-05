@@ -1,9 +1,15 @@
 <template>
   <div class="app-container">
-    <doc-alert title="WebSocket 实时通信" url="https://doc.iocoder.cn/websocket/" />
+    <doc-alert
+      title="WebSocket 实时通信"
+      url="https://doc.iocoder.cn/websocket/"
+    />
 
     <el-row :gutter="12">
-      <el-col :xs="24" :sm="12">
+      <el-col
+        :xs="24"
+        :sm="12"
+      >
         <el-card shadow="always">
           <div slot="header">连接</div>
           <div class="connection-status">
@@ -12,7 +18,10 @@
           </div>
           <el-divider />
           <div class="connection-input">
-            <el-input v-model="server" disabled>
+            <el-input
+              v-model="server"
+              disabled
+            >
               <template slot="prepend">服务地址</template>
             </el-input>
             <el-button
@@ -33,8 +42,15 @@
             placeholder="请输入你要发送的消息"
             type="textarea"
           />
-          <el-select v-model="sendUserId" class="send-user" placeholder="请选择发送人">
-            <el-option label="所有人" value="" />
+          <el-select
+            v-model="sendUserId"
+            class="send-user"
+            placeholder="请选择发送人"
+          >
+            <el-option
+              label="所有人"
+              value=""
+            />
             <el-option
               v-for="user in userList"
               :key="user.id"
@@ -53,7 +69,10 @@
         </el-card>
       </el-col>
 
-      <el-col :xs="24" :sm="12">
+      <el-col
+        :xs="24"
+        :sm="12"
+      >
         <el-card shadow="always">
           <div slot="header">消息记录</div>
           <div class="message-records">

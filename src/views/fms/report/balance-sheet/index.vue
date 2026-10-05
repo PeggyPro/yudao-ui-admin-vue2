@@ -1,8 +1,14 @@
 <template>
   <div class="app-container fms-balance-sheet-page">
-    <doc-alert title="【报表】财务报表" url="https://doc.iocoder.cn/fms/report/" />
+    <doc-alert
+      title="【报表】财务报表"
+      url="https://doc.iocoder.cn/fms/report/"
+    />
 
-    <el-card class="toolbar-card" shadow="never">
+    <el-card
+      class="toolbar-card"
+      shadow="never"
+    >
       <fms-report-period-bar @query="handleQuery">
         <fms-report-print-button
           v-hasPermi="['fms:report:balance-sheet:print']"
@@ -23,8 +29,14 @@
       </fms-report-period-bar>
     </el-card>
 
-    <el-card class="report-card" shadow="never">
-      <fms-report-check-alert :report-type="FMS_REPORT_TYPE.BALANCE_SHEET" :result="checkResult" />
+    <el-card
+      class="report-card"
+      shadow="never"
+    >
+      <fms-report-check-alert
+        :report-type="FMS_REPORT_TYPE.BALANCE_SHEET"
+        :result="checkResult"
+      />
       <el-table
         id="fms-balance-sheet-table"
         v-loading="loading"
@@ -32,7 +44,10 @@
         border
         height="calc(100vh - 290px)"
       >
-        <el-table-column label="资产" min-width="210">
+        <el-table-column
+          label="资产"
+          min-width="210"
+        >
           <template slot-scope="scope">
             <div class="item-cell">
               <span :class="itemClass(scope.row.assetLevel, scope.row.assetEditable, scope.row.assetRowNo)">
@@ -49,16 +64,31 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="行次" width="64">
+        <el-table-column
+          align="center"
+          label="行次"
+          width="64"
+        >
           <template slot-scope="scope">{{ scope.row.assetRowNo || '' }}</template>
         </el-table-column>
-        <el-table-column align="right" label="期末余额" width="140">
+        <el-table-column
+          align="right"
+          label="期末余额"
+          width="140"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.assetClosingAmount) }}</template>
         </el-table-column>
-        <el-table-column align="right" label="年初余额" width="140">
+        <el-table-column
+          align="right"
+          label="年初余额"
+          width="140"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.assetOpeningAmount) }}</template>
         </el-table-column>
-        <el-table-column label="负债和所有者权益" min-width="250">
+        <el-table-column
+          label="负债和所有者权益"
+          min-width="250"
+        >
           <template slot-scope="scope">
             <div class="item-cell">
               <span :class="itemClass(scope.row.liabilityLevel, scope.row.liabilityEditable, scope.row.liabilityRowNo)">
@@ -75,19 +105,34 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="行次" width="64">
+        <el-table-column
+          align="center"
+          label="行次"
+          width="64"
+        >
           <template slot-scope="scope">{{ scope.row.liabilityRowNo || '' }}</template>
         </el-table-column>
-        <el-table-column align="right" label="期末余额" width="140">
+        <el-table-column
+          align="right"
+          label="期末余额"
+          width="140"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.liabilityClosingAmount) }}</template>
         </el-table-column>
-        <el-table-column align="right" label="年初余额" width="140">
+        <el-table-column
+          align="right"
+          label="年初余额"
+          width="140"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.liabilityOpeningAmount) }}</template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <fms-report-formula-form ref="formulaForm" @success="getList" />
+    <fms-report-formula-form
+      ref="formulaForm"
+      @success="getList"
+    />
   </div>
 </template>
 

@@ -1,9 +1,18 @@
 <template>
   <div class="app-link-input">
-    <el-input v-model="appLink" placeholder="输入或选择链接">
-      <el-button slot="append" @click="handleOpenDialog">选择</el-button>
+    <el-input
+      v-model="appLink"
+      placeholder="输入或选择链接"
+    >
+      <el-button
+        slot="append"
+        @click="handleOpenDialog"
+      >选择</el-button>
     </el-input>
-    <AppLinkSelectDialog ref="dialog" @change="handleLinkSelected" />
+    <AppLinkSelectDialog
+      ref="dialog"
+      @change="handleLinkSelected"
+    />
   </div>
 </template>
 

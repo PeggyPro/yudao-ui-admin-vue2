@@ -7,7 +7,11 @@
   >
     <el-row v-loading="formLoading">
       <el-col :span="24">
-        <el-card shadow="never" :body-style="{ padding: '10px' }" style="height: 360px; overflow: auto">
+        <el-card
+          shadow="never"
+          :body-style="{ padding: '10px' }"
+          style="height: 360px; overflow: auto"
+        >
           <el-tree
             ref="treeRef"
             :data="deptTree"

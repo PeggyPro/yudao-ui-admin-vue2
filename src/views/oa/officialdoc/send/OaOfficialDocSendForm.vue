@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="90%">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="90%"
+  >
     <div class="send-form-body">
       <el-form
         ref="form"
@@ -10,7 +14,10 @@
       >
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="套红模板" prop="templateId">
+            <el-form-item
+              label="套红模板"
+              prop="templateId"
+            >
               <oa-official-doc-template-select
                 v-model="formData.templateId"
                 style="width: 100%"
@@ -19,28 +26,62 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="标题" prop="title">
-              <el-input v-model="formData.title" placeholder="请输入标题" />
+            <el-form-item
+              label="标题"
+              prop="title"
+            >
+              <el-input
+                v-model="formData.title"
+                placeholder="请输入标题"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="字号" prop="noPrefix">
-              <el-input v-model="formData.noPrefix" placeholder="请输入字号" />
+            <el-form-item
+              label="字号"
+              prop="noPrefix"
+            >
+              <el-input
+                v-model="formData.noPrefix"
+                placeholder="请输入字号"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="年份" prop="year">
-              <el-input-number v-model="formData.year" :min="1" :max="9999" style="width: 100%" />
+            <el-form-item
+              label="年份"
+              prop="year"
+            >
+              <el-input-number
+                v-model="formData.year"
+                :min="1"
+                :max="9999"
+                style="width: 100%"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="第几号文" prop="sequence">
-              <el-input-number v-model="formData.sequence" :min="1" style="width: 100%" />
+            <el-form-item
+              label="第几号文"
+              prop="sequence"
+            >
+              <el-input-number
+                v-model="formData.sequence"
+                :min="1"
+                style="width: 100%"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="密级" prop="secrecyLevel">
-              <el-select v-model="formData.secrecyLevel" placeholder="请选择密级" style="width: 100%">
+            <el-form-item
+              label="密级"
+              prop="secrecyLevel"
+            >
+              <el-select
+                v-model="formData.secrecyLevel"
+                placeholder="请选择密级"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="dict in secretLevelOptions"
                   :key="dict.value"
@@ -51,8 +92,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="紧急程度" prop="urgencyLevel">
-              <el-select v-model="formData.urgencyLevel" placeholder="请选择紧急程度" style="width: 100%">
+            <el-form-item
+              label="紧急程度"
+              prop="urgencyLevel"
+            >
+              <el-select
+                v-model="formData.urgencyLevel"
+                placeholder="请选择紧急程度"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="dict in urgencyLevelOptions"
                   :key="dict.value"
@@ -63,8 +111,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公开类别" prop="disclosureType">
-              <el-select v-model="formData.disclosureType" placeholder="请选择公开类别" style="width: 100%">
+            <el-form-item
+              label="公开类别"
+              prop="disclosureType"
+            >
+              <el-select
+                v-model="formData.disclosureType"
+                placeholder="请选择公开类别"
+                style="width: 100%"
+              >
                 <el-option
                   v-for="dict in publicCategoryOptions"
                   :key="dict.value"
@@ -75,7 +130,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="发文日期" prop="issueTime">
+            <el-form-item
+              label="发文日期"
+              prop="issueTime"
+            >
               <el-date-picker
                 v-model="formData.issueTime"
                 type="datetime"
@@ -86,27 +144,53 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="发文部门" prop="sendDeptId">
-              <dept-select v-model="formData.sendDeptId" style="width: 100%" />
+            <el-form-item
+              label="发文部门"
+              prop="sendDeptId"
+            >
+              <dept-select
+                v-model="formData.sendDeptId"
+                style="width: 100%"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="主送部门" prop="mainDeptIds">
-              <dept-select v-model="formData.mainDeptIds" multiple style="width: 100%" />
+            <el-form-item
+              label="主送部门"
+              prop="mainDeptIds"
+            >
+              <dept-select
+                v-model="formData.mainDeptIds"
+                multiple
+                style="width: 100%"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="抄送部门" prop="copyDeptIds">
-              <dept-select v-model="formData.copyDeptIds" multiple style="width: 100%" />
+            <el-form-item
+              label="抄送部门"
+              prop="copyDeptIds"
+            >
+              <dept-select
+                v-model="formData.copyDeptIds"
+                multiple
+                style="width: 100%"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="签发人">
-              <el-input :value="formData.signerName" disabled />
+              <el-input
+                :value="formData.signerName"
+                disabled
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="附注" prop="remark">
+            <el-form-item
+              label="附注"
+              prop="remark"
+            >
               <el-input
                 v-model="formData.remark"
                 placeholder="请输入附注"
@@ -116,37 +200,66 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="公文内容" prop="content">
-              <editor v-model="formData.content" height="320px" />
+            <el-form-item
+              label="公文内容"
+              prop="content"
+            >
+              <editor
+                v-model="formData.content"
+                height="320px"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="附件" prop="fileUrls">
-              <upload-file v-model="formData.fileUrls" :limit="10" />
+            <el-form-item
+              label="附件"
+              prop="fileUrls"
+            >
+              <upload-file
+                v-model="formData.fileUrls"
+                :limit="10"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="正式公文" prop="formalFileUrl">
-              <upload-file v-model="formData.formalFileUrl" :limit="1" :file-type="['pdf']" />
+            <el-form-item
+              label="正式公文"
+              prop="formalFileUrl"
+            >
+              <upload-file
+                v-model="formData.formalFileUrl"
+                :limit="1"
+                :file-type="['pdf']"
+              />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <!-- 随表单内容实时更新套红预览 -->
       <div class="send-form-preview">
-        <oa-official-doc-preview :document="formData" :template="selectedTemplate" />
+        <oa-official-doc-preview
+          :document="formData"
+          :template="selectedTemplate"
+        />
       </div>
     </div>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as SendApi from '@/api/oa/officialdoc/send'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import * as TemplateApi from '@/api/oa/officialdoc/template'
 import { formatDate } from '@/utils/formatTime'
@@ -180,7 +293,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaOfficialDocSendForm',
-  components: { Dialog, OaOfficialDocTemplateSelect, OaOfficialDocPreview, DeptSelect },
+  components: { AppDialog, OaOfficialDocTemplateSelect, OaOfficialDocPreview, DeptSelect },
   data() {
     return {
       dialogVisible: false,

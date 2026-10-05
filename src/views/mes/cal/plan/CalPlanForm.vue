@@ -1,6 +1,11 @@
 <!-- MES 排班计划表单 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="960px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="960px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -11,28 +16,58 @@
     >
       <el-row>
         <el-col :span="8">
-          <el-form-item label="计划编码" prop="code">
-            <el-input v-model="formData.code" placeholder="请输入计划编码">
-              <el-button slot="append" @click="generateCode">生成</el-button>
+          <el-form-item
+            label="计划编码"
+            prop="code"
+          >
+            <el-input
+              v-model="formData.code"
+              placeholder="请输入计划编码"
+            >
+              <el-button
+                slot="append"
+                @click="generateCode"
+              >生成</el-button>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="计划名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入计划名称" />
+          <el-form-item
+            label="计划名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入计划名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="班组类型" prop="calendarType">
-            <el-select v-model="formData.calendarType" placeholder="请选择班组类型" class="full-width">
-              <el-option v-for="dict in calendarTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <el-form-item
+            label="班组类型"
+            prop="calendarType"
+          >
+            <el-select
+              v-model="formData.calendarType"
+              placeholder="请选择班组类型"
+              class="full-width"
+            >
+              <el-option
+                v-for="dict in calendarTypeOptions"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="开始日期" prop="startDate">
+          <el-form-item
+            label="开始日期"
+            prop="startDate"
+          >
             <el-date-picker
               v-model="formData.startDate"
               type="date"
@@ -43,7 +78,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="结束日期" prop="endDate">
+          <el-form-item
+            label="结束日期"
+            prop="endDate"
+          >
             <el-date-picker
               v-model="formData.endDate"
               type="date"
@@ -54,42 +92,103 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="轮班方式" prop="shiftType">
-            <el-select v-model="formData.shiftType" placeholder="请选择轮班方式" class="full-width">
-              <el-option v-for="dict in shiftTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <el-form-item
+            label="轮班方式"
+            prop="shiftType"
+          >
+            <el-select
+              v-model="formData.shiftType"
+              placeholder="请选择轮班方式"
+              class="full-width"
+            >
+              <el-option
+                v-for="dict in shiftTypeOptions"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
-        <el-col v-if="formData.shiftType && formData.shiftType !== MesCalShiftTypeEnum.SINGLE" :span="8">
-          <el-form-item label="倒班方式" prop="shiftMethod">
-            <el-select v-model="formData.shiftMethod" placeholder="请选择倒班方式" class="full-width">
-              <el-option v-for="dict in shiftMethodOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+        <el-col
+          v-if="formData.shiftType && formData.shiftType !== MesCalShiftTypeEnum.SINGLE"
+          :span="8"
+        >
+          <el-form-item
+            label="倒班方式"
+            prop="shiftMethod"
+          >
+            <el-select
+              v-model="formData.shiftMethod"
+              placeholder="请选择倒班方式"
+              class="full-width"
+            >
+              <el-option
+                v-for="dict in shiftMethodOptions"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col v-if="formData.shiftMethod === MesCalShiftMethodEnum.DAY" :span="8">
-          <el-form-item label="倒班天数" prop="shiftCount">
-            <el-input-number v-model="formData.shiftCount" :min="1" controls-position="right" class="full-width" />
+        <el-col
+          v-if="formData.shiftMethod === MesCalShiftMethodEnum.DAY"
+          :span="8"
+        >
+          <el-form-item
+            label="倒班天数"
+            prop="shiftCount"
+          >
+            <el-input-number
+              v-model="formData.shiftCount"
+              :min="1"
+              controls-position="right"
+              class="full-width"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
-            <el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" />
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
+            <el-input
+              v-model="formData.remark"
+              type="textarea"
+              placeholder="请输入备注"
+            />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
 
-    <el-tabs v-if="formType === 'update' || isDetail" v-model="activeTab" class="resource-tabs">
-      <el-tab-pane label="班次" name="shift">
-        <cal-shift-list :plan-id="formData.id" :form-type="formType" />
+    <el-tabs
+      v-if="formType === 'update' || isDetail"
+      v-model="activeTab"
+      class="resource-tabs"
+    >
+      <el-tab-pane
+        label="班次"
+        name="shift"
+      >
+        <cal-shift-list
+          :plan-id="formData.id"
+          :form-type="formType"
+        />
       </el-tab-pane>
-      <el-tab-pane label="班组" name="team">
-        <cal-plan-team-list :plan-id="formData.id" :form-type="formType" />
+      <el-tab-pane
+        label="班组"
+        name="team"
+      >
+        <cal-plan-team-list
+          :plan-id="formData.id"
+          :form-type="formType"
+        />
       </el-tab-pane>
     </el-tabs>
 
@@ -101,10 +200,17 @@
           :disabled="formLoading"
           @click="handleConfirm"
         >确认计划</el-button>
-        <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+        <el-button
+          type="primary"
+          :disabled="formLoading"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </template>
-      <el-button v-else @click="dialogVisible = false">关 闭</el-button>
+      <el-button
+        v-else
+        @click="dialogVisible = false"
+      >关 闭</el-button>
     </span>
   </el-dialog>
 </template>

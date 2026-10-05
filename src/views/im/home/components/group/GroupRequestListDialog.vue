@@ -13,9 +13,15 @@
     :close-on-click-modal="false"
     class="im-group-request-list__dialog"
   >
-    <div v-loading="loading" class="flex flex-col gap-3 max-h-[60vh] overflow-y-auto pr-1">
+    <div
+      v-loading="loading"
+      class="flex flex-col gap-3 max-h-[60vh] overflow-y-auto pr-1"
+    >
       <!-- 空态 -->
-      <el-empty v-if="!loading && list.length === 0" description="暂无进群申请" />
+      <el-empty
+        v-if="!loading && list.length === 0"
+        description="暂无进群申请"
+      />
 
       <!-- 顶部卡片：最新一条 -->
       <div
@@ -60,7 +66,10 @@
           >
             已拒绝
           </span>
-          <div v-else class="flex gap-1.5 flex-shrink-0">
+          <div
+            v-else
+            class="flex gap-1.5 flex-shrink-0"
+          >
             <button
               class="im-group-request-list__btn im-group-request-list__btn--primary"
               :disabled="actingId === latest.id"
@@ -145,7 +154,10 @@
           >
             已拒绝
           </span>
-          <div v-else class="flex gap-1.5 flex-shrink-0">
+          <div
+            v-else
+            class="flex gap-1.5 flex-shrink-0"
+          >
             <button
               class="im-group-request-list__btn im-group-request-list__btn--primary"
               :disabled="actingId === item.id"
@@ -168,14 +180,14 @@
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref, watch } from 'vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { getGroupRequestListByGroupId } from '@/api/im/group/request';
-import { ImGroupRequestHandleResult } from '@/views/im/utils/constants';
-import { useGroupRequestStore } from '../../store/groupRequestStore';
-import UserAvatar from '../user/UserAvatar.vue';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { getGroupRequestListByGroupId } from '@/api/im/group/request'
+import { ImGroupRequestHandleResult } from '@/views/im/utils/constants'
+import { useGroupRequestStore } from '../../store/groupRequestStore'
+import UserAvatar from '../user/UserAvatar.vue'
+export default /* #__PURE__*/_defineComponent({
   components: {
     UserAvatar
   },
@@ -183,41 +195,41 @@ export default /*#__PURE__*/_defineComponent({
   setup(__props, {
     expose
   }) {
-    const message = useMessage();
-    const groupRequestStore = useGroupRequestStore();
-    const visible = ref(false);
+    const message = useMessage()
+    const groupRequestStore = useGroupRequestStore()
+    const visible = ref(false)
     /** 当前展示的群编号；undefined 时走全局未处理列表（store.unhandledList） */
-    const groupId = ref();
-    const loading = ref(false);
-    const groupList = ref([]);
-    const actingId = ref(null);
+    const groupId = ref()
+    const loading = ref(false)
+    const groupList = ref([])
+    const actingId = ref(null)
     expose({
       /** 打开进群申请弹窗：reset → 灌参 → visible=true；不传 groupId 走全局未处理列表 */
       open(opts) {
-        groupId.value = opts?.groupId;
-        actingId.value = null;
-        visible.value = true;
+        groupId.value = opts?.groupId
+        actingId.value = null
+        visible.value = true
       }
-    });
+    })
 
     /** 数据源：单群模式用 fetch 回来的 groupList；全局模式直接读 store.unhandledList，处理后 store 自动 reactive 同步 */
-    const list = computed(() => groupId.value ? groupList.value : groupRequestStore.unhandledList);
+    const list = computed(() => groupId.value ? groupList.value : groupRequestStore.unhandledList)
 
     /** 顶部卡片：最新一条；空数组时为 null */
-    const latest = computed(() => list.value[0] || null);
+    const latest = computed(() => list.value[0] || null)
     /** 历史列表：除最新一条外的其余 */
-    const histories = computed(() => list.value.slice(1));
+    const histories = computed(() => list.value.slice(1))
 
     /** 打开 dialog 时拉数据：单群拉 API；全局直接读 store；关闭时清掉单群缓存 */
     watch([visible, groupId], ([isVisible, currentGroupId]) => {
       if (isVisible && currentGroupId) {
-        void fetchList(currentGroupId);
+        void fetchList(currentGroupId)
       } else if (!isVisible) {
-        groupList.value = [];
+        groupList.value = []
       }
     }, {
       immediate: true
-    });
+    })
 
     /**
      * 单群模式下订阅 store 中归属本群的未处理列表变化：远端事件（WS 1503 新申请 / 其他管理员处理）触发时 refetch
@@ -227,72 +239,72 @@ export default /*#__PURE__*/_defineComponent({
      */
     watch(() => groupId.value && visible.value ? groupRequestStore.unhandledList.filter(request => request.groupId === groupId.value).map(request => `${request.id}:${request.inviterUserId ?? ''}:${request.applyContent ?? ''}`).join(',') : null, (current, previous) => {
       if (current === null || previous === undefined || current === previous) {
-        return;
+        return
       }
       if (actingId.value !== null) {
-        return;
+        return
       }
       if (groupId.value) {
-        void fetchList(groupId.value);
+        void fetchList(groupId.value)
       }
-    });
-    let fetchSeq = 0; // 单调递增请求序号；同群也会因为 WS 1503 推送触发额外 fetch，乱序返回时旧响应不能覆盖新数据
+    })
+    let fetchSeq = 0 // 单调递增请求序号；同群也会因为 WS 1503 推送触发额外 fetch，乱序返回时旧响应不能覆盖新数据
     async function fetchList(targetGroupId) {
-      const seq = ++fetchSeq;
-      loading.value = true;
+      const seq = ++fetchSeq
+      loading.value = true
       try {
-        const data = (await getGroupRequestListByGroupId(targetGroupId)).data;
+        const data = (await getGroupRequestListByGroupId(targetGroupId)).data
         // 期间切群 / 关弹窗 / 又触发更新 fetch：丢响应
         if (seq !== fetchSeq || !visible.value || groupId.value !== targetGroupId) {
-          return;
+          return
         }
-        groupList.value = data;
+        groupList.value = data
       } finally {
         // 旧请求 finally 命中时新请求仍在跑，跳过避免提前关 loading
         if (seq === fetchSeq) {
-          loading.value = false;
+          loading.value = false
         }
       }
     }
 
     /** 同意：走 store 同步全局未处理列表 + 本地更新 handleResult 让按钮变灰 */
     async function handleAgree(item) {
-      if (actingId.value !== null) return;
-      actingId.value = item.id;
+      if (actingId.value !== null) return
+      actingId.value = item.id
       try {
-        await groupRequestStore.agreeGroupRequest(item.id);
-        updateLocalResult(item.id, ImGroupRequestHandleResult.AGREED);
-        message.success('已同意');
+        await groupRequestStore.agreeGroupRequest(item.id)
+        updateLocalResult(item.id, ImGroupRequestHandleResult.AGREED)
+        message.success('已同意')
       } finally {
-        actingId.value = null;
+        actingId.value = null
       }
     }
 
     /** 拒绝：弹理由输入框；为空则不带 handleContent */
     async function handleRefuse(item) {
-      if (actingId.value !== null) return;
-      let handleContent = '';
+      if (actingId.value !== null) return
+      let handleContent = ''
       try {
-        const result = await message.prompt('请输入拒绝理由（可选）', '拒绝申请');
-        handleContent = result.value || '';
+        const result = await message.prompt('请输入拒绝理由（可选）', '拒绝申请')
+        handleContent = result.value || ''
       } catch {
-        return;
+        return
       }
-      actingId.value = item.id;
+      actingId.value = item.id
       try {
-        await groupRequestStore.refuseGroupRequest(item.id, handleContent || undefined);
-        updateLocalResult(item.id, ImGroupRequestHandleResult.REFUSED);
-        message.success('已拒绝');
+        await groupRequestStore.refuseGroupRequest(item.id, handleContent || undefined)
+        updateLocalResult(item.id, ImGroupRequestHandleResult.REFUSED)
+        message.success('已拒绝')
       } finally {
-        actingId.value = null;
+        actingId.value = null
       }
     }
 
     /** 单群模式下处理后更新 groupList 里的 handleResult，按钮转「已同意 / 已拒绝」灰态；全局模式 store 直接移除该项无需更新 */
     function updateLocalResult(id, handleResult) {
-      const target = groupList.value.find(r => r.id === id);
+      const target = groupList.value.find(r => r.id === id)
       if (target) {
-        target.handleResult = handleResult;
+        target.handleResult = handleResult
       }
     }
     const __returned__ = {
@@ -313,14 +325,14 @@ export default /*#__PURE__*/_defineComponent({
       updateLocalResult,
       ImGroupRequestHandleResult,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped>
 

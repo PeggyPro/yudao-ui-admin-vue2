@@ -9,19 +9,39 @@
           @click="openForm('create')"
         >新增</el-button>
       </div>
-      <el-table v-loading="loading" :data="list" stripe>
-        <el-table-column label="模板名称" prop="name" min-width="180" />
-        <el-table-column label="默认模板" align="center" prop="defaultStatus" width="100">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        stripe
+      >
+        <el-table-column
+          label="模板名称"
+          prop="name"
+          min-width="180"
+        />
+        <el-table-column
+          label="默认模板"
+          align="center"
+          prop="defaultStatus"
+          width="100"
+        >
           <template slot-scope="scope">
             <el-tag :type="scope.row.defaultStatus ? 'success' : 'info'">
               {{ scope.row.defaultStatus ? '是' : '否' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="调薪项" min-width="260">
+        <el-table-column
+          label="调薪项"
+          min-width="260"
+        >
           <template slot-scope="scope">
             <div class="option-tags">
-              <el-tag v-for="item in scope.row.options || []" :key="item.code" type="primary">
+              <el-tag
+                v-for="item in scope.row.options || []"
+                :key="item.code"
+                type="primary"
+              >
                 {{ item.name }}
               </el-tag>
             </div>
@@ -34,7 +54,12 @@
           width="180"
           :formatter="dateFormatter"
         />
-        <el-table-column label="操作" align="center" fixed="right" width="160">
+        <el-table-column
+          label="操作"
+          align="center"
+          fixed="right"
+          width="160"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['hrm:salary:change-template:update']"
@@ -51,7 +76,10 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <salary-change-template-form ref="form" @success="getList" />
+    <salary-change-template-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 
@@ -92,7 +120,9 @@ export default {
         await deleteSalaryChangeTemplate(id)
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     }
   }
 }

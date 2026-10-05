@@ -1,19 +1,30 @@
 <template>
-  <Dialog title="公文发文详情" v-model="dialogVisible" width="1000px">
-    <official-doc-send-detail v-if="dialogVisible && detailId" :key="detailId" :id="detailId" />
-    <div slot="footer" class="dialog-footer">
+  <AppDialog
+    v-model="dialogVisible"
+    title="公文发文详情"
+    width="1000px"
+  >
+    <official-doc-send-detail
+      v-if="dialogVisible && detailId"
+      :id="detailId"
+      :key="detailId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import OfficialDocSendDetail from './detail/index.vue'
 
 export default {
   name: 'OaOfficialDocSendDetail',
-  components: { Dialog, OfficialDocSendDetail },
+  components: { AppDialog, OfficialDocSendDetail },
   data() {
     return {
       dialogVisible: false,

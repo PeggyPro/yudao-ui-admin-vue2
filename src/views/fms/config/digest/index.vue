@@ -1,8 +1,15 @@
 <template>
   <div class="app-container fms-digest-page">
-    <doc-alert title="【设置】凭证字、常用摘要、凭证模板" url="https://doc.iocoder.cn/fms/config/voucher/" />
+    <doc-alert
+      title="【设置】凭证字、常用摘要、凭证模板"
+      url="https://doc.iocoder.cn/fms/config/voucher/"
+    />
 
-    <el-form :inline="true" class="digest-toolbar" label-width="78px">
+    <el-form
+      :inline="true"
+      class="digest-toolbar"
+      label-width="78px"
+    >
       <el-form-item label="当前账套">
         <el-select
           v-model="accountSetId"
@@ -41,12 +48,30 @@
       type="info"
     />
 
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" stripe>
-      <el-table-column label="摘要内容" min-width="480" prop="content" />
-      <el-table-column align="center" label="创建时间" prop="createTime" width="180">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      stripe
+    >
+      <el-table-column
+        label="摘要内容"
+        min-width="480"
+        prop="content"
+      />
+      <el-table-column
+        align="center"
+        label="创建时间"
+        prop="createTime"
+        width="180"
+      >
         <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="160">
+      <el-table-column
+        align="center"
+        label="操作"
+        width="160"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="isWritable"
@@ -65,7 +90,10 @@
       </el-table-column>
     </el-table>
 
-    <fms-digest-form ref="form" @success="getList" />
+    <fms-digest-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

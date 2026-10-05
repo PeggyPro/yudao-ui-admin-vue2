@@ -5,7 +5,10 @@
     size="588px"
     :before-close="handleBeforeClose"
   >
-    <div slot="title" class="condition-config-title">
+    <div
+      slot="title"
+      class="condition-config-title"
+    >
       <el-input
         v-if="editingName"
         v-model="draftName"
@@ -15,15 +18,28 @@
       />
       <span v-else>
         {{ draftName || currentNode.name }}
-        <i class="el-icon-edit" @click="editingName = true" />
+        <i
+          class="el-icon-edit"
+          @click="editingName = true"
+        />
       </span>
     </div>
-    <div v-if="isDefaultFlow" class="default-flow-tip">
+    <div
+      v-if="isDefaultFlow"
+      class="default-flow-tip"
+    >
       未满足其它条件时，将进入此分支（该分支不可编辑和删除）
     </div>
-    <Condition v-else ref="condition" v-model="condition" />
+    <Condition
+      v-else
+      ref="condition"
+      v-model="condition"
+    />
     <div class="drawer-footer">
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </div>
   </el-drawer>
@@ -48,6 +64,9 @@ function clone(value) {
 export default {
   name: 'ConditionNodeConfig',
   components: { Condition },
+  inject: {
+    formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) }
+  },
   props: {
     conditionNode: {
       type: Object,
@@ -57,9 +76,6 @@ export default {
       type: Number,
       default: 0
     }
-  },
-  inject: {
-    formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) }
   },
   data() {
     return {

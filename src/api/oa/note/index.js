@@ -37,10 +37,10 @@ export function deleteReceivedNote(id) {
 
 // 修改笔记收藏状态
 export function updateNoteFavorite(id, favorite) {
-  return request({ url: '/oa/note/update-favorite', method: 'put', data: { id, favorite } })
+  return request({ url: '/oa/note/update-favorite', method: 'put', data: { id, favorite }})
 }
 
 // 修改笔记共享接收人
 export function updateNoteShare(id, receiverUserIds) {
-  return request({ url: '/oa/note/update-share', method: 'put', data: { id, receiverUserIds } })
+  return request({ url: '/oa/note/update-share', method: 'put', data: { id, receiverUserIds }})
 }

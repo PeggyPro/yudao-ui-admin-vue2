@@ -6,7 +6,11 @@
     <span class="legend-item"><span class="legend-dot middle-shift" />中班（三班倒）</span>
     <span class="legend-item"><span class="legend-dot night-shift" />中班（两班倒）/ 夜班</span>
     <span class="legend-item"><span class="legend-dot weekend-dot" /><span class="weekend-text">红色日期</span> = 周末</span>
-    <span class="legend-item"><el-tag size="mini" effect="dark" type="success">休</el-tag> = 节假日（不显示排班）</span>
+    <span class="legend-item"><el-tag
+      size="mini"
+      effect="dark"
+      type="success"
+    >休</el-tag> = 节假日（不显示排班）</span>
   </div>
 </template>
 

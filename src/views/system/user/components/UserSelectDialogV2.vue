@@ -1,24 +1,70 @@
 <template>
-  <el-dialog :title="title" :visible.sync="dialogVisible" width="80%" append-to-body>
-    <el-row class="user-select-dialog" :gutter="15">
-      <el-col class="user-select-left" :span="5" :xs="24">
-        <el-card shadow="never" class="user-select-card">
-          <DeptTreeSelect ref="deptTree" @node-click="handleDeptNodeClick" />
+  <el-dialog
+    :title="title"
+    :visible.sync="dialogVisible"
+    width="80%"
+    append-to-body
+  >
+    <el-row
+      class="user-select-dialog"
+      :gutter="15"
+    >
+      <el-col
+        class="user-select-left"
+        :span="5"
+        :xs="24"
+      >
+        <el-card
+          shadow="never"
+          class="user-select-card"
+        >
+          <DeptTreeSelect
+            ref="deptTree"
+            @node-click="handleDeptNodeClick"
+          />
         </el-card>
       </el-col>
-      <el-col class="user-select-right" :span="19" :xs="24">
-        <el-form :inline="true" :model="queryParams" size="small" label-width="72px">
+      <el-col
+        class="user-select-right"
+        :span="19"
+        :xs="24"
+      >
+        <el-form
+          :inline="true"
+          :model="queryParams"
+          size="small"
+          label-width="72px"
+        >
           <el-form-item label="用户名称">
-            <el-input v-model="queryParams.username" placeholder="请输入用户名称" clearable @keyup.enter.native="handleQuery" />
+            <el-input
+              v-model="queryParams.username"
+              placeholder="请输入用户名称"
+              clearable
+              @keyup.enter.native="handleQuery"
+            />
           </el-form-item>
           <el-form-item label="用户昵称">
-            <el-input v-model="queryParams.nickname" placeholder="请输入用户昵称" clearable @keyup.enter.native="handleQuery" />
+            <el-input
+              v-model="queryParams.nickname"
+              placeholder="请输入用户昵称"
+              clearable
+              @keyup.enter.native="handleQuery"
+            />
           </el-form-item>
           <el-form-item label="手机号码">
-            <el-input v-model="queryParams.mobile" placeholder="请输入手机号码" clearable @keyup.enter.native="handleQuery" />
+            <el-input
+              v-model="queryParams.mobile"
+              placeholder="请输入手机号码"
+              clearable
+              @keyup.enter.native="handleQuery"
+            />
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+            <el-select
+              v-model="queryParams.status"
+              placeholder="请选择状态"
+              clearable
+            >
               <el-option
                 v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
                 :key="parseInt(dict.value)"
@@ -28,8 +74,15 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              @click="handleQuery"
+            >搜索</el-button>
+            <el-button
+              icon="el-icon-refresh"
+              @click="resetQuery"
+            >重置</el-button>
           </el-form-item>
         </el-form>
 
@@ -51,8 +104,12 @@
             width="50"
             align="center"
           />
-          <el-table-column v-else width="50" align="center">
-            <template v-slot="scope">
+          <el-table-column
+            v-else
+            width="50"
+            align="center"
+          >
+            <template slot-scope="scope">
               <el-radio
                 v-model="selectedRadioId"
                 :label="scope.row.id"
@@ -63,28 +120,78 @@
               </el-radio>
             </template>
           </el-table-column>
-          <el-table-column label="用户编号" align="center" prop="id" width="100" />
-          <el-table-column label="用户名称" align="center" prop="username" width="140" show-overflow-tooltip />
-          <el-table-column label="用户昵称" align="center" prop="nickname" width="140" show-overflow-tooltip />
-          <el-table-column label="部门" align="center" prop="deptName" width="150" show-overflow-tooltip>
-            <template v-slot="scope">{{ scope.row.deptName || (scope.row.dept && scope.row.dept.name) || '-' }}</template>
+          <el-table-column
+            label="用户编号"
+            align="center"
+            prop="id"
+            width="100"
+          />
+          <el-table-column
+            label="用户名称"
+            align="center"
+            prop="username"
+            width="140"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            label="用户昵称"
+            align="center"
+            prop="nickname"
+            width="140"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            label="部门"
+            align="center"
+            prop="deptName"
+            width="150"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">{{ scope.row.deptName || (scope.row.dept && scope.row.dept.name) || '-' }}</template>
           </el-table-column>
-          <el-table-column label="手机号码" align="center" prop="mobile" width="130" />
-          <el-table-column label="状态" align="center" prop="status" width="90">
-            <template v-slot="scope">
-              <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+          <el-table-column
+            label="手机号码"
+            align="center"
+            prop="mobile"
+            width="130"
+          />
+          <el-table-column
+            label="状态"
+            align="center"
+            prop="status"
+            width="90"
+          >
+            <template slot-scope="scope">
+              <dict-tag
+                :type="DICT_TYPE.COMMON_STATUS"
+                :value="scope.row.status"
+              />
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-            <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+          <el-table-column
+            label="创建时间"
+            align="center"
+            prop="createTime"
+            width="180"
+          >
+            <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
           </el-table-column>
         </el-table>
-        <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+        <pagination
+          v-show="total > 0"
+          :total="total"
+          :page.sync="queryParams.pageNo"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
       </el-col>
     </el-row>
     <div slot="footer">
       <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="confirmSelect">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="confirmSelect"
+      >确 定</el-button>
     </div>
   </el-dialog>
 </template>

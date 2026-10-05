@@ -1,10 +1,20 @@
 <template>
-  <div v-if="shouldShowComponent" class="message-reasoning">
-    <button type="button" class="message-reasoning__header" @click="isExpanded = !isExpanded">
+  <div
+    v-if="shouldShowComponent"
+    class="message-reasoning"
+  >
+    <button
+      type="button"
+      class="message-reasoning__header"
+      @click="isExpanded = !isExpanded"
+    >
       <span><i class="el-icon-chat-dot-square" /> {{ titleText }}</span>
       <i :class="isExpanded ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
     </button>
-    <div v-show="isExpanded" class="message-reasoning__content">
+    <div
+      v-show="isExpanded"
+      class="message-reasoning__content"
+    >
       <markdown-view :content="reasoningContent" />
     </div>
   </div>

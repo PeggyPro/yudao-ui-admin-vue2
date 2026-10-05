@@ -2,7 +2,11 @@
   <div class="message-new-conversation">
     <div>
       <p>点击下方按钮，开始你的对话吧</p>
-      <el-button type="primary" round @click="$emit('on-new-conversation')">新建对话</el-button>
+      <el-button
+        type="primary"
+        round
+        @click="$emit('on-new-conversation')"
+      >新建对话</el-button>
     </div>
   </div>
 </template>

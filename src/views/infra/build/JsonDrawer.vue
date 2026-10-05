@@ -1,25 +1,48 @@
 <template>
   <div>
-    <el-drawer v-bind="$attrs" v-on="$listeners" @opened="onOpen" @close="onClose">
-      <div class="action-bar" :style="{'text-align': 'left'}">
-        <span class="bar-btn" @click="refresh">
+    <el-drawer
+      v-bind="$attrs"
+      v-on="$listeners"
+      @opened="onOpen"
+      @close="onClose"
+    >
+      <div
+        class="action-bar"
+        :style="{'text-align': 'left'}"
+      >
+        <span
+          class="bar-btn"
+          @click="refresh"
+        >
           <i class="el-icon-refresh" />
           刷新
         </span>
-        <span ref="copyBtn" class="bar-btn copy-json-btn">
+        <span
+          ref="copyBtn"
+          class="bar-btn copy-json-btn"
+        >
           <i class="el-icon-document-copy" />
           复制JSON
         </span>
-        <span class="bar-btn" @click="exportJsonFile">
+        <span
+          class="bar-btn"
+          @click="exportJsonFile"
+        >
           <i class="el-icon-download" />
           导出JSON文件
         </span>
-        <span class="bar-btn delete-btn" @click="$emit('update:visible', false)">
+        <span
+          class="bar-btn delete-btn"
+          @click="$emit('update:visible', false)"
+        >
           <i class="el-icon-circle-close" />
           关闭
         </span>
       </div>
-      <div id="editorJson" class="json-editor" />
+      <div
+        id="editorJson"
+        class="json-editor"
+      />
     </el-drawer>
   </div>
 </template>

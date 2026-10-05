@@ -2,14 +2,38 @@
 <template>
   <div class="calendar-date-cell">
     <div class="cell-header">
-      <span class="day-number" :class="{ weekend: isWeekend }">{{ dayNumber }}</span>
-      <el-tag v-if="isHoliday" size="mini" effect="dark" type="success">休</el-tag>
-      <el-tag v-else size="mini" effect="dark">班</el-tag>
+      <span
+        class="day-number"
+        :class="{ weekend: isWeekend }"
+      >{{ dayNumber }}</span>
+      <el-tag
+        v-if="isHoliday"
+        size="mini"
+        effect="dark"
+        type="success"
+      >休</el-tag>
+      <el-tag
+        v-else
+        size="mini"
+        effect="dark"
+      >班</el-tag>
     </div>
-    <div class="lunar-text" :class="{ festival: hasFestivalDay }">{{ lunarDisplay }}</div>
-    <div v-if="!isHoliday" class="shift-list">
-      <div v-for="item in teamShifts" :key="item.sort">
-        <div v-if="item.sort === 1" class="shift-tag day-shift">
+    <div
+      class="lunar-text"
+      :class="{ festival: hasFestivalDay }"
+    >{{ lunarDisplay }}</div>
+    <div
+      v-if="!isHoliday"
+      class="shift-list"
+    >
+      <div
+        v-for="item in teamShifts"
+        :key="item.sort"
+      >
+        <div
+          v-if="item.sort === 1"
+          class="shift-tag day-shift"
+        >
           {{ item.shiftName }} · {{ item.teamName }}
         </div>
         <div
@@ -19,7 +43,10 @@
         >
           {{ item.shiftName }} · {{ item.teamName }}
         </div>
-        <div v-else-if="item.sort === 3" class="shift-tag night-shift">
+        <div
+          v-else-if="item.sort === 3"
+          class="shift-tag night-shift"
+        >
           {{ item.shiftName }} · {{ item.teamName }}
         </div>
       </div>

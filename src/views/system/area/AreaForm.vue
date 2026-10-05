@@ -1,15 +1,46 @@
 <template>
-  <el-dialog title="IP 查询" :visible.sync="dialogVisible" width="500px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="80px">
-      <el-form-item label="IP" prop="ip">
-        <el-input v-model="formData.ip" placeholder="请输入 IP 地址" />
+  <el-dialog
+    title="IP 查询"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="80px"
+    >
+      <el-form-item
+        label="IP"
+        prop="ip"
+      >
+        <el-input
+          v-model="formData.ip"
+          placeholder="请输入 IP 地址"
+        />
       </el-form-item>
-      <el-form-item label="地址" prop="result">
-        <el-input v-model="formData.result" placeholder="展示查询 IP 结果" readonly />
+      <el-form-item
+        label="地址"
+        prop="result"
+      >
+        <el-input
+          v-model="formData.result"
+          placeholder="展示查询 IP 结果"
+          readonly
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

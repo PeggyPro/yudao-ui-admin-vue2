@@ -1,6 +1,10 @@
 <template>
   <div class="message-list-wrap">
-    <div ref="messageContainer" class="message-list" @scroll="handleScroll">
+    <div
+      ref="messageContainer"
+      class="message-list"
+      @scroll="handleScroll"
+    >
       <div
         v-for="(item, index) in list"
         :key="item.id + '-' + index"
@@ -8,7 +12,10 @@
         :class="{ 'message-row--user': isUserMessage(item) }"
       >
         <template v-if="!isUserMessage(item)">
-          <el-avatar :size="38" :src="roleAvatar" />
+          <el-avatar
+            :size="38"
+            :src="roleAvatar"
+          />
           <div class="message-column message-column--assistant">
             <span class="message-time">{{ formatDate(item.createTime) }}</span>
             <div class="message-bubble message-bubble--assistant">
@@ -16,16 +23,27 @@
                 :reasoning-content="item.reasoningContent || ''"
                 :content="item.content || ''"
               />
-              <markdown-view class="message-content" :content="item.content || ''" />
+              <markdown-view
+                class="message-content"
+                :content="item.content || ''"
+              />
               <message-files :attachment-urls="item.attachmentUrls" />
-              <message-knowledge v-if="item.segments && item.segments.length" :segments="item.segments" />
+              <message-knowledge
+                v-if="item.segments && item.segments.length"
+                :segments="item.segments"
+              />
               <message-web-search
                 v-if="item.webSearchPages && item.webSearchPages.length"
                 :web-search-pages="item.webSearchPages"
               />
             </div>
             <div class="message-tools">
-              <el-button type="text" icon="el-icon-document-copy" title="复制" @click="copyContent(item.content)" />
+              <el-button
+                type="text"
+                icon="el-icon-document-copy"
+                title="复制"
+                @click="copyContent(item.content)"
+              />
               <el-button
                 v-if="item.id > 0"
                 type="text"
@@ -45,12 +63,25 @@
               class="message-files--user"
               :attachment-urls="item.attachmentUrls"
             />
-            <div v-if="item.content && item.content.trim()" class="message-bubble message-bubble--user">
+            <div
+              v-if="item.content && item.content.trim()"
+              class="message-bubble message-bubble--user"
+            >
               {{ item.content }}
             </div>
             <div class="message-tools message-tools--user">
-              <el-button type="text" icon="el-icon-edit" title="编辑" @click="$emit('on-edit', item)" />
-              <el-button type="text" icon="el-icon-refresh-right" title="重新生成" @click="$emit('on-refresh', item)" />
+              <el-button
+                type="text"
+                icon="el-icon-edit"
+                title="编辑"
+                @click="$emit('on-edit', item)"
+              />
+              <el-button
+                type="text"
+                icon="el-icon-refresh-right"
+                title="重新生成"
+                @click="$emit('on-refresh', item)"
+              />
               <el-button
                 v-if="item.id > 0"
                 type="text"
@@ -58,10 +89,18 @@
                 title="删除"
                 @click="deleteMessage(item.id)"
               />
-              <el-button type="text" icon="el-icon-document-copy" title="复制" @click="copyContent(item.content)" />
+              <el-button
+                type="text"
+                icon="el-icon-document-copy"
+                title="复制"
+                @click="copyContent(item.content)"
+              />
             </div>
           </div>
-          <el-avatar :size="38" :src="userAvatar" />
+          <el-avatar
+            :size="38"
+            :src="userAvatar"
+          />
         </template>
       </div>
     </div>

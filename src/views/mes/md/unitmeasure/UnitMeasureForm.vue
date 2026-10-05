@@ -1,6 +1,11 @@
 <!-- MES 计量单位表单 -->
 <template>
-  <el-dialog :title="title" :visible.sync="visible" width="600px" append-to-body>
+  <el-dialog
+    :title="title"
+    :visible.sync="visible"
+    width="600px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,21 +13,48 @@
       :rules="formRules"
       label-width="130px"
     >
-      <el-form-item label="单位编码" prop="code">
-        <el-input v-model="formData.code" placeholder="请输入单位编码" />
+      <el-form-item
+        label="单位编码"
+        prop="code"
+      >
+        <el-input
+          v-model="formData.code"
+          placeholder="请输入单位编码"
+        />
       </el-form-item>
-      <el-form-item label="单位名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入单位名称" />
+      <el-form-item
+        label="单位名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入单位名称"
+        />
       </el-form-item>
-      <el-form-item label="是否主单位" prop="primaryFlag">
+      <el-form-item
+        label="是否主单位"
+        prop="primaryFlag"
+      >
         <el-radio-group v-model="formData.primaryFlag">
-          <el-radio v-for="dict in boolOptions" :key="String(dict.value)" :label="dict.value">
+          <el-radio
+            v-for="dict in boolOptions"
+            :key="String(dict.value)"
+            :label="dict.value"
+          >
             {{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="formData.primaryFlag === false" label="主单位" prop="primaryId">
-        <el-select v-model="formData.primaryId" placeholder="请选择主单位" class="full-width">
+      <el-form-item
+        v-if="formData.primaryFlag === false"
+        label="主单位"
+        prop="primaryId"
+      >
+        <el-select
+          v-model="formData.primaryId"
+          placeholder="请选择主单位"
+          class="full-width"
+        >
           <el-option
             v-for="item in primaryUnitList"
             :key="item.id"
@@ -44,19 +76,37 @@
           class="full-width"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
-          <el-radio v-for="dict in statusOptions" :key="dict.value" :label="dict.value">
+          <el-radio
+            v-for="dict in statusOptions"
+            :key="dict.value"
+            :label="dict.value"
+          >
             {{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        />
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </span>
   </el-dialog>

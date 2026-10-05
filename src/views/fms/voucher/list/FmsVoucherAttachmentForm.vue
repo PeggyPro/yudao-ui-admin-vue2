@@ -1,23 +1,49 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="凭证附件" width="570px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="凭证附件"
+    width="570px"
+  >
     <file-upload
       v-if="editable"
       v-model="attachmentValue"
       :file-type="FMS_VOUCHER_ATTACHMENT_FILE_TYPES"
       :limit="100"
     />
-    <ul v-else-if="attachmentUrls.length" class="attachment-list">
-      <li v-for="(url, index) in attachmentUrls" :key="url + index">
-        <el-link :href="url" target="_blank" type="primary">{{ fileName(url) }}</el-link>
+    <ul
+      v-else-if="attachmentUrls.length"
+      class="attachment-list"
+    >
+      <li
+        v-for="(url, index) in attachmentUrls"
+        :key="url + index"
+      >
+        <el-link
+          :href="url"
+          target="_blank"
+          type="primary"
+        >{{ fileName(url) }}</el-link>
       </li>
     </ul>
-    <el-empty v-else description="暂无附件" />
+    <el-empty
+      v-else
+      description="暂无附件"
+    />
     <div slot="footer">
       <template v-if="editable">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button :loading="formLoading" type="primary" @click="submitForm">保 存</el-button>
+        <el-button
+          :loading="formLoading"
+          type="primary"
+          @click="submitForm"
+        >保 存</el-button>
       </template>
-      <el-button v-else type="primary" @click="dialogVisible = false">确 定</el-button>
+      <el-button
+        v-else
+        type="primary"
+        @click="dialogVisible = false"
+      >确 定</el-button>
     </div>
   </el-dialog>
 </template>

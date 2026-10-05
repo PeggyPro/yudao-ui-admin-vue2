@@ -9,7 +9,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="成员姓名" prop="userName">
+      <el-form-item
+        label="成员姓名"
+        prop="userName"
+      >
         <el-input
           v-model="queryParams.userName"
           placeholder="请输入成员姓名"
@@ -18,8 +21,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="计划类型" prop="type">
-        <el-radio-group v-model="queryParams.type" @change="handleTypeChange">
+      <el-form-item
+        label="计划类型"
+        prop="type"
+      >
+        <el-radio-group
+          v-model="queryParams.type"
+          @change="handleTypeChange"
+        >
           <el-radio-button
             v-for="item in typeOptions"
             :key="item.value"
@@ -42,23 +51,49 @@
       <el-form-item>
         <el-button @click="handlePeriodChange(-1)">上一周期</el-button>
         <el-button @click="handlePeriodChange(1)">下一周期</el-button>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 报表列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="部门" prop="deptName" min-width="120" />
-      <el-table-column label="成员" prop="userName" min-width="110" />
-      <el-table-column label="计划" min-width="260">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="部门"
+        prop="deptName"
+        min-width="120"
+      />
+      <el-table-column
+        label="成员"
+        prop="userName"
+        min-width="110"
+      />
+      <el-table-column
+        label="计划"
+        min-width="260"
+      >
         <template slot-scope="scope">
           <template v-if="scope.row.planId">
             <div class="plan-title">
               <span v-if="scope.row.label">【{{ scope.row.label }}】</span>{{ scope.row.title }}
             </div>
             <div class="plan-content">{{ scope.row.content }}</div>
-            <div v-if="scope.row.fileUrls && scope.row.fileUrls.length" class="plan-files">
+            <div
+              v-if="scope.row.fileUrls && scope.row.fileUrls.length"
+              class="plan-files"
+            >
               <el-link
                 v-for="(fileUrl, index) in scope.row.fileUrls"
                 :key="fileUrl"
@@ -69,10 +104,17 @@
               >附件 {{ Number(index) + 1 }}</el-link>
             </div>
           </template>
-          <span v-else class="not-submitted">未提交</span>
+          <span
+            v-else
+            class="not-submitted"
+          >未提交</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" width="90">
+      <el-table-column
+        label="状态"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">
           <dict-tag
             v-if="scope.row.planId"
@@ -82,13 +124,26 @@
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column label="总结" prop="summary" min-width="180" show-overflow-tooltip />
-      <el-table-column label="点评" min-width="180">
+      <el-table-column
+        label="总结"
+        prop="summary"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="点评"
+        min-width="180"
+      >
         <template slot-scope="scope">
           <div class="pre-line">{{ scope.row.comment || '-' }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="90" fixed="right">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="90"
+        fixed="right"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.planId"
@@ -109,7 +164,11 @@
     />
 
     <!-- 计划点评表单 -->
-    <Dialog title="点评工作计划" v-model="commentDialogVisible" width="560px">
+    <AppDialog
+      v-model="commentDialogVisible"
+      title="点评工作计划"
+      width="560px"
+    >
       <el-form
         ref="commentForm"
         v-loading="commentLoading"
@@ -117,7 +176,10 @@
         :rules="commentFormRules"
         label-width="80px"
       >
-        <el-form-item label="点评内容" prop="comment">
+        <el-form-item
+          label="点评内容"
+          prop="comment"
+        >
           <el-input
             v-model="commentFormData.comment"
             type="textarea"
@@ -128,18 +190,25 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" :loading="commentLoading" @click="submitComment">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          :loading="commentLoading"
+          @click="submitComment"
+        >确 定</el-button>
         <el-button @click="commentDialogVisible = false">取 消</el-button>
       </div>
-    </Dialog>
+    </AppDialog>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import * as PlanApi from '@/api/oa/plan'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { OA_PLAN_TYPE } from '@/views/oa/utils/constants-collab'
 
@@ -153,7 +222,7 @@ function getDateRange(beginDate, endDate) {
 
 export default {
   name: 'OaPlanReport',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       DICT_TYPE,

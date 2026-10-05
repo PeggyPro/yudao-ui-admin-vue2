@@ -1,15 +1,42 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="560px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="WiFi 名称" prop="ssid">
-        <el-input v-model="formData.ssid" maxlength="50" placeholder="请输入 WiFi 名称" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="560px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
+      <el-form-item
+        label="WiFi 名称"
+        prop="ssid"
+      >
+        <el-input
+          v-model="formData.ssid"
+          maxlength="50"
+          placeholder="请输入 WiFi 名称"
+        />
       </el-form-item>
-      <el-form-item label="MAC 地址" prop="mac">
-        <el-input v-model="formData.mac" maxlength="17" placeholder="例如 00:11:22:33:44:55" />
+      <el-form-item
+        label="MAC 地址"
+        prop="mac"
+      >
+        <el-input
+          v-model="formData.mac"
+          maxlength="17"
+          placeholder="例如 00:11:22:33:44:55"
+        />
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

@@ -12,14 +12,30 @@
       class="file-preview-frame"
       :src="url"
       title="文件在线预览"
-    ></iframe>
-    <video v-else-if="previewType === 'video'" class="file-preview-media" controls :src="url">
+    />
+    <video
+      v-else-if="previewType === 'video'"
+      class="file-preview-media"
+      controls
+      :src="url"
+    >
       当前浏览器不支持视频预览
     </video>
-    <audio v-else-if="previewType === 'audio'" class="file-preview-audio" controls :src="url">
+    <audio
+      v-else-if="previewType === 'audio'"
+      class="file-preview-audio"
+      controls
+      :src="url"
+    >
       当前浏览器不支持音频预览
     </audio>
-    <el-alert v-else :closable="false" show-icon :title="unsupportedTitle" type="info" />
+    <el-alert
+      v-else
+      :closable="false"
+      show-icon
+      :title="unsupportedTitle"
+      type="info"
+    />
   </div>
 </template>
 

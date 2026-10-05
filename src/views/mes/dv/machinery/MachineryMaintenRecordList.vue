@@ -1,22 +1,104 @@
 <!-- 设备台账 - 保养记录列表 -->
 <template>
   <div>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="计划编码" align="center" prop="planCode" width="120" />
-      <el-table-column label="计划名称" align="center" prop="planName" min-width="120" />
-      <el-table-column label="开始时间" align="center" prop="planStartDate" width="180"><template v-slot="scope">{{ parseTime(scope.row.planStartDate) }}</template></el-table-column>
-      <el-table-column label="结束日期" align="center" prop="planEndDate" width="180"><template v-slot="scope">{{ parseTime(scope.row.planEndDate) }}</template></el-table-column>
-      <el-table-column label="频率数量" align="center" prop="planCycleCount" width="100" />
-      <el-table-column label="频率类型" align="center" prop="planCycleType" width="100"><template v-slot="scope"><dict-tag :type="MES_DV_CYCLE_TYPE" :value="scope.row.planCycleType" /></template></el-table-column>
-      <el-table-column label="保养时间" align="center" prop="maintenTime" width="180"><template v-slot="scope">{{ parseTime(scope.row.maintenTime) }}</template></el-table-column>
-      <el-table-column label="保养人" align="center" prop="nickname" width="100" />
-      <el-table-column label="设备编码" align="center" prop="machineryCode" width="120" />
-      <el-table-column label="设备名称" align="center" prop="machineryName" width="120" />
-      <el-table-column label="品牌" align="center" prop="machineryBrand" width="100" />
-      <el-table-column label="规格型号" align="center" prop="machinerySpecification" width="120" />
-      <el-table-column label="状态" align="center" prop="status" width="100"><template v-slot="scope"><dict-tag :type="MES_MAINTEN_RECORD_STATUS" :value="scope.row.status" /></template></el-table-column>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="计划编码"
+        align="center"
+        prop="planCode"
+        width="120"
+      />
+      <el-table-column
+        label="计划名称"
+        align="center"
+        prop="planName"
+        min-width="120"
+      />
+      <el-table-column
+        label="开始时间"
+        align="center"
+        prop="planStartDate"
+        width="180"
+      ><template slot-scope="scope">{{ parseTime(scope.row.planStartDate) }}</template></el-table-column>
+      <el-table-column
+        label="结束日期"
+        align="center"
+        prop="planEndDate"
+        width="180"
+      ><template slot-scope="scope">{{ parseTime(scope.row.planEndDate) }}</template></el-table-column>
+      <el-table-column
+        label="频率数量"
+        align="center"
+        prop="planCycleCount"
+        width="100"
+      />
+      <el-table-column
+        label="频率类型"
+        align="center"
+        prop="planCycleType"
+        width="100"
+      ><template slot-scope="scope"><dict-tag
+        :type="MES_DV_CYCLE_TYPE"
+        :value="scope.row.planCycleType"
+      /></template></el-table-column>
+      <el-table-column
+        label="保养时间"
+        align="center"
+        prop="maintenTime"
+        width="180"
+      ><template slot-scope="scope">{{ parseTime(scope.row.maintenTime) }}</template></el-table-column>
+      <el-table-column
+        label="保养人"
+        align="center"
+        prop="nickname"
+        width="100"
+      />
+      <el-table-column
+        label="设备编码"
+        align="center"
+        prop="machineryCode"
+        width="120"
+      />
+      <el-table-column
+        label="设备名称"
+        align="center"
+        prop="machineryName"
+        width="120"
+      />
+      <el-table-column
+        label="品牌"
+        align="center"
+        prop="machineryBrand"
+        width="100"
+      />
+      <el-table-column
+        label="规格型号"
+        align="center"
+        prop="machinerySpecification"
+        width="120"
+      />
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+        width="100"
+      ><template slot-scope="scope"><dict-tag
+        :type="MES_MAINTEN_RECORD_STATUS"
+        :value="scope.row.status"
+      /></template></el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<el-dialog
+  <el-dialog
     :visible.sync="visible"
     width="560px"
     :close-on-click-modal="false"
@@ -21,7 +21,10 @@
       </div>
     </template>
 
-    <div v-if="currentPayload" class="flex flex-col h-[480px]">
+    <div
+      v-if="currentPayload"
+      class="flex flex-col h-[480px]"
+    >
       <div
         class="px-4 py-2 text-12px text-[var(--el-text-color-secondary)] border-b border-b-solid border-[var(--el-border-color-lighter)]"
       >
@@ -63,15 +66,15 @@
   </el-dialog>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import UserAvatar from '@/views/im/home/components/user/UserAvatar.vue';
-import MessageBubble from '../MessageBubble.vue';
-import { parseMessage } from '@/views/im/utils/message';
-import { formatMergeItemTime } from '@/views/im/utils/time';
-import { useVoicePlayer } from '@/views/im/home/composables/useVoicePlayer';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import UserAvatar from '@/views/im/home/components/user/UserAvatar.vue'
+import MessageBubble from '../MessageBubble.vue'
+import { parseMessage } from '@/views/im/utils/message'
+import { formatMergeItemTime } from '@/views/im/utils/time'
+import { useVoicePlayer } from '@/views/im/home/composables/useVoicePlayer'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImMessageMergeDetailDialog'
   },
@@ -84,42 +87,42 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    const voicePlayer = useVoicePlayer();
-    const visible = ref(false);
+    const voicePlayer = useVoicePlayer()
+    const visible = ref(false)
 
     /** 嵌套层级栈，存 parsed payload 避免切层重 parse */
-    const stack = ref([]);
+    const stack = ref([])
     __expose({
       /** 打开详情弹窗，传入顶层合并消息 content */
       open(content) {
-        const payload = parseMessage(content);
-        stack.value = payload ? [payload] : [];
-        visible.value = true;
+        const payload = parseMessage(content)
+        stack.value = payload ? [payload] : []
+        visible.value = true
       }
-    });
+    })
 
     /** 当前层 payload */
-    const currentPayload = computed(() => stack.value[stack.value.length - 1] ?? null);
+    const currentPayload = computed(() => stack.value[stack.value.length - 1] ?? null)
 
     /** 嵌套合并气泡点击：解析 content 后压栈进入下一层 */
     function handleNestedOpen(content) {
-      const payload = parseMessage(content);
+      const payload = parseMessage(content)
       if (payload) {
-        stack.value.push(payload);
+        stack.value.push(payload)
       }
     }
 
     /** 顶部返回箭头点击：弹出栈顶回到上一层 */
     function handleBack() {
       if (stack.value.length > 1) {
-        stack.value.pop();
+        stack.value.pop()
       }
     }
 
     /** 弹窗关闭：清栈 + 停语音，下次打开从顶层重新开始 */
     function handleClose() {
-      stack.value = [];
-      voicePlayer.stop();
+      stack.value = []
+      voicePlayer.stop()
     }
     const __returned__ = {
       voicePlayer,
@@ -133,17 +136,17 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       UserAvatar,
       MessageBubble,
       get formatMergeItemTime() {
-        return formatMergeItemTime;
+        return formatMergeItemTime
       }
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

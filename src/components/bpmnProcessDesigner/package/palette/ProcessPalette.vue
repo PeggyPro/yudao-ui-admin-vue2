@@ -1,36 +1,43 @@
 <template>
   <div class="my-process-palette">
-    <div class="test-button" @click="addTask" @mousedown="addTask">测试任务</div>
-    <div class="test-container" id="palette-container">1</div>
+    <div
+      class="test-button"
+      @click="addTask"
+      @mousedown="addTask"
+    >测试任务</div>
+    <div
+      id="palette-container"
+      class="test-container"
+    >1</div>
   </div>
 </template>
 
 <script>
-import { assign } from "min-dash";
+import { assign } from 'min-dash'
 
 export default {
-  name: "MyProcessPalette",
+  name: 'MyProcessPalette',
   data() {
-    return {};
+    return {}
   },
   mounted() {},
   methods: {
     addTask(event, options = {}) {
-      const ElementFactory = window.bpmnInstances.elementFactory;
-      const create = window.bpmnInstances.modeler.get("create");
+      const ElementFactory = window.bpmnInstances.elementFactory
+      const create = window.bpmnInstances.modeler.get('create')
 
-      console.log(ElementFactory, create);
+      console.log(ElementFactory, create)
 
-      const shape = ElementFactory.createShape(assign({ type: "bpmn:UserTask" }, options));
+      const shape = ElementFactory.createShape(assign({ type: 'bpmn:UserTask' }, options))
 
       if (options) {
-        shape.businessObject.di.isExpanded = options.isExpanded;
+        shape.businessObject.di.isExpanded = options.isExpanded
       }
 
-      create.start(event, shape);
+      create.start(event, shape)
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

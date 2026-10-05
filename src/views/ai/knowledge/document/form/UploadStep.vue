@@ -1,5 +1,9 @@
 <template>
-  <el-form :model="modelData" label-width="0" class="upload-step">
+  <el-form
+    :model="modelData"
+    label-width="0"
+    class="upload-step"
+  >
     <el-form-item>
       <div class="upload-content">
         <div class="upload-drop-zone">
@@ -24,14 +28,24 @@
             <div class="el-upload__text">
               拖拽文件至此，或者<em>选择文件</em>
             </div>
-            <div slot="tip" class="el-upload__tip">
+            <div
+              slot="tip"
+              class="el-upload__tip"
+            >
               已支持 {{ supportedFileTypes.join('、') }}，每个文件不超过 {{ maxFileSize }} MB。
             </div>
           </el-upload>
         </div>
 
-        <div v-if="modelData.list && modelData.list.length" class="uploaded-files">
-          <div v-for="(file, index) in modelData.list" :key="file.url || index" class="file-row">
+        <div
+          v-if="modelData.list && modelData.list.length"
+          class="uploaded-files"
+        >
+          <div
+            v-for="(file, index) in modelData.list"
+            :key="file.url || index"
+            class="file-row"
+          >
             <div class="file-name">
               <i class="el-icon-document" />
               <span>{{ file.name }}</span>
@@ -49,7 +63,11 @@
     </el-form-item>
     <el-form-item>
       <div class="step-actions">
-        <el-button type="primary" :disabled="!isAllUploaded" @click="handleNextStep">
+        <el-button
+          type="primary"
+          :disabled="!isAllUploaded"
+          @click="handleNextStep"
+        >
           下一步
         </el-button>
       </div>

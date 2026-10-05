@@ -1,7 +1,10 @@
 <template>
   <div class="app-container oa-attendance-my">
     <!-- 今日打卡 -->
-    <el-card shadow="never" class="attendance-card">
+    <el-card
+      shadow="never"
+      class="attendance-card"
+    >
       <div class="today-attendance">
         <div>
           <div class="today-title">今日考勤</div>
@@ -11,14 +14,21 @@
             }}
           </div>
         </div>
-        <el-button type="primary" :loading="clockLoading" @click="handleClock">
+        <el-button
+          type="primary"
+          :loading="clockLoading"
+          @click="handleClock"
+        >
           {{ clockButtonText }}
         </el-button>
       </div>
     </el-card>
 
     <!-- 搜索 -->
-    <el-card shadow="never" class="attendance-card">
+    <el-card
+      shadow="never"
+      class="attendance-card"
+    >
       <el-form
         ref="queryForm"
         :model="queryParams"
@@ -27,7 +37,10 @@
         label-width="68px"
         @submit.native.prevent
       >
-        <el-form-item label="考勤类型" prop="type">
+        <el-form-item
+          label="考勤类型"
+          prop="type"
+        >
           <el-select
             v-model="queryParams.type"
             placeholder="请选择考勤类型"
@@ -42,7 +55,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="考勤状态" prop="status">
+        <el-form-item
+          label="考勤状态"
+          prop="status"
+        >
           <el-select
             v-model="queryParams.status"
             placeholder="请选择考勤状态"
@@ -57,7 +73,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="考勤时间" prop="attendanceTime">
+        <el-form-item
+          label="考勤时间"
+          prop="attendanceTime"
+        >
           <el-date-picker
             v-model="queryParams.attendanceTime"
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -68,23 +87,52 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
 
     <!-- 我的考勤记录 -->
-    <el-card shadow="never" class="attendance-card">
-      <el-table v-loading="loading" :data="list" border stripe>
-        <el-table-column label="考勤类型" align="center" width="110">
+    <el-card
+      shadow="never"
+      class="attendance-card"
+    >
+      <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        stripe
+      >
+        <el-table-column
+          label="考勤类型"
+          align="center"
+          width="110"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_ATTENDANCE_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.OA_ATTENDANCE_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="考勤状态" align="center" width="100">
+        <el-table-column
+          label="考勤状态"
+          align="center"
+          width="100"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_ATTENDANCE_STATUS" :value="scope.row.status" />
+            <dict-tag
+              :type="DICT_TYPE.OA_ATTENDANCE_STATUS"
+              :value="scope.row.status"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -94,7 +142,12 @@
           align="center"
           width="180"
         />
-        <el-table-column label="考勤 IP" prop="attendanceIp" align="center" min-width="130" />
+        <el-table-column
+          label="考勤 IP"
+          prop="attendanceIp"
+          align="center"
+          min-width="130"
+        />
         <el-table-column
           label="备注"
           prop="remark"

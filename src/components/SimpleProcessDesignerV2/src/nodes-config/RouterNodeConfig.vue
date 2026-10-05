@@ -13,14 +13,41 @@
         :closable="false"
         show-icon
       />
-      <el-card v-for="(route, index) in draft.routerGroups" :key="`route-${index}`" shadow="never" class="route-card">
-        <div slot="header" class="route-header">
+      <el-card
+        v-for="(route, index) in draft.routerGroups"
+        :key="`route-${index}`"
+        shadow="never"
+        class="route-card"
+      >
+        <div
+          slot="header"
+          class="route-header"
+        >
           <span>路由 {{ index + 1 }}</span>
-          <el-button type="text" icon="el-icon-delete" @click="removeRoute(index)">删除</el-button>
+          <el-button
+            type="text"
+            icon="el-icon-delete"
+            @click="removeRoute(index)"
+          >删除</el-button>
         </div>
-        <el-form-item label="目标节点" :prop="`routerGroups.${index}.nodeId`">
-          <el-select v-model="route.nodeId" filterable allow-create clearable placeholder="请选择或填写节点编号" style="width: 100%">
-            <el-option v-for="item in nodeOptions" :key="item.value" :label="item.label" :value="item.value" />
+        <el-form-item
+          label="目标节点"
+          :prop="`routerGroups.${index}.nodeId`"
+        >
+          <el-select
+            v-model="route.nodeId"
+            filterable
+            allow-create
+            clearable
+            placeholder="请选择或填写节点编号"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in nodeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
         <Condition
@@ -28,12 +55,23 @@
           @input="updateRoute(index, $event)"
         />
       </el-card>
-      <div v-if="!draft.routerGroups.length" class="empty-tip">尚未配置路由分支</div>
-      <el-button type="primary" plain icon="el-icon-plus" @click="addRoute">新增路由分支</el-button>
+      <div
+        v-if="!draft.routerGroups.length"
+        class="empty-tip"
+      >尚未配置路由分支</div>
+      <el-button
+        type="primary"
+        plain
+        icon="el-icon-plus"
+        @click="addRoute"
+      >新增路由分支</el-button>
     </div>
     <div class="drawer-footer">
       <el-button @click="cancelConfig">取 消</el-button>
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
     </div>
   </el-drawer>
 </template>
@@ -46,10 +84,10 @@ import { clone, conditionGroupsDefault, conditionIsValid, conditionShowText } fr
 export default {
   name: 'RouterNodeConfig',
   components: { Condition },
-  props: { flowNode: { type: Object, required: true } },
   inject: {
     processDataRef: { from: 'processData', default: () => ({ value: undefined }) }
   },
+  props: { flowNode: { type: Object, required: true }},
   data() {
     return {
       visible: false,

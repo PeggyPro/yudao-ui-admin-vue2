@@ -1,65 +1,196 @@
 <template>
   <div class="app-container">
-    <doc-alert title="支付宝支付接入" url="https://doc.iocoder.cn/pay/alipay-pay-demo/" />
-    <doc-alert title="支付宝、微信退款接入" url="https://doc.iocoder.cn/pay/refund-demo/" />
-    <doc-alert title="微信公众号支付接入" url="https://doc.iocoder.cn/pay/wx-pub-pay-demo/" />
-    <doc-alert title="微信小程序支付接入" url="https://doc.iocoder.cn/pay/wx-lite-pay-demo/" />
+    <doc-alert
+      title="支付宝支付接入"
+      url="https://doc.iocoder.cn/pay/alipay-pay-demo/"
+    />
+    <doc-alert
+      title="支付宝、微信退款接入"
+      url="https://doc.iocoder.cn/pay/refund-demo/"
+    />
+    <doc-alert
+      title="微信公众号支付接入"
+      url="https://doc.iocoder.cn/pay/wx-pub-pay-demo/"
+    />
+    <doc-alert
+      title="微信小程序支付接入"
+      url="https://doc.iocoder.cn/pay/wx-lite-pay-demo/"
+    />
 
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" :loading="formLoading" @click="handleAdd">发起订单</el-button>
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          :loading="formLoading"
+          @click="handleAdd"
+        >发起订单</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" />
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" stripe>
-      <el-table-column label="订单编号" align="center" prop="id" />
-      <el-table-column label="用户编号" align="center" prop="userId" />
-      <el-table-column label="商品名字" align="center" prop="spuName" />
-      <el-table-column label="支付价格" align="center" prop="price">
-        <template v-slot="scope">￥{{ formatPrice(scope.row.price) }}</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      stripe
+    >
+      <el-table-column
+        label="订单编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="用户编号"
+        align="center"
+        prop="userId"
+      />
+      <el-table-column
+        label="商品名字"
+        align="center"
+        prop="spuName"
+      />
+      <el-table-column
+        label="支付价格"
+        align="center"
+        prop="price"
+      >
+        <template slot-scope="scope">￥{{ formatPrice(scope.row.price) }}</template>
       </el-table-column>
-      <el-table-column label="退款金额" align="center" prop="refundPrice">
-        <template v-slot="scope">￥{{ formatPrice(scope.row.refundPrice) }}</template>
+      <el-table-column
+        label="退款金额"
+        align="center"
+        prop="refundPrice"
+      >
+        <template slot-scope="scope">￥{{ formatPrice(scope.row.refundPrice) }}</template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="支付单号" align="center" prop="payOrderId" />
-      <el-table-column label="是否支付" align="center" prop="payStatus">
-        <template v-slot="scope"><dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.payStatus" /></template>
+      <el-table-column
+        label="支付单号"
+        align="center"
+        prop="payOrderId"
+      />
+      <el-table-column
+        label="是否支付"
+        align="center"
+        prop="payStatus"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+          :value="scope.row.payStatus"
+        /></template>
       </el-table-column>
-      <el-table-column label="支付时间" align="center" prop="payTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.payTime) }}</template>
+      <el-table-column
+        label="支付时间"
+        align="center"
+        prop="payTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.payTime) }}</template>
       </el-table-column>
-      <el-table-column label="退款时间" align="center" prop="refundTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="退款时间"
+        align="center"
+        prop="refundTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span v-if="scope.row.refundTime">{{ parseTime(scope.row.refundTime) }}</span>
           <span v-else-if="scope.row.payRefundId">退款中，等待退款结果</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handlePay(scope.row)" v-if="!scope.row.payStatus">前往支付</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleRefund(scope.row)" v-if="scope.row.payStatus && !scope.row.payRefundId">发起退款</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-if="!scope.row.payStatus"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handlePay(scope.row)"
+          >前往支付</el-button>
+          <el-button
+            v-if="scope.row.payStatus && !scope.row.payRefundId"
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleRefund(scope.row)"
+          >发起退款</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
 
-    <el-dialog title="发起订单" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px" v-loading="formLoading">
-        <el-form-item label="商品" prop="spuId">
-          <el-select v-model="form.spuId" placeholder="请输入下单商品" clearable size="small" style="width: 380px">
-            <el-option v-for="item in spus" :key="item.id" :label="item.name" :value="item.id">
+    <el-dialog
+      v-dialogDrag
+      title="发起订单"
+      :visible.sync="open"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        v-loading="formLoading"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+      >
+        <el-form-item
+          label="商品"
+          prop="spuId"
+        >
+          <el-select
+            v-model="form.spuId"
+            placeholder="请输入下单商品"
+            clearable
+            size="small"
+            style="width: 380px"
+          >
+            <el-option
+              v-for="item in spus"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
               <span style="float: left">{{ item.name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">￥{{ formatPrice(item.price) }}</span>
             </el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          :loading="formLoading"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>

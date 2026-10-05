@@ -1,21 +1,47 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="920px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="100px">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="920px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="方案名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入方案名称" />
+          <el-form-item
+            label="方案名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入方案名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="凭证字" prop="voucherWordId">
-            <FmsVoucherWordSelect v-model="formData.voucherWordId" :options="voucherWords" class="full-width" />
+          <el-form-item
+            label="凭证字"
+            prop="voucherWordId"
+          >
+            <FmsVoucherWordSelect
+              v-model="formData.voucherWordId"
+              :options="voucherWords"
+              class="full-width"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="10">
-          <el-form-item label="来源科目" prop="subjectId">
+          <el-form-item
+            label="来源科目"
+            prop="subjectId"
+          >
             <FmsSubjectSelect
               v-model="formData.subjectId"
               :options="subjects"
@@ -25,8 +51,14 @@
           </el-form-item>
         </el-col>
         <el-col :span="7">
-          <el-form-item label="取数规则" prop="formulaRule">
-            <el-select v-model="formData.formulaRule" class="full-width">
+          <el-form-item
+            label="取数规则"
+            prop="formulaRule"
+          >
+            <el-select
+              v-model="formData.formulaRule"
+              class="full-width"
+            >
               <el-option
                 v-for="item in formulaRuleOptions.slice(0, 3)"
                 :key="item.value"
@@ -37,8 +69,14 @@
           </el-form-item>
         </el-col>
         <el-col :span="7">
-          <el-form-item label="时间类型" prop="timeType">
-            <el-select v-model="formData.timeType" class="full-width">
+          <el-form-item
+            label="时间类型"
+            prop="timeType"
+          >
+            <el-select
+              v-model="formData.timeType"
+              class="full-width"
+            >
               <el-option
                 v-for="item in timeTypeOptions"
                 :key="item.value"
@@ -56,28 +94,61 @@
 
     <div class="rules-header">
       <span>凭证分录规则</span>
-      <el-button type="text" icon="el-icon-plus" @click="addSubjectRule()">添加分录</el-button>
+      <el-button
+        type="text"
+        icon="el-icon-plus"
+        @click="addSubjectRule()"
+      >添加分录</el-button>
     </div>
-    <el-table :data="formData.subjects" border max-height="360px">
-      <el-table-column label="摘要" min-width="180">
+    <el-table
+      :data="formData.subjects"
+      border
+      max-height="360px"
+    >
+      <el-table-column
+        label="摘要"
+        min-width="180"
+      >
         <template slot-scope="scope">
-          <el-input v-model="scope.row.digest" placeholder="请输入摘要" />
+          <el-input
+            v-model="scope.row.digest"
+            placeholder="请输入摘要"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="借/贷" width="105">
+      <el-table-column
+        label="借/贷"
+        width="105"
+      >
         <template slot-scope="scope">
           <el-select v-model="scope.row.direction">
-            <el-option label="借" :value="FMS_DEBIT_CREDIT_DIRECTION.DEBIT" />
-            <el-option label="贷" :value="FMS_DEBIT_CREDIT_DIRECTION.CREDIT" />
+            <el-option
+              label="借"
+              :value="FMS_DEBIT_CREDIT_DIRECTION.DEBIT"
+            />
+            <el-option
+              label="贷"
+              :value="FMS_DEBIT_CREDIT_DIRECTION.CREDIT"
+            />
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="科目" min-width="280">
+      <el-table-column
+        label="科目"
+        min-width="280"
+      >
         <template slot-scope="scope">
-          <FmsSubjectSelect v-model="scope.row.subjectId" :options="subjects" class="full-width" />
+          <FmsSubjectSelect
+            v-model="scope.row.subjectId"
+            :options="subjects"
+            class="full-width"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="金额比例%" width="130">
+      <el-table-column
+        label="金额比例%"
+        width="130"
+      >
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.amountRatio"
@@ -89,19 +160,39 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="70" align="center">
+      <el-table-column
+        label="操作"
+        width="70"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="danger-text" @click="formData.subjects.splice(scope.$index, 1)">删除</el-button>
+          <el-button
+            type="text"
+            class="danger-text"
+            @click="formData.subjects.splice(scope.$index, 1)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="form-tip">借方和贷方的金额比例需要分别等于 100%，科目规则随方案保存为 JSON</div>
 
-    <div slot="footer" class="form-footer">
-      <el-button v-if="formData.id" type="text" class="danger-text" @click="deleteScheme">删除方案</el-button>
+    <div
+      slot="footer"
+      class="form-footer"
+    >
+      <el-button
+        v-if="formData.id"
+        type="text"
+        class="danger-text"
+        @click="deleteScheme"
+      >删除方案</el-button>
       <span v-else />
       <div>
-        <el-button type="primary" :loading="submitting" @click="submitForm">确定</el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="submitForm"
+        >确定</el-button>
         <el-button @click="dialogVisible = false">取消</el-button>
       </div>
     </div>

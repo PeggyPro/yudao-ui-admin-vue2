@@ -1,6 +1,10 @@
 <template>
   <ComponentContainerProperty v-model="formData.style">
-    <el-form label-width="80px" :model="formData" class="property-form">
+    <el-form
+      label-width="80px"
+      :model="formData"
+      class="property-form"
+    >
       <p class="section-title">魔方设置</p>
       <p class="section-tip">每格尺寸187 * 187</p>
       <MagicCubeEditor
@@ -11,16 +15,32 @@
         @hotAreaSelected="handleHotAreaSelected"
       />
       <template v-for="(hotArea, index) in formData.list">
-        <div v-if="selectedHotAreaIndex === index" :key="index">
-          <el-form-item label="上传图片" :prop="`list[${index}].imgUrl`">
-            <UploadImg v-model="hotArea.imgUrl" height="80px" width="80px" />
+        <div
+          v-if="selectedHotAreaIndex === index"
+          :key="index"
+        >
+          <el-form-item
+            label="上传图片"
+            :prop="`list[${index}].imgUrl`"
+          >
+            <UploadImg
+              v-model="hotArea.imgUrl"
+              height="80px"
+              width="80px"
+            />
           </el-form-item>
-          <el-form-item label="链接" :prop="`list[${index}].url`">
+          <el-form-item
+            label="链接"
+            :prop="`list[${index}].url`"
+          >
             <AppLinkInput v-model="hotArea.url" />
           </el-form-item>
         </div>
       </template>
-      <el-form-item label="上圆角" prop="borderRadiusTop">
+      <el-form-item
+        label="上圆角"
+        prop="borderRadiusTop"
+      >
         <el-slider
           v-model="formData.borderRadiusTop"
           :max="100"
@@ -30,7 +50,10 @@
           :show-input-controls="false"
         />
       </el-form-item>
-      <el-form-item label="下圆角" prop="borderRadiusBottom">
+      <el-form-item
+        label="下圆角"
+        prop="borderRadiusBottom"
+      >
         <el-slider
           v-model="formData.borderRadiusBottom"
           :max="100"
@@ -40,7 +63,10 @@
           :show-input-controls="false"
         />
       </el-form-item>
-      <el-form-item label="间隔" prop="space">
+      <el-form-item
+        label="间隔"
+        prop="space"
+      >
         <el-slider
           v-model="formData.space"
           :max="100"

@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="820px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="820px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -10,8 +15,15 @@
       <!-- 公告基本信息 -->
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-form-item label="公告类型" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择公告类型" style="width: 100%">
+          <el-form-item
+            label="公告类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择公告类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -22,8 +34,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="优先级" prop="priority">
-            <el-select v-model="formData.priority" placeholder="请选择优先级" style="width: 100%">
+          <el-form-item
+            label="优先级"
+            prop="priority"
+          >
+            <el-select
+              v-model="formData.priority"
+              placeholder="请选择优先级"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in priorityOptions"
                 :key="item.value"
@@ -34,13 +53,19 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="置顶" prop="top">
+          <el-form-item
+            label="置顶"
+            prop="top"
+          >
             <el-switch v-model="formData.top" />
           </el-form-item>
         </el-col>
       </el-row>
       <!-- 公告内容 -->
-      <el-form-item label="公告标题" prop="title">
+      <el-form-item
+        label="公告标题"
+        prop="title"
+      >
         <el-input
           v-model="formData.title"
           maxlength="255"
@@ -48,23 +73,43 @@
           placeholder="请输入公告标题"
         />
       </el-form-item>
-      <el-form-item label="相关链接" prop="url">
-        <el-input v-model="formData.url" maxlength="512" placeholder="请输入相关链接（可选）" />
+      <el-form-item
+        label="相关链接"
+        prop="url"
+      >
+        <el-input
+          v-model="formData.url"
+          maxlength="512"
+          placeholder="请输入相关链接（可选）"
+        />
       </el-form-item>
-      <el-form-item label="公告内容" prop="content">
-        <Editor v-model="formData.content" height="300px" />
+      <el-form-item
+        label="公告内容"
+        prop="content"
+      >
+        <Editor
+          v-model="formData.content"
+          height="300px"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as AnnouncementApi from '@/api/oa/announcement'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import Editor from '@/components/Editor'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { OA_ANNOUNCEMENT_TYPE, OA_PRIORITY } from '@/views/oa/utils/constants-collab'
@@ -83,7 +128,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaAnnouncementForm',
-  components: { Dialog, Editor },
+  components: { AppDialog, Editor },
   data() {
     return {
       dialogVisible: false,

@@ -1,5 +1,8 @@
 <template>
-  <div v-if="attachmentUrls && attachmentUrls.length" class="message-files">
+  <div
+    v-if="attachmentUrls && attachmentUrls.length"
+    class="message-files"
+  >
     <button
       v-for="(url, index) in attachmentUrls"
       :key="url + index"
@@ -8,7 +11,10 @@
       :title="getFileName(url)"
       @click="openFile(url)"
     >
-      <span class="message-file__icon" :class="getFileTypeClass(getFileName(url))">
+      <span
+        class="message-file__icon"
+        :class="getFileTypeClass(getFileName(url))"
+      >
         <i :class="getFileIcon(getFileName(url))" />
       </span>
       <span class="message-file__name">{{ getFileName(url) }}</span>

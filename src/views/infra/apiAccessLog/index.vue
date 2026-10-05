@@ -1,102 +1,269 @@
 <template>
   <div class="app-container">
-    <doc-alert title="系统日志" url="https://doc.iocoder.cn/system-log/" />
+    <doc-alert
+      title="系统日志"
+      url="https://doc.iocoder.cn/system-log/"
+    />
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户编号" prop="userId">
-        <el-input v-model="queryParams.userId" placeholder="请输入用户编号" clearable @keyup.enter.native="handleQuery"/>
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="用户编号"
+        prop="userId"
+      >
+        <el-input
+          v-model="queryParams.userId"
+          placeholder="请输入用户编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="用户类型" prop="userType">
-        <el-select v-model="queryParams.userType" placeholder="请选择用户类型" clearable>
-          <el-option v-for="dict in this.getDictDatas(DICT_TYPE.USER_TYPE)"
-                     :key="dict.value" :label="dict.label" :value="dict.value"/>
+      <el-form-item
+        label="用户类型"
+        prop="userType"
+      >
+        <el-select
+          v-model="queryParams.userType"
+          placeholder="请选择用户类型"
+          clearable
+        >
+          <el-option
+            v-for="dict in getDictDatas(DICT_TYPE.USER_TYPE)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="应用名" prop="applicationName">
-        <el-input v-model="queryParams.applicationName" placeholder="请输入应用名" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="应用名"
+        prop="applicationName"
+      >
+        <el-input
+          v-model="queryParams.applicationName"
+          placeholder="请输入应用名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="请求地址" prop="requestUrl">
-        <el-input v-model="queryParams.requestUrl" placeholder="请输入请求地址" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="请求地址"
+        prop="requestUrl"
+      >
+        <el-input
+          v-model="queryParams.requestUrl"
+          placeholder="请输入请求地址"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="请求时间" prop="beginTime">
-        <el-date-picker v-model="queryParams.beginTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
+      <el-form-item
+        label="请求时间"
+        prop="beginTime"
+      >
+        <el-date-picker
+          v-model="queryParams.beginTime"
+          style="width: 240px"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="['00:00:00', '23:59:59']"
+        />
       </el-form-item>
-      <el-form-item label="执行时长" prop="duration">
-        <el-input v-model="queryParams.duration" placeholder="请输入执行时长" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="执行时长"
+        prop="duration"
+      >
+        <el-input
+          v-model="queryParams.duration"
+          placeholder="请输入执行时长"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="结果码" prop="resultCode">
-        <el-input v-model="queryParams.resultCode" placeholder="请输入结果码" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="结果码"
+        prop="resultCode"
+      >
+        <el-input
+          v-model="queryParams.resultCode"
+          placeholder="请输入结果码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" :loading="exportLoading" @click="handleExport"
-                   v-hasPermi="['infra:api-access-log:export']">导出</el-button>
+        <el-button
+          v-hasPermi="['infra:api-access-log:export']"
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          :loading="exportLoading"
+          @click="handleExport"
+        >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="日志编号" align="center" prop="id" />
-      <el-table-column label="用户编号" align="center" prop="userId" />
-      <el-table-column label="用户类型" align="center" prop="userType">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.USER_TYPE" :value="scope.row.userType"/>
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="日志编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="用户编号"
+        align="center"
+        prop="userId"
+      />
+      <el-table-column
+        label="用户类型"
+        align="center"
+        prop="userType"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.USER_TYPE"
+            :value="scope.row.userType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="应用名" align="center" prop="applicationName" />
-      <el-table-column label="请求方法名" align="center" prop="requestMethod" />
-      <el-table-column label="请求地址" align="center" prop="requestUrl" width="250" />
-      <el-table-column label="请求时间" align="center" prop="beginTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="应用名"
+        align="center"
+        prop="applicationName"
+      />
+      <el-table-column
+        label="请求方法名"
+        align="center"
+        prop="requestMethod"
+      />
+      <el-table-column
+        label="请求地址"
+        align="center"
+        prop="requestUrl"
+        width="250"
+      />
+      <el-table-column
+        label="请求时间"
+        align="center"
+        prop="beginTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="执行时长" align="center" prop="startTime">
-        <template v-slot="scope">
+      <el-table-column
+        label="执行时长"
+        align="center"
+        prop="startTime"
+      >
+        <template slot-scope="scope">
           <span>{{ scope.row.duration }}  ms</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作结果" align="center" prop="status">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作结果"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
           <span>{{ scope.row.resultCode === 0 ? '成功' : '失败(' + scope.row.resultMsg + ')' }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作模块" align="center" prop="operateModule" width="180" />
-      <el-table-column label="操作名" align="center" prop="operateName" width="180" />
-      <el-table-column label="操作类型" align="center" prop="operateType">
+      <el-table-column
+        label="操作模块"
+        align="center"
+        prop="operateModule"
+        width="180"
+      />
+      <el-table-column
+        label="操作名"
+        align="center"
+        prop="operateName"
+        width="180"
+      />
+      <el-table-column
+        label="操作类型"
+        align="center"
+        prop="operateType"
+      >
         <template #default="scope">
-          <dict-tag :type="DICT_TYPE.INFRA_OPERATE_TYPE" :value="scope.row.operateType" />
+          <dict-tag
+            :type="DICT_TYPE.INFRA_OPERATE_TYPE"
+            :value="scope.row.operateType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row,scope.index)"
-                     v-hasPermi="['infra:api-access-log:query']">详细</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['infra:api-access-log:query']"
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row,scope.index)"
+          >详细</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
     <api-access-log-detail ref="detailRef" />
   </div>
 </template>
 
 <script>
-import { getApiAccessLogPage, exportApiAccessLog } from "@/api/infra/apiAccessLog";
+import { getApiAccessLogPage, exportApiAccessLog } from '@/api/infra/apiAccessLog'
 import ApiAccessLogDetail from './ApiAccessLogDetail.vue'
 
 export default {
-  name: "InfraApiAccessLog",
+  name: 'InfraApiAccessLog',
   components: {
     ApiAccessLogDetail
   },
@@ -123,53 +290,53 @@ export default {
         duration: null,
         resultCode: null,
         beginTime: []
-      },
-    };
+      }
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       // 执行查询
       getApiAccessLogPage(this.queryParams).then(response => {
-        this.list = response.data.list;
-        this.total = response.data.total;
-        this.loading = false;
-      });
+        this.list = response.data.list
+        this.total = response.data.total
+        this.loading = false
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
-      this.getList();
+      this.queryParams.pageNo = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 详细按钮操作 */
     handleView(row) {
-      this.$refs.detailRef.open(row);
+      this.$refs.detailRef.open(row)
     },
     /** 导出按钮操作 */
     handleExport() {
       // 处理查询参数
-      let params = {...this.queryParams};
-      params.pageNo = undefined;
-      params.pageSize = undefined;
+      const params = { ...this.queryParams }
+      params.pageNo = undefined
+      params.pageSize = undefined
       // 执行导出
       this.$modal.confirm('是否确认导出所有API 访问日志数据项?').then(() => {
-        this.exportLoading = true;
-        return exportApiAccessLog(params);
+        this.exportLoading = true
+        return exportApiAccessLog(params)
       }).then(response => {
-        this.$download.excel(response, 'API 访问日志.xls');
+        this.$download.excel(response, 'API 访问日志.xls')
       }).finally(() => {
-        this.exportLoading = false;
-      });
+        this.exportLoading = false
+      })
     }
   }
-};
+}
 </script>

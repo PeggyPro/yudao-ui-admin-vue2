@@ -14,26 +14,30 @@
     <div class="h-[480px]">
       <GroupMemberPickerPanel
         :selected-ids="selectedIds"
-        @update:selectedIds="selectedIds = $event"
         :members="members"
         :disabled-ids="disabledIds"
         :hide-ids="hideIds"
+        @update:selectedIds="selectedIds = $event"
       />
     </div>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" :disabled="!canSubmit" @click="handleOk">完成</el-button>
+      <el-button
+        type="primary"
+        :disabled="!canSubmit"
+        @click="handleOk"
+      >完成</el-button>
     </template>
   </el-dialog>
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import { useGroupStore } from '../../store/groupStore';
-import { getCurrentUserId } from '@/views/im/utils/session';
-import GroupMemberPickerPanel from '../picker/GroupMemberPickerPanel.vue';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import { useGroupStore } from '../../store/groupStore'
+import { getCurrentUserId } from '@/views/im/utils/session'
+import GroupMemberPickerPanel from '../picker/GroupMemberPickerPanel.vue'
+export default /* #__PURE__*/_defineComponent({
   components: {
     GroupMemberPickerPanel
   },
@@ -42,25 +46,25 @@ export default /*#__PURE__*/_defineComponent({
     expose,
     emit
   }) {
-    const groupStore = useGroupStore();
+    const groupStore = useGroupStore()
 
     /** 弹窗显隐 */
-    const visible = ref(false);
+    const visible = ref(false)
     /** 当前群编号；open 时由调用方传入 */
-    const groupId = ref(0);
+    const groupId = ref(0)
     /** 弹窗用途；invite=发起群通话选邀请人 / add=通话中追加成员 */
-    const mode = ref('invite');
+    const mode = ref('invite')
     /** 置灰的 userId 列表；add 场景把已在通话内的人禁用 */
-    const excludeUserIds = ref([]);
+    const excludeUserIds = ref([])
     /** 当前选中的 userId 列表；GroupMemberPickerPanel v-model 绑过来 */
-    const selectedIds = ref([]);
+    const selectedIds = ref([])
 
     /** 标题；按用途切换 */
-    const title = computed(() => mode.value === 'add' ? '添加成员' : '选择成员');
+    const title = computed(() => mode.value === 'add' ? '添加成员' : '选择成员')
 
     /** 群成员列表；从 groupStore 现取，map 成 GroupMemberLite */
     const members = computed(() => {
-      const group = groupStore.getGroup(groupId.value);
+      const group = groupStore.getGroup(groupId.value)
       return (group?.members || []).map(member => ({
         userId: member.userId,
         nickname: member.nickname,
@@ -68,37 +72,37 @@ export default /*#__PURE__*/_defineComponent({
         avatar: member.avatar,
         status: member.status,
         role: member.role
-      }));
-    });
+      }))
+    })
 
     /** 自己不出现在选项里 */
     const hideIds = computed(() => {
-      const myId = getCurrentUserId();
-      return myId ? [myId] : [];
-    });
+      const myId = getCurrentUserId()
+      return myId ? [myId] : []
+    })
 
     /** 已在通话内的成员置灰 */
-    const disabledIds = computed(() => excludeUserIds.value);
+    const disabledIds = computed(() => excludeUserIds.value)
 
     /** 是否可提交：至少选 1 个 */
-    const canSubmit = computed(() => selectedIds.value.length > 0);
+    const canSubmit = computed(() => selectedIds.value.length > 0)
 
     /** 打开弹窗；excludeUserIds 用于「添加成员」时把已在通话内的人置灰 */
     function open(opts) {
-      groupId.value = opts.groupId;
-      mode.value = opts.mode || 'invite';
-      excludeUserIds.value = opts.excludeUserIds || [];
-      selectedIds.value = [];
-      visible.value = true;
+      groupId.value = opts.groupId
+      mode.value = opts.mode || 'invite'
+      excludeUserIds.value = opts.excludeUserIds || []
+      selectedIds.value = []
+      visible.value = true
     }
     expose({
       open
-    }); // 提供 open 方法，用于打开弹窗
+    }) // 提供 open 方法，用于打开弹窗
 
     /** 点完成：emit 选中 ID 列表给父级 + 关闭弹窗；提交按钮 disabled 已保证 selectedIds 非空 */
     function handleOk() {
-      emit('success', [...selectedIds.value]);
-      visible.value = false;
+      emit('success', [...selectedIds.value])
+      visible.value = false
     }
     const __returned__ = {
       emit,
@@ -116,14 +120,14 @@ export default /*#__PURE__*/_defineComponent({
       open,
       handleOk,
       GroupMemberPickerPanel
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped lang="scss">
 

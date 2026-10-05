@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" append-to-body width="520px">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    append-to-body
+    width="520px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,12 +12,23 @@
       :rules="formRules"
       label-width="90px"
     >
-      <el-form-item label="分类名称" prop="name">
-        <el-input v-model="formData.name" maxlength="255" placeholder="请输入分类名称" />
+      <el-form-item
+        label="分类名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="255"
+          placeholder="请输入分类名称"
+        />
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button :loading="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :loading="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

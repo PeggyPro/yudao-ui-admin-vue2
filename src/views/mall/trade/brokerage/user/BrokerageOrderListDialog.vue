@@ -94,7 +94,7 @@
         prop="sourceUserAvatar"
         width="70"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-avatar :src="scope.row.sourceUserAvatar" />
         </template>
       </el-table-column>
@@ -117,7 +117,7 @@
         prop="status"
         min-width="85"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="brokerageRecordStatusDictType"
             :value="scope.row.status"

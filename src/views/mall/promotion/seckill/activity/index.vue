@@ -81,7 +81,7 @@
         width="220"
         :show-overflow-tooltip="false"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-tag
             v-for="(configId, index) in scope.row.configIds"
             :key="index"
@@ -94,7 +94,7 @@
         min-width="210"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           {{ formatDate(scope.row.startTime) }} ~ {{ formatDate(scope.row.endTime) }}
         </template>
       </el-table-column>
@@ -104,7 +104,7 @@
         min-width="80"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             :src="scope.row.picUrl"
             :preview-src-list="scope.row.picUrl ? [scope.row.picUrl] : []"
@@ -137,7 +137,7 @@
         min-width="100"
         show-overflow-tooltip
       >
-        <template v-slot="scope">{{ formatSeckillPrice(scope.row.products) }}</template>
+        <template slot-scope="scope">{{ formatSeckillPrice(scope.row.products) }}</template>
       </el-table-column>
       <el-table-column
         label="活动状态"
@@ -146,7 +146,7 @@
         min-width="100"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -174,7 +174,7 @@
         width="180"
         show-overflow-tooltip
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
       <el-table-column
         label="操作"
@@ -182,7 +182,7 @@
         width="150"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:seckill-activity:update']"
             type="text"

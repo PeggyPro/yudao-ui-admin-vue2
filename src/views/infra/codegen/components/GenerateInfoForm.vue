@@ -1,5 +1,10 @@
 <template>
-  <gen-info-form ref="inner" :form-data="table" :columns="columns" :menus="menus" />
+  <gen-info-form
+    ref="inner"
+    :form-data="table"
+    :columns="columns"
+    :menus="menus"
+  />
 </template>
 
 <script>

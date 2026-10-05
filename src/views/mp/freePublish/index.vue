@@ -25,43 +25,88 @@ SOFTWARE.
 -->
 <template>
   <div class="app-container">
-    <doc-alert title="公众号图文" url="https://doc.iocoder.cn/mp/article/" />
+    <doc-alert
+      title="公众号图文"
+      url="https://doc.iocoder.cn/mp/article/"
+    />
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="公众号" prop="accountId">
-        <el-select v-model="queryParams.accountId" placeholder="请选择公众号">
-          <el-option v-for="item in accounts" :key="parseInt(item.id)" :label="item.name" :value="parseInt(item.id)" />
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="公众号"
+        prop="accountId"
+      >
+        <el-select
+          v-model="queryParams.accountId"
+          placeholder="请选择公众号"
+        >
+          <el-option
+            v-for="item in accounts"
+            :key="parseInt(item.id)"
+            :label="item.name"
+            :value="parseInt(item.id)"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 列表 -->
-    <div class="waterfall" v-loading="loading">
-      <div v-if="item.content && item.content.newsItem" class="waterfall-item" v-for="item in list"
-           :key='item.articleId'>
+    <div
+      v-loading="loading"
+      class="waterfall"
+    >
+      <div
+        v-for="item in list"
+        v-if="item.content && item.content.newsItem"
+        :key="item.articleId"
+        class="waterfall-item"
+      >
         <wx-news :articles="item.content.newsItem" />
         <!-- 操作 -->
         <el-row class="ope-row">
-          <el-button type="danger" icon="el-icon-delete" circle @click="handleDelete(item)"
-                     v-hasPermi="['mp:free-publish:delete']" />
+          <el-button
+            v-hasPermi="['mp:free-publish:delete']"
+            type="danger"
+            icon="el-icon-delete"
+            circle
+            @click="handleDelete(item)"
+          />
         </el-row>
       </div>
     </div>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 
 <script>
-import { getFreePublishPage, deleteFreePublish } from "@/api/mp/freePublish";
-import { getSimpleAccountList } from "@/api/mp/account";
-import WxNews from '@/views/mp/components/wx-news/main.vue';
+import { getFreePublishPage, deleteFreePublish } from '@/api/mp/freePublish'
+import { getSimpleAccountList } from '@/api/mp/account'
+import WxNews from '@/views/mp/components/wx-news/main.vue'
 
 export default {
   name: 'MpFreePublish',
@@ -86,18 +131,18 @@ export default {
       },
 
       // 公众号账号列表
-      accounts: [],
+      accounts: []
     }
   },
   created() {
     getSimpleAccountList().then(response => {
-      this.accounts = response.data;
+      this.accounts = response.data
       // 默认选中第一个
       if (this.accounts.length > 0) {
-        this.queryParams.accountId = this.accounts[0].id;
+        this.queryParams.accountId = this.accounts[0].id
       }
       // 加载数据
-      this.getList();
+      this.getList()
     })
   },
   methods: {
@@ -109,13 +154,13 @@ export default {
         return false
       }
 
-      this.loading = true;
+      this.loading = true
       getFreePublishPage(this.queryParams).then(response => {
         // 将 thumbUrl 转成 picUrl，保证 wx-news 组件可以预览封面
         response.data.list.forEach(item => {
-          const newsItem = item.content.newsItem;
+          const newsItem = item.content.newsItem
           newsItem.forEach(article => {
-            article.picUrl = article.thumbUrl;
+            article.picUrl = article.thumbUrl
           })
         })
         this.list = response.data.list
@@ -126,29 +171,29 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
-      this.getList();
+      this.queryParams.pageNo = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
+      this.resetForm('queryForm')
       // 默认选中第一个
       if (this.accounts.length > 0) {
-        this.queryParams.accountId = this.accounts[0].id;
+        this.queryParams.accountId = this.accounts[0].id
       }
-      this.handleQuery();
+      this.handleQuery()
     },
     /** 删除按钮操作 */
-    handleDelete(item){
-      const articleId = item.articleId;
-      const accountId = this.queryParams.accountId;
+    handleDelete(item) {
+      const articleId = item.articleId
+      const accountId = this.queryParams.accountId
       this.$modal.confirm('删除后用户将无法访问此页面，确定删除？').then(function() {
-        return deleteFreePublish(accountId, articleId);
+        return deleteFreePublish(accountId, articleId)
       }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
-    },
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {})
+    }
   }
 }
 </script>

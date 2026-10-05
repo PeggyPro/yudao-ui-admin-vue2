@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    title="修改考勤记录"
+  <AppDialog
     v-model="dialogVisible"
+    title="修改考勤记录"
     append-to-body
     @closed="resetForm"
   >
@@ -13,16 +13,32 @@
       label-width="80px"
     >
       <el-form-item label="员工">
-        <el-input :value="formData.userName" disabled />
+        <el-input
+          :value="formData.userName"
+          disabled
+        />
       </el-form-item>
       <el-form-item label="考勤类型">
-        <el-input :value="getAttendanceTypeLabel" disabled />
+        <el-input
+          :value="getAttendanceTypeLabel"
+          disabled
+        />
       </el-form-item>
       <el-form-item label="考勤时间">
-        <el-input :value="formatDate(formData.attendanceTime)" disabled />
+        <el-input
+          :value="formatDate(formData.attendanceTime)"
+          disabled
+        />
       </el-form-item>
-      <el-form-item label="考勤状态" prop="status">
-        <el-select v-model="formData.status" placeholder="请选择考勤状态" style="width: 100%">
+      <el-form-item
+        label="考勤状态"
+        prop="status"
+      >
+        <el-select
+          v-model="formData.status"
+          placeholder="请选择考勤状态"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
@@ -31,7 +47,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           type="textarea"
@@ -42,16 +61,23 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as AttendanceApi from '@/api/oa/attendance'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getDictLabel, getIntDictOptions } from '@/utils/dict'
 import { formatDate } from '@/utils/formatTime'
 import { OA_ATTENDANCE_STATUS, OA_ATTENDANCE_TYPE } from '@/views/oa/utils/constants'
@@ -71,7 +97,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaAttendanceForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

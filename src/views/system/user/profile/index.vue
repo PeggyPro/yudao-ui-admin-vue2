@@ -1,9 +1,15 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :span="6" :xs="24">
+      <el-col
+        :span="6"
+        :xs="24"
+      >
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <span>个人信息</span>
           </div>
           <div>
@@ -25,15 +31,24 @@
               </li>
               <li class="list-group-item">
                 <svg-icon icon-class="tree" />所属部门
-                <div class="pull-right" v-if="user.dept">{{ user.dept.name }}</div>
+                <div
+                  v-if="user.dept"
+                  class="pull-right"
+                >{{ user.dept.name }}</div>
               </li>
               <li class="list-group-item">
                 <svg-icon icon-class="tree" />所属岗位
-                <div class="pull-right" v-if="user.posts">{{ user.posts.map(post => post.name).join(',') }}</div>
+                <div
+                  v-if="user.posts"
+                  class="pull-right"
+                >{{ user.posts.map(post => post.name).join(',') }}</div>
               </li>
               <li class="list-group-item">
                 <svg-icon icon-class="peoples" />所属角色
-                <div class="pull-right" v-if="user.roles">{{ user.roles.map(role => role.name).join(',') }}</div>
+                <div
+                  v-if="user.roles"
+                  class="pull-right"
+                >{{ user.roles.map(role => role.name).join(',') }}</div>
               </li>
               <li class="list-group-item">
                 <svg-icon icon-class="date" />创建日期
@@ -43,20 +58,42 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="18" :xs="24">
+      <el-col
+        :span="18"
+        :xs="24"
+      >
         <el-card>
-          <div slot="header" class="clearfix">
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <span>基本资料</span>
           </div>
           <el-tabs v-model="activeTab">
-            <el-tab-pane label="基本资料" name="userinfo">
-              <userInfo :user="user" @success="getUser" />
+            <el-tab-pane
+              label="基本资料"
+              name="userinfo"
+            >
+              <userInfo
+                :user="user"
+                @success="getUser"
+              />
             </el-tab-pane>
-            <el-tab-pane label="修改密码" name="resetPwd">
+            <el-tab-pane
+              label="修改密码"
+              name="resetPwd"
+            >
               <resetPwd :user="user" />
             </el-tab-pane>
-            <el-tab-pane label="社交信息" name="userSocial">
-              <userSocial :user="user" :getUser="getUser" :setActiveTab="setActiveTab" />
+            <el-tab-pane
+              label="社交信息"
+              name="userSocial"
+            >
+              <userSocial
+                :user="user"
+                :get-user="getUser"
+                :set-active-tab="setActiveTab"
+              />
             </el-tab-pane>
           </el-tabs>
         </el-card>
@@ -66,36 +103,36 @@
 </template>
 
 <script>
-import userAvatar from "./userAvatar";
-import userInfo from "./userInfo";
-import resetPwd from "./resetPwd";
-import userSocial from "./userSocial";
-import { getUserProfile } from "@/api/system/user/profile";
+import userAvatar from './userAvatar'
+import userInfo from './userInfo'
+import resetPwd from './resetPwd'
+import userSocial from './userSocial'
+import { getUserProfile } from '@/api/system/user/profile'
 
 export default {
-  name: "Profile",
+  name: 'Profile',
   components: { userAvatar, userInfo, resetPwd, userSocial },
   data() {
     return {
       user: {},
       roleGroup: {},
       postGroup: {},
-      activeTab: "userinfo"
-    };
+      activeTab: 'userinfo'
+    }
   },
   created() {
-    this.getUser();
+    this.getUser()
   },
   methods: {
     getUser() {
       return getUserProfile().then(response => {
-        this.user = response.data;
-        return this.user;
-      });
+        this.user = response.data
+        return this.user
+      })
     },
     setActiveTab(activeTab) {
       this.activeTab = activeTab
     }
   }
-};
+}
 </script>

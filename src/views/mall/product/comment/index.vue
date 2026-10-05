@@ -132,7 +132,7 @@
         align="center"
         min-width="320"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div class="product-info">
             <el-image
               v-if="scope.row.skuPicUrl"
@@ -174,7 +174,7 @@
         prop="content"
         min-width="210"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <p>{{ scope.row.content }}</p>
           <div class="comment-images">
             <el-image
@@ -201,7 +201,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -210,7 +210,7 @@
         align="center"
         width="90"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-switch
             v-model="scope.row.visible"
             v-hasPermi="['product:comment:update']"
@@ -226,7 +226,7 @@
         class-name="small-padding fixed-width"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['product:comment:update']"
             size="mini"

@@ -1,15 +1,39 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" :title="dialogTitle" width="460px" append-to-body>
-    <el-form ref="formRef" :model="formData" :rules="formRules" label-width="80px">
-      <el-form-item label="标签名称" prop="name">
-        <el-input v-model="formData.name" maxlength="50" placeholder="请输入标签名称" />
+  <el-dialog
+    :visible.sync="dialogVisible"
+    :title="dialogTitle"
+    width="460px"
+    append-to-body
+  >
+    <el-form
+      ref="formRef"
+      :model="formData"
+      :rules="formRules"
+      label-width="80px"
+    >
+      <el-form-item
+        label="标签名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="50"
+          placeholder="请输入标签名称"
+        />
       </el-form-item>
-      <el-form-item label="标签颜色" prop="color">
+      <el-form-item
+        label="标签颜色"
+        prop="color"
+      >
         <el-color-picker v-model="formData.color" />
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
   </el-dialog>

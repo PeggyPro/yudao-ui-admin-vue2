@@ -1,6 +1,9 @@
 <template>
   <div class="iframe-component">
-    <div v-if="showPreview" class="iframe-preview">
+    <div
+      v-if="showPreview"
+      class="iframe-preview"
+    >
       <iframe
         :src="displayUrl"
         :width="width"
@@ -11,7 +14,10 @@
         class="iframe-content"
       />
     </div>
-    <div v-else class="iframe-placeholder">
+    <div
+      v-else
+      class="iframe-placeholder"
+    >
       <el-empty description="请在右侧属性面板配置 URL 地址" />
     </div>
   </div>

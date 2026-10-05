@@ -1,5 +1,9 @@
 <template>
-  <div class="message-file-upload" @mouseenter="showTooltip" @mouseleave="hideTooltip">
+  <div
+    class="message-file-upload"
+    @mouseenter="showTooltip"
+    @mouseleave="hideTooltip"
+  >
     <el-button
       v-if="!disabled"
       circle
@@ -11,7 +15,10 @@
       @click="triggerFileInput"
     >
       <i class="el-icon-paperclip" />
-      <span v-if="fileList.length" class="message-file-upload__count">{{ fileList.length }}</span>
+      <span
+        v-if="fileList.length"
+        class="message-file-upload__count"
+      >{{ fileList.length }}</span>
     </el-button>
     <input
       ref="fileInput"
@@ -29,9 +36,16 @@
         @mouseenter="showTooltip"
         @mouseleave="hideTooltip"
       >
-        <div v-for="(file, index) in fileList" :key="index" class="upload-file-item">
+        <div
+          v-for="(file, index) in fileList"
+          :key="index"
+          class="upload-file-item"
+        >
           <i :class="getFileIcon(file.name)" />
-          <span class="upload-file-item__name" :title="file.name">{{ file.name }}</span>
+          <span
+            class="upload-file-item__name"
+            :title="file.name"
+          >{{ file.name }}</span>
           <span class="upload-file-item__size">{{ formatFileSize(file.size) }}</span>
           <el-progress
             v-if="file.uploading"

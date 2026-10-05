@@ -1,7 +1,13 @@
 <template>
   <div class="app-container fms-ledger-page">
-    <doc-alert title="【账簿】账簿管理" url="https://doc.iocoder.cn/fms/ledger/" />
-    <el-card class="ledger-toolbar" shadow="never">
+    <doc-alert
+      title="【账簿】账簿管理"
+      url="https://doc.iocoder.cn/fms/ledger/"
+    />
+    <el-card
+      class="ledger-toolbar"
+      shadow="never"
+    >
       <FmsLedgerSearchBar
         :end-month="queryParams.endMonth"
         :export-loading="exportLoading"
@@ -14,7 +20,13 @@
       />
     </el-card>
     <el-card shadow="never">
-      <el-alert v-if="!accountSetLoading && !accountSetId" :closable="false" show-icon type="info" title="请先选择已初始化的账套" />
+      <el-alert
+        v-if="!accountSetLoading && !accountSetId"
+        :closable="false"
+        show-icon
+        type="info"
+        title="请先选择已初始化的账套"
+      />
       <el-table
         id="fms-general-ledger-table"
         v-loading="loading || accountSetLoading"
@@ -25,16 +37,54 @@
         stripe
         height="calc(100vh - 285px)"
       >
-        <el-table-column align="center" label="科目编码" prop="subjectCode" width="125">
-          <template slot-scope="scope"><el-button type="text" @click="openDetail(scope.row)">{{ scope.row.subjectCode }}</el-button></template>
+        <el-table-column
+          align="center"
+          label="科目编码"
+          prop="subjectCode"
+          width="125"
+        >
+          <template slot-scope="scope"><el-button
+            type="text"
+            @click="openDetail(scope.row)"
+          >{{ scope.row.subjectCode }}</el-button></template>
         </el-table-column>
-        <el-table-column label="科目名称" prop="subjectName" min-width="160" />
-        <el-table-column align="center" label="期间" prop="period" width="100" />
-        <el-table-column label="摘要" prop="digest" min-width="130" />
-        <el-table-column align="right" label="借方" width="140"><template slot-scope="scope">{{ formatMoney(scope.row.debitAmount) }}</template></el-table-column>
-        <el-table-column align="right" label="贷方" width="140"><template slot-scope="scope">{{ formatMoney(scope.row.creditAmount) }}</template></el-table-column>
-        <el-table-column align="center" label="方向" prop="balanceDirection" width="80" />
-        <el-table-column align="right" label="余额" width="150"><template slot-scope="scope">{{ formatMoney(scope.row.balance) }}</template></el-table-column>
+        <el-table-column
+          label="科目名称"
+          prop="subjectName"
+          min-width="160"
+        />
+        <el-table-column
+          align="center"
+          label="期间"
+          prop="period"
+          width="100"
+        />
+        <el-table-column
+          label="摘要"
+          prop="digest"
+          min-width="130"
+        />
+        <el-table-column
+          align="right"
+          label="借方"
+          width="140"
+        ><template slot-scope="scope">{{ formatMoney(scope.row.debitAmount) }}</template></el-table-column>
+        <el-table-column
+          align="right"
+          label="贷方"
+          width="140"
+        ><template slot-scope="scope">{{ formatMoney(scope.row.creditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="方向"
+          prop="balanceDirection"
+          width="80"
+        />
+        <el-table-column
+          align="right"
+          label="余额"
+          width="150"
+        ><template slot-scope="scope">{{ formatMoney(scope.row.balance) }}</template></el-table-column>
       </el-table>
     </el-card>
   </div>

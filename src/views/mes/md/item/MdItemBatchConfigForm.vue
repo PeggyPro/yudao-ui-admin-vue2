@@ -1,7 +1,19 @@
 <!-- MES 物料批次属性配置 -->
 <template>
-  <el-form v-loading="loading" :model="formData" :disabled="isReadOnly">
-    <div v-if="!isReadOnly" class="actions"><el-button type="primary" size="small" :loading="loading" @click="handleSave">保存批次属性</el-button></div>
+  <el-form
+    v-loading="loading"
+    :model="formData"
+    :disabled="isReadOnly"
+  >
+    <div
+      v-if="!isReadOnly"
+      class="actions"
+    ><el-button
+      type="primary"
+      size="small"
+      :loading="loading"
+      @click="handleSave"
+    >保存批次属性</el-button></div>
     <el-row :gutter="20">
       <el-col :span="5"><el-checkbox v-model="formData.produceDateFlag">生产日期</el-checkbox></el-col>
       <el-col :span="5"><el-checkbox v-model="formData.qualityStatusFlag">质量状态</el-checkbox></el-col>

@@ -14,14 +14,29 @@
           type="textarea"
         />
         <div class="comment-submit">
-          <el-button :loading="submitting" type="primary" @click="submitRootComment">
+          <el-button
+            :loading="submitting"
+            type="primary"
+            @click="submitRootComment"
+          >
             发表评论
           </el-button>
         </div>
       </div>
-      <el-empty v-if="comments.length === 0" :image-size="72" description="暂无评论" />
-      <div v-for="comment in comments" :key="comment.id" class="comment-row">
-        <el-avatar :size="32" class="knowledge-comment-avatar">
+      <el-empty
+        v-if="comments.length === 0"
+        :image-size="72"
+        description="暂无评论"
+      />
+      <div
+        v-for="comment in comments"
+        :key="comment.id"
+        class="comment-row"
+      >
+        <el-avatar
+          :size="32"
+          class="knowledge-comment-avatar"
+        >
           {{ firstCharacter(comment.userName) }}
         </el-avatar>
         <div class="comment-body">
@@ -37,10 +52,20 @@
               type="text"
               @click="handleDelete(comment)"
             >删除</el-button>
-            <el-button type="text" @click="startReply(comment, comment)">回复</el-button>
+            <el-button
+              type="text"
+              @click="startReply(comment, comment)"
+            >回复</el-button>
           </div>
-          <div v-for="reply in comment.children" :key="reply.id" class="reply-row">
-            <el-avatar :size="28" class="knowledge-comment-avatar">
+          <div
+            v-for="reply in comment.children"
+            :key="reply.id"
+            class="reply-row"
+          >
+            <el-avatar
+              :size="28"
+              class="knowledge-comment-avatar"
+            >
               {{ firstCharacter(reply.userName) }}
             </el-avatar>
             <div class="comment-body">
@@ -48,7 +73,10 @@
                 <span class="comment-user">{{ reply.userName }}</span>
                 <span>{{ formatDate(reply.createTime) }}</span>
               </div>
-              <div v-if="reply.replyUserName" class="reply-target">
+              <div
+                v-if="reply.replyUserName"
+                class="reply-target"
+              >
                 回复 @{{ reply.replyUserName }}
               </div>
               <div class="comment-content">{{ reply.content }}</div>
@@ -59,18 +87,28 @@
                   type="text"
                   @click="handleDelete(reply)"
                 >删除</el-button>
-                <el-button type="text" @click="startReply(comment, reply)">回复</el-button>
+                <el-button
+                  type="text"
+                  @click="startReply(comment, reply)"
+                >回复</el-button>
               </div>
             </div>
           </div>
-          <div v-if="replyMainId === comment.id" class="reply-editor">
+          <div
+            v-if="replyMainId === comment.id"
+            class="reply-editor"
+          >
             <el-input
               v-model="replyContent"
               :placeholder="'回复 ' + replyUserName"
               maxlength="2000"
               @keyup.enter.native="submitReply"
             />
-            <el-button :loading="submitting" type="primary" @click="submitReply">回复</el-button>
+            <el-button
+              :loading="submitting"
+              type="primary"
+              @click="submitReply"
+            >回复</el-button>
             <el-button @click="cancelReply">取消</el-button>
           </div>
         </div>

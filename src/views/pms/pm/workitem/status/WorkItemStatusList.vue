@@ -15,14 +15,34 @@
         type="info"
         show-icon
       />
-      <el-tabs v-model="activeTab" v-loading="loading">
-        <el-tab-pane label="状态管理" name="status">
+      <el-tabs
+        v-model="activeTab"
+        v-loading="loading"
+      >
+        <el-tab-pane
+          label="状态管理"
+          name="status"
+        >
           <el-form label-width="0">
-            <draggable v-model="statusList" handle=".status-drag-handle">
-              <div v-for="element in statusList" :key="element.id" class="status-row">
+            <draggable
+              v-model="statusList"
+              handle=".status-drag-handle"
+            >
+              <div
+                v-for="element in statusList"
+                :key="element.id"
+                class="status-row"
+              >
                 <i class="el-icon-rank status-drag-handle" />
-                <el-input v-model="element.name" maxlength="50" placeholder="状态名称" />
-                <el-select v-model="element.statusType" class="status-type-select">
+                <el-input
+                  v-model="element.name"
+                  maxlength="50"
+                  placeholder="状态名称"
+                />
+                <el-select
+                  v-model="element.statusType"
+                  class="status-type-select"
+                >
                   <el-option
                     v-for="option in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_STATUS_TYPE)"
                     :key="option.value"
@@ -30,8 +50,15 @@
                     :value="option.value"
                   />
                 </el-select>
-                <el-input v-model="element.description" maxlength="255" placeholder="状态描述" />
-                <el-radio v-model="defaultStatusId" :label="element.id">初始</el-radio>
+                <el-input
+                  v-model="element.description"
+                  maxlength="255"
+                  placeholder="状态描述"
+                />
+                <el-radio
+                  v-model="defaultStatusId"
+                  :label="element.id"
+                >初始</el-radio>
                 <el-button
                   :disabled="element.id === defaultStatusId"
                   type="text"
@@ -40,10 +67,18 @@
                 >删除</el-button>
               </div>
             </draggable>
-            <el-button class="add-status-button" plain type="primary" @click="handleAdd">添加状态</el-button>
+            <el-button
+              class="add-status-button"
+              plain
+              type="primary"
+              @click="handleAdd"
+            >添加状态</el-button>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="看板配置" name="board">
+        <el-tab-pane
+          label="看板配置"
+          name="board"
+        >
           <div class="unassigned-board">
             <div class="board-label">未放入看板</div>
             <draggable
@@ -51,38 +86,75 @@
               class="status-tags"
               group="work-item-board-status"
             >
-              <el-tag v-for="status in unassignedStatuses" :key="status.id" class="status-tag" effect="plain">
+              <el-tag
+                v-for="status in unassignedStatuses"
+                :key="status.id"
+                class="status-tag"
+                effect="plain"
+              >
                 {{ status.name }}
               </el-tag>
             </draggable>
           </div>
-          <draggable v-model="boardList" handle=".board-drag-handle">
-            <div v-for="(board, index) in boardList" :key="board.id" class="board-row">
+          <draggable
+            v-model="boardList"
+            handle=".board-drag-handle"
+          >
+            <div
+              v-for="(board, index) in boardList"
+              :key="board.id"
+              class="board-row"
+            >
               <div class="board-heading">
                 <i class="el-icon-rank board-drag-handle" />
-                <el-input v-model="board.name" maxlength="50" placeholder="请输入看板列名称" />
-                <el-button type="text" class="danger-button" @click="handleDeleteBoard(index)">删除列</el-button>
+                <el-input
+                  v-model="board.name"
+                  maxlength="50"
+                  placeholder="请输入看板列名称"
+                />
+                <el-button
+                  type="text"
+                  class="danger-button"
+                  @click="handleDeleteBoard(index)"
+                >删除列</el-button>
               </div>
               <draggable
                 v-model="board.statuses"
                 class="status-tags board-status-tags"
                 group="work-item-board-status"
               >
-                <el-tag v-for="status in board.statuses" :key="status.id" class="status-tag" effect="plain">
+                <el-tag
+                  v-for="status in board.statuses"
+                  :key="status.id"
+                  class="status-tag"
+                  effect="plain"
+                >
                   {{ status.name }}
                 </el-tag>
               </draggable>
             </div>
           </draggable>
-          <el-button plain type="primary" icon="el-icon-plus" @click="handleAddBoard">添加看板列</el-button>
+          <el-button
+            plain
+            type="primary"
+            icon="el-icon-plus"
+            @click="handleAddBoard"
+          >添加看板列</el-button>
         </el-tab-pane>
       </el-tabs>
       <span slot="footer">
-        <el-button :disabled="loading" type="primary" @click="submitForm">确 定</el-button>
+        <el-button
+          :disabled="loading"
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
-    <WorkItemStatusDeleteForm ref="deleteFormRef" @success="handleDeleteSuccess" />
+    <WorkItemStatusDeleteForm
+      ref="deleteFormRef"
+      @success="handleDeleteSuccess"
+    />
   </div>
 </template>
 

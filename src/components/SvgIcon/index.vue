@@ -1,8 +1,24 @@
 <template>
   <span v-if="!hasIcon" />
-  <i v-else-if="isElementIcon" :class="elementIconClass" :style="iconStyle" v-on="$listeners" />
-  <div v-else-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
-  <svg v-else :class="svgIconClass" :style="iconStyle" aria-hidden="true" v-on="$listeners">
+  <i
+    v-else-if="isElementIcon"
+    :class="elementIconClass"
+    :style="iconStyle"
+    v-on="$listeners"
+  />
+  <div
+    v-else-if="isExternal"
+    :style="styleExternalIcon"
+    class="svg-external-icon svg-icon"
+    v-on="$listeners"
+  />
+  <svg
+    v-else
+    :class="svgIconClass"
+    :style="iconStyle"
+    aria-hidden="true"
+    v-on="$listeners"
+  >
     <use :xlink:href="iconName" />
   </svg>
 </template>

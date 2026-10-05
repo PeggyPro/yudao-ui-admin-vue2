@@ -1,5 +1,8 @@
 <template>
-  <div ref="refSticky" :style="{ height: height, zIndex: zIndex }">
+  <div
+    ref="refSticky"
+    :style="{ height: height, zIndex: zIndex }"
+  >
     <div
       :class="className"
       :style="{
@@ -43,7 +46,7 @@ export default {
     // 定位方式，默认为(top)，表示距离顶部位置，可以设置为top或者bottom
     position: {
       type: String,
-      validator: function (value) {
+      validator: function(value) {
         return ['top', 'bottom'].indexOf(value) !== -1
       },
       default: 'top'

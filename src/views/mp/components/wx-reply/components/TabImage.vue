@@ -8,7 +8,7 @@
         class="material-img"
         :src="reply.url"
         alt=""
-      />
+      >
       <p
         v-if="reply.name"
         class="item-name"

@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="dialogTitle" v-model="dialogVisible" width="1200px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="1200px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,7 +11,10 @@
       :rules="formRules"
       label-width="100px"
     >
-      <el-form-item label="出差事由" prop="reason">
+      <el-form-item
+        label="出差事由"
+        prop="reason"
+      >
         <el-input
           v-model="formData.reason"
           type="textarea"
@@ -17,7 +24,10 @@
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="9">
-          <el-form-item label="开始日期" prop="startTime">
+          <el-form-item
+            label="开始日期"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               type="datetime"
@@ -28,7 +38,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="9">
-          <el-form-item label="结束日期" prop="endTime">
+          <el-form-item
+            label="结束日期"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               type="datetime"
@@ -40,7 +53,11 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="出差天数">
-            <el-input :value="days" placeholder="自动计算" disabled>
+            <el-input
+              :value="days"
+              placeholder="自动计算"
+              disabled
+            >
               <template slot="append">天</template>
             </el-input>
           </el-form-item>
@@ -48,12 +65,21 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="同行人" prop="companion">
-            <el-input v-model="formData.companion" placeholder="请输入同行人" />
+          <el-form-item
+            label="同行人"
+            prop="companion"
+          >
+            <el-input
+              v-model="formData.companion"
+              placeholder="请输入同行人"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="预计费用" prop="estimatedPrice">
+          <el-form-item
+            label="预计费用"
+            prop="estimatedPrice"
+          >
             <el-input-number
               v-model="formData.estimatedPrice"
               placeholder="请输入预计费用"
@@ -65,20 +91,50 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" :rows="2" placeholder="请输入备注" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          :rows="2"
+          placeholder="请输入备注"
+        />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :is-show-tip="false" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :is-show-tip="false"
+        />
       </el-form-item>
 
       <div class="item-header">
         <span class="item-title">行程明细</span>
-        <el-button type="primary" plain size="mini" @click="addItem">添加行程</el-button>
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          @click="addItem"
+        >添加行程</el-button>
       </div>
-      <el-table :data="formData.items" border>
-        <el-table-column type="index" label="序号" width="60" align="center" />
-        <el-table-column label="出发城市" min-width="180">
+      <el-table
+        :data="formData.items"
+        border
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="60"
+          align="center"
+        />
+        <el-table-column
+          label="出发城市"
+          min-width="180"
+        >
           <template slot-scope="scope">
             <area-select
               v-model="scope.row.departureAreaId"
@@ -88,7 +144,10 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="到达城市" min-width="180">
+        <el-table-column
+          label="到达城市"
+          min-width="180"
+        >
           <template slot-scope="scope">
             <area-select
               v-model="scope.row.arrivalAreaId"
@@ -98,7 +157,10 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="开始日期" min-width="160">
+        <el-table-column
+          label="开始日期"
+          min-width="160"
+        >
           <template slot-scope="scope">
             <el-date-picker
               v-model="scope.row.startTime"
@@ -109,7 +171,10 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="结束日期" min-width="160">
+        <el-table-column
+          label="结束日期"
+          min-width="160"
+        >
           <template slot-scope="scope">
             <el-date-picker
               v-model="scope.row.endTime"
@@ -120,9 +185,16 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="交通方式" min-width="140">
+        <el-table-column
+          label="交通方式"
+          min-width="140"
+        >
           <template slot-scope="scope">
-            <el-select v-model="scope.row.transportType" clearable placeholder="请选择交通方式">
+            <el-select
+              v-model="scope.row.transportType"
+              clearable
+              placeholder="请选择交通方式"
+            >
               <el-option
                 v-for="dict in transportTypeOptions"
                 :key="dict.value"
@@ -132,26 +204,47 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="180">
+        <el-table-column
+          label="备注"
+          min-width="180"
+        >
           <template slot-scope="scope">
-            <el-input v-model="scope.row.remark" placeholder="请输入备注" />
+            <el-input
+              v-model="scope.row.remark"
+              placeholder="请输入备注"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="75" fixed="right">
+        <el-table-column
+          label="操作"
+          width="75"
+          fixed="right"
+        >
           <template slot-scope="scope">
-            <el-button type="text" size="mini" class="danger-text" @click="deleteItem(scope.$index)">删除</el-button>
+            <el-button
+              type="text"
+              size="mini"
+              class="danger-text"
+              @click="deleteItem(scope.$index)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button
         v-hasPermi="['oa:travel-apply:save']"
         :disabled="formLoading"
         type="primary"
         @click="submitForm"
       >保 存</el-button>
-      <el-button :disabled="formLoading" @click="dialogVisible = false">取 消</el-button>
+      <el-button
+        :disabled="formLoading"
+        @click="dialogVisible = false"
+      >取 消</el-button>
     </div>
   </dialog-component>
 </template>

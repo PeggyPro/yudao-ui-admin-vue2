@@ -171,7 +171,9 @@ export default {
         this.$modal.msgSuccess(this.$t('common.updateSuccess'))
         await this.getList()
         this.$emit('change')
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     async handleDelete(recordId) {
       if (!recordId) return
@@ -181,7 +183,9 @@ export default {
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.getList()
         this.$emit('change')
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     }
   }
 }

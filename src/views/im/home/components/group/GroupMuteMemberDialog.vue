@@ -1,7 +1,12 @@
 <template>
 
   <!-- 禁言时长选择弹窗 -->
-  <el-dialog :visible.sync="visible" title="设置禁言" width="560px" :close-on-click-modal="false">
+  <el-dialog
+    :visible.sync="visible"
+    title="设置禁言"
+    width="560px"
+    :close-on-click-modal="false"
+  >
     <div class="flex flex-col gap-4">
       <!-- 成员信息卡：和 FriendAddDialog 的 user 卡保持一致的浅色背景 -->
       <div class="flex items-center gap-2 px-3 py-2.5 rounded-md bg-[var(--el-fill-color-light)]">
@@ -29,17 +34,21 @@
     </div>
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" :loading="loading" @click="handleConfirm">确定</el-button>
+      <el-button
+        type="primary"
+        :loading="loading"
+        @click="handleConfirm"
+      >确定</el-button>
     </template>
   </el-dialog>
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { ref } from 'vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { muteMember } from '@/api/im/group';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { ref } from 'vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { muteMember } from '@/api/im/group'
+export default /* #__PURE__*/_defineComponent({
   __name: 'GroupMuteMemberDialog',
   setup(__props, {
     expose,
@@ -47,13 +56,13 @@ export default /*#__PURE__*/_defineComponent({
   }) {
     const {
       success: successMessage
-    } = useMessage();
-    const visible = ref(false);
-    const loading = ref(false);
-    const groupId = ref(0);
-    const userId = ref(0);
-    const memberName = ref('');
-    const selected = ref(600); // 默认 10 分钟
+    } = useMessage()
+    const visible = ref(false)
+    const loading = ref(false)
+    const groupId = ref(0)
+    const userId = ref(0)
+    const memberName = ref('')
+    const selected = ref(600) // 默认 10 分钟
 
     const presets = [{
       label: '10 分钟',
@@ -76,36 +85,36 @@ export default /*#__PURE__*/_defineComponent({
     }, {
       label: '永久',
       value: 0
-    }];
+    }]
 
     /** 打开弹窗 */
     function open(gid, uid, name) {
-      groupId.value = gid;
-      userId.value = uid;
-      memberName.value = name;
-      selected.value = 600;
-      visible.value = true;
+      groupId.value = gid
+      userId.value = uid
+      memberName.value = name
+      selected.value = 600
+      visible.value = true
     }
 
     /** 确认禁言 */
     async function handleConfirm() {
-      loading.value = true;
+      loading.value = true
       try {
         await muteMember({
           id: groupId.value,
           userId: userId.value,
           mutedSeconds: selected.value
-        });
-        successMessage('禁言成功');
-        visible.value = false;
-        emit('success');
+        })
+        successMessage('禁言成功')
+        visible.value = false
+        emit('success')
       } finally {
-        loading.value = false;
+        loading.value = false
       }
     }
     expose({
       open
-    });
+    })
     const __returned__ = {
       emit,
       successMessage,
@@ -118,12 +127,12 @@ export default /*#__PURE__*/_defineComponent({
       presets,
       open,
       handleConfirm
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>

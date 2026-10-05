@@ -1,6 +1,9 @@
 <template>
   <div class="message-loading">
-    <el-skeleton :rows="6" animated />
+    <el-skeleton
+      :rows="6"
+      animated
+    />
   </div>
 </template>
 

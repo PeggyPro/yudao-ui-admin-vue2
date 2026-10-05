@@ -1,5 +1,9 @@
 <template>
-  <el-descriptions :column="column" border size="small">
+  <el-descriptions
+    :column="column"
+    border
+    size="small"
+  >
     <el-descriptions-item label="等级">{{ user.levelName || '无' }}</el-descriptions-item>
     <el-descriptions-item label="成长值">{{ user.experience || 0 }}</el-descriptions-item>
     <el-descriptions-item label="当前积分">{{ user.point || 0 }}</el-descriptions-item>

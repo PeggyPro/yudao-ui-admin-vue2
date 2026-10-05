@@ -1,30 +1,70 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="formData.id ? '编辑工时' : '登记工时'" width="520px" append-to-body>
-    <el-form ref="formRef" v-loading="formLoading" :model="formData" :rules="formRules" label-width="96px">
-      <el-form-item label="投入工时" prop="actualHours">
-        <el-input-number v-model="formData.actualHours" style="width: 100%" :min="1" @change="handleActualHoursChange" />
+  <AppDialog
+    v-model="dialogVisible"
+    :title="formData.id ? '编辑工时' : '登记工时'"
+    width="520px"
+    append-to-body
+  >
+    <el-form
+      ref="formRef"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="96px"
+    >
+      <el-form-item
+        label="投入工时"
+        prop="actualHours"
+      >
+        <el-input-number
+          v-model="formData.actualHours"
+          style="width: 100%"
+          :min="1"
+          @change="handleActualHoursChange"
+        />
       </el-form-item>
-      <el-form-item label="剩余工时" prop="remainingHours">
-        <el-input-number v-model="formData.remainingHours" style="width: 100%" :min="0" />
+      <el-form-item
+        label="剩余工时"
+        prop="remainingHours"
+      >
+        <el-input-number
+          v-model="formData.remainingHours"
+          style="width: 100%"
+          :min="0"
+        />
       </el-form-item>
-      <el-form-item label="工时说明" prop="description">
-        <el-input v-model="formData.description" :rows="4" maxlength="500" placeholder="请输入本次工作内容" show-word-limit type="textarea" />
+      <el-form-item
+        label="工时说明"
+        prop="description"
+      >
+        <el-input
+          v-model="formData.description"
+          :rows="4"
+          maxlength="500"
+          placeholder="请输入本次工作内容"
+          show-word-limit
+          type="textarea"
+        />
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as WorkLogApi from '@/api/pms/pm/workitem/worklog'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 export default {
   name: 'PmsWorkItemWorkLogForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

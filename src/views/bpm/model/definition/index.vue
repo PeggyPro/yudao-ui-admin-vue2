@@ -1,48 +1,112 @@
 <template>
   <div class="app-container">
-    <doc-alert title="工作流手册" url="https://doc.iocoder.cn/bpm/" />
+    <doc-alert
+      title="工作流手册"
+      url="https://doc.iocoder.cn/bpm/"
+    />
 
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="定义编号" align="center" prop="id" min-width="250" show-overflow-tooltip />
-      <el-table-column label="流程名称" align="center" prop="name" min-width="150" />
-      <el-table-column label="流程图标" align="center" min-width="50">
-        <template v-slot="scope">
-          <el-image v-if="scope.row.icon" :src="scope.row.icon" class="definition-icon" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="定义编号"
+        align="center"
+        prop="id"
+        min-width="250"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="流程名称"
+        align="center"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="流程图标"
+        align="center"
+        min-width="50"
+      >
+        <template slot-scope="scope">
+          <el-image
+            v-if="scope.row.icon"
+            :src="scope.row.icon"
+            class="definition-icon"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="可见范围" prop="startUserIds" min-width="100">
-        <template v-slot="scope">
+      <el-table-column
+        label="可见范围"
+        prop="startUserIds"
+        min-width="100"
+      >
+        <template slot-scope="scope">
           {{ visibleScopeText(scope.row) }}
         </template>
       </el-table-column>
-      <el-table-column label="流程类型" prop="modelType" min-width="120">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.BPM_MODEL_TYPE" :value="scope.row.modelType" />
+      <el-table-column
+        label="流程类型"
+        prop="modelType"
+        min-width="120"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.BPM_MODEL_TYPE"
+            :value="scope.row.modelType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="表单信息" prop="formType" min-width="150">
-        <template v-slot="scope">
-          <el-button v-if="Number(scope.row.formType) === Number(BpmModelFormType.NORMAL)" type="text" @click="handleFormDetail(scope.row)">
+      <el-table-column
+        label="表单信息"
+        prop="formType"
+        min-width="150"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-if="Number(scope.row.formType) === Number(BpmModelFormType.NORMAL)"
+            type="text"
+            @click="handleFormDetail(scope.row)"
+          >
             {{ scope.row.formName }}
           </el-button>
-          <el-button v-else-if="Number(scope.row.formType) === Number(BpmModelFormType.CUSTOM)" type="text" @click="handleFormDetail(scope.row)">
+          <el-button
+            v-else-if="Number(scope.row.formType) === Number(BpmModelFormType.CUSTOM)"
+            type="text"
+            @click="handleFormDetail(scope.row)"
+          >
             {{ scope.row.formCustomCreatePath }}
           </el-button>
           <span v-else>暂无表单</span>
         </template>
       </el-table-column>
-      <el-table-column label="流程版本" align="center" prop="version" min-width="80">
-        <template v-slot="scope">
+      <el-table-column
+        label="流程版本"
+        align="center"
+        prop="version"
+        min-width="80"
+      >
+        <template slot-scope="scope">
           <el-tag>v{{ scope.row.version }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="部署时间" align="center" prop="deploymentTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.deploymentTime) }}</template>
+      <el-table-column
+        label="部署时间"
+        align="center"
+        prop="deploymentTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.deploymentTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center">
-        <template v-slot="scope">
-          <el-button type="text" @click="handleRestore(scope.row)"
-                     v-hasPermi="['bpm:model:update']">恢复</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['bpm:model:update']"
+            type="text"
+            @click="handleRestore(scope.row)"
+          >恢复</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -55,25 +119,42 @@
       @pagination="getList"
     />
 
-    <Dialog title="表单详情" v-model="formDetailVisible" width="800px">
-      <form-create :rule="formDetail.rule" :option="formDetail.option" />
-    </Dialog>
+    <AppDialog
+      v-model="formDetailVisible"
+      title="表单详情"
+      width="800px"
+    >
+      <form-create
+        :rule="formDetail.rule"
+        :option="formDetail.option"
+      />
+    </AppDialog>
 
-    <el-dialog title="流程图" :visible.sync="bpmnVisible" width="80%" append-to-body>
-      <my-process-viewer v-if="bpmnXML" key="definition-viewer" v-model="bpmnXML" :prefix="'flowable'" />
+    <el-dialog
+      title="流程图"
+      :visible.sync="bpmnVisible"
+      width="80%"
+      append-to-body
+    >
+      <my-process-viewer
+        v-if="bpmnXML"
+        key="definition-viewer"
+        v-model="bpmnXML"
+        :prefix="'flowable'"
+      />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { getProcessDefinition, getProcessDefinitionPage } from '@/api/bpm/definition'
 import { setConfAndFields2 } from '@/utils/formCreate'
 import { BpmModelFormType } from '@/utils/constants'
 
 export default {
   name: 'BpmProcessDefinition',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       loading: false,

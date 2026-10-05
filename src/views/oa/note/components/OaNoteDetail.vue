@@ -1,8 +1,17 @@
 <template>
   <!-- 笔记详情 -->
-  <Dialog title="笔记详情" v-model="dialogVisible" width="800px">
+  <AppDialog
+    v-model="dialogVisible"
+    title="笔记详情"
+    width="800px"
+  >
     <div v-loading="loading">
-      <el-descriptions v-if="note" :column="1" border class="note-detail">
+      <el-descriptions
+        v-if="note"
+        :column="1"
+        border
+        class="note-detail"
+      >
         <el-descriptions-item label="笔记标题">{{ note.title }}</el-descriptions-item>
         <el-descriptions-item label="创建人">{{ note.creatorUserName }}</el-descriptions-item>
         <el-descriptions-item label="创建时间">
@@ -10,16 +19,25 @@
         </el-descriptions-item>
         <el-descriptions-item label="笔记目录">{{ note.categoryName }}</el-descriptions-item>
         <el-descriptions-item label="笔记类型">
-          <dict-tag :type="DICT_TYPE.OA_NOTE_TYPE" :value="note.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_NOTE_TYPE"
+            :value="note.type"
+          />
         </el-descriptions-item>
         <el-descriptions-item label="优先级">
-          <dict-tag :type="DICT_TYPE.OA_PRIORITY" :value="note.priority" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PRIORITY"
+            :value="note.priority"
+          />
         </el-descriptions-item>
         <el-descriptions-item label="共享给">
           {{ note.receiverUserNames && note.receiverUserNames.join('、') }}
         </el-descriptions-item>
         <el-descriptions-item label="笔记内容">
-          <div v-dompurify-html="note.content || ''" class="content-html" />
+          <div
+            v-dompurify-html="note.content || ''"
+            class="content-html"
+          />
         </el-descriptions-item>
         <el-descriptions-item label="附件">
           <el-link
@@ -34,18 +52,18 @@
         </el-descriptions-item>
       </el-descriptions>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as NoteApi from '@/api/oa/note'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE } from '@/utils/dict'
 import { formatDate } from '@/utils/formatTime'
 
 export default {
   name: 'OaNoteDetail',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       DICT_TYPE,

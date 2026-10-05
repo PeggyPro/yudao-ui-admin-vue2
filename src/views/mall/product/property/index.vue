@@ -103,7 +103,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -112,7 +112,7 @@
         align="center"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['product:property:update']"
             size="mini"

@@ -1,10 +1,10 @@
 <template>
   <el-dialog
+    v-dialogDrag
     :title="dialogTitle"
     :visible.sync="dialogVisible"
     width="500px"
     append-to-body
-    v-dialogDrag
   >
     <el-form
       ref="form"
@@ -13,20 +13,51 @@
       :rules="formRules"
       label-width="140px"
     >
-      <el-form-item label="模版编码" prop="code">
-        <el-input v-model="formData.code" placeholder="请输入模版编码" />
+      <el-form-item
+        label="模版编码"
+        prop="code"
+      >
+        <el-input
+          v-model="formData.code"
+          placeholder="请输入模版编码"
+        />
       </el-form-item>
-      <el-form-item label="模板名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入模版名称" />
+      <el-form-item
+        label="模板名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入模版名称"
+        />
       </el-form-item>
-      <el-form-item label="发件人名称" prop="nickname">
-        <el-input v-model="formData.nickname" placeholder="请输入发件人名称" />
+      <el-form-item
+        label="发件人名称"
+        prop="nickname"
+      >
+        <el-input
+          v-model="formData.nickname"
+          placeholder="请输入发件人名称"
+        />
       </el-form-item>
-      <el-form-item label="模板内容" prop="content">
-        <el-input v-model="formData.content" type="textarea" placeholder="请输入模板内容" />
+      <el-form-item
+        label="模板内容"
+        prop="content"
+      >
+        <el-input
+          v-model="formData.content"
+          type="textarea"
+          placeholder="请输入模板内容"
+        />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="formData.type" placeholder="请选择类型">
+      <el-form-item
+        label="类型"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          placeholder="请选择类型"
+        >
           <el-option
             v-for="dict in getDictDatas(DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE)"
             :key="dict.value"
@@ -35,7 +66,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="开启状态" prop="status">
+      <el-form-item
+        label="开启状态"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
           <el-radio
             v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
@@ -46,12 +80,25 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" placeholder="请输入备注" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          placeholder="请输入备注"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

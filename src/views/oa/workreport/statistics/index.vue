@@ -1,14 +1,38 @@
 <template>
-  <el-row :gutter="20" class="app-container oa-work-report-statistics">
+  <el-row
+    :gutter="20"
+    class="app-container oa-work-report-statistics"
+  >
     <!-- 左侧部门树 -->
-    <el-col :span="4" :xs="24">
-      <dept-tree-select ref="deptTreeRef" @node-click="handleDeptNodeClick" />
+    <el-col
+      :span="4"
+      :xs="24"
+    >
+      <dept-tree-select
+        ref="deptTreeRef"
+        @node-click="handleDeptNodeClick"
+      />
     </el-col>
-    <el-col :span="20" :xs="24">
-      <el-tabs v-model="activeType" @tab-click="handleTypeChange">
-        <el-tab-pane label="日报" :name="String(OA_WORK_REPORT_TYPE.DAILY)" />
-        <el-tab-pane label="周报" :name="String(OA_WORK_REPORT_TYPE.WEEKLY)" />
-        <el-tab-pane label="月报" :name="String(OA_WORK_REPORT_TYPE.MONTHLY)" />
+    <el-col
+      :span="20"
+      :xs="24"
+    >
+      <el-tabs
+        v-model="activeType"
+        @tab-click="handleTypeChange"
+      >
+        <el-tab-pane
+          label="日报"
+          :name="String(OA_WORK_REPORT_TYPE.DAILY)"
+        />
+        <el-tab-pane
+          label="周报"
+          :name="String(OA_WORK_REPORT_TYPE.WEEKLY)"
+        />
+        <el-tab-pane
+          label="月报"
+          :name="String(OA_WORK_REPORT_TYPE.MONTHLY)"
+        />
       </el-tabs>
 
       <!-- 搜索工作栏 -->
@@ -21,7 +45,10 @@
         class="query-form"
         @submit.native.prevent
       >
-        <el-form-item label="统计周期" prop="reportDate">
+        <el-form-item
+          label="统计周期"
+          prop="reportDate"
+        >
           <el-date-picker
             v-model="reportDate"
             style="width: 260px"
@@ -32,16 +59,29 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
 
-      <el-empty v-if="!queryParams.deptId" description="请选择部门查看汇报统计" />
+      <el-empty
+        v-if="!queryParams.deptId"
+        description="请选择部门查看汇报统计"
+      />
       <template v-else>
         <!-- 汇报统计概览 -->
         <div class="stat-cards">
-          <el-card shadow="never" :body-style="{ padding: '12px 16px' }">
+          <el-card
+            shadow="never"
+            :body-style="{ padding: '12px 16px' }"
+          >
             <div class="stat-card">
               <div>
                 <div class="stat-label">统计人数</div>
@@ -49,7 +89,10 @@
               </div>
             </div>
           </el-card>
-          <el-card shadow="never" :body-style="{ padding: '12px 16px' }">
+          <el-card
+            shadow="never"
+            :body-style="{ padding: '12px 16px' }"
+          >
             <div class="stat-card">
               <div>
                 <div class="stat-label">应填汇报</div>
@@ -57,7 +100,10 @@
               </div>
             </div>
           </el-card>
-          <el-card shadow="never" :body-style="{ padding: '12px 16px' }">
+          <el-card
+            shadow="never"
+            :body-style="{ padding: '12px 16px' }"
+          >
             <div class="stat-card">
               <div>
                 <div class="stat-label">已填汇报</div>
@@ -65,7 +111,10 @@
               </div>
             </div>
           </el-card>
-          <el-card shadow="never" :body-style="{ padding: '12px 16px' }">
+          <el-card
+            shadow="never"
+            :body-style="{ padding: '12px 16px' }"
+          >
             <div class="stat-card">
               <div>
                 <div class="stat-label">未填汇报</div>
@@ -73,7 +122,10 @@
               </div>
             </div>
           </el-card>
-          <el-card shadow="never" :body-style="{ padding: '12px 16px' }">
+          <el-card
+            shadow="never"
+            :body-style="{ padding: '12px 16px' }"
+          >
             <div class="stat-card">
               <div>
                 <div class="stat-label">整体填写率</div>
@@ -84,9 +136,24 @@
         </div>
 
         <!-- 员工汇报统计 -->
-        <el-table v-loading="loading" :data="statistics.users" border stripe>
-          <el-table-column type="index" label="序号" width="60" align="center" />
-          <el-table-column label="员工" prop="userName" min-width="120" align="center" />
+        <el-table
+          v-loading="loading"
+          :data="statistics.users"
+          border
+          stripe
+        >
+          <el-table-column
+            type="index"
+            label="序号"
+            width="60"
+            align="center"
+          />
+          <el-table-column
+            label="员工"
+            prop="userName"
+            min-width="120"
+            align="center"
+          />
           <el-table-column
             label="部门"
             prop="deptName"
@@ -94,8 +161,18 @@
             align="center"
             show-overflow-tooltip
           />
-          <el-table-column label="应填" prop="expectedCount" min-width="100" align="center" />
-          <el-table-column label="已填" prop="submittedCount" min-width="100" align="center">
+          <el-table-column
+            label="应填"
+            prop="expectedCount"
+            min-width="100"
+            align="center"
+          />
+          <el-table-column
+            label="已填"
+            prop="submittedCount"
+            min-width="100"
+            align="center"
+          >
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -104,7 +181,12 @@
               >{{ scope.row.submittedCount }}</el-button>
             </template>
           </el-table-column>
-          <el-table-column label="未填" prop="missingCount" min-width="100" align="center">
+          <el-table-column
+            label="未填"
+            prop="missingCount"
+            min-width="100"
+            align="center"
+          >
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -113,7 +195,11 @@
               >{{ scope.row.missingCount }}</el-button>
             </template>
           </el-table-column>
-          <el-table-column label="填写率" min-width="160" align="center">
+          <el-table-column
+            label="填写率"
+            min-width="160"
+            align="center"
+          >
             <template slot-scope="scope">
               <el-progress
                 :percentage="calculateFillRate(scope.row.submittedCount, scope.row.expectedCount)"

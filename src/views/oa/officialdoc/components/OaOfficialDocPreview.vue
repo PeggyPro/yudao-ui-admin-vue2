@@ -1,6 +1,9 @@
 <template>
   <article class="oa-official-doc-preview">
-    <h1 class="preview-header" :style="{ fontSize: (template && template.fontSize || 36) + 'px' }">
+    <h1
+      class="preview-header"
+      :style="{ fontSize: (template && template.fontSize || 36) + 'px' }"
+    >
       {{ template && template.authorityName }}
     </h1>
     <p
@@ -10,7 +13,7 @@
           (document.year ? '〔' + document.year + '〕' : '') +
           (document.sequence == null ? '' : document.sequence + '号')
       "
-    ></p>
+    />
     <hr
       class="preview-separator"
       :class="
@@ -18,16 +21,19 @@
           ? 'preview-separator--double'
           : 'preview-separator--single'
       "
-    />
+    >
     <h2 class="preview-title">{{ document.title }}</h2>
-    <div v-html="document.content || ''" class="preview-content"></div>
+    <div
+      class="preview-content"
+      v-html="document.content || ''"
+    />
     <div class="preview-footer">
       <img
         v-if="template && template.sealPicUrl"
         :src="template.sealPicUrl"
         alt="印章"
         class="preview-seal"
-      />
+      >
       <p>{{ template && template.authorityName }}</p>
       <p>{{ document.issueTime ? formatDate(document.issueTime, 'YYYY年MM月DD日') : '' }}</p>
     </div>

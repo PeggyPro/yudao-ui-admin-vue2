@@ -11,7 +11,10 @@
           <el-descriptions-item label="联系电话">{{ dept.phone || '-' }}</el-descriptions-item>
           <el-descriptions-item label="邮箱">{{ dept.email || '-' }}</el-descriptions-item>
           <el-descriptions-item label="状态">
-            <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="dept.status" />
+            <dict-tag
+              :type="DICT_TYPE.COMMON_STATUS"
+              :value="dept.status"
+            />
           </el-descriptions-item>
           <el-descriptions-item label="创建时间">
             {{ dept.createTime ? parseTime(dept.createTime) : '-' }}

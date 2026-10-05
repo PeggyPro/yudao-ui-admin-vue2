@@ -184,7 +184,9 @@ export default {
         await deleteInsuranceMonthRecord(row.id)
         this.$modal.msgSuccess('删除成功')
         await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     isLatestEditableRecord(row) {
       return row.id === (this.latestRecord && this.latestRecord.id) &&

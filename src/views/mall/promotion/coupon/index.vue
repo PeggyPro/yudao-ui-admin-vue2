@@ -94,7 +94,7 @@
         align="center"
         prop="productScope"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_PRODUCT_SCOPE"
             :value="scope.row.productScope"
@@ -107,7 +107,7 @@
         min-width="100"
         prop="discount"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_DISCOUNT_TYPE"
             :value="scope.row.discountType"
@@ -120,7 +120,7 @@
         align="center"
         prop="takeType"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_COUPON_TAKE_TYPE"
             :value="scope.row.takeType"
@@ -132,7 +132,7 @@
         align="center"
         prop="status"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_COUPON_STATUS"
             :value="scope.row.status"
@@ -145,7 +145,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope"><span>{{ parseTime(scope.row.createTime) }}</span></template>
+        <template slot-scope="scope"><span>{{ parseTime(scope.row.createTime) }}</span></template>
       </el-table-column>
       <el-table-column
         label="使用时间"
@@ -153,14 +153,14 @@
         prop="useTime"
         width="180"
       >
-        <template v-slot="scope"><span>{{ parseTime(scope.row.useTime) }}</span></template>
+        <template slot-scope="scope"><span>{{ parseTime(scope.row.useTime) }}</span></template>
       </el-table-column>
       <el-table-column
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:coupon:delete']"
             type="text"

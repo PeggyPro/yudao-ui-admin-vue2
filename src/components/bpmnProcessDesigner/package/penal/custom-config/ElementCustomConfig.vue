@@ -13,9 +13,15 @@
       label-width="90px"
       @submit.native.prevent
     >
-      <component :is="customConfigComponent" v-bind="$props" />
+      <component
+        :is="customConfigComponent"
+        v-bind="$props"
+      />
     </el-form>
-    <div v-else class="empty-custom-config">当前元素暂无自定义配置</div>
+    <div
+      v-else
+      class="empty-custom-config"
+    >当前元素暂无自定义配置</div>
   </div>
 </template>
 

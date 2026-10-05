@@ -1,5 +1,5 @@
 <template>
-<div
+  <div
     class="relative flex items-center gap-2.5 px-4 py-3 cursor-pointer transition-colors hover:bg-[var(--el-fill-color)]"
     :class="{ '!bg-[#d9ecff] dark:!bg-[var(--el-color-primary-light-8)]': isActive }"
     :data-conversation-key="`${conversation.type}-${conversation.targetId}`"
@@ -33,7 +33,7 @@
       <span
         v-show="conversation.silent && conversation.unreadCount > 0"
         class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#f56c6c] border border-solid border-white dark:border-[var(--el-bg-color)] rounded-full box-border"
-      ></span>
+      />
     </div>
 
     <div class="flex-1 min-w-0">
@@ -103,22 +103,22 @@
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed } from 'vue';
-import { formatConversationTime } from '@/views/im/utils/time';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { useConversationStore } from '../../../../store/conversationStore';
-import { useFriendStore } from '../../../../store/friendStore';
-import { useGroupStore } from '../../../../store/groupStore';
-import { useGroupRequestStore } from '../../../../store/groupRequestStore';
-import { useImUiStore } from '../../../../store/uiStore';
-import { ImConversationType, ImContentType, isNormalMessage } from '../../../../../utils/constants';
-import { getSenderDisplayName } from '@/views/im/utils/user';
-import { buildRecallTip } from '@/views/im/utils/conversation';
-import UserAvatar from '../../../../components/user/UserAvatar.vue';
-import GroupAvatar from '../../../../components/group/GroupAvatar.vue';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed } from 'vue'
+import { formatConversationTime } from '@/views/im/utils/time'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { useConversationStore } from '../../../../store/conversationStore'
+import { useFriendStore } from '../../../../store/friendStore'
+import { useGroupStore } from '../../../../store/groupStore'
+import { useGroupRequestStore } from '../../../../store/groupRequestStore'
+import { useImUiStore } from '../../../../store/uiStore'
+import { ImConversationType, ImContentType, isNormalMessage } from '../../../../../utils/constants'
+import { getSenderDisplayName } from '@/views/im/utils/user'
+import { buildRecallTip } from '@/views/im/utils/conversation'
+import UserAvatar from '../../../../components/user/UserAvatar.vue'
+import GroupAvatar from '../../../../components/group/GroupAvatar.vue'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImConversationItem'
   },
@@ -137,18 +137,18 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
+    __expose()
 
     /** 周中文名（dayjs 的 day() 返回 0-6，0=周日）；项目没全局装 dayjs/locale/zh-cn，本地映射避免引副作用 */
 
-    const props = __props;
-    const conversationStore = useConversationStore();
-    const friendStore = useFriendStore();
-    const groupStore = useGroupStore();
-    const groupRequestStore = useGroupRequestStore();
-    const uiStore = useImUiStore();
-    const message = useMessage();
-    const isActive = computed(() => conversationStore.activeConversation?.targetId === props.conversation.targetId && conversationStore.activeConversation?.type === props.conversation.type);
+    const props = __props
+    const conversationStore = useConversationStore()
+    const friendStore = useFriendStore()
+    const groupStore = useGroupStore()
+    const groupRequestStore = useGroupRequestStore()
+    const uiStore = useImUiStore()
+    const message = useMessage()
+    const isActive = computed(() => conversationStore.activeConversation?.targetId === props.conversation.targetId && conversationStore.activeConversation?.type === props.conversation.type)
 
     /**
      * 当前会话的草稿快照：存在时列表显示 [草稿] 前缀 + plain 文本，盖掉 sender 前缀和 @我 红字
@@ -156,105 +156,105 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      */
     const draft = computed(() => {
       if (isActive.value) {
-        return undefined;
+        return undefined
       }
-      return conversationStore.getConversationDraft(props.conversation);
-    });
-    const isGroup = computed(() => props.conversation.type === ImConversationType.GROUP);
+      return conversationStore.getConversationDraft(props.conversation)
+    })
+    const isGroup = computed(() => props.conversation.type === ImConversationType.GROUP)
 
     /** 最后一条消息发送者的展示名：实时算 + 快照 fallback（getSenderDisplayName 算不出时兜底） */
     const lastSenderDisplayName = computed(() => {
-      const senderId = props.conversation.lastSenderId;
+      const senderId = props.conversation.lastSenderId
       if (!senderId) {
-        return '';
+        return ''
       }
-      return getSenderDisplayName(senderId, props.conversation.type, props.conversation.targetId, props.conversation.lastSenderDisplayName);
-    });
+      return getSenderDisplayName(senderId, props.conversation.type, props.conversation.targetId, props.conversation.lastSenderDisplayName)
+    })
 
     /** 群聊 + 有最后发送者 + 最后一条是普通消息时，显示发送者前缀（FRIEND_* / GROUP_* / RECALL / 草稿态不带前缀） */
     const showSendName = computed(() => {
       if (draft.value) {
-        return false;
+        return false
       }
       if (!isGroup.value) {
-        return false;
+        return false
       }
       if (!props.conversation.lastSenderId) {
-        return false;
+        return false
       }
-      const lastType = props.conversation.lastMessageType;
-      return lastType != null && isNormalMessage(lastType);
-    });
+      const lastType = props.conversation.lastMessageType
+      return lastType != null && isNormalMessage(lastType)
+    })
 
     /** 列表展示文案：草稿优先（对齐微信 PC：有草稿时盖掉最后一条预览）→ 撤回实时算 → lastContent 兜底 */
     const lastContentDisplay = computed(() => {
       if (draft.value) {
-        return draft.value.plain;
+        return draft.value.plain
       }
       if (props.conversation.lastMessageType === ImContentType.RECALL && props.conversation.lastSenderId != null) {
-        return buildRecallTip(props.conversation.lastSenderId, !!props.conversation.lastSelfSend, props.conversation.type, props.conversation.targetId, props.conversation.lastSenderDisplayName);
+        return buildRecallTip(props.conversation.lastSenderId, !!props.conversation.lastSelfSend, props.conversation.type, props.conversation.targetId, props.conversation.lastSenderDisplayName)
       }
-      return props.conversation.lastContent;
-    });
+      return props.conversation.lastContent
+    })
 
     /** 会话列表 "[草稿]" / "@ 我" / "@ 全体成员" 红字提示；草稿优先（对齐微信 PC） */
     const atText = computed(() => {
       if (draft.value) {
-        return '[草稿]';
+        return '[草稿]'
       }
       if (props.conversation.atMe) {
-        return '[有人@我]';
+        return '[有人@我]'
       }
       if (props.conversation.atAll) {
-        return '[@全体成员]';
+        return '[@全体成员]'
       }
-      return '';
-    });
+      return ''
+    })
 
     /** 免打扰会话未读条数文案 */
     const mutedUnreadText = computed(() => {
       if (!props.conversation.silent || props.conversation.unreadCount <= 0) {
-        return '';
+        return ''
       }
-      const count = props.conversation.unreadCount > 99 ? '99+' : props.conversation.unreadCount;
-      return `[${count}条]`;
-    });
+      const count = props.conversation.unreadCount > 99 ? '99+' : props.conversation.unreadCount
+      return `[${count}条]`
+    })
 
     /** 群聊未处理加群申请红字前缀；store 已经按「我管理的群」过滤过，count > 0 即可显示 */
     const requestText = computed(() => {
       if (!isGroup.value) {
-        return '';
+        return ''
       }
-      const count = groupRequestStore.getUnhandledGroupRequestCountMap.get(props.conversation.targetId) ?? 0;
-      return count > 0 ? `[${count}条进群申请]` : '';
-    });
+      const count = groupRequestStore.getUnhandledGroupRequestCountMap.get(props.conversation.targetId) ?? 0
+      return count > 0 ? `[${count}条进群申请]` : ''
+    })
 
     /** 点击切会话 */
     function handleClick() {
-      conversationStore.setActiveConversation(props.conversation);
+      conversationStore.setActiveConversation(props.conversation)
     }
 
     /** 切换置顶 */
     function handleTop() {
-      conversationStore.setConversationTop(props.conversation.type, props.conversation.targetId, !props.conversation.top);
+      conversationStore.setConversationTop(props.conversation.type, props.conversation.targetId, !props.conversation.top)
     }
 
     /** 切换免打扰：乐观 UI（先本地切换，菜单立即关；后端失败回滚 conversation 状态） */
     function handleMuted() {
-      const next = !props.conversation.silent;
+      const next = !props.conversation.silent
       const {
         type,
         targetId
-      } = props.conversation;
-      conversationStore.setConversationSilent(type, targetId, next);
-      const sync = type === ImConversationType.PRIVATE ? friendStore.setFriendSilent(targetId, next) : groupStore.setGroupSilent(targetId, next);
+      } = props.conversation
+      conversationStore.setConversationSilent(type, targetId, next)
+      const sync = type === ImConversationType.PRIVATE ? friendStore.setFriendSilent(targetId, next) : groupStore.setGroupSilent(targetId, next)
       void sync.catch(e => {
-        console.error('[IM] 切换免打扰失败', e);
-        const conversation = conversationStore.getConversation(type, targetId);
+        console.error('[IM] 切换免打扰失败', e)
+        const conversation = conversationStore.getConversation(type, targetId)
         if (conversation?.silent === next) {
-          conversationStore.setConversationSilent(type, targetId, !next);
+          conversationStore.setConversationSilent(type, targetId, !next)
         }
-      });
+      })
     }
 
     /** 删除会话：二次确认后软删 */
@@ -263,16 +263,16 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
         type,
         targetId,
         name
-      } = props.conversation;
+      } = props.conversation
       try {
-        await message.confirm(`确定删除与「${name}」的会话吗？`, '删除会话');
+        await message.confirm(`确定删除与「${name}」的会话吗？`, '删除会话')
       } catch {
-        return;
+        return
       }
       try {
-        await conversationStore.removeConversation(type, targetId);
+        await conversationStore.removeConversation(type, targetId)
       } catch (error) {
-        console.warn('[IM ConversationItem] 删除会话失败', error);
+        console.warn('[IM ConversationItem] 删除会话失败', error)
       }
     }
 
@@ -294,13 +294,13 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
         danger: true
       }], item => {
         if (item.key === 'TOP') {
-          handleTop();
+          handleTop()
         } else if (item.key === 'MUTED') {
-          handleMuted();
+          handleMuted()
         } else if (item.key === 'DELETE') {
-          void handleDelete();
+          void handleDelete()
         }
-      });
+      })
     }
     const __returned__ = {
       props,
@@ -325,20 +325,20 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       handleDelete,
       handleContextMenu,
       get formatConversationTime() {
-        return formatConversationTime;
+        return formatConversationTime
       },
       Icon,
       UserAvatar,
       GroupAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

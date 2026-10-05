@@ -11,19 +11,31 @@
       size="small"
       @click="$refs.form.open('update', detail.id)"
     >编辑公文</el-button>
-    <el-descriptions :column="2" border>
+    <el-descriptions
+      :column="2"
+      border
+    >
       <el-descriptions-item label="公文标题">{{ detail.title }}</el-descriptions-item>
       <el-descriptions-item label="字号">{{ detail.noPrefix }}</el-descriptions-item>
       <el-descriptions-item label="年份">{{ detail.year }}</el-descriptions-item>
       <el-descriptions-item label="第几号文">{{ detail.sequence }}</el-descriptions-item>
       <el-descriptions-item label="密级">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_SECRET_LEVEL" :value="detail.secrecyLevel" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_SECRET_LEVEL"
+          :value="detail.secrecyLevel"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="紧急程度">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_URGENCY_LEVEL" :value="detail.urgencyLevel" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_URGENCY_LEVEL"
+          :value="detail.urgencyLevel"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="公开类别">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_PUBLIC_CATEGORY" :value="detail.disclosureType" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_PUBLIC_CATEGORY"
+          :value="detail.disclosureType"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="发文日期">
         {{ detail.issueTime ? formatDate(detail.issueTime) : '' }}
@@ -40,23 +52,52 @@
         {{ detail.copyDeptNames && detail.copyDeptNames.join('、') }}
       </el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detail.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+        <el-tag
+          v-if="detail.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+          size="small"
+        >
           未提交
         </el-tag>
-        <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="detail.status" />
+        <dict-tag
+          v-else
+          :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+          :value="detail.status"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="创建时间">
         {{ detail.createTime ? formatDate(detail.createTime) : '' }}
       </el-descriptions-item>
-      <el-descriptions-item label="附件" :span="2">
-        <upload-file :model-value="detail.fileUrls || []" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="附件"
+        :span="2"
+      >
+        <upload-file
+          :model-value="detail.fileUrls || []"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
-      <el-descriptions-item label="正式公文" :span="2">
-        <upload-file :model-value="detail.formalFileUrl || ''" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="正式公文"
+        :span="2"
+      >
+        <upload-file
+          :model-value="detail.formalFileUrl || ''"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
     </el-descriptions>
-    <oa-official-doc-preview v-if="detail.id" :document="detail" :template="template" />
-    <oa-official-doc-send-form ref="form" @success="getInfo" />
+    <oa-official-doc-preview
+      v-if="detail.id"
+      :document="detail"
+      :template="template"
+    />
+    <oa-official-doc-send-form
+      ref="form"
+      @success="getInfo"
+    />
   </div>
 </template>
 

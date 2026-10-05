@@ -1,7 +1,20 @@
 <template>
-  <el-dialog :title="title" :visible.sync="dialogVisible" width="960px" append-to-body>
-    <el-card shadow="never" class="search-card">
-      <el-form :inline="true" :model="queryParams" label-width="72px" @submit.native.prevent>
+  <el-dialog
+    :title="title"
+    :visible.sync="dialogVisible"
+    width="960px"
+    append-to-body
+  >
+    <el-card
+      shadow="never"
+      class="search-card"
+    >
+      <el-form
+        :inline="true"
+        :model="queryParams"
+        label-width="72px"
+        @submit.native.prevent
+      >
         <el-form-item label="员工姓名">
           <el-input
             v-model="queryParams.name"
@@ -21,11 +34,20 @@
           />
         </el-form-item>
         <el-form-item label="部门">
-          <DeptSelect v-model="queryParams.deptId" class="field-dept" />
+          <DeptSelect
+            v-model="queryParams.deptId"
+            class="field-dept"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -50,7 +72,11 @@
           reserve-selection
           :selectable="rowSelectable"
         />
-        <el-table-column v-else align="center" width="50">
+        <el-table-column
+          v-else
+          align="center"
+          width="50"
+        >
           <template slot-scope="scope">
             <el-radio
               v-model="selectedRadioId"
@@ -61,15 +87,48 @@
             ><span /></el-radio>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="员工姓名" min-width="120" prop="name" show-overflow-tooltip />
-        <el-table-column align="center" label="工号" min-width="110" prop="jobNumber" show-overflow-tooltip />
-        <el-table-column align="center" label="部门" min-width="120" prop="deptName" show-overflow-tooltip>
+        <el-table-column
+          align="center"
+          label="员工姓名"
+          min-width="120"
+          prop="name"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          align="center"
+          label="工号"
+          min-width="110"
+          prop="jobNumber"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          align="center"
+          label="部门"
+          min-width="120"
+          prop="deptName"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">{{ scope.row.deptName || '-' }}</template>
         </el-table-column>
-        <el-table-column align="center" label="手机号" min-width="130" prop="mobile" show-overflow-tooltip />
-        <el-table-column align="center" label="入职状态" min-width="100" prop="entryStatus" show-overflow-tooltip>
+        <el-table-column
+          align="center"
+          label="手机号"
+          min-width="130"
+          prop="mobile"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          align="center"
+          label="入职状态"
+          min-width="100"
+          prop="entryStatus"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.HRM_EMPLOYEE_ENTRY_STATUS" :value="scope.row.entryStatus" />
+            <dict-tag
+              :type="DICT_TYPE.HRM_EMPLOYEE_ENTRY_STATUS"
+              :value="scope.row.entryStatus"
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -83,7 +142,10 @@
     </el-card>
 
     <span slot="footer">
-      <el-button type="primary" @click="confirmSelect">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="confirmSelect"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

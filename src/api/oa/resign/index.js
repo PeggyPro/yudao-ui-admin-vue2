@@ -22,5 +22,5 @@ export function updateResignApply(data) {
 
 // 提交离职申请
 export function submitResignApply(id, startUserSelectAssignees) {
-  return request({ url: '/oa/resign-apply/submit', method: 'post', data: { id, startUserSelectAssignees } })
+  return request({ url: '/oa/resign-apply/submit', method: 'post', data: { id, startUserSelectAssignees }})
 }

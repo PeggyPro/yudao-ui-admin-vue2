@@ -1,72 +1,176 @@
 <template>
   <div class="app-container">
-    <doc-alert title="审批接入（流程表单）" url="https://doc.iocoder.cn/bpm/use-bpm-form/" />
+    <doc-alert
+      title="审批接入（流程表单）"
+      url="https://doc.iocoder.cn/bpm/use-bpm-form/"
+    />
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="表单名" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入表单名" clearable @keyup.enter.native="handleQuery"/>
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="表单名"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入表单名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['bpm:form:create']">新增</el-button>
+        <el-button
+          v-hasPermi="['bpm:form:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+        >新增</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="表单名" align="center" prop="name" />
-      <el-table-column label="开启状态" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status"/>
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="表单名"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="开启状态"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-copy-document" @click="handleCopy(scope.row)"
-                     v-hasPermi="['bpm:form:update']">复制</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleDetail(scope.row)"
-                     v-hasPermi="['bpm:form:query']">详情</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['bpm:form:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['bpm:form:delete']">删除</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['bpm:form:update']"
+            size="mini"
+            type="text"
+            icon="el-icon-copy-document"
+            @click="handleCopy(scope.row)"
+          >复制</el-button>
+          <el-button
+            v-hasPermi="['bpm:form:query']"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleDetail(scope.row)"
+          >详情</el-button>
+          <el-button
+            v-hasPermi="['bpm:form:update']"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+          >修改</el-button>
+          <el-button
+            v-hasPermi="['bpm:form:delete']"
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
 
     <!--表单配置详情-->
-    <el-dialog title="表单详情" :visible.sync="detailOpen" width="800px" append-to-body>
-      <form-create v-if="detailOpen" :rule="detailData.rule" :option="detailData.option" />
+    <el-dialog
+      title="表单详情"
+      :visible.sync="detailOpen"
+      width="800px"
+      append-to-body
+    >
+      <form-create
+        v-if="detailOpen"
+        :rule="detailData.rule"
+        :option="detailData.option"
+      />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {deleteForm, getForm, getFormPage} from "@/api/bpm/form";
-import {setConfAndFields2} from "@/utils/formCreate";
+import { deleteForm, getForm, getFormPage } from '@/api/bpm/form'
+import { setConfAndFields2 } from '@/utils/formCreate'
 
 export default {
-  name: "BpmForm",
+  name: 'BpmForm',
   data() {
     return {
       // 遮罩层
@@ -81,7 +185,7 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        name: null,
+        name: null
       },
       // 表单详情
       detailOpen: false,
@@ -89,31 +193,31 @@ export default {
         rule: [],
         option: {}
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       // 执行查询
       getFormPage(this.queryParams).then(response => {
-        this.list = response.data.list;
-        this.total = response.data.total;
-        this.loading = false;
-      });
+        this.list = response.data.list
+        this.total = response.data.total
+        this.loading = false
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
-      this.getList();
+      this.queryParams.pageNo = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 详情按钮操作 */
     handleDetail(row) {
@@ -128,39 +232,39 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.$router.push({
-        name: "BpmFormEditor"
-      });
+        name: 'BpmFormEditor'
+      })
     },
     /** 复制表单：沿用 Vue3 的 type + id 查询契约，由编辑器清除主键后创建副本。 */
     handleCopy(row) {
       this.$router.push({
-        name: "BpmFormEditor",
+        name: 'BpmFormEditor',
         query: {
           type: 'copy',
           id: row.id
         }
-      });
+      })
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.$router.push({
-        name: "BpmFormEditor",
-        query:{
+        name: 'BpmFormEditor',
+        query: {
           type: 'update',
           id: row.id
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const id = row.id;
+      const id = row.id
       this.$modal.confirm('是否确认删除工作表单的编号为"' + id + '"的数据项?').then(function() {
-        return deleteForm(id);
+        return deleteForm(id)
       }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {})
     }
   }
-};
+}
 </script>

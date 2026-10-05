@@ -1,6 +1,9 @@
 <template>
   <div class="app-container oa-travel-reimbursement">
-    <doc-alert title="【流程】出差、费用报销" url="https://doc.iocoder.cn/oa/travel-reimbursement/" />
+    <doc-alert
+      title="【流程】出差、费用报销"
+      url="https://doc.iocoder.cn/oa/travel-reimbursement/"
+    />
     <!-- 搜索 -->
     <content-wrap>
       <el-form
@@ -10,7 +13,10 @@
         label-width="68px"
         @submit.native.prevent
       >
-        <el-form-item label="单据编号" prop="no">
+        <el-form-item
+          label="单据编号"
+          prop="no"
+        >
           <el-input
             v-model="queryParams.no"
             placeholder="请输入单据编号"
@@ -19,14 +25,20 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="单据状态" prop="status">
+        <el-form-item
+          label="单据状态"
+          prop="status"
+        >
           <el-select
             v-model="queryParams.status"
             placeholder="请选择单据状态"
             clearable
             style="width: 240px"
           >
-            <el-option label="未提交" :value="-1" />
+            <el-option
+              label="未提交"
+              :value="-1"
+            />
             <el-option
               v-for="dict in statusOptions"
               :key="dict.value"
@@ -35,10 +47,20 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="申请部门" prop="deptId">
-          <dept-select v-model="queryParams.deptId" placeholder="请选择申请部门" style="width: 240px" />
+        <el-form-item
+          label="申请部门"
+          prop="deptId"
+        >
+          <dept-select
+            v-model="queryParams.deptId"
+            placeholder="请选择申请部门"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="创建时间" prop="createTime">
+        <el-form-item
+          label="创建时间"
+          prop="createTime"
+        >
           <el-date-picker
             v-model="queryParams.createTime"
             type="datetimerange"
@@ -48,7 +70,10 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="支付状态" prop="payStatus">
+        <el-form-item
+          label="支付状态"
+          prop="payStatus"
+        >
           <el-select
             v-model="queryParams.payStatus"
             placeholder="请选择支付状态"
@@ -64,8 +89,15 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <el-button
             v-hasPermi="['oa:travel-reimbursement:save']"
             type="primary"
@@ -79,16 +111,38 @@
 
     <!-- 列表 -->
     <content-wrap>
-      <el-table v-loading="loading" :data="list" border stripe>
-        <el-table-column label="单据编号" min-width="200">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        stripe
+      >
+        <el-table-column
+          label="单据编号"
+          min-width="200"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openDetail(scope.row.id)">{{ scope.row.no }}</el-button>
+            <el-button
+              type="text"
+              @click="openDetail(scope.row.id)"
+            >{{ scope.row.no }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="单据状态" width="110" align="center">
+        <el-table-column
+          label="单据状态"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START" type="info">未提交</el-tag>
-            <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+            <el-tag
+              v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
+              type="info"
+            >未提交</el-tag>
+            <dict-tag
+              v-else
+              :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+              :value="scope.row.status"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -104,10 +158,18 @@
           header-align="center"
           show-overflow-tooltip
         />
-        <el-table-column label="开始日期" width="180" header-align="center">
+        <el-table-column
+          label="开始日期"
+          width="180"
+          header-align="center"
+        >
           <template slot-scope="scope">{{ formatDate(scope.row.startTime) }}</template>
         </el-table-column>
-        <el-table-column label="结束日期" width="180" header-align="center">
+        <el-table-column
+          label="结束日期"
+          width="180"
+          header-align="center"
+        >
           <template slot-scope="scope">{{ formatDate(scope.row.endTime) }}</template>
         </el-table-column>
         <el-table-column
@@ -117,13 +179,30 @@
           align="right"
           header-align="center"
         />
-        <el-table-column label="支付状态" width="110" align="center">
+        <el-table-column
+          label="支付状态"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_PAY_STATUS" :value="scope.row.payStatus" />
+            <dict-tag
+              :type="DICT_TYPE.OA_PAY_STATUS"
+              :value="scope.row.payStatus"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="申请人" prop="creatorName" width="120" header-align="center" />
-        <el-table-column label="申请部门" prop="deptName" min-width="140" header-align="center" />
+        <el-table-column
+          label="申请人"
+          prop="creatorName"
+          width="120"
+          header-align="center"
+        />
+        <el-table-column
+          label="申请部门"
+          prop="deptName"
+          min-width="140"
+          header-align="center"
+        />
         <el-table-column
           label="创建时间"
           prop="createTime"
@@ -131,7 +210,12 @@
           width="180"
           header-align="center"
         />
-        <el-table-column label="操作" fixed="right" width="260" align="center">
+        <el-table-column
+          label="操作"
+          fixed="right"
+          width="260"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="isEditable(scope.row)"
@@ -182,7 +266,10 @@
     </content-wrap>
 
     <!-- 表单及详情 -->
-    <oa-travel-reimbursement-form ref="form" @success="getList" />
+    <oa-travel-reimbursement-form
+      ref="form"
+      @success="getList"
+    />
     <oa-travel-reimbursement-detail ref="detail" />
   </div>
 </template>

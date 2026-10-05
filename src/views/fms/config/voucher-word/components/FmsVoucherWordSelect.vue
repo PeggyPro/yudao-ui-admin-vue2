@@ -7,7 +7,12 @@
     :value="value"
     @input="handleChange"
   >
-    <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" />
+    <el-option
+      v-for="item in options"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id"
+    />
   </el-select>
 </template>
 

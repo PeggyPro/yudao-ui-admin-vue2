@@ -85,13 +85,13 @@
         align="center"
         prop="picUrl"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <img
             v-if="scope.row.picUrl"
             :src="scope.row.picUrl"
             alt="分类图片"
             style="height: 100px"
-          />
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -104,7 +104,7 @@
         align="center"
         prop="status"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -117,7 +117,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -126,7 +126,7 @@
         align="center"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['product:category:update']"
             size="mini"
@@ -197,7 +197,7 @@ export default {
   methods: {
     /** 查看商品操作 */
     handleViewSpu(id) {
-      this.$router.push({ name: 'ProductSpu', query: { categoryId: id } })
+      this.$router.push({ name: 'ProductSpu', query: { categoryId: id }})
     },
     getList() {
       this.loading = true

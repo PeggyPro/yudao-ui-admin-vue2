@@ -1,8 +1,16 @@
 <template>
   <div>
-    <el-dialog title="选择链接" :visible.sync="dialogVisible" width="65%" append-to-body>
+    <el-dialog
+      title="选择链接"
+      :visible.sync="dialogVisible"
+      width="65%"
+      append-to-body
+    >
       <div class="link-selector">
-        <el-scrollbar ref="groupScrollbar" class="group-scrollbar">
+        <el-scrollbar
+          ref="groupScrollbar"
+          class="group-scrollbar"
+        >
           <div class="group-list">
             <el-button
               v-for="group in APP_LINK_GROUP_LIST"
@@ -17,9 +25,19 @@
             </el-button>
           </div>
         </el-scrollbar>
-        <el-scrollbar ref="linkScrollbar" class="link-scrollbar">
-          <div v-for="group in APP_LINK_GROUP_LIST" :key="group.name" class="link-group">
-            <div ref="groupTitleRefs" class="group-title">{{ group.name }}</div>
+        <el-scrollbar
+          ref="linkScrollbar"
+          class="link-scrollbar"
+        >
+          <div
+            v-for="group in APP_LINK_GROUP_LIST"
+            :key="group.name"
+            class="link-group"
+          >
+            <div
+              ref="groupTitleRefs"
+              class="group-title"
+            >{{ group.name }}</div>
             <el-tooltip
               v-for="appLink in group.links"
               :key="appLink.path"
@@ -38,13 +56,24 @@
           </div>
         </el-scrollbar>
       </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="handleSubmit"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="" :visible.sync="detailSelectDialog.visible" width="50%" append-to-body>
+    <el-dialog
+      title=""
+      :visible.sync="detailSelectDialog.visible"
+      width="50%"
+      append-to-body
+    >
       <el-form class="detail-form">
         <el-form-item
           v-if="detailSelectDialog.type === APP_LINK_TYPE_ENUM.PRODUCT_CATEGORY_LIST"

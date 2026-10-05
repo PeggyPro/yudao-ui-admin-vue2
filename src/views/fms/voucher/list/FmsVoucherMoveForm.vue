@@ -1,24 +1,68 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="移动凭证" width="480px">
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="88px">
-      <el-form-item label="期间" prop="month">
-        <el-date-picker v-model="formData.month" :clearable="false" placeholder="请选择期间" type="month" value-format="yyyy-MM" style="width: 100%" />
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="移动凭证"
+    width="480px"
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="88px"
+    >
+      <el-form-item
+        label="期间"
+        prop="month"
+      >
+        <el-date-picker
+          v-model="formData.month"
+          :clearable="false"
+          placeholder="请选择期间"
+          type="month"
+          value-format="yyyy-MM"
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="凭证字" prop="voucherWordId">
-        <fms-voucher-word-select v-model="formData.voucherWordId" :options="voucherWords" style="width: 100%" />
+      <el-form-item
+        label="凭证字"
+        prop="voucherWordId"
+      >
+        <fms-voucher-word-select
+          v-model="formData.voucherWordId"
+          :options="voucherWords"
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="移动规则" prop="sourceNumber">
+      <el-form-item
+        label="移动规则"
+        prop="sourceNumber"
+      >
         <div class="move-rule">
           <span>将上述期间的：</span>
-          <el-input-number v-model="formData.sourceNumber" :controls="false" :min="1" @blur="$refs.form && $refs.form.validateField('sourceNumber')" />
+          <el-input-number
+            v-model="formData.sourceNumber"
+            :controls="false"
+            :min="1"
+            @blur="$refs.form && $refs.form.validateField('sourceNumber')"
+          />
           <span>号移动到：</span>
-          <el-input-number v-model="formData.targetNumber" :controls="false" :min="1" />
+          <el-input-number
+            v-model="formData.targetNumber"
+            :controls="false"
+            :min="1"
+          />
           <span>号之前</span>
         </div>
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

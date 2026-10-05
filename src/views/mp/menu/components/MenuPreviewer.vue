@@ -18,7 +18,10 @@
         >
           <i class="el-icon-s-fold" />{{ parent.name }}
         </div>
-        <div v-if="parentIndex === x && parent.children" class="submenu">
+        <div
+          v-if="parentIndex === x && parent.children"
+          class="submenu"
+        >
           <draggable
             v-model="parent.children"
             ghost-class="draggable-ghost"
@@ -48,7 +51,11 @@
       </div>
     </draggable>
 
-    <div v-if="menuList.length < 3" class="menu_bottom menu_addicon" @click="addMenu">
+    <div
+      v-if="menuList.length < 3"
+      class="menu_bottom menu_addicon"
+      @click="addMenu"
+    >
       <i class="el-icon-plus plus" />
     </div>
   </div>

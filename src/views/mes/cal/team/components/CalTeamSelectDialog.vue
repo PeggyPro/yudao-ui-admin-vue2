@@ -1,16 +1,43 @@
 <!-- MES 班组弹窗选择器（支持单选/多选） -->
 <template>
-  <el-dialog title="班组选择" :visible.sync="dialogVisible" width="720px" append-to-body>
-    <el-form :inline="true" :model="queryParams" label-width="68px" size="small" @submit.native.prevent>
+  <el-dialog
+    title="班组选择"
+    :visible.sync="dialogVisible"
+    width="720px"
+    append-to-body
+  >
+    <el-form
+      :inline="true"
+      :model="queryParams"
+      label-width="68px"
+      size="small"
+      @submit.native.prevent
+    >
       <el-form-item label="班组编码">
-        <el-input v-model="queryParams.code" placeholder="请输入班组编码" clearable @keyup.enter.native="handleQuery" />
+        <el-input
+          v-model="queryParams.code"
+          placeholder="请输入班组编码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="班组名称">
-        <el-input v-model="queryParams.name" placeholder="请输入班组名称" clearable @keyup.enter.native="handleQuery" />
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入班组名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -26,9 +53,19 @@
       @row-click="handleRowClick"
       @row-dblclick="handleRowDblClick"
     >
-      <el-table-column v-if="multiple" type="selection" :reserve-selection="true" width="50" align="center" />
-      <el-table-column v-else width="50" align="center">
-        <template v-slot="scope">
+      <el-table-column
+        v-if="multiple"
+        type="selection"
+        :reserve-selection="true"
+        width="50"
+        align="center"
+      />
+      <el-table-column
+        v-else
+        width="50"
+        align="center"
+      >
+        <template slot-scope="scope">
           <el-radio
             v-model="selectedRadioId"
             :label="scope.row.id"
@@ -37,9 +74,24 @@
           ><span /></el-radio>
         </template>
       </el-table-column>
-      <el-table-column label="班组编码" align="center" prop="code" min-width="120" />
-      <el-table-column label="班组名称" align="center" prop="name" min-width="140" />
-      <el-table-column label="备注" align="center" prop="remark" min-width="120" />
+      <el-table-column
+        label="班组编码"
+        align="center"
+        prop="code"
+        min-width="120"
+      />
+      <el-table-column
+        label="班组名称"
+        align="center"
+        prop="name"
+        min-width="140"
+      />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        min-width="120"
+      />
     </el-table>
     <pagination
       v-show="total > 0"
@@ -50,7 +102,10 @@
     />
 
     <span slot="footer">
-      <el-button type="primary" @click="confirmSelect">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="confirmSelect"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

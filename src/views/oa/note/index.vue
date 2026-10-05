@@ -1,7 +1,13 @@
 <template>
-  <el-row :gutter="20" class="app-container oa-note">
+  <el-row
+    :gutter="20"
+    class="app-container oa-note"
+  >
     <!-- 左侧分类和类型导航 -->
-    <el-col :span="4" :xs="24">
+    <el-col
+      :span="4"
+      :xs="24"
+    >
       <oa-note-sidebar
         :categories="categoryList"
         :category-id="queryParams.categoryId"
@@ -11,7 +17,10 @@
         @manage="handleManageCategory"
       />
     </el-col>
-    <el-col :span="20" :xs="24">
+    <el-col
+      :span="20"
+      :xs="24"
+    >
       <!-- 搜索 -->
       <el-form
         ref="queryForm"
@@ -22,12 +31,18 @@
         @submit.native.prevent
       >
         <el-form-item label="笔记场景">
-          <el-radio-group v-model="activeScene" @change="handleSceneChange">
+          <el-radio-group
+            v-model="activeScene"
+            @change="handleSceneChange"
+          >
             <el-radio-button :label="OA_NOTE_SCENE_TYPE.MINE">我的笔记</el-radio-button>
             <el-radio-button :label="OA_NOTE_SCENE_TYPE.SHARED">共享给我</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="标题" prop="title">
+        <el-form-item
+          label="标题"
+          prop="title"
+        >
           <el-input
             v-model="queryParams.title"
             placeholder="请输入笔记标题"
@@ -36,7 +51,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="优先级" prop="priority">
+        <el-form-item
+          label="优先级"
+          prop="priority"
+        >
           <el-select
             v-model="queryParams.priority"
             placeholder="请选择优先级"
@@ -51,7 +69,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="创建时间" prop="createTime">
+        <el-form-item
+          label="创建时间"
+          prop="createTime"
+        >
           <el-date-picker
             v-model="queryParams.createTime"
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -61,20 +82,36 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="收藏" prop="favorite">
+        <el-form-item
+          label="收藏"
+          prop="favorite"
+        >
           <el-select
             v-model="queryParams.favorite"
             placeholder="请选择收藏状态"
             clearable
             style="width: 240px"
           >
-            <el-option label="已收藏" :value="true" />
-            <el-option label="未收藏" :value="false" />
+            <el-option
+              label="已收藏"
+              :value="true"
+            />
+            <el-option
+              label="未收藏"
+              :value="false"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <el-button
             v-hasPermi="['oa:note:create']"
             type="primary"
@@ -86,7 +123,10 @@
       </el-form>
 
       <!-- 列表 -->
-      <div v-if="activeScene === OA_NOTE_SCENE_TYPE.MINE" class="batch-bar">
+      <div
+        v-if="activeScene === OA_NOTE_SCENE_TYPE.MINE"
+        class="batch-bar"
+      >
         <el-button
           v-hasPermi="['oa:note:delete']"
           type="danger"
@@ -110,7 +150,11 @@
           width="55"
           align="center"
         />
-        <el-table-column label="收藏" width="80" align="center">
+        <el-table-column
+          label="收藏"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               type="text"
@@ -119,26 +163,63 @@
             >{{ scope.row.favorite ? '已收藏' : '收藏' }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="标题" prop="title" min-width="200" show-overflow-tooltip>
+        <el-table-column
+          label="标题"
+          prop="title"
+          min-width="200"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
-            <el-button type="text" class="link-button" @click="openDetail(scope.row.id)">
+            <el-button
+              type="text"
+              class="link-button"
+              @click="openDetail(scope.row.id)"
+            >
               {{ scope.row.title }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="目录" prop="categoryName" align="center" width="120" />
-        <el-table-column label="类型" align="center" width="100">
+        <el-table-column
+          label="目录"
+          prop="categoryName"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          label="类型"
+          align="center"
+          width="100"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_NOTE_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.OA_NOTE_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="优先级" align="center" width="90">
+        <el-table-column
+          label="优先级"
+          align="center"
+          width="90"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_PRIORITY" :value="scope.row.priority" />
+            <dict-tag
+              :type="DICT_TYPE.OA_PRIORITY"
+              :value="scope.row.priority"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="创建人" prop="creatorUserName" align="center" width="120" />
-        <el-table-column label="共享给" min-width="160" show-overflow-tooltip>
+        <el-table-column
+          label="创建人"
+          prop="creatorUserName"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          label="共享给"
+          min-width="160"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
             {{ (scope.row.receiverUserNames && scope.row.receiverUserNames.join('、')) || '-' }}
           </template>
@@ -150,7 +231,12 @@
           align="center"
           width="180"
         />
-        <el-table-column label="操作" width="200" align="center" fixed="right">
+        <el-table-column
+          label="操作"
+          width="200"
+          align="center"
+          fixed="right"
+        >
           <template slot-scope="scope">
             <template v-if="activeScene === OA_NOTE_SCENE_TYPE.MINE">
               <el-button
@@ -194,9 +280,18 @@
 
     <!-- 笔记表单与目录管理 -->
     <oa-note-detail ref="detailRef" />
-    <oa-note-share-form ref="shareFormRef" @success="getList" />
-    <oa-note-form ref="formRef" @success="getList" />
-    <oa-note-category-list ref="categoryDialogRef" @success="handleCategoryChange" />
+    <oa-note-share-form
+      ref="shareFormRef"
+      @success="getList"
+    />
+    <oa-note-form
+      ref="formRef"
+      @success="getList"
+    />
+    <oa-note-category-list
+      ref="categoryDialogRef"
+      @success="handleCategoryChange"
+    />
   </el-row>
 </template>
 

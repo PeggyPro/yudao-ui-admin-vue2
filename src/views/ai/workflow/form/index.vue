@@ -1,8 +1,14 @@
 <template>
-  <div class="app-container workflow-form-page" v-loading="initializing">
+  <div
+    v-loading="initializing"
+    class="app-container workflow-form-page"
+  >
     <div class="workflow-header">
       <div class="header-title">
-        <i class="el-icon-back back-icon" @click="handleBack" />
+        <i
+          class="el-icon-back back-icon"
+          @click="handleBack"
+        />
         <span :title="formData.name || '创建流程'">{{ formData.name || '创建流程' }}</span>
       </div>
 
@@ -20,13 +26,26 @@
       </div>
 
       <div class="header-actions">
-        <el-button type="primary" :loading="saving" @click="handleSave">保 存</el-button>
+        <el-button
+          type="primary"
+          :loading="saving"
+          @click="handleSave"
+        >保 存</el-button>
       </div>
     </div>
 
-    <div v-if="currentStep >= 0" class="workflow-body">
-      <div v-if="currentStep === 0" class="basic-info-panel">
-        <BasicInfo ref="basicInfo" v-model="formData" />
+    <div
+      v-if="currentStep >= 0"
+      class="workflow-body"
+    >
+      <div
+        v-if="currentStep === 0"
+        class="basic-info-panel"
+      >
+        <BasicInfo
+          ref="basicInfo"
+          v-model="formData"
+        />
       </div>
       <WorkflowDesign
         v-if="currentStep === 1"

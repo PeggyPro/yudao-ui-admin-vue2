@@ -1,6 +1,12 @@
 <template>
-  <div class="app-container fms-voucher-create" data-testid="fms-voucher-create-page">
-    <el-card shadow="never" class="toolbar-card">
+  <div
+    class="app-container fms-voucher-create"
+    data-testid="fms-voucher-create-page"
+  >
+    <el-card
+      shadow="never"
+      class="toolbar-card"
+    >
       <div class="toolbar">
         <div class="toolbar-actions">
           <el-button
@@ -8,8 +14,15 @@
             type="primary"
             @click="resetForm()"
           >新增</el-button>
-          <el-button v-if="canSaveAndCreate" type="primary" @click="submitForm(true)">保存并新增</el-button>
-          <el-button v-if="canSave" @click="submitForm(false)">保存</el-button>
+          <el-button
+            v-if="canSaveAndCreate"
+            type="primary"
+            @click="submitForm(true)"
+          >保存并新增</el-button>
+          <el-button
+            v-if="canSave"
+            @click="submitForm(false)"
+          >保存</el-button>
           <el-button
             v-if="formData.id && currentAccountWritable && !isApproved && !isClosingGenerated && checkPermi(['fms:voucher:review'])"
             @click="handleReview(FMS_VOUCHER_STATUS.APPROVED)"
@@ -26,25 +39,50 @@
             v-if="formData.id && currentAccountWritable && checkPermi(['fms:voucher:create'])"
             @click="copyVoucher"
           >复制</el-button>
-          <el-button v-if="formData.id && checkPermi(['fms:voucher:print'])" @click="printVoucher">打印</el-button>
-          <el-dropdown v-if="!formData.id && !readOnly" trigger="click" @command="handleMoreCommand">
+          <el-button
+            v-if="formData.id && checkPermi(['fms:voucher:print'])"
+            @click="printVoucher"
+          >打印</el-button>
+          <el-dropdown
+            v-if="!formData.id && !readOnly"
+            trigger="click"
+            @command="handleMoreCommand"
+          >
             <el-button>更多<i class="el-icon-arrow-down el-icon--right" /></el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="checkPermi(['fms:config:voucher-template:create'])" command="saveTemplate">保存为模板</el-dropdown-item>
+              <el-dropdown-item
+                v-if="checkPermi(['fms:config:voucher-template:create'])"
+                command="saveTemplate"
+              >保存为模板</el-dropdown-item>
               <el-dropdown-item command="applyTemplate">使用模板</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
         <div class="toolbar-navigation">
           <fms-voucher-shortcut-help />
-          <el-button circle :disabled="!previousVoucherId" title="上一张" icon="el-icon-arrow-left" @click="navigateVoucher(previousVoucherId)" />
-          <el-button circle :disabled="!nextVoucherId" title="下一张" icon="el-icon-arrow-right" @click="navigateVoucher(nextVoucherId)" />
+          <el-button
+            circle
+            :disabled="!previousVoucherId"
+            title="上一张"
+            icon="el-icon-arrow-left"
+            @click="navigateVoucher(previousVoucherId)"
+          />
+          <el-button
+            circle
+            :disabled="!nextVoucherId"
+            title="下一张"
+            icon="el-icon-arrow-right"
+            @click="navigateVoucher(nextVoucherId)"
+          />
         </div>
       </div>
     </el-card>
 
     <el-card shadow="never">
-      <div v-loading="loading" class="voucher-sheet">
+      <div
+        v-loading="loading"
+        class="voucher-sheet"
+      >
         <div class="voucher-title">记账凭证</div>
         <div class="voucher-period">{{ voucherPeriod }}</div>
         <div class="voucher-meta">
@@ -58,7 +96,12 @@
               style="width: 90px"
               @input="refreshVoucherNumber"
             />
-            <el-input v-model.number="formData.voucherNumber" :disabled="readOnly" type="number" style="width: 110px">
+            <el-input
+              v-model.number="formData.voucherNumber"
+              :disabled="readOnly"
+              type="number"
+              style="width: 110px"
+            >
               <template slot="append">号</template>
             </el-input>
             <el-date-picker
@@ -74,21 +117,36 @@
           </div>
           <div class="meta-right">
             <span>附单据</span>
-            <el-input v-model.number="formData.attachmentCount" :disabled="readOnly" type="number" style="width: 110px">
+            <el-input
+              v-model.number="formData.attachmentCount"
+              :disabled="readOnly"
+              type="number"
+              style="width: 110px"
+            >
               <template slot="append">张</template>
             </el-input>
           </div>
         </div>
 
-        <div ref="entryTableWrap" class="entry-table-wrap" @keydown="handleEntryTableKeydown">
-          <table class="entry-table" data-testid="fms-voucher-entry-table">
+        <div
+          ref="entryTableWrap"
+          class="entry-table-wrap"
+          @keydown="handleEntryTableKeydown"
+        >
+          <table
+            class="entry-table"
+            data-testid="fms-voucher-entry-table"
+          >
             <colgroup>
-              <col style="width: 30px" />
-              <col style="width: 18.5%" />
-              <col />
-              <col v-if="showQuantityColumn" style="width: 15%" />
-              <col style="width: 20.4%" />
-              <col style="width: 20.4%" />
+              <col style="width: 30px">
+              <col style="width: 18.5%">
+              <col>
+              <col
+                v-if="showQuantityColumn"
+                style="width: 15%"
+              >
+              <col style="width: 20.4%">
+              <col style="width: 20.4%">
             </colgroup>
             <thead>
               <tr>
@@ -98,40 +156,90 @@
                 <th v-if="showQuantityColumn">数量</th>
                 <th class="money-header">
                   <strong>借方金额</strong>
-                  <div class="money-units"><span v-for="(unit, index) in FMS_VOUCHER_MONEY_UNITS" :key="'debit-' + index">{{ unit }}</span></div>
+                  <div class="money-units"><span
+                    v-for="(unit, index) in FMS_VOUCHER_MONEY_UNITS"
+                    :key="'debit-' + index"
+                  >{{ unit }}</span></div>
                 </th>
                 <th class="money-header">
                   <strong>贷方金额</strong>
-                  <div class="money-units"><span v-for="(unit, index) in FMS_VOUCHER_MONEY_UNITS" :key="'credit-' + index">{{ unit }}</span></div>
+                  <div class="money-units"><span
+                    v-for="(unit, index) in FMS_VOUCHER_MONEY_UNITS"
+                    :key="'credit-' + index"
+                  >{{ unit }}</span></div>
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(entry, index) in entries" :key="entry.rowKey" :data-entry-index="index">
+              <tr
+                v-for="(entry, index) in entries"
+                :key="entry.rowKey"
+                :data-entry-index="index"
+              >
                 <td class="operation-column">
-                  <div v-if="!readOnly" class="row-actions">
-                    <el-dropdown placement="right-start" trigger="hover" @command="handleInsertEntry($event, index)">
-                      <el-button circle type="text" icon="el-icon-circle-plus-outline" title="插入分录" />
+                  <div
+                    v-if="!readOnly"
+                    class="row-actions"
+                  >
+                    <el-dropdown
+                      placement="right-start"
+                      trigger="hover"
+                      @command="handleInsertEntry($event, index)"
+                    >
+                      <el-button
+                        circle
+                        type="text"
+                        icon="el-icon-circle-plus-outline"
+                        title="插入分录"
+                      />
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="before">从上方插入行</el-dropdown-item>
                         <el-dropdown-item command="after">从下方插入行</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
-                    <el-button circle type="text" icon="el-icon-remove-outline" title="删除分录" :disabled="entries.length <= 2" @click="deleteEntry(index)" />
+                    <el-button
+                      circle
+                      type="text"
+                      icon="el-icon-remove-outline"
+                      title="删除分录"
+                      :disabled="entries.length <= 2"
+                      @click="deleteEntry(index)"
+                    />
                   </div>
                 </td>
                 <td class="entry-digest">
-                  <div v-if="readOnly" class="readonly-cell">{{ entry.digest }}</div>
-                  <div v-else class="digest-editor">
-                    <el-input v-model="entry.digest" maxlength="500" @focus="fillDigest(index)" />
-                    <el-button type="text" @click="openDigestLibrary(index)">摘要库</el-button>
+                  <div
+                    v-if="readOnly"
+                    class="readonly-cell"
+                  >{{ entry.digest }}</div>
+                  <div
+                    v-else
+                    class="digest-editor"
+                  >
+                    <el-input
+                      v-model="entry.digest"
+                      maxlength="500"
+                      @focus="fillDigest(index)"
+                    />
+                    <el-button
+                      type="text"
+                      @click="openDigestLibrary(index)"
+                    >摘要库</el-button>
                   </div>
                 </td>
                 <td class="entry-subject">
-                  <div v-if="readOnly" class="readonly-cell">{{ formatEntrySubject(entry) }}</div>
+                  <div
+                    v-if="readOnly"
+                    class="readonly-cell"
+                  >{{ formatEntrySubject(entry) }}</div>
                   <template v-else>
                     <div class="subject-editor">
-                      <el-select v-model="entry.subjectId" filterable placeholder="" @change="handleSubjectChange(entry)">
+                      <el-select
+                        v-model="entry.subjectId"
+                        filterable
+                        placeholder=""
+                        @change="handleSubjectChange(entry)"
+                      >
                         <el-option
                           v-for="subject in getEntrySubjectOptions(entry)"
                           :key="subject.id"
@@ -146,23 +254,42 @@
                         placement="bottom-start"
                         @command="openSubjectForm"
                       >
-                        <el-button type="text" title="新增科目"><i class="el-icon-plus" /></el-button>
+                        <el-button
+                          type="text"
+                          title="新增科目"
+                        ><i class="el-icon-plus" /></el-button>
                         <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item v-for="subjectType in subjectTypeOptions" :key="subjectType.value" :command="subjectType.value">
+                          <el-dropdown-item
+                            v-for="subjectType in subjectTypeOptions"
+                            :key="subjectType.value"
+                            :command="subjectType.value"
+                          >
                             {{ subjectType.label }}类科目
                           </el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
                     </div>
-                    <div v-if="getSubjectAuxiliaryTypeIds(entry.subjectId).length" class="auxiliary-fields">
-                      <div v-for="auxiliaryTypeId in getSubjectAuxiliaryTypeIds(entry.subjectId)" :key="auxiliaryTypeId" class="auxiliary-field">
+                    <div
+                      v-if="getSubjectAuxiliaryTypeIds(entry.subjectId).length"
+                      class="auxiliary-fields"
+                    >
+                      <div
+                        v-for="auxiliaryTypeId in getSubjectAuxiliaryTypeIds(entry.subjectId)"
+                        :key="auxiliaryTypeId"
+                        class="auxiliary-field"
+                      >
                         <el-select
                           :value="getEntryAuxiliaryItemId(entry, auxiliaryTypeId)"
                           filterable
                           :placeholder="getAuxiliaryTypeName(auxiliaryTypeId)"
                           @change="setEntryAuxiliary(entry, auxiliaryTypeId, $event)"
                         >
-                          <el-option v-for="item in auxiliaryOptions[auxiliaryTypeId] || []" :key="item.id" :label="item.code + ' ' + item.name" :value="item.id" />
+                          <el-option
+                            v-for="item in auxiliaryOptions[auxiliaryTypeId] || []"
+                            :key="item.id"
+                            :label="item.code + ' ' + item.name"
+                            :value="item.id"
+                          />
                         </el-select>
                         <el-button
                           v-if="currentAccountWritable"
@@ -174,35 +301,90 @@
                       </div>
                     </div>
                   </template>
-                  <div v-if="entry.subjectId" class="subject-balance">余额：{{ formatEntryBalance(entry) }}</div>
+                  <div
+                    v-if="entry.subjectId"
+                    class="subject-balance"
+                  >余额：{{ formatEntryBalance(entry) }}</div>
                 </td>
-                <td v-if="showQuantityColumn" class="quantity-cell">
+                <td
+                  v-if="showQuantityColumn"
+                  class="quantity-cell"
+                >
                   <template v-if="isQuantitySubject(entry.subjectId)">
                     <div class="quantity-row">
                       <span>数量</span>
-                      <el-input-number v-model="entry.quantity" :controls="false" :disabled="readOnly" :min="0" :precision="4" @change="calculateEntryAmount(entry)" />
+                      <el-input-number
+                        v-model="entry.quantity"
+                        :controls="false"
+                        :disabled="readOnly"
+                        :min="0"
+                        :precision="4"
+                        @change="calculateEntryAmount(entry)"
+                      />
                       <span>{{ getQuantityUnit(entry.subjectId) }}</span>
                     </div>
                     <div class="quantity-row">
                       <span>单价</span>
-                      <el-input-number v-model="entry.unitPrice" :controls="false" :disabled="readOnly" :min="0" :precision="6" @change="calculateEntryAmount(entry)" />
+                      <el-input-number
+                        v-model="entry.unitPrice"
+                        :controls="false"
+                        :disabled="readOnly"
+                        :min="0"
+                        :precision="6"
+                        @change="calculateEntryAmount(entry)"
+                      />
                     </div>
                   </template>
-                  <span v-else class="muted">-</span>
+                  <span
+                    v-else
+                    class="muted"
+                  >-</span>
                 </td>
-                <td class="entry-money" data-entry-money data-entry-direction="debit">
+                <td
+                  class="entry-money"
+                  data-entry-money
+                  data-entry-direction="debit"
+                >
                   <div class="money-editor">
-                    <el-input-number v-model="entry.debitAmount" :controls="false" :disabled="readOnly" :precision="2" @change="handleEntryAmountChange(entry, 'debit')" />
-                    <div class="money-cell-value" :class="{ negative: Number(entry.debitAmount) < 0 }">
-                      <span v-for="(digit, digitIndex) in getMoneyDigits(entry.debitAmount)" :key="digitIndex">{{ digit }}</span>
+                    <el-input-number
+                      v-model="entry.debitAmount"
+                      :controls="false"
+                      :disabled="readOnly"
+                      :precision="2"
+                      @change="handleEntryAmountChange(entry, 'debit')"
+                    />
+                    <div
+                      class="money-cell-value"
+                      :class="{ negative: Number(entry.debitAmount) < 0 }"
+                    >
+                      <span
+                        v-for="(digit, digitIndex) in getMoneyDigits(entry.debitAmount)"
+                        :key="digitIndex"
+                      >{{ digit }}</span>
                     </div>
                   </div>
                 </td>
-                <td class="entry-money" data-entry-money data-entry-direction="credit">
+                <td
+                  class="entry-money"
+                  data-entry-money
+                  data-entry-direction="credit"
+                >
                   <div class="money-editor">
-                    <el-input-number v-model="entry.creditAmount" :controls="false" :disabled="readOnly" :precision="2" @change="handleEntryAmountChange(entry, 'credit')" />
-                    <div class="money-cell-value" :class="{ negative: Number(entry.creditAmount) < 0 }">
-                      <span v-for="(digit, digitIndex) in getMoneyDigits(entry.creditAmount)" :key="digitIndex">{{ digit }}</span>
+                    <el-input-number
+                      v-model="entry.creditAmount"
+                      :controls="false"
+                      :disabled="readOnly"
+                      :precision="2"
+                      @change="handleEntryAmountChange(entry, 'credit')"
+                    />
+                    <div
+                      class="money-cell-value"
+                      :class="{ negative: Number(entry.creditAmount) < 0 }"
+                    >
+                      <span
+                        v-for="(digit, digitIndex) in getMoneyDigits(entry.creditAmount)"
+                        :key="digitIndex"
+                      >{{ digit }}</span>
                     </div>
                   </div>
                 </td>
@@ -211,18 +393,36 @@
             <tfoot>
               <tr>
                 <td class="operation-column" />
-                <td :colspan="showQuantityColumn ? 3 : 2" class="total-label">
+                <td
+                  :colspan="showQuantityColumn ? 3 : 2"
+                  class="total-label"
+                >
                   合计：{{ amountInWords }}
-                  <span v-if="!balanced" class="unbalanced">借贷不平衡</span>
+                  <span
+                    v-if="!balanced"
+                    class="unbalanced"
+                  >借贷不平衡</span>
                 </td>
                 <td class="entry-money">
-                  <div class="money-cell-value total-money" :class="{ negative: debitTotal < 0 }">
-                    <span v-for="(digit, index) in getMoneyDigits(debitTotal, true)" :key="index">{{ digit }}</span>
+                  <div
+                    class="money-cell-value total-money"
+                    :class="{ negative: debitTotal < 0 }"
+                  >
+                    <span
+                      v-for="(digit, index) in getMoneyDigits(debitTotal, true)"
+                      :key="index"
+                    >{{ digit }}</span>
                   </div>
                 </td>
                 <td class="entry-money">
-                  <div class="money-cell-value total-money" :class="{ negative: creditTotal < 0 }">
-                    <span v-for="(digit, index) in getMoneyDigits(creditTotal, true)" :key="index">{{ digit }}</span>
+                  <div
+                    class="money-cell-value total-money"
+                    :class="{ negative: creditTotal < 0 }"
+                  >
+                    <span
+                      v-for="(digit, index) in getMoneyDigits(creditTotal, true)"
+                      :key="index"
+                    >{{ digit }}</span>
                   </div>
                 </td>
               </tr>
@@ -235,23 +435,48 @@
           <template v-if="formData.id">
             <span>审核人：{{ detail && detail.reviewerUserName || '-' }}</span>
             <el-tag :type="isApproved ? 'success' : 'warning'">{{ isApproved ? '已审核' : '待审核' }}</el-tag>
-            <el-tag v-if="isClosingGenerated" type="info">结账生成凭证</el-tag>
+            <el-tag
+              v-if="isClosingGenerated"
+              type="info"
+            >结账生成凭证</el-tag>
           </template>
         </div>
-        <div v-if="isApproved" class="approved-stamp">审核通过</div>
+        <div
+          v-if="isApproved"
+          class="approved-stamp"
+        >审核通过</div>
       </div>
-      <div v-if="canSave" class="bottom-actions">
-        <el-button v-if="canSaveAndCreate" type="primary" @click="submitForm(true)">保存并新增</el-button>
+      <div
+        v-if="canSave"
+        class="bottom-actions"
+      >
+        <el-button
+          v-if="canSaveAndCreate"
+          type="primary"
+          @click="submitForm(true)"
+        >保存并新增</el-button>
         <el-button @click="submitForm(false)">保存</el-button>
       </div>
     </el-card>
 
     <fms-voucher-template-save-form ref="templateSaveForm" />
-    <fms-voucher-template-select ref="templateSelect" @select="applyTemplate" />
-    <fms-digest-library ref="digestLibrary" @select="applyDigest" />
+    <fms-voucher-template-select
+      ref="templateSelect"
+      @select="applyTemplate"
+    />
+    <fms-digest-library
+      ref="digestLibrary"
+      @select="applyDigest"
+    />
     <fms-voucher-print-form ref="printForm" />
-    <fms-subject-form ref="subjectForm" @success="refreshSubjectOptions" />
-    <fms-auxiliary-item-form ref="auxiliaryItemForm" @success="refreshAuxiliaryItemOptions" />
+    <fms-subject-form
+      ref="subjectForm"
+      @success="refreshSubjectOptions"
+    />
+    <fms-auxiliary-item-form
+      ref="auxiliaryItemForm"
+      @success="refreshAuxiliaryItemOptions"
+    />
   </div>
 </template>
 

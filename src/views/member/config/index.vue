@@ -1,19 +1,39 @@
 <template>
   <div class="app-container">
-    <doc-alert title="会员手册（功能开启）" url="https://doc.iocoder.cn/member/build/" />
+    <doc-alert
+      title="会员手册（功能开启）"
+      url="https://doc.iocoder.cn/member/build/"
+    />
 
-    <el-card v-loading="formLoading" shadow="never">
-      <el-form ref="form" :model="formData" :rules="formRules" label-width="130px">
-        <el-form-item label="hideId" v-show="false">
+    <el-card
+      v-loading="formLoading"
+      shadow="never"
+    >
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="formRules"
+        label-width="130px"
+      >
+        <el-form-item
+          v-show="false"
+          label="hideId"
+        >
           <el-input v-model="formData.id" />
         </el-form-item>
         <el-tabs>
           <el-tab-pane label="积分">
-            <el-form-item label="积分抵扣" prop="pointTradeDeductEnable">
+            <el-form-item
+              label="积分抵扣"
+              prop="pointTradeDeductEnable"
+            >
               <el-switch v-model="formData.pointTradeDeductEnable" />
               <div class="form-item-help">下单积分是否抵用订单金额</div>
             </el-form-item>
-            <el-form-item label="积分抵扣" prop="pointTradeDeductUnitPrice">
+            <el-form-item
+              label="积分抵扣"
+              prop="pointTradeDeductUnitPrice"
+            >
               <el-input-number
                 v-model="computedPointTradeDeductUnitPrice"
                 :min="0"
@@ -22,7 +42,10 @@
               />
               <div class="form-item-help">积分抵用比例(1 积分抵多少金额)，单位：元</div>
             </el-form-item>
-            <el-form-item label="积分抵扣最大值" prop="pointTradeDeductMaxPrice">
+            <el-form-item
+              label="积分抵扣最大值"
+              prop="pointTradeDeductMaxPrice"
+            >
               <el-input-number
                 v-model="formData.pointTradeDeductMaxPrice"
                 :min="0"
@@ -31,7 +54,10 @@
               />
               <div class="form-item-help">单次下单积分使用上限，0 不限制</div>
             </el-form-item>
-            <el-form-item label="1 元赠送多少分" prop="pointTradeGivePoint">
+            <el-form-item
+              label="1 元赠送多少分"
+              prop="pointTradeGivePoint"
+            >
               <el-input-number
                 v-model="formData.pointTradeGivePoint"
                 :min="0"

@@ -1,5 +1,5 @@
 <template>
-  <Dialog
+  <AppDialog
     v-model="dialogVisible"
     title="编辑文档"
     default-fullscreen
@@ -7,10 +7,17 @@
     append-to-body
     custom-class="knowledge-document-update-dialog"
   >
-    <div slot="title" class="update-dialog-title">
+    <div
+      slot="title"
+      class="update-dialog-title"
+    >
       <span>编辑文档</span>
       <div class="update-actions">
-        <el-button :loading="formLoading" type="primary" @click="submitForm">保存</el-button>
+        <el-button
+          :loading="formLoading"
+          type="primary"
+          @click="submitForm"
+        >保存</el-button>
         <el-button @click="previewing = !previewing">
           {{ previewing ? '返回编辑' : '预览' }}
         </el-button>
@@ -25,10 +32,21 @@
       label-width="0"
       class="update-form"
     >
-      <el-form-item class="form-item" prop="title">
-        <el-input v-model="formData.title" maxlength="255" placeholder="请输入文档标题" />
+      <el-form-item
+        class="form-item"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          maxlength="255"
+          placeholder="请输入文档标题"
+        />
       </el-form-item>
-      <el-form-item class="form-item" label="标签" label-width="48px">
+      <el-form-item
+        class="form-item"
+        label="标签"
+        label-width="48px"
+      >
         <knowledge-document-label-select v-model="formData.labelIds" />
       </el-form-item>
       <el-form-item
@@ -40,10 +58,19 @@
           v-if="previewing"
           v-dompurify-html="formData.content || '<p>暂无内容</p>'"
           class="pms-knowledge-rich-text"
-        ></div>
-        <editor v-else v-model="formData.content" class="document-editor" :height="editorHeight" />
+        />
+        <editor
+          v-else
+          v-model="formData.content"
+          class="document-editor"
+          :height="editorHeight"
+        />
       </el-form-item>
-      <el-form-item v-else class="content-form-item" prop="content">
+      <el-form-item
+        v-else
+        class="content-form-item"
+        prop="content"
+      >
         <UploadFile
           v-model="formData.content"
           :file-size="PmsKnowledgeUploadFileSize"
@@ -53,7 +80,7 @@
         />
       </el-form-item>
     </el-form>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -65,7 +92,7 @@ import {
 } from '@/views/pms/kb/utils/constants'
 import KnowledgeDocumentLabelSelect from './components/KnowledgeDocumentLabelSelect.vue'
 import UploadFile from '@/components/UploadFile'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 function getDefaultFormData() {
   return {
@@ -81,7 +108,7 @@ function getDefaultFormData() {
 
 export default {
   name: 'PmsKnowledgeDocumentUpdateForm',
-  components: { Editor, KnowledgeDocumentLabelSelect, UploadFile, Dialog },
+  components: { Editor, KnowledgeDocumentLabelSelect, UploadFile, AppDialog },
   data() {
     return {
       PmsKnowledgeDocumentType,

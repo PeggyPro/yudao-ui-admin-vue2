@@ -21,7 +21,7 @@
       align="center"
       prop="requestMatch"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <dict-tag
           :type="DICT_TYPE.MP_AUTO_REPLY_REQUEST_MATCH"
           :value="scope.row.requestMatch"
@@ -32,7 +32,7 @@
       label="回复消息类型"
       align="center"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <dict-tag
           :type="DICT_TYPE.MP_MESSAGE_TYPE"
           :value="scope.row.responseMessageType"
@@ -43,7 +43,7 @@
       label="回复内容"
       align="center"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <div v-if="scope.row.responseMessageType === 'text'">
           {{ scope.row.responseContent }}
         </div>
@@ -88,7 +88,7 @@
       prop="createTime"
       width="180"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <span>{{ parseTime(scope.row.createTime) }}</span>
       </template>
     </el-table-column>
@@ -97,7 +97,7 @@
       align="center"
       class-name="small-padding fixed-width"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <el-button
           v-hasPermi="['mp:auto-reply:update']"
           size="mini"

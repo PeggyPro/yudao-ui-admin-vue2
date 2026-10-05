@@ -7,9 +7,17 @@
     title="账套开通引导"
     width="560px"
   >
-    <el-result icon="warning" :title="title" :sub-title="description">
+    <el-result
+      icon="warning"
+      :title="title"
+      :sub-title="description"
+    >
       <template slot="extra">
-        <el-button v-if="canHandle" type="primary" @click="goAccountSet">前往账套管理</el-button>
+        <el-button
+          v-if="canHandle"
+          type="primary"
+          @click="goAccountSet"
+        >前往账套管理</el-button>
         <el-button @click="close">{{ canHandle ? '稍后处理' : '我知道了' }}</el-button>
       </template>
     </el-result>

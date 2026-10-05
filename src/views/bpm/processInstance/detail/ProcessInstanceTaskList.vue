@@ -1,18 +1,46 @@
 <template>
   <div>
-    <el-table v-loading="loading || innerLoading" :data="list" border>
-      <el-table-column label="任务编号" prop="id" min-width="220" show-overflow-tooltip />
-      <el-table-column label="任务名称" prop="name" min-width="140" />
-      <el-table-column label="审批人" min-width="120">
-        <template v-slot="scope">{{ userName(scope.row.assigneeUser || scope.row.ownerUser) }}</template>
+    <el-table
+      v-loading="loading || innerLoading"
+      :data="list"
+      border
+    >
+      <el-table-column
+        label="任务编号"
+        prop="id"
+        min-width="220"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="任务名称"
+        prop="name"
+        min-width="140"
+      />
+      <el-table-column
+        label="审批人"
+        min-width="120"
+      >
+        <template slot-scope="scope">{{ userName(scope.row.assigneeUser || scope.row.ownerUser) }}</template>
       </el-table-column>
-      <el-table-column label="状态" prop="status" width="110">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.BPM_TASK_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="状态"
+        prop="status"
+        width="110"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.BPM_TASK_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="审批意见" prop="reason" min-width="220" show-overflow-tooltip>
-        <template v-slot="scope">
+      <el-table-column
+        label="审批意见"
+        prop="reason"
+        min-width="220"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
           <span>{{ scope.row.reason }}</span>
           <el-button
             v-if="scope.row.formId > 0"
@@ -26,26 +54,45 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="附件/签名" min-width="220">
-        <template v-slot="scope">
+      <el-table-column
+        label="附件/签名"
+        min-width="220"
+      >
+        <template slot-scope="scope">
           <TaskEvidenceCell
             :attachments="scope.row.attachments"
             :sign-pic-url="scope.row.signPicUrl"
           />
         </template>
       </el-table-column>
-      <el-table-column label="开始时间" prop="createTime" width="170">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="开始时间"
+        prop="createTime"
+        width="170"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="结束时间" prop="endTime" width="170">
-        <template v-slot="scope">{{ parseTime(scope.row.endTime) }}</template>
+      <el-table-column
+        label="结束时间"
+        prop="endTime"
+        width="170"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.endTime) }}</template>
       </el-table-column>
-      <el-table-column label="耗时" prop="durationInMillis" width="120">
-        <template v-slot="scope">{{ formatPast2(scope.row.durationInMillis) }}</template>
+      <el-table-column
+        label="耗时"
+        prop="durationInMillis"
+        width="120"
+      >
+        <template slot-scope="scope">{{ formatPast2(scope.row.durationInMillis) }}</template>
       </el-table-column>
     </el-table>
 
-    <Dialog title="表单详情" v-model="taskFormVisible" width="600px">
+    <AppDialog
+      v-model="taskFormVisible"
+      title="表单详情"
+      width="600px"
+    >
       <form-create
         v-if="taskForm.rule.length"
         v-model="fApi"
@@ -53,13 +100,16 @@
         :rule="taskForm.rule"
         :option="taskForm.option"
       />
-      <el-empty v-else description="暂无表单信息" />
-    </Dialog>
+      <el-empty
+        v-else
+        description="暂无表单信息"
+      />
+    </AppDialog>
   </div>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { getTaskListByProcessInstanceId } from '@/api/bpm/task'
 import { formatPast2 } from '@/utils'
 import { setConfAndFields2 } from '@/utils/formCreate'
@@ -68,7 +118,7 @@ import TaskEvidenceCell from '@/views/bpm/task/components/TaskEvidenceCell.vue'
 export default {
   name: 'ProcessInstanceTaskList',
   components: {
-    Dialog,
+    AppDialog,
     TaskEvidenceCell
   },
   props: {

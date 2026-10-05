@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body :title="`${workItemTypeName}导入`" width="460px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    :title="`${workItemTypeName}导入`"
+    width="460px"
+  >
     <el-upload
       ref="uploadRef"
       :action="importUrl"
@@ -15,15 +20,26 @@
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <div slot="tip" class="el-upload__tip import-tip">
+      <div
+        slot="tip"
+        class="el-upload__tip import-tip"
+      >
         <span>仅允许导入 xls、xlsx 格式文件。</span>
         <span>处理人请填写用户编号，状态请填写当前项目的状态名称。</span>
         <span>优先级、缺陷类型可直接使用模板下拉（缺陷类型仅缺陷填写），标签支持多个名称（用逗号分隔）。</span>
-        <el-link :underline="false" type="primary" @click="downloadTemplate">下载模板</el-link>
+        <el-link
+          :underline="false"
+          type="primary"
+          @click="downloadTemplate"
+        >下载模板</el-link>
       </div>
     </el-upload>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

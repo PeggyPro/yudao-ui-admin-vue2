@@ -1,5 +1,9 @@
 <template>
-  <div class="mention-modal" :style="{ top: top, left: left }" @mousedown.prevent>
+  <div
+    class="mention-modal"
+    :style="{ top: top, left: left }"
+    @mousedown.prevent
+  >
     <input
       ref="input"
       v-model="searchVal"
@@ -15,7 +19,10 @@
       >
         {{ item.name }}
       </li>
-      <li v-if="searchedList.length === 0" class="mention-empty">暂无匹配字段</li>
+      <li
+        v-if="searchedList.length === 0"
+        class="mention-empty"
+      >暂无匹配字段</li>
     </ul>
   </div>
 </template>

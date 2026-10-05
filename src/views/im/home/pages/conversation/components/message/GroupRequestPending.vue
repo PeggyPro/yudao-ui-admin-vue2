@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     群顶部「待处理加群申请」横幅
     - 仅当登录用户是该群 owner / admin 且该群下未处理申请数 > 0 时显示
     - count 从 groupRequestStore 派生（全局存）；本端处理 / WS 通知到达后 store 自动更新
@@ -31,15 +31,15 @@
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { getCurrentUserId } from '@/views/im/utils/session';
-import { ImGroupMemberRole } from '@/views/im/utils/constants';
-import { useGroupStore } from '../../../../store/groupStore';
-import { useGroupRequestStore } from '../../../../store/groupRequestStore';
-import GroupRequestListDialog from '../../../../components/group/GroupRequestListDialog.vue';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { getCurrentUserId } from '@/views/im/utils/session'
+import { ImGroupMemberRole } from '@/views/im/utils/constants'
+import { useGroupStore } from '../../../../store/groupStore'
+import { useGroupRequestStore } from '../../../../store/groupRequestStore'
+import GroupRequestListDialog from '../../../../components/group/GroupRequestListDialog.vue'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImGroupRequestPending'
   },
@@ -57,38 +57,38 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
-    const props = __props;
-    const groupStore = useGroupStore();
-    const groupRequestStore = useGroupRequestStore();
+    __expose()
+    const props = __props
+    const groupStore = useGroupStore()
+    const groupRequestStore = useGroupRequestStore()
 
     /** 申请列表弹窗 ref：handleOpen 调 open({ groupId }) 触发 */
-    const requestListDialogRef = ref();
+    const requestListDialogRef = ref()
 
     /** 打开当前群的进群申请列表 */
     function handleOpen() {
       requestListDialogRef.value?.open({
         groupId: props.groupId
-      });
+      })
     }
 
     /** 当前群（含 ownerUserId / members） */
-    const group = computed(() => groupStore.getGroup(props.groupId));
+    const group = computed(() => groupStore.getGroup(props.groupId))
 
     /** 当前用户在群里的角色；优先用 group.members，懒加载未到时回退到 ownerUserId 直判 */
     const myRole = computed(() => {
-      const myId = getCurrentUserId();
+      const myId = getCurrentUserId()
       if (group.value?.ownerUserId === myId) {
-        return ImGroupMemberRole.OWNER;
+        return ImGroupMemberRole.OWNER
       }
-      return group.value?.members?.find(m => m.userId === myId)?.role;
-    });
+      return group.value?.members?.find(m => m.userId === myId)?.role
+    })
 
     /** 仅群主 / 管理员可见 */
-    const canManage = computed(() => myRole.value === ImGroupMemberRole.OWNER || myRole.value === ImGroupMemberRole.ADMIN);
+    const canManage = computed(() => myRole.value === ImGroupMemberRole.OWNER || myRole.value === ImGroupMemberRole.ADMIN)
 
     /** 当前群未处理申请数；从 store 派生 */
-    const pendingCount = computed(() => groupRequestStore.getUnhandledGroupRequestCount(props.groupId));
+    const pendingCount = computed(() => groupRequestStore.getUnhandledGroupRequestCount(props.groupId))
     const __returned__ = {
       props,
       groupStore,
@@ -101,15 +101,15 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       pendingCount,
       Icon,
       GroupRequestListDialog
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>
 <style scoped>
 

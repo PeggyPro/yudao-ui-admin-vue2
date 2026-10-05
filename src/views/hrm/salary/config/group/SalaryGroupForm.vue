@@ -14,12 +14,22 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="薪资组" prop="name">
-            <el-input v-model="formData.name" maxlength="64" placeholder="请输入薪资组名称" />
+          <el-form-item
+            label="薪资组"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              maxlength="64"
+              placeholder="请输入薪资组名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="计税规则" prop="taxRuleId">
+          <el-form-item
+            label="计税规则"
+            prop="taxRuleId"
+          >
             <salary-tax-rule-select v-model="formData.taxRuleId" />
           </el-form-item>
         </el-col>
@@ -36,7 +46,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="部门范围" prop="deptIds">
+          <el-form-item
+            label="部门范围"
+            prop="deptIds"
+          >
             <dept-select
               v-model="formData.deptIds"
               multiple
@@ -46,7 +59,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="员工范围" prop="employeeIds">
+          <el-form-item
+            label="员工范围"
+            prop="employeeIds"
+          >
             <hrm-employee-select
               v-model="formData.employeeIds"
               class="full-width"
@@ -59,7 +75,11 @@
       </el-row>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

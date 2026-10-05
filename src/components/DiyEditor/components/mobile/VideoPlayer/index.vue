@@ -1,6 +1,13 @@
 <template>
-  <div class="video-player" :style="{ height: property.style.height + 'px' }">
-    <el-image v-if="property.posterUrl" class="media" :src="property.posterUrl" />
+  <div
+    class="video-player"
+    :style="{ height: property.style.height + 'px' }"
+  >
+    <el-image
+      v-if="property.posterUrl"
+      class="media"
+      :src="property.posterUrl"
+    />
     <video
       v-else
       class="media"

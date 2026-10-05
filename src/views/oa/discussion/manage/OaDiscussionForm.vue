@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="850px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="850px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,8 +13,16 @@
       label-width="90px"
     >
       <!-- 讨论内容 -->
-      <el-form-item label="讨论类型" prop="type">
-        <el-select v-model="formData.type" :disabled="isUpdate" placeholder="请选择讨论类型" style="width: 100%">
+      <el-form-item
+        label="讨论类型"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          :disabled="isUpdate"
+          placeholder="请选择讨论类型"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in discussionTypeOptions"
             :key="item.value"
@@ -18,7 +31,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="标题" prop="title">
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
         <el-input
           v-model="formData.title"
           placeholder="请输入讨论标题"
@@ -26,8 +42,14 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="正文" prop="content">
-        <Editor v-model="formData.content" height="280px" />
+      <el-form-item
+        label="正文"
+        prop="content"
+      >
+        <Editor
+          v-model="formData.content"
+          height="280px"
+        />
       </el-form-item>
       <el-form-item label="附件">
         <UploadFile v-model="formData.fileUrls" />
@@ -37,12 +59,21 @@
       <template v-if="formData.type === OA_DISCUSSION_TYPE.VOTE">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="允许多选" prop="voteMultiple">
-              <el-switch v-model="formData.voteMultiple" :disabled="isUpdate" />
+            <el-form-item
+              label="允许多选"
+              prop="voteMultiple"
+            >
+              <el-switch
+                v-model="formData.voteMultiple"
+                :disabled="isUpdate"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="开始时间" prop="voteStartTime">
+            <el-form-item
+              label="开始时间"
+              prop="voteStartTime"
+            >
               <el-date-picker
                 v-model="formData.voteStartTime"
                 type="datetime"
@@ -53,7 +84,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结束时间" prop="voteEndTime">
+            <el-form-item
+              label="结束时间"
+              prop="voteEndTime"
+            >
               <el-date-picker
                 v-model="formData.voteEndTime"
                 type="datetime"
@@ -76,7 +110,10 @@
                 maxlength="200"
                 :disabled="isUpdate"
               />
-              <el-color-picker v-model="option.color" :disabled="isUpdate" />
+              <el-color-picker
+                v-model="option.color"
+                :disabled="isUpdate"
+              />
               <el-button
                 v-if="!isUpdate"
                 type="text"
@@ -85,21 +122,34 @@
                 @click="handleDeleteVoteOption(index)"
               >删除</el-button>
             </div>
-            <el-button v-if="!isUpdate" plain size="small" icon="el-icon-plus" @click="handleAddVoteOption">新增选项</el-button>
+            <el-button
+              v-if="!isUpdate"
+              plain
+              size="small"
+              icon="el-icon-plus"
+              @click="handleAddVoteOption"
+            >新增选项</el-button>
           </div>
         </el-form-item>
       </template>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as DiscussionApi from '@/api/oa/discussion'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import Editor from '@/components/Editor'
 import UploadFile from '@/components/UploadFile'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
@@ -129,7 +179,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaDiscussionForm',
-  components: { Dialog, Editor, UploadFile },
+  components: { AppDialog, Editor, UploadFile },
   data() {
     return {
       OA_DISCUSSION_TYPE,

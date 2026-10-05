@@ -1,5 +1,8 @@
 <template>
-  <div class="upload-box" :style="uploadStyle">
+  <div
+    class="upload-box"
+    :style="uploadStyle"
+  >
     <el-upload
       ref="upload"
       :accept="fileType.join(',')"
@@ -32,7 +35,11 @@
       title="预览"
       width="800px"
     >
-      <img :src="previewUrl" alt="" class="preview-image" />
+      <img
+        :src="previewUrl"
+        alt=""
+        class="preview-image"
+      >
     </el-dialog>
   </div>
 </template>

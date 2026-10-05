@@ -1,6 +1,9 @@
 <template>
   <div>
-    <doc-alert title="大屏设计器" url="https://doc.iocoder.cn/report/screen/" />
+    <doc-alert
+      title="大屏设计器"
+      url="https://doc.iocoder.cn/report/screen/"
+    />
     <i-frame :src="url" />
   </div>
 </template>

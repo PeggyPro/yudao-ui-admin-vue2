@@ -71,7 +71,7 @@
         prop="avatar"
         width="70"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-avatar :src="scope.row.avatar" />
         </template>
       </el-table-column>
@@ -99,7 +99,7 @@
         prop="brokerageEnabled"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-tag v-if="scope.row.brokerageEnabled">有</el-tag>
           <el-tag
             v-else

@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     width="1080px"
     append-to-body
   >
@@ -144,12 +144,12 @@
       :loading="formLoading"
       @click="submitForm"
     >确 定</el-button><el-button @click="cancel">取 消</el-button></div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import FileUpload from '@/components/FileUpload'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { getSupplierSimpleList } from '@/api/erp/purchase/supplier'
 import { getSimpleUserList } from '@/api/system/user'
 import { getAccountSimpleList } from '@/api/erp/finance/account'
@@ -159,7 +159,7 @@ import FinancePaymentItemForm from './components/FinancePaymentItemForm.vue'
 
 export default {
   name: 'FinancePaymentForm',
-  components: { Dialog, FileUpload, FinancePaymentItemForm },
+  components: { AppDialog, FileUpload, FinancePaymentItemForm },
   data() {
     return {
       dialogVisible: false,

@@ -31,5 +31,5 @@ export function getBusinessStatusTypeSimpleList() {
 }
 
 export function getBusinessStatusSimpleList(typeId) {
-  return request({ url: '/crm/business-status/status-simple-list', method: 'get', params: { typeId } })
+  return request({ url: '/crm/business-status/status-simple-list', method: 'get', params: { typeId }})
 }

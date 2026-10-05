@@ -1,15 +1,31 @@
 <template>
-  <el-card shadow="never" class="vote-card">
-    <div slot="header" class="vote-header">
+  <el-card
+    shadow="never"
+    class="vote-card"
+  >
+    <div
+      slot="header"
+      class="vote-header"
+    >
       <span>投票（{{ getDiscussionVoteModeName(detail.voteMultiple) }}）</span>
       <el-tag :type="voteStatusTagType">{{ voteStatusText }}</el-tag>
     </div>
     <div class="vote-time">
       {{ formatDate(detail.voteStartTime) }} 至 {{ formatDate(detail.voteEndTime) }}
     </div>
-    <el-checkbox-group v-if="detail.voteMultiple" v-model="selectedOptionIds">
-      <div v-for="option in detail.voteOptions" :key="option.id" class="vote-option">
-        <el-checkbox :label="option.id" :disabled="voteStatus !== 'ongoing' || !!option.voted">
+    <el-checkbox-group
+      v-if="detail.voteMultiple"
+      v-model="selectedOptionIds"
+    >
+      <div
+        v-for="option in detail.voteOptions"
+        :key="option.id"
+        class="vote-option"
+      >
+        <el-checkbox
+          :label="option.id"
+          :disabled="voteStatus !== 'ongoing' || !!option.voted"
+        >
           {{ option.title }}（{{ option.voteCount || 0 }} 票）
         </el-checkbox>
         <el-progress
@@ -23,14 +39,28 @@
           title="投票人"
           width="240"
         >
-          <el-button slot="reference" type="text">查看投票人</el-button>
+          <el-button
+            slot="reference"
+            type="text"
+          >查看投票人</el-button>
           <div class="voter-names">{{ option.voterUserNames.join('、') }}</div>
         </el-popover>
       </div>
     </el-checkbox-group>
-    <el-radio-group v-else v-model="selectedOptionId" class="vote-radio-group">
-      <div v-for="option in detail.voteOptions" :key="option.id" class="vote-option">
-        <el-radio :label="option.id" :disabled="voteDisabled">
+    <el-radio-group
+      v-else
+      v-model="selectedOptionId"
+      class="vote-radio-group"
+    >
+      <div
+        v-for="option in detail.voteOptions"
+        :key="option.id"
+        class="vote-option"
+      >
+        <el-radio
+          :label="option.id"
+          :disabled="voteDisabled"
+        >
           {{ option.title }}（{{ option.voteCount || 0 }} 票）
         </el-radio>
         <el-progress
@@ -44,15 +74,26 @@
           title="投票人"
           width="240"
         >
-          <el-button slot="reference" type="text">查看投票人</el-button>
+          <el-button
+            slot="reference"
+            type="text"
+          >查看投票人</el-button>
           <div class="voter-names">{{ option.voterUserNames.join('、') }}</div>
         </el-popover>
       </div>
     </el-radio-group>
-    <el-button v-if="!voteDisabled" type="primary" :loading="submitLoading" @click="submitVote">
+    <el-button
+      v-if="!voteDisabled"
+      type="primary"
+      :loading="submitLoading"
+      @click="submitVote"
+    >
       提交投票
     </el-button>
-    <el-tag v-else-if="hasVoted" type="success">已投票</el-tag>
+    <el-tag
+      v-else-if="hasVoted"
+      type="success"
+    >已投票</el-tag>
   </el-card>
 </template>
 

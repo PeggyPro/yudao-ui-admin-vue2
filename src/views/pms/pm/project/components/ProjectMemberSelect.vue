@@ -1,9 +1,27 @@
 <template>
-  <el-tooltip :disabled="!multiple || selectedNames.length < 2" :content="selectedNames.join('、')" placement="top">
-    <el-select :value="modelValue" clearable :collapse-tags="multiple" filterable :loading="loading"
-      :multiple="multiple" :placeholder="placeholder" @input="$emit('update:modelValue', $event)"
-      @blur="$emit('blur', $event)" @keyup.esc.native.capture.stop="$emit('keyup', $event)">
-      <el-option v-for="member in memberList" :key="member.userId" :label="member.nickname" :value="member.userId" />
+  <el-tooltip
+    :disabled="!multiple || selectedNames.length < 2"
+    :content="selectedNames.join('、')"
+    placement="top"
+  >
+    <el-select
+      :value="modelValue"
+      clearable
+      :collapse-tags="multiple"
+      filterable
+      :loading="loading"
+      :multiple="multiple"
+      :placeholder="placeholder"
+      @input="$emit('update:modelValue', $event)"
+      @blur="$emit('blur', $event)"
+      @keyup.esc.native.capture.stop="$emit('keyup', $event)"
+    >
+      <el-option
+        v-for="member in memberList"
+        :key="member.userId"
+        :label="member.nickname"
+        :value="member.userId"
+      />
     </el-select>
   </el-tooltip>
 </template>
@@ -27,7 +45,7 @@ export default {
       return this.memberList.filter(member => ids.includes(member.userId)).map(member => member.nickname)
     }
   },
-  watch: { projectId: { immediate: true, handler: 'getProjectMemberList' } },
+  watch: { projectId: { immediate: true, handler: 'getProjectMemberList' }},
   methods: {
     async getProjectMemberList() {
       this.loading = true

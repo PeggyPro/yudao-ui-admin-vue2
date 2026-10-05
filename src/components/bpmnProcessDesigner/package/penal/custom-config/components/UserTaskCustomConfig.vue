@@ -19,8 +19,15 @@
 
     <el-divider content-position="left">审批类型</el-divider>
     <el-form-item label="处理方式">
-      <el-radio-group v-model="approveTypeEl.value" @change="updateElementExtensions">
-        <el-radio v-for="item in approveTypes" :key="item.value" :label="item.value">
+      <el-radio-group
+        v-model="approveTypeEl.value"
+        @change="updateElementExtensions"
+      >
+        <el-radio
+          v-for="item in approveTypes"
+          :key="item.value"
+          :label="item.value"
+        >
           {{ item.label }}
         </el-radio>
       </el-radio-group>
@@ -28,7 +35,10 @@
 
     <el-divider content-position="left">审批人拒绝时</el-divider>
     <el-form-item label="执行动作">
-      <el-radio-group v-model="rejectHandlerType" @change="updateRejectHandlerType">
+      <el-radio-group
+        v-model="rejectHandlerType"
+        @change="updateRejectHandlerType"
+      >
         <el-radio
           v-for="item in rejectHandlerTypes"
           :key="item.value"
@@ -39,7 +49,10 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="Number(rejectHandlerType) === rejectReturnValue" label="驳回节点">
+    <el-form-item
+      v-if="Number(rejectHandlerType) === rejectReturnValue"
+      label="驳回节点"
+    >
       <el-select
         v-model="returnNodeId"
         clearable
@@ -55,13 +68,23 @@
           :value="item.id"
         />
       </el-select>
-      <div v-if="returnTaskList.length === 0" class="field-help">当前节点没有可回退的前置用户任务</div>
+      <div
+        v-if="returnTaskList.length === 0"
+        class="field-help"
+      >当前节点没有可回退的前置用户任务</div>
     </el-form-item>
 
     <el-divider content-position="left">审批人为空时</el-divider>
     <el-form-item label="执行动作">
-      <el-radio-group v-model="assignEmptyHandlerType" @change="updateAssignEmptyHandlerType">
-        <el-radio v-for="item in assignEmptyHandlerTypes" :key="item.value" :label="item.value">
+      <el-radio-group
+        v-model="assignEmptyHandlerType"
+        @change="updateAssignEmptyHandlerType"
+      >
+        <el-radio
+          v-for="item in assignEmptyHandlerTypes"
+          :key="item.value"
+          :label="item.value"
+        >
           {{ item.label }}
         </el-radio>
       </el-radio-group>
@@ -94,7 +117,11 @@
         v-model="assignStartUserHandlerType"
         @change="updateAssignStartUserHandlerType"
       >
-        <el-radio v-for="item in assignStartUserHandlerTypes" :key="item.value" :label="item.value">
+        <el-radio
+          v-for="item in assignStartUserHandlerTypes"
+          :key="item.value"
+          :label="item.value"
+        >
           {{ item.label }}
         </el-radio>
       </el-radio-group>
@@ -107,7 +134,11 @@
         <span>显示名称</span>
         <span>启用</span>
       </div>
-      <div v-for="(item, index) in buttonsSettingEl" :key="buttonKey(item, index)" class="button-setting-item">
+      <div
+        v-for="(item, index) in buttonsSettingEl"
+        :key="buttonKey(item, index)"
+        class="button-setting-item"
+      >
         <span class="button-name">{{ operationButtonName(item.id) }}</span>
         <el-input
           v-model="item.displayName"
@@ -116,31 +147,65 @@
           :placeholder="operationButtonName(item.id)"
           @change="updateButton(index)"
         />
-        <el-switch v-model="item.enable" @change="updateElementExtensions" />
+        <el-switch
+          v-model="item.enable"
+          @change="updateElementExtensions"
+        />
       </div>
     </div>
 
     <el-divider content-position="left">字段权限</el-divider>
-    <div v-if="isNormalForm && fieldsPermissionEl.length" class="field-setting-pane">
+    <div
+      v-if="isNormalForm && fieldsPermissionEl.length"
+      class="field-setting-pane"
+    >
       <div class="field-permission-title">
         <span>字段名称</span>
         <span class="permission-actions">
-          <el-button type="text" size="mini" @click="updatePermission(fieldPermission.READ)">只读</el-button>
-          <el-button type="text" size="mini" @click="updatePermission(fieldPermission.WRITE)">可编辑</el-button>
-          <el-button type="text" size="mini" @click="updatePermission(fieldPermission.NONE)">隐藏</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="updatePermission(fieldPermission.READ)"
+          >只读</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="updatePermission(fieldPermission.WRITE)"
+          >可编辑</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="updatePermission(fieldPermission.NONE)"
+          >隐藏</el-button>
         </span>
       </div>
-      <div v-for="item in fieldsPermissionEl" :key="item.field" class="field-setting-item">
-        <span class="field-name" :title="item.title">{{ item.title || item.field }}</span>
-        <el-radio-group v-model="item.permission" @change="updateElementExtensions">
+      <div
+        v-for="item in fieldsPermissionEl"
+        :key="item.field"
+        class="field-setting-item"
+      >
+        <span
+          class="field-name"
+          :title="item.title"
+        >{{ item.title || item.field }}</span>
+        <el-radio-group
+          v-model="item.permission"
+          @change="updateElementExtensions"
+        >
           <el-radio :label="fieldPermission.READ"><span class="sr-only">只读</span></el-radio>
           <el-radio :label="fieldPermission.WRITE"><span class="sr-only">可编辑</span></el-radio>
           <el-radio :label="fieldPermission.NONE"><span class="sr-only">隐藏</span></el-radio>
         </el-radio-group>
       </div>
     </div>
-    <div v-else-if="isNormalForm" class="field-help">当前流程表单暂无可配置字段</div>
-    <div v-else class="field-help">业务表单不提供流程字段权限配置</div>
+    <div
+      v-else-if="isNormalForm"
+      class="field-help"
+    >当前流程表单暂无可配置字段</div>
+    <div
+      v-else
+      class="field-help"
+    >业务表单不提供流程字段权限配置</div>
 
     <el-divider content-position="left">是否需要签名</el-divider>
     <el-form-item label="签名">
@@ -172,7 +237,7 @@ import {
   DEFAULT_BUTTON_SETTING,
   FieldPermissionType,
   OPERATION_BUTTON_NAME,
-  OperationButtonType,
+
   RejectHandlerType
 } from '@/components/SimpleProcessDesignerV2/src/consts'
 import { BpmModelFormType } from '@/utils/constants'
@@ -224,24 +289,16 @@ function extensionAttribute(extension, key, fallback) {
   return extension[shortKey] !== undefined ? extension[shortKey] : fallback
 }
 
-function cloneButton(item) {
-  return {
-    id: item.id,
-    displayName: item.displayName,
-    enable: item.enable !== false
-  }
-}
-
 export default {
   name: 'ElementCustomConfig4UserTask',
-  props: {
-    id: String,
-    type: String
-  },
   inject: {
     prefix: { default: 'flowable' },
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
     formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
+  },
+  props: {
+    id: String,
+    type: String
   },
   data() {
     return {

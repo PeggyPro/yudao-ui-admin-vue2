@@ -1,6 +1,11 @@
 <!-- MES 班组表单 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="960px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="960px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -11,42 +16,94 @@
     >
       <el-row>
         <el-col :span="8">
-          <el-form-item label="班组编码" prop="code">
-            <el-input v-model="formData.code" placeholder="请输入班组编码" :maxlength="64">
-              <el-button slot="append" @click="generateCode">生成</el-button>
+          <el-form-item
+            label="班组编码"
+            prop="code"
+          >
+            <el-input
+              v-model="formData.code"
+              placeholder="请输入班组编码"
+              :maxlength="64"
+            >
+              <el-button
+                slot="append"
+                @click="generateCode"
+              >生成</el-button>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="班组名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入班组名称" :maxlength="100" />
+          <el-form-item
+            label="班组名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入班组名称"
+              :maxlength="100"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="班组类型" prop="calendarType">
-            <el-select v-model="formData.calendarType" placeholder="请选择班组类型" class="full-width">
-              <el-option v-for="dict in calendarTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <el-form-item
+            label="班组类型"
+            prop="calendarType"
+          >
+            <el-select
+              v-model="formData.calendarType"
+              placeholder="请选择班组类型"
+              class="full-width"
+            >
+              <el-option
+                v-for="dict in calendarTypeOptions"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
-            <el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" :maxlength="250" />
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
+            <el-input
+              v-model="formData.remark"
+              type="textarea"
+              placeholder="请输入备注"
+              :maxlength="250"
+            />
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
 
-    <el-tabs v-if="formType === 'update' || isDetail" v-model="activeTab" class="resource-tabs">
-      <el-tab-pane label="班组成员" name="member">
-        <cal-team-member-list :team-id="formData.id" :form-type="formType" />
+    <el-tabs
+      v-if="formType === 'update' || isDetail"
+      v-model="activeTab"
+      class="resource-tabs"
+    >
+      <el-tab-pane
+        label="班组成员"
+        name="member"
+      >
+        <cal-team-member-list
+          :team-id="formData.id"
+          :form-type="formType"
+        />
       </el-tab-pane>
     </el-tabs>
 
     <span slot="footer">
-      <el-button v-if="!isDetail" type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        v-if="!isDetail"
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </span>
   </el-dialog>

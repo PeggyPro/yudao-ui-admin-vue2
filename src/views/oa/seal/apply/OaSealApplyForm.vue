@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,7 +11,10 @@
       :rules="formRules"
       label-width="120px"
     >
-      <el-form-item label="印章" prop="sealId">
+      <el-form-item
+        label="印章"
+        prop="sealId"
+      >
         <oa-seal-select
           v-if="dialogVisible"
           v-model="formData.sealId"
@@ -17,7 +24,10 @@
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item label="用印事由" prop="reason">
+          <el-form-item
+            label="用印事由"
+            prop="reason"
+          >
             <el-input
               v-model="formData.reason"
               placeholder="请输入用印事由"
@@ -29,8 +39,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="用印类型" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择用印类型" style="width: 100%">
+          <el-form-item
+            label="用印类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择用印类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in typeOptions"
                 :key="dict.value"
@@ -41,8 +58,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="用印方式" prop="mode">
-            <el-select v-model="formData.mode" placeholder="请选择用印方式" style="width: 100%">
+          <el-form-item
+            label="用印方式"
+            prop="mode"
+          >
+            <el-select
+              v-model="formData.mode"
+              placeholder="请选择用印方式"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in modeOptions"
                 :key="dict.value"
@@ -53,7 +77,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="文件标题" prop="documentTitle">
+          <el-form-item
+            label="文件标题"
+            prop="documentTitle"
+          >
             <el-input
               v-model="formData.documentTitle"
               placeholder="请输入文件标题"
@@ -62,12 +89,22 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="文件类型" prop="documentType">
-            <el-input v-model="formData.documentType" placeholder="请输入文件类型" maxlength="64" />
+          <el-form-item
+            label="文件类型"
+            prop="documentType"
+          >
+            <el-input
+              v-model="formData.documentType"
+              placeholder="请输入文件类型"
+              maxlength="64"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="文件份数" prop="documentCount">
+          <el-form-item
+            label="文件份数"
+            prop="documentCount"
+          >
             <el-input-number
               v-model="formData.documentCount"
               :min="1"
@@ -77,8 +114,14 @@
             />
           </el-form-item>
         </el-col>
-        <el-col v-if="formData.type === OaSealApplyType.CONTRACT" :span="12">
-          <el-form-item label="合同金额" prop="contractPrice">
+        <el-col
+          v-if="formData.type === OaSealApplyType.CONTRACT"
+          :span="12"
+        >
+          <el-form-item
+            label="合同金额"
+            prop="contractPrice"
+          >
             <el-input-number
               v-model="formData.contractPrice"
               :min="0"
@@ -88,8 +131,14 @@
             />
           </el-form-item>
         </el-col>
-        <el-col v-if="formData.type === OaSealApplyType.CONTRACT" :span="12">
-          <el-form-item label="合同对方" prop="contractParty">
+        <el-col
+          v-if="formData.type === OaSealApplyType.CONTRACT"
+          :span="12"
+        >
+          <el-form-item
+            label="合同对方"
+            prop="contractParty"
+          >
             <el-input
               v-model="formData.contractParty"
               placeholder="请输入合同对方"
@@ -98,7 +147,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="预计用印时间" prop="expectedUseTime">
+          <el-form-item
+            label="预计用印时间"
+            prop="expectedUseTime"
+          >
             <el-date-picker
               v-model="formData.expectedUseTime"
               type="datetime"
@@ -108,8 +160,14 @@
             />
           </el-form-item>
         </el-col>
-        <el-col v-if="formData.mode === OaSealUseMode.BORROW" :span="12">
-          <el-form-item label="预计归还时间" prop="expectedReturnTime">
+        <el-col
+          v-if="formData.mode === OaSealUseMode.BORROW"
+          :span="12"
+        >
+          <el-form-item
+            label="预计归还时间"
+            prop="expectedReturnTime"
+          >
             <el-date-picker
               v-model="formData.expectedReturnTime"
               type="datetime"
@@ -120,7 +178,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="实际归还时间" prop="actualReturnTime">
+          <el-form-item
+            label="实际归还时间"
+            prop="actualReturnTime"
+          >
             <el-date-picker
               v-model="formData.actualReturnTime"
               type="datetime"
@@ -131,12 +192,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="是否紧急" prop="urgent">
+          <el-form-item
+            label="是否紧急"
+            prop="urgent"
+          >
             <el-switch v-model="formData.urgent" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               placeholder="请输入备注"
@@ -148,12 +215,25 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :limit="5" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :limit="5"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </dialog-component>

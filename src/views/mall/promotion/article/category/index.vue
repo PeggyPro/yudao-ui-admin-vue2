@@ -111,7 +111,7 @@
         align="center"
         min-width="90"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             v-if="scope.row.picUrl"
             :src="scope.row.picUrl"
@@ -128,7 +128,7 @@
         prop="status"
         min-width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -147,7 +147,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -157,7 +157,7 @@
         width="160"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:article-category:update']"
             type="text"

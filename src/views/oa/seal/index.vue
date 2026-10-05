@@ -13,7 +13,10 @@
         label-width="68px"
         @submit.native.prevent
       >
-        <el-form-item label="编号" prop="no">
+        <el-form-item
+          label="编号"
+          prop="no"
+        >
           <el-input
             v-model="queryParams.no"
             placeholder="请输入编号"
@@ -22,7 +25,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="名称" prop="name">
+        <el-form-item
+          label="名称"
+          prop="name"
+        >
           <el-input
             v-model="queryParams.name"
             placeholder="请输入名称"
@@ -31,7 +37,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="印章分类" prop="category">
+        <el-form-item
+          label="印章分类"
+          prop="category"
+        >
           <el-select
             v-model="queryParams.category"
             placeholder="请选择印章分类"
@@ -46,11 +55,26 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="所属部门" prop="deptId">
-          <dept-select v-model="queryParams.deptId" placeholder="请选择所属部门" style="width: 240px" />
+        <el-form-item
+          label="所属部门"
+          prop="deptId"
+        >
+          <dept-select
+            v-model="queryParams.deptId"
+            placeholder="请选择所属部门"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="queryParams.status" placeholder="请选择状态" clearable style="width: 240px">
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
+          <el-select
+            v-model="queryParams.status"
+            placeholder="请选择状态"
+            clearable
+            style="width: 240px"
+          >
             <el-option
               v-for="dict in statusOptions"
               :key="dict.value"
@@ -59,7 +83,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="印章类型" prop="type">
+        <el-form-item
+          label="印章类型"
+          prop="type"
+        >
           <el-select
             v-model="queryParams.type"
             placeholder="请选择印章类型"
@@ -74,14 +101,20 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="保管人" prop="keeperUserId">
+        <el-form-item
+          label="保管人"
+          prop="keeperUserId"
+        >
           <user-select-v2
             v-model="queryParams.keeperUserId"
             placeholder="请选择保管人"
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="购买时间" prop="purchaseTime">
+        <el-form-item
+          label="购买时间"
+          prop="purchaseTime"
+        >
           <el-date-picker
             v-model="queryParams.purchaseTime"
             type="daterange"
@@ -92,7 +125,10 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="启用时间" prop="enableTime">
+        <el-form-item
+          label="启用时间"
+          prop="enableTime"
+        >
           <el-date-picker
             v-model="queryParams.enableTime"
             type="daterange"
@@ -103,7 +139,10 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="停用时间" prop="disableTime">
+        <el-form-item
+          label="停用时间"
+          prop="disableTime"
+        >
           <el-date-picker
             v-model="queryParams.disableTime"
             type="daterange"
@@ -115,8 +154,15 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <el-button
             v-hasPermi="['oa:seal:create']"
             type="primary"
@@ -129,20 +175,50 @@
     </content-wrap>
     <!-- 列表 -->
     <content-wrap>
-      <el-table v-loading="loading" :data="list" border stripe>
-        <el-table-column label="所属部门" prop="deptName" min-width="150" />
-        <el-table-column label="印章编号" prop="no" min-width="180" />
-        <el-table-column label="印章名称" min-width="160">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        stripe
+      >
+        <el-table-column
+          label="所属部门"
+          prop="deptName"
+          min-width="150"
+        />
+        <el-table-column
+          label="印章编号"
+          prop="no"
+          min-width="180"
+        />
+        <el-table-column
+          label="印章名称"
+          min-width="160"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openDetail(scope.row.id)">{{ scope.row.name }}</el-button>
+            <el-button
+              type="text"
+              @click="openDetail(scope.row.id)"
+            >{{ scope.row.name }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="100" align="center">
+        <el-table-column
+          label="状态"
+          width="100"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SEAL_STATUS" :value="scope.row.status" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SEAL_STATUS"
+              :value="scope.row.status"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="印章照片" width="100" align="center">
+        <el-table-column
+          label="印章照片"
+          width="100"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-image
               v-if="scope.row.picUrl"
@@ -153,35 +229,82 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="印章类型" min-width="110" align="center">
+        <el-table-column
+          label="印章类型"
+          min-width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SEAL_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SEAL_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="分类" min-width="120" align="center">
+        <el-table-column
+          label="分类"
+          min-width="120"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SEAL_CATEGORY" :value="scope.row.category" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SEAL_CATEGORY"
+              :value="scope.row.category"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="保管人" prop="keeperName" min-width="120" />
-        <el-table-column label="保管部门" prop="keeperDeptName" min-width="150" />
+        <el-table-column
+          label="保管人"
+          prop="keeperName"
+          min-width="120"
+        />
+        <el-table-column
+          label="保管部门"
+          prop="keeperDeptName"
+          min-width="150"
+        />
         <el-table-column
           label="购买日期"
           prop="purchaseTime"
           :formatter="dateFormatter2"
           width="120"
         />
-        <el-table-column label="启用日期" prop="enableTime" :formatter="dateFormatter2" width="120" />
+        <el-table-column
+          label="启用日期"
+          prop="enableTime"
+          :formatter="dateFormatter2"
+          width="120"
+        />
         <el-table-column
           label="停用日期"
           prop="disableTime"
           :formatter="dateFormatter2"
           width="120"
         />
-        <el-table-column label="显示顺序" prop="sort" width="100" align="center" />
-        <el-table-column label="备注" prop="remark" min-width="150" show-overflow-tooltip />
-        <el-table-column label="创建时间" prop="createTime" :formatter="dateFormatter" width="180" />
-        <el-table-column label="操作" fixed="right" width="140" align="center">
+        <el-table-column
+          label="显示顺序"
+          prop="sort"
+          width="100"
+          align="center"
+        />
+        <el-table-column
+          label="备注"
+          prop="remark"
+          min-width="150"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="创建时间"
+          prop="createTime"
+          :formatter="dateFormatter"
+          width="180"
+        />
+        <el-table-column
+          label="操作"
+          fixed="right"
+          width="140"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['oa:seal:update']"
@@ -209,7 +332,10 @@
       />
     </content-wrap>
     <!-- 添加或修改印章弹窗 -->
-    <oa-seal-form ref="form" @success="getList" />
+    <oa-seal-form
+      ref="form"
+      @success="getList"
+    />
     <!-- 印章详情弹窗 -->
     <oa-seal-detail ref="detail" />
   </div>

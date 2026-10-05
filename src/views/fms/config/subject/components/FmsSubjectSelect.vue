@@ -8,7 +8,12 @@
     :placeholder="placeholder"
     @input="handleInput"
   >
-    <el-option v-for="subject in subjectOptions" :key="subject.id" :label="formatSubject(subject)" :value="subject.id" />
+    <el-option
+      v-for="subject in subjectOptions"
+      :key="subject.id"
+      :label="formatSubject(subject)"
+      :value="subject.id"
+    />
   </el-select>
 </template>
 

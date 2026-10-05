@@ -1,11 +1,18 @@
 <template>
   <div class="infotip">
-    <div v-if="title" class="infotip__header">
+    <div
+      v-if="title"
+      class="infotip__header"
+    >
       <i class="el-icon-warning infotip__icon" />
       <span class="infotip__title">{{ title }}</span>
     </div>
     <div class="infotip__content">
-      <p v-for="(item, $index) in schema" :key="$index" class="infotip__item">
+      <p
+        v-for="(item, $index) in schema"
+        :key="$index"
+        class="infotip__item"
+      >
         <template v-if="typeof item === 'string'">{{ showIndex ? `${$index + 1}、` : '' }}{{ item }}</template>
         <template v-else>
           {{ showIndex ? `${$index + 1}、` : '' }}<span

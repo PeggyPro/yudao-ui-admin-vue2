@@ -1,12 +1,12 @@
-import { updateFile } from '@/api/infra/file';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { isOpenableUrl } from '@/utils/url';
-import { useMessageStore } from '../store/messageStore';
-import { useMessageSender } from './useMessageSender';
-import { getDb } from '../../utils/db';
-import { ImMessageStatus, ImContentType } from '../../utils/constants';
-import { MESSAGE_FILE_MAX_MB, MESSAGE_IMAGE_MAX_MB, MESSAGE_VIDEO_MAX_MB, MESSAGE_VOICE_MAX_MB } from '../../utils/config';
-import { BLOB_URL_PREFIX, generateClientMessageId, parseMessage, serializeMessage, withQuotePayload } from '../../utils/message';
+import { updateFile } from '@/api/infra/file'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { isOpenableUrl } from '@/utils/url'
+import { useMessageStore } from '../store/messageStore'
+import { useMessageSender } from './useMessageSender'
+import { getDb } from '../../utils/db'
+import { ImMessageStatus, ImContentType } from '../../utils/constants'
+import { MESSAGE_FILE_MAX_MB, MESSAGE_IMAGE_MAX_MB, MESSAGE_VIDEO_MAX_MB, MESSAGE_VOICE_MAX_MB } from '../../utils/config'
+import { BLOB_URL_PREFIX, generateClientMessageId, parseMessage, serializeMessage, withQuotePayload } from '../../utils/message'
 
 /** 单条媒体 payload 联合（覆盖 IMAGE / FILE / VOICE / VIDEO 四种） */
 
@@ -43,10 +43,10 @@ export const mediaTypeHandlers = {
       duration: context.voiceDuration ?? 0
     }),
     extractResendContext: oldContent => {
-      const old = parseMessage(oldContent);
+      const old = parseMessage(oldContent)
       return {
         voiceDuration: old?.duration ?? 0
-      };
+      }
     }
   },
   [ImContentType.VIDEO]: {
@@ -60,9 +60,9 @@ export const mediaTypeHandlers = {
       size: file.size
     }),
     extractResendContext: oldContent => {
-      const old = parseMessage(oldContent);
+      const old = parseMessage(oldContent)
       // 旧 coverUrl 是 blob 说明上传期失败（cover 没传成功），不复用；真实 URL 直接复用，省一次封面上传
-      const reuseCover = old?.coverUrl && !old.coverUrl.startsWith(BLOB_URL_PREFIX) ? old.coverUrl : undefined;
+      const reuseCover = old?.coverUrl && !old.coverUrl.startsWith(BLOB_URL_PREFIX) ? old.coverUrl : undefined
       return {
         videoProbe: {
           duration: old?.duration,
@@ -70,10 +70,10 @@ export const mediaTypeHandlers = {
           height: old?.height
         },
         videoCoverUrl: reuseCover
-      };
+      }
     }
   }
-};
+}
 
 /** 单次媒体上传的入参（image / file / voice 走 uploadAndSendMedia；video 走低层 helper 自行组装） */
 
@@ -92,33 +92,33 @@ export const mediaTypeHandlers = {
 function resolveMediaMaxMb(type) {
   switch (type) {
     case ImContentType.IMAGE:
-      return MESSAGE_IMAGE_MAX_MB;
+      return MESSAGE_IMAGE_MAX_MB
     case ImContentType.VIDEO:
-      return MESSAGE_VIDEO_MAX_MB;
+      return MESSAGE_VIDEO_MAX_MB
     case ImContentType.VOICE:
-      return MESSAGE_VOICE_MAX_MB;
+      return MESSAGE_VOICE_MAX_MB
     case ImContentType.FILE:
-      return MESSAGE_FILE_MAX_MB;
+      return MESSAGE_FILE_MAX_MB
     default:
-      return 0;
+      return 0
   }
 }
 
 /** 校验媒体文件大小是否超过内容类型上限；超限触发 warn 并返回 false，调用方不应进入占位 / 上传链路 */
 export function ensureMediaSizeWithinLimit(file, type, warn) {
-  const maxMb = resolveMediaMaxMb(type);
+  const maxMb = resolveMediaMaxMb(type)
   if (maxMb && file.size > maxMb * 1024 * 1024) {
-    warn(`文件大小超过上限 ${maxMb}MB，请压缩后再发`);
-    return false;
+    warn(`文件大小超过上限 ${maxMb}MB，请压缩后再发`)
+    return false
   }
-  return true;
+  return true
 }
 export const useMediaUploader = () => {
-  const messageStore = useMessageStore();
-  const message = useMessage();
+  const messageStore = useMessageStore()
+  const message = useMessage()
   const {
     sendRaw
-  } = useMessageSender();
+  } = useMessageSender()
 
   /**
    * 立即写入媒体占位消息（低层 helper；image/file/voice 走 uploadAndSendMedia 包装，video 直接用本函数）
@@ -129,10 +129,10 @@ export const useMediaUploader = () => {
   const insertMediaPlaceholder = async opts => {
     const {
       conversation
-    } = opts;
-    const db = getDb();
-    const blobUrl = URL.createObjectURL(opts.file);
-    const clientMessageId = opts.existingClientMessageId || generateClientMessageId();
+    } = opts
+    const db = getDb()
+    const blobUrl = URL.createObjectURL(opts.file)
+    const clientMessageId = opts.existingClientMessageId || generateClientMessageId()
     const result = {
       clientMessageId,
       blobUrl,
@@ -143,15 +143,15 @@ export const useMediaUploader = () => {
         realContent,
         db
       })
-    };
+    }
     if (opts.existingClientMessageId) {
       messageStore.patchMessage(conversation.type, conversation.targetId, clientMessageId, {
         content: opts.buildContent(blobUrl),
         status: ImMessageStatus.SENDING,
         uploadProgress: 0,
         _localFile: opts.file
-      });
-      return result;
+      })
+      return result
     }
     const placeholder = {
       clientMessageId,
@@ -164,24 +164,24 @@ export const useMediaUploader = () => {
       selfSend: true,
       uploadProgress: 0,
       _localFile: opts.file
-    };
+    }
     try {
       const inserted = await messageStore.insertMessage({
         type: conversation.type,
         targetId: conversation.targetId,
         name: conversation.name || String(conversation.targetId),
         avatar: conversation.avatar || ''
-      }, placeholder, db);
+      }, placeholder, db)
       if (!inserted) {
-        URL.revokeObjectURL(blobUrl);
-        return undefined;
+        URL.revokeObjectURL(blobUrl)
+        return undefined
       }
     } catch (error) {
-      URL.revokeObjectURL(blobUrl);
-      throw error;
+      URL.revokeObjectURL(blobUrl)
+      throw error
     }
-    return result;
-  };
+    return result
+  }
 
   /**
    * 把占位消息置为 FAILED（上传失败 / 会话切走 / 禁言期到点 等场景统一收尾）
@@ -193,8 +193,8 @@ export const useMediaUploader = () => {
     messageStore.patchMessage(conversationType, targetId, clientMessageId, {
       status: ImMessageStatus.FAILED,
       uploadProgress: undefined
-    });
-  };
+    })
+  }
 
   /**
    * 生成 axios `onUploadProgress` 回调：用 closure 缓存上次百分比，未变化直接 return 不进 store
@@ -203,21 +203,21 @@ export const useMediaUploader = () => {
    * 在源头去重，能省掉 store 的 find + Object.assign + Vue reactivity 触发链
    */
   const createUploadProgressHandler = (conversation, clientMessageId) => {
-    let lastPercent = -1;
+    let lastPercent = -1
     return event => {
       if (!event.total) {
-        return;
+        return
       }
-      const percent = Math.round(event.loaded / event.total * 100);
+      const percent = Math.round(event.loaded / event.total * 100)
       if (percent === lastPercent) {
-        return;
+        return
       }
-      lastPercent = percent;
+      lastPercent = percent
       messageStore.patchMessage(conversation.type, conversation.targetId, clientMessageId, {
         uploadProgress: percent
-      });
-    };
-  };
+      })
+    }
+  }
 
   /**
    * 按 type 取 handler，缺则抛错（程序错误集中在这一处）
@@ -226,12 +226,12 @@ export const useMediaUploader = () => {
    * 仅给「确定 type 在表里」的调用方用 —— image/file/voice/video 四类入口；通用 dispatcher 仍可用 `mediaTypeHandlers[type]?.` optional chain
    */
   const requireMediaHandler = type => {
-    const handler = mediaTypeHandlers[type];
+    const handler = mediaTypeHandlers[type]
     if (!handler) {
-      throw new Error(`[IM] 未注册的媒体类型 ${type}`);
+      throw new Error(`[IM] 未注册的媒体类型 ${type}`)
     }
-    return handler;
-  };
+    return handler
+  }
 
   /**
    * 占位完成后用真实 url 替换 content，再走 sendRaw 完成发送
@@ -241,15 +241,15 @@ export const useMediaUploader = () => {
   const commitMediaPlaceholder = async opts => {
     messageStore.patchMessage(opts.conversation.type, opts.conversation.targetId, opts.clientMessageId, {
       content: opts.realContent
-    });
+    })
     // 显式传入占位消息所属会话，确保上传完成后仍发送到原会话
     await sendRaw(opts.type, opts.realContent, {
       existingClientMessageId: opts.clientMessageId,
       targetId: opts.conversation.targetId,
       conversation: opts.conversation,
       db: opts.db
-    });
-  };
+    })
+  }
 
   /**
    * 上传媒体文件并发送消息（高层入口；image / file / voice 用，video 走低层 helper 自行组装）
@@ -259,23 +259,23 @@ export const useMediaUploader = () => {
   const uploadAndSendMedia = async opts => {
     const {
       conversation
-    } = opts;
-    const handler = mediaTypeHandlers[opts.type];
+    } = opts
+    const handler = mediaTypeHandlers[opts.type]
     if (!handler) {
       console.warn('[IM] uploadAndSendMedia 收到未注册的媒体类型', {
         type: opts.type
-      });
-      return '';
+      })
+      return ''
     }
     // 体积上限拦截：大文件浏览器内截帧 / 解码可致 OOM；超限直接 warning，不进入占位 / 上传链路
     if (!ensureMediaSizeWithinLimit(opts.file, opts.type, message.warning)) {
-      return '';
+      return ''
     }
-    const context = opts.context ?? {};
-    const buildContent = url => serializeMessage(withQuotePayload(handler.build(opts.file, url, context), opts.quote));
+    const context = opts.context ?? {}
+    const buildContent = url => serializeMessage(withQuotePayload(handler.build(opts.file, url, context), opts.quote))
 
     // 1. 立即占位
-    let placeholder;
+    let placeholder
     try {
       placeholder = await insertMediaPlaceholder({
         file: opts.file,
@@ -283,48 +283,48 @@ export const useMediaUploader = () => {
         conversation,
         buildContent,
         existingClientMessageId: opts.existingClientMessageId
-      });
+      })
       if (!placeholder) {
-        return '';
+        return ''
       }
     } catch (error) {
-      console.error('[IM] 媒体消息占位写入失败', error);
-      message.warning('消息保存失败，请重试');
-      return '';
+      console.error('[IM] 媒体消息占位写入失败', error)
+      message.warning('消息保存失败，请重试')
+      return ''
     }
-    const clientMessageId = placeholder.clientMessageId;
+    const clientMessageId = placeholder.clientMessageId
 
     // 2. 上传：进度回调 patch uploadProgress；失败保留 _localFile 供重试
-    let url;
+    let url
     try {
-      const form = new FormData();
-      form.append('file', opts.file);
-      url = (await updateFile(form, createUploadProgressHandler(conversation, clientMessageId))).data;
+      const form = new FormData()
+      form.append('file', opts.file)
+      url = (await updateFile(form, createUploadProgressHandler(conversation, clientMessageId))).data
     } catch (e) {
-      console.error(`[IM] ${handler.kind}上传失败`, e);
+      console.error(`[IM] ${handler.kind}上传失败`, e)
     }
     if (!url) {
-      markMediaFailed(conversation.type, conversation.targetId, clientMessageId);
-      return clientMessageId;
+      markMediaFailed(conversation.type, conversation.targetId, clientMessageId)
+      return clientMessageId
     }
     if (!isOpenableUrl(url)) {
       console.warn(`[IM] ${handler.kind}上传返回了不支持打开的 URL`, {
         url
-      });
-      message.warning('上传返回的文件地址不支持打开');
-      markMediaFailed(conversation.type, conversation.targetId, clientMessageId);
-      return clientMessageId;
+      })
+      message.warning('上传返回的文件地址不支持打开')
+      markMediaFailed(conversation.type, conversation.targetId, clientMessageId)
+      return clientMessageId
     }
 
     // 3. patch content + sendRaw 收尾
-    await placeholder.commit(buildContent(url));
-    return clientMessageId;
-  };
+    await placeholder.commit(buildContent(url))
+    return clientMessageId
+  }
   return {
     uploadAndSendMedia,
     insertMediaPlaceholder,
     markMediaFailed,
     createUploadProgressHandler,
     requireMediaHandler
-  };
-};
+  }
+}

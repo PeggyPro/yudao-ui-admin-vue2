@@ -2,22 +2,40 @@
   <div>
     <div class="detail-header">
       <div class="breadcrumb-row">
-        <el-button type="text" @click="$emit('back')">
+        <el-button
+          type="text"
+          @click="$emit('back')"
+        >
           <i class="el-icon-arrow-left" />最近删除
         </el-button>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item v-for="item in breadcrumbs" :key="item.key">
-            <el-button class="breadcrumb-button" type="text" @click="openNode(item.key)">
+          <el-breadcrumb-item
+            v-for="item in breadcrumbs"
+            :key="item.key"
+          >
+            <el-button
+              class="breadcrumb-button"
+              type="text"
+              @click="openNode(item.key)"
+            >
               {{ item.name }}
             </el-button>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="detail-actions">
-        <el-button size="small" type="primary" @click="$emit('restore', detail.root)">
+        <el-button
+          size="small"
+          type="primary"
+          @click="$emit('restore', detail.root)"
+        >
           <i class="el-icon-refresh-left" />恢复
         </el-button>
-        <el-button size="small" type="danger" @click="$emit('permanent-delete', detail.root)">
+        <el-button
+          size="small"
+          type="danger"
+          @click="$emit('permanent-delete', detail.root)"
+        >
           <i class="el-icon-delete" />彻底删除
         </el-button>
       </div>
@@ -30,7 +48,10 @@
     />
     <div v-if="currentNode && currentNode.type === PmsKnowledgeObjectType.FOLDER">
       <div class="node-title"><i class="el-icon-folder-opened" />{{ currentNode.name }}</div>
-      <div v-if="currentChildren.length" class="child-grid">
+      <div
+        v-if="currentChildren.length"
+        class="child-grid"
+      >
         <button
           v-for="item in currentChildren"
           :key="item.key"
@@ -38,14 +59,19 @@
           class="child-button"
           @click="openNode(item.key)"
         >
-          <i :class="item.type === PmsKnowledgeObjectType.FOLDER
-            ? 'el-icon-folder'
-            : 'el-icon-document'" />
+          <i
+            :class="item.type === PmsKnowledgeObjectType.FOLDER
+              ? 'el-icon-folder'
+              : 'el-icon-document'"
+          />
           <span>{{ item.name }}</span>
           <i class="el-icon-arrow-right" />
         </button>
       </div>
-      <el-empty v-else description="该文件夹没有级联删除内容" />
+      <el-empty
+        v-else
+        description="该文件夹没有级联删除内容"
+      />
     </div>
     <div v-else-if="currentNode">
       <div class="node-title"><i class="el-icon-document" />{{ currentNode.name }}</div>
@@ -54,7 +80,7 @@
           v-if="preview && currentNode.type === PmsKnowledgeObjectType.DOCUMENT"
           v-dompurify-html="preview.content || '<p>暂无内容</p>'"
           class="pms-knowledge-rich-text"
-        ></div>
+        />
         <template
           v-else-if="preview && currentNode.type === PmsKnowledgeObjectType.FILE && preview.content"
         >
@@ -70,7 +96,10 @@
             :url="preview.content"
           />
         </template>
-        <el-empty v-else description="该内容暂无可预览数据" />
+        <el-empty
+          v-else
+          description="该内容暂无可预览数据"
+        />
       </div>
     </div>
   </div>

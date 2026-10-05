@@ -1,5 +1,10 @@
 <template>
-  <el-form ref="form" :model="modelData" label-width="140px" class="model-step-form">
+  <el-form
+    ref="form"
+    :model="modelData"
+    label-width="140px"
+    class="model-step-form"
+  >
     <el-form-item label="提交人权限">
       <el-checkbox v-model="modelData.allowCancelRunningProcess">允许撤销审批中的申请</el-checkbox>
     </el-form-item>
@@ -7,8 +12,15 @@
       <el-checkbox v-model="modelData.allowWithdrawTask">允许审批人撤回任务</el-checkbox>
     </el-form-item>
     <el-form-item label="流程编码">
-      <el-input v-model="modelData.processIdRule.prefix" placeholder="前缀" style="width: 120px">
-        <el-checkbox slot="prepend" v-model="modelData.processIdRule.enable" />
+      <el-input
+        v-model="modelData.processIdRule.prefix"
+        placeholder="前缀"
+        style="width: 120px"
+      >
+        <el-checkbox
+          slot="prepend"
+          v-model="modelData.processIdRule.enable"
+        />
       </el-input>
       <el-select
         v-model="modelData.processIdRule.infix"
@@ -16,11 +28,26 @@
         placeholder="中缀"
         style="width: 140px; margin-left: 6px"
       >
-        <el-option label="无" value="" />
-        <el-option label="精确到日" value="DAY" />
-        <el-option label="精确到时" value="HOUR" />
-        <el-option label="精确到分" value="MINUTE" />
-        <el-option label="精确到秒" value="SECOND" />
+        <el-option
+          label="无"
+          value=""
+        />
+        <el-option
+          label="精确到日"
+          value="DAY"
+        />
+        <el-option
+          label="精确到时"
+          value="HOUR"
+        />
+        <el-option
+          label="精确到分"
+          value="MINUTE"
+        />
+        <el-option
+          label="精确到秒"
+          value="SECOND"
+        />
       </el-select>
       <el-input
         v-model="modelData.processIdRule.postfix"
@@ -34,7 +61,10 @@
         :disabled="!modelData.processIdRule.enable"
         style="width: 120px; margin-left: 6px"
       />
-      <div v-if="modelData.processIdRule.enable" class="setting-tip">示例：{{ numberExample }}</div>
+      <div
+        v-if="modelData.processIdRule.enable"
+        class="setting-tip"
+      >示例：{{ numberExample }}</div>
     </el-form-item>
     <el-form-item label="自动去重">
       <el-radio-group v-model="modelData.autoApprovalType">
@@ -241,6 +271,20 @@ export default {
       return result
     }
   },
+  watch: {
+    'modelData.formId': {
+      immediate: true,
+      handler(value) {
+        this.loadFormFields(value)
+      }
+    },
+    'modelData.formType'() {
+      this.loadFormFields(this.modelData.formId)
+    }
+  },
+  created() {
+    this.initData()
+  },
   methods: {
     validate() {
       for (const trigger of this.triggerDefinitions) {
@@ -354,20 +398,6 @@ export default {
         this.$set(this.modelData.printTemplateSetting, 'template', this.defaultPrintTemplate())
       }
     }
-  },
-  watch: {
-    'modelData.formId': {
-      immediate: true,
-      handler(value) {
-        this.loadFormFields(value)
-      }
-    },
-    'modelData.formType'() {
-      this.loadFormFields(this.modelData.formId)
-    }
-  },
-  created() {
-    this.initData()
   }
 }
 </script>

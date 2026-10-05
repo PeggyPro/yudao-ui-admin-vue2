@@ -15,7 +15,10 @@
     >
       <div class="print-heading">
         <h2>出库单</h2>
-        <order-barcode :value="printData.no" label="出库单号条码" />
+        <order-barcode
+          :value="printData.no"
+          label="出库单号条码"
+        />
       </div>
       <div class="print-meta">
         <div>出库单号：{{ printData.no || "-" }}</div>

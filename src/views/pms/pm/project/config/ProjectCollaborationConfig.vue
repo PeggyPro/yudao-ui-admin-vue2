@@ -1,13 +1,31 @@
 <template>
   <div>
     <el-table :data="configurationList">
-      <el-table-column label="事项类型" prop="name" width="180" />
-      <el-table-column label="适用项目" prop="projectTypeName" min-width="220" />
-      <el-table-column label="说明" prop="description" min-width="360" />
-      <el-table-column align="center" fixed="right" label="操作" width="120">
+      <el-table-column
+        label="事项类型"
+        prop="name"
+        width="180"
+      />
+      <el-table-column
+        label="适用项目"
+        prop="projectTypeName"
+        min-width="220"
+      />
+      <el-table-column
+        label="说明"
+        prop="description"
+        min-width="360"
+      />
+      <el-table-column
+        align="center"
+        fixed="right"
+        label="操作"
+        width="120"
+      >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['pms:pm:work-item:update']" type="text"
+            v-hasPermi="['pms:pm:work-item:update']"
+            type="text"
             @click="openStatus(scope.row.type)"
           >
             状态设置
@@ -26,7 +44,7 @@ import WorkItemStatusList from '@/views/pms/pm/workitem/status/WorkItemStatusLis
 export default {
   name: 'PmsProjectCollaborationConfig',
   components: { WorkItemStatusList },
-  props: { projectId: { type: Number, required: true }, projectType: { type: Number, required: true } },
+  props: { projectId: { type: Number, required: true }, projectType: { type: Number, required: true }},
   computed: {
     configurationList() {
       return PmsWorkItemConfigurationOptions

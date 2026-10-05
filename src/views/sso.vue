@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="logo"></div>
+    <div class="logo" />
     <!-- 登录区域 -->
     <div class="content">
       <!-- 配图 -->
-      <div class="pic"></div>
+      <div class="pic" />
       <!-- 表单 -->
       <div class="field">
         <!-- [移动端]标题 -->
@@ -14,29 +14,51 @@
 
         <!-- 表单 -->
         <div class="form-cont">
-          <el-tabs class="form" style=" float:none;" value="uname">
-            <el-tab-pane :label="'三方授权（' + client.name + ')'" name="uname">
-            </el-tab-pane>
+          <el-tabs
+            class="form"
+            style=" float:none;"
+            value="uname"
+          >
+            <el-tab-pane
+              :label="'三方授权（' + client.name + ')'"
+              name="uname"
+            />
           </el-tabs>
           <div>
-            <el-form ref="loginForm" :model="loginForm" class="login-form">
+            <el-form
+              ref="loginForm"
+              :model="loginForm"
+              class="login-form"
+            >
               <!-- 授权范围的选择 -->
               此第三方应用请求获得以下权限：
               <el-form-item prop="scopes">
                 <el-checkbox-group v-model="loginForm.scopes">
-                  <el-checkbox v-for="scope in params.scopes" :label="scope" :key="scope"
-                               style="display: block; margin-bottom: -10px;">{{formatScope(scope)}}</el-checkbox>
+                  <el-checkbox
+                    v-for="scope in params.scopes"
+                    :key="scope"
+                    :label="scope"
+                    style="display: block; margin-bottom: -10px;"
+                  >{{ formatScope(scope) }}</el-checkbox>
                 </el-checkbox-group>
               </el-form-item>
               <!-- 下方的登录按钮 -->
               <el-form-item style="width:100%;">
-                <el-button :loading="loading" size="medium" type="primary" style="width:60%;"
-                           @click.native.prevent="handleAuthorize(true)">
+                <el-button
+                  :loading="loading"
+                  size="medium"
+                  type="primary"
+                  style="width:60%;"
+                  @click.native.prevent="handleAuthorize(true)"
+                >
                   <span v-if="!loading">同意授权</span>
                   <span v-else>授 权 中...</span>
                 </el-button>
-                <el-button size="medium" style="width:36%"
-                           @click.native.prevent="handleAuthorize(false)">拒绝</el-button>
+                <el-button
+                  size="medium"
+                  style="width:36%"
+                  @click.native.prevent="handleAuthorize(false)"
+                >拒绝</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -51,28 +73,28 @@
 </template>
 
 <script>
-import {authorize, getAuthorize} from "@/api/login";
+import { authorize, getAuthorize } from '@/api/login'
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       loginForm: {
-        scopes: [], // 已选中的 scope 数组
+        scopes: [] // 已选中的 scope 数组
       },
       params: { // URL 上的 client_id、scope 等参数
         responseType: undefined,
         clientId: undefined,
         redirectUri: undefined,
         state: undefined,
-        scopes: [], // 优先从 query 参数获取；如果未传递，从后端获取
+        scopes: [] // 优先从 query 参数获取；如果未传递，从后端获取
       },
       client: { // 客户端信息
         name: '',
-        logo: '',
+        logo: ''
       },
       loading: false
-    };
+    }
   },
   created() {
     // 防止在没有登录的情况下循环弹窗
@@ -96,7 +118,7 @@ export default {
         const href = res.data
         if (!href) {
           console.log('自动授权未通过！')
-          return;
+          return
         }
         location.href = href
       })
@@ -138,8 +160,8 @@ export default {
         }
         this.loading = true
         // 计算 checkedScopes + uncheckedScopes
-        let checkedScopes;
-        let uncheckedScopes;
+        let checkedScopes
+        let uncheckedScopes
         if (approved) { // 同意授权，按照用户的选择
           checkedScopes = this.loginForm.scopes
           uncheckedScopes = this.params.scopes.filter(item => checkedScopes.indexOf(item) === -1)
@@ -151,7 +173,7 @@ export default {
         this.doAuthorize(false, checkedScopes, uncheckedScopes).then(res => {
           const href = res.data
           if (!href) {
-            return;
+            return
           }
           location.href = href
         }).finally(() => {
@@ -161,7 +183,7 @@ export default {
     },
     doAuthorize(autoApprove, checkedScopes, uncheckedScopes) {
       return authorize(this.params.responseType, this.params.clientId, this.params.redirectUri, this.params.state,
-          autoApprove, checkedScopes, uncheckedScopes)
+        autoApprove, checkedScopes, uncheckedScopes)
     },
     formatScope(scope) {
       // 格式化 scope 授权范围，方便用户理解。
@@ -173,7 +195,7 @@ export default {
       }
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/styles/login.scss";

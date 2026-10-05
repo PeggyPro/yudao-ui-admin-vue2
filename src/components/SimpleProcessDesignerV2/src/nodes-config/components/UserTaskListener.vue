@@ -1,6 +1,15 @@
 <template>
-  <el-form ref="listenerForm" :model="value" label-position="top" size="small">
-    <div v-for="listener in listeners" :key="listener.type" class="task-listener">
+  <el-form
+    ref="listenerForm"
+    :model="value"
+    label-position="top"
+    size="small"
+  >
+    <div
+      v-for="listener in listeners"
+      :key="listener.type"
+      class="task-listener"
+    >
       <el-divider content-position="left">{{ listener.name }}</el-divider>
       <el-switch
         v-model="value[listener.enableKey]"
@@ -20,7 +29,10 @@
           :prop="listener.pathKey"
           :rules="pathRules"
         >
-          <el-input v-model="value[listener.pathKey]" placeholder="https://example.com/listener" />
+          <el-input
+            v-model="value[listener.pathKey]"
+            placeholder="https://example.com/listener"
+          />
         </el-form-item>
         <HttpRequestParamSetting
           :header="value[listener.configKey].header"

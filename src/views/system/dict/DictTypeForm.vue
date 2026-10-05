@@ -1,25 +1,70 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="80px">
-      <el-form-item label="字典名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入字典名称" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="80px"
+    >
+      <el-form-item
+        label="字典名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入字典名称"
+        />
       </el-form-item>
-      <el-form-item label="字典类型" prop="type">
-        <el-input v-model="formData.type" :disabled="formData.id !== undefined" placeholder="请输入字典类型" />
+      <el-form-item
+        label="字典类型"
+        prop="type"
+      >
+        <el-input
+          v-model="formData.type"
+          :disabled="formData.id !== undefined"
+          placeholder="请输入字典类型"
+        />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
-          <el-radio v-for="dict in statusDictDatas" :key="dict.value" :label="parseInt(dict.value)">
+          <el-radio
+            v-for="dict in statusDictDatas"
+            :key="dict.value"
+            :label="parseInt(dict.value)"
+          >
             {{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" placeholder="请输入内容" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入内容"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

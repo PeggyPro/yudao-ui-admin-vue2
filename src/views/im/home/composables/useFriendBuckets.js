@@ -1,24 +1,24 @@
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 /** 字母分桶结果：letter 取 'A'-'Z' 或兜底 '#'；list 桶内按拼音 / 名字自然序 */
 
 /** 取分桶 / 排序键：备注拼音优先 → 昵称拼音 → 名字本身（兜底英文 / 数字） */
 function getSortKey(friend) {
-  return friend.displayNamePinyin || friend.nicknamePinyin || (friend.displayName || friend.nickname || '').toLowerCase();
+  return friend.displayNamePinyin || friend.nicknamePinyin || (friend.displayName || friend.nickname || '').toLowerCase()
 }
 
 /** 取分桶字母：拼音首字母大写，非字母（纯符号 / 数字 / 中文）兜底 '#' */
 function getBucketLetter(friend) {
-  const first = getSortKey(friend).charAt(0);
-  return /^[a-zA-Z]$/.test(first) ? first.toUpperCase() : '#';
+  const first = getSortKey(friend).charAt(0)
+  return /^[a-zA-Z]$/.test(first) ? first.toUpperCase() : '#'
 }
 
 /** 拼音首字母拼接：「lao zhang」→ 'lz'，支持「输 lz 搜老张」 */
 function pinyinInitials(pinyin) {
   if (!pinyin) {
-    return '';
+    return ''
   }
-  return pinyin.split(' ').map(word => word.charAt(0)).join('');
+  return pinyin.split(' ').map(word => word.charAt(0)).join('')
 }
 
 /**
@@ -31,43 +31,43 @@ function pinyinInitials(pinyin) {
  */
 export function useFriendBuckets(friends, keyword) {
   const filtered = computed(() => {
-    const keywordLower = keyword.value.trim().toLowerCase();
+    const keywordLower = keyword.value.trim().toLowerCase()
     if (!keywordLower) {
-      return friends.value;
+      return friends.value
     }
     return friends.value.filter(friend => {
-      const nicknamePinyin = friend.nicknamePinyin || '';
-      const displayNamePinyin = friend.displayNamePinyin || '';
+      const nicknamePinyin = friend.nicknamePinyin || ''
+      const displayNamePinyin = friend.displayNamePinyin || ''
       // 全拼搜索去掉空格，让「laozhang」也能命中「lao zhang」
-      return (friend.nickname || '').toLowerCase().includes(keywordLower) || (friend.displayName || '').toLowerCase().includes(keywordLower) || nicknamePinyin.replace(/\s/g, '').includes(keywordLower) || displayNamePinyin.replace(/\s/g, '').includes(keywordLower) || pinyinInitials(nicknamePinyin).includes(keywordLower) || pinyinInitials(displayNamePinyin).includes(keywordLower);
-    });
-  });
+      return (friend.nickname || '').toLowerCase().includes(keywordLower) || (friend.displayName || '').toLowerCase().includes(keywordLower) || nicknamePinyin.replace(/\s/g, '').includes(keywordLower) || displayNamePinyin.replace(/\s/g, '').includes(keywordLower) || pinyinInitials(nicknamePinyin).includes(keywordLower) || pinyinInitials(displayNamePinyin).includes(keywordLower)
+    })
+  })
   const buckets = computed(() => {
-    const map = new Map();
+    const map = new Map()
     for (const friend of filtered.value) {
-      const letter = getBucketLetter(friend);
+      const letter = getBucketLetter(friend)
       if (!map.has(letter)) {
-        map.set(letter, []);
+        map.set(letter, [])
       }
-      map.get(letter).push(friend);
+      map.get(letter).push(friend)
     }
     const letters = Array.from(map.keys()).sort((a, b) => {
       // '#' 永远排末尾，A-Z 走 localeCompare
       if (a === '#') {
-        return 1;
+        return 1
       }
       if (b === '#') {
-        return -1;
+        return -1
       }
-      return a.localeCompare(b);
-    });
+      return a.localeCompare(b)
+    })
     return letters.map(letter => ({
       letter,
       list: map.get(letter).sort((a, b) => getSortKey(a).localeCompare(getSortKey(b)))
-    }));
-  });
+    }))
+  })
   return {
     filtered,
     buckets
-  };
+  }
 }

@@ -13,7 +13,10 @@
         label-width="80px"
         @submit.native.prevent
       >
-        <el-form-item label="单据编号" prop="no">
+        <el-form-item
+          label="单据编号"
+          prop="no"
+        >
           <el-input
             v-model="queryParams.no"
             placeholder="请输入单据编号"
@@ -22,10 +25,19 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="印章" prop="sealId">
-          <oa-seal-select v-model="queryParams.sealId" style="width: 240px" />
+        <el-form-item
+          label="印章"
+          prop="sealId"
+        >
+          <oa-seal-select
+            v-model="queryParams.sealId"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="单据状态" prop="status">
+        <el-form-item
+          label="单据状态"
+          prop="status"
+        >
           <el-select
             v-model="queryParams.status"
             placeholder="请选择单据状态"
@@ -40,7 +52,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="用印类型" prop="type">
+        <el-form-item
+          label="用印类型"
+          prop="type"
+        >
           <el-select
             v-model="queryParams.type"
             placeholder="请选择用印类型"
@@ -55,7 +70,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="用印方式" prop="mode">
+        <el-form-item
+          label="用印方式"
+          prop="mode"
+        >
           <el-select
             v-model="queryParams.mode"
             placeholder="请选择用印方式"
@@ -70,7 +88,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="用印状态" prop="useStatus">
+        <el-form-item
+          label="用印状态"
+          prop="useStatus"
+        >
           <el-select
             v-model="queryParams.useStatus"
             placeholder="请选择用印状态"
@@ -85,8 +106,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="紧急" prop="urgent">
-          <el-select v-model="queryParams.urgent" placeholder="请选择" clearable style="width: 240px">
+        <el-form-item
+          label="紧急"
+          prop="urgent"
+        >
+          <el-select
+            v-model="queryParams.urgent"
+            placeholder="请选择"
+            clearable
+            style="width: 240px"
+          >
             <el-option
               v-for="dict in urgentOptions"
               :key="String(dict.value)"
@@ -95,7 +124,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="用印时间" prop="expectedUseTime">
+        <el-form-item
+          label="用印时间"
+          prop="expectedUseTime"
+        >
           <el-date-picker
             v-model="queryParams.expectedUseTime"
             type="datetimerange"
@@ -105,10 +137,19 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="申请部门" prop="deptId">
-          <dept-select v-model="queryParams.deptId" style="width: 240px" />
+        <el-form-item
+          label="申请部门"
+          prop="deptId"
+        >
+          <dept-select
+            v-model="queryParams.deptId"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="创建时间" prop="createTime">
+        <el-form-item
+          label="创建时间"
+          prop="createTime"
+        >
           <el-date-picker
             v-model="queryParams.createTime"
             type="datetimerange"
@@ -119,8 +160,15 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <el-button
             v-hasPermi="['oa:seal-apply:create']"
             type="primary"
@@ -133,41 +181,104 @@
     </content-wrap>
     <!-- 申请列表 -->
     <content-wrap>
-      <el-table v-loading="loading" :data="list" border stripe>
-        <el-table-column label="单据编号" min-width="200">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        stripe
+      >
+        <el-table-column
+          label="单据编号"
+          min-width="200"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openDetail(scope.row.id)">
+            <el-button
+              type="text"
+              @click="openDetail(scope.row.id)"
+            >
               {{ scope.row.no }}
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="单据状态" width="110" align="center">
+        <el-table-column
+          label="单据状态"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START" type="info">未提交</el-tag>
-            <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+            <el-tag
+              v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
+              type="info"
+            >未提交</el-tag>
+            <dict-tag
+              v-else
+              :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+              :value="scope.row.status"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="印章编号" prop="sealNo" min-width="160" />
-        <el-table-column label="紧急" width="80" align="center">
+        <el-table-column
+          label="印章编号"
+          prop="sealNo"
+          min-width="160"
+        />
+        <el-table-column
+          label="紧急"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.urgent" />
+            <dict-tag
+              :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+              :value="scope.row.urgent"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="印章" prop="sealName" min-width="160" />
-        <el-table-column label="用印事由" prop="reason" min-width="180" show-overflow-tooltip />
-        <el-table-column label="用印类型" width="110" align="center">
+        <el-table-column
+          label="印章"
+          prop="sealName"
+          min-width="160"
+        />
+        <el-table-column
+          label="用印事由"
+          prop="reason"
+          min-width="180"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="用印类型"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SEAL_APPLY_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SEAL_APPLY_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="用印方式" width="110" align="center">
+        <el-table-column
+          label="用印方式"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SEAL_USE_MODE" :value="scope.row.mode" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SEAL_USE_MODE"
+              :value="scope.row.mode"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="用印状态" width="110" align="center">
+        <el-table-column
+          label="用印状态"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SEAL_USE_STATUS" :value="scope.row.useStatus" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SEAL_USE_STATUS"
+              :value="scope.row.useStatus"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -182,11 +293,33 @@
           :formatter="dateFormatter"
           width="180"
         />
-        <el-table-column label="保管人" prop="keeperName" width="120" />
-        <el-table-column label="申请人" prop="userName" width="120" />
-        <el-table-column label="申请部门" prop="deptName" width="150" />
-        <el-table-column label="创建时间" prop="createTime" :formatter="dateFormatter" width="180" />
-        <el-table-column label="操作" fixed="right" width="220" align="center">
+        <el-table-column
+          label="保管人"
+          prop="keeperName"
+          width="120"
+        />
+        <el-table-column
+          label="申请人"
+          prop="userName"
+          width="120"
+        />
+        <el-table-column
+          label="申请部门"
+          prop="deptName"
+          width="150"
+        />
+        <el-table-column
+          label="创建时间"
+          prop="createTime"
+          :formatter="dateFormatter"
+          width="180"
+        />
+        <el-table-column
+          label="操作"
+          fixed="right"
+          width="220"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.processInstanceId"
@@ -237,7 +370,10 @@
       />
     </content-wrap>
     <!-- 添加或修改用印申请弹窗 -->
-    <oa-seal-apply-form ref="form" @success="getList" />
+    <oa-seal-apply-form
+      ref="form"
+      @success="getList"
+    />
     <!-- 用印申请详情弹窗 -->
     <oa-seal-apply-detail ref="detail" />
   </div>

@@ -3,12 +3,21 @@
     v-if="reason || attachments.length || signPicUrl"
     :class="['task-evidence', { 'task-evidence--compact': compact }]"
   >
-    <div v-if="reason" class="task-evidence__reason">
+    <div
+      v-if="reason"
+      class="task-evidence__reason"
+    >
       {{ reasonLabel }}：{{ reason }}
     </div>
 
-    <div v-if="attachments.length" class="task-evidence__section">
-      <div v-if="!compact" class="task-evidence__label">附件列表：</div>
+    <div
+      v-if="attachments.length"
+      class="task-evidence__section"
+    >
+      <div
+        v-if="!compact"
+        class="task-evidence__label"
+      >附件列表：</div>
       <div class="task-evidence__attachments">
         <template v-for="attachment in attachments">
           <el-image
@@ -29,14 +38,17 @@
             class="task-evidence__file"
             :title="getFileNameFromUrl(attachment)"
           >
-            <i class="el-icon-document"></i>
+            <i class="el-icon-document" />
             {{ getFileNameFromUrl(attachment) }}
           </el-link>
         </template>
       </div>
     </div>
 
-    <div v-if="signPicUrl" class="task-evidence__section">
+    <div
+      v-if="signPicUrl"
+      class="task-evidence__section"
+    >
       <div class="task-evidence__label">签名：</div>
       <el-image
         class="task-evidence__sign"
@@ -46,7 +58,10 @@
       />
     </div>
   </div>
-  <span v-else-if="compact" class="task-evidence-empty">{{ emptyText }}</span>
+  <span
+    v-else-if="compact"
+    class="task-evidence-empty"
+  >{{ emptyText }}</span>
 </template>
 
 <script>

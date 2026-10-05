@@ -9,17 +9,35 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-        <div v-if="selectedItem" slot="content" class="vendor-tooltip">
+      <el-tooltip
+        :disabled="!selectedItem"
+        placement="top"
+        :open-delay="500"
+      >
+        <div
+          v-if="selectedItem"
+          slot="content"
+          class="vendor-tooltip"
+        >
           <div>编码：{{ selectedItem.code }}</div>
           <div>名称：{{ selectedItem.name }}</div>
           <div>简称：{{ selectedItem.nickname || '-' }}</div>
           <div>电话：{{ selectedItem.telephone || '-' }}</div>
         </div>
-        <el-input :value="displayLabel" :placeholder="placeholder" :disabled="disabled" readonly :suffix-icon="suffixIcon" />
+        <el-input
+          :value="displayLabel"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          readonly
+          :suffix-icon="suffixIcon"
+        />
       </el-tooltip>
     </div>
-    <md-vendor-select-dialog ref="dialog" :multiple="false" @selected="handleSelected" />
+    <md-vendor-select-dialog
+      ref="dialog"
+      :multiple="false"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 
@@ -29,8 +47,8 @@ import MdVendorSelectDialog from './MdVendorSelectDialog.vue'
 
 export default {
   name: 'MdVendorSelect',
-  inheritAttrs: false,
   components: { MdVendorSelectDialog },
+  inheritAttrs: false,
   props: {
     value: Number,
     modelValue: Number,

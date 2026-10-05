@@ -2,11 +2,26 @@
   <div class="app-container bpm-model-form">
     <div class="model-form-header">
       <div class="model-form-header__left">
-        <el-button type="text" icon="el-icon-back" class="model-form-back" @click="handleBack" />
+        <el-button
+          type="text"
+          icon="el-icon-back"
+          class="model-form-back"
+          @click="handleBack"
+        />
         <span class="model-form-title">{{ formData.name || title }}</span>
       </div>
-      <el-steps :active="currentStep" finish-status="success" align-center class="model-form-steps">
-        <el-step v-for="step in steps" :key="step.title" :title="step.title" @click.native="handleStepClick(step.index)" />
+      <el-steps
+        :active="currentStep"
+        finish-status="success"
+        align-center
+        class="model-form-steps"
+      >
+        <el-step
+          v-for="step in steps"
+          :key="step.title"
+          :title="step.title"
+          @click.native="handleStepClick(step.index)"
+        />
       </el-steps>
       <div class="model-form-header__right">
         <el-button

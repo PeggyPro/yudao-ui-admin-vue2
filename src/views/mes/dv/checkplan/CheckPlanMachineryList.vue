@@ -1,21 +1,94 @@
 <!-- MES 点检保养方案-设备清单 -->
 <template>
   <div>
-    <el-button v-if="isUpdate" type="primary" plain size="small" icon="el-icon-plus" class="operation-button" @click="openForm">添加设备</el-button>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true" border>
-      <el-table-column label="设备编码" align="center" prop="machineryCode" min-width="120" />
-      <el-table-column label="设备名称" align="center" prop="machineryName" min-width="150" />
-      <el-table-column label="品牌" align="center" prop="machineryBrand" min-width="100" />
-      <el-table-column label="规格型号" align="center" prop="machinerySpecification" min-width="120" />
-      <el-table-column label="备注" align="center" prop="remark" min-width="120" />
-      <el-table-column v-if="isUpdate" label="操作" align="center" width="80"><template v-slot="scope"><el-button type="text" size="mini" @click="handleDelete(scope.row.id)">删除</el-button></template></el-table-column>
+    <el-button
+      v-if="isUpdate"
+      type="primary"
+      plain
+      size="small"
+      icon="el-icon-plus"
+      class="operation-button"
+      @click="openForm"
+    >添加设备</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+      border
+    >
+      <el-table-column
+        label="设备编码"
+        align="center"
+        prop="machineryCode"
+        min-width="120"
+      />
+      <el-table-column
+        label="设备名称"
+        align="center"
+        prop="machineryName"
+        min-width="150"
+      />
+      <el-table-column
+        label="品牌"
+        align="center"
+        prop="machineryBrand"
+        min-width="100"
+      />
+      <el-table-column
+        label="规格型号"
+        align="center"
+        prop="machinerySpecification"
+        min-width="120"
+      />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        min-width="120"
+      />
+      <el-table-column
+        v-if="isUpdate"
+        label="操作"
+        align="center"
+        width="80"
+      ><template slot-scope="scope"><el-button
+        type="text"
+        size="mini"
+        @click="handleDelete(scope.row.id)"
+      >删除</el-button></template></el-table-column>
     </el-table>
-    <el-dialog title="新增设备" :visible.sync="dialogVisible" width="500px" append-to-body>
-      <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="80px">
-        <el-form-item label="设备" prop="machineryId"><dv-machinery-select v-model="formData.machineryId" /></el-form-item>
-        <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+    <el-dialog
+      title="新增设备"
+      :visible.sync="dialogVisible"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        v-loading="formLoading"
+        :model="formData"
+        :rules="formRules"
+        label-width="80px"
+      >
+        <el-form-item
+          label="设备"
+          prop="machineryId"
+        ><dv-machinery-select v-model="formData.machineryId" /></el-form-item>
+        <el-form-item
+          label="备注"
+          prop="remark"
+        ><el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        /></el-form-item>
       </el-form>
-      <span slot="footer"><el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
+      <span slot="footer"><el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
     </el-dialog>
   </div>
 </template>

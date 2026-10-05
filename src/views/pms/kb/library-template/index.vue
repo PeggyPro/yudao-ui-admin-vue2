@@ -1,6 +1,9 @@
 <template>
   <div class="app-container pms-knowledge-library-template">
-    <doc-alert title="【PMS】知识库管理" url="https://doc.iocoder.cn/pms/kb/library/" />
+    <doc-alert
+      title="【PMS】知识库管理"
+      url="https://doc.iocoder.cn/pms/kb/library/"
+    />
 
     <!-- 搜索 -->
     <el-form
@@ -11,7 +14,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="模板名称" prop="name">
+      <el-form-item
+        label="模板名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           clearable
@@ -20,7 +26,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           clearable
@@ -36,8 +45,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['pms:kb:library-template:create']"
           plain
@@ -49,8 +65,18 @@
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column align="center" label="模板名称" min-width="180" prop="name" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        align="center"
+        label="模板名称"
+        min-width="180"
+        prop="name"
+      />
       <el-table-column
         align="center"
         label="模板描述"
@@ -58,12 +84,25 @@
         prop="description"
         show-overflow-tooltip
       />
-      <el-table-column align="center" label="状态" prop="status" width="100">
+      <el-table-column
+        align="center"
+        label="状态"
+        prop="status"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="排序" prop="sort" width="80" />
+      <el-table-column
+        align="center"
+        label="排序"
+        prop="sort"
+        width="80"
+      />
       <el-table-column
         :formatter="dateFormatter"
         align="center"
@@ -71,7 +110,12 @@
         prop="createTime"
         width="180"
       />
-      <el-table-column align="center" fixed="right" label="操作" width="140">
+      <el-table-column
+        align="center"
+        fixed="right"
+        label="操作"
+        width="140"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['pms:kb:library-template:update']"
@@ -96,7 +140,10 @@
     />
 
     <!-- 新增或修改知识库模板 -->
-    <knowledge-library-template-form ref="form" @success="getList" />
+    <knowledge-library-template-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

@@ -1,5 +1,8 @@
 <template>
-  <el-aside class="editor-left" width="261px">
+  <el-aside
+    class="editor-left"
+    width="261px"
+  >
     <el-scrollbar class="library-scrollbar">
       <el-collapse v-model="extendGroups">
         <el-collapse-item
@@ -18,10 +21,16 @@
             class="component-container"
             ghost-class="draggable-ghost"
           >
-            <div v-for="element in group.components" :key="element.id">
+            <div
+              v-for="element in group.components"
+              :key="element.id"
+            >
               <div class="drag-placement">组件放置区域</div>
               <div class="component">
-                <svg-icon :icon-class="element.icon" class-name="component-icon" />
+                <svg-icon
+                  :icon-class="element.icon"
+                  class-name="component-icon"
+                />
                 <span class="component-name">{{ element.name }}</span>
               </div>
             </div>

@@ -122,8 +122,8 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label"><span class="reminder-label">提醒: </span></template>
-          如果未发货，请点击同意退款给买家。<br />
-          如果实际已发货，请主动与买家联系。<br />
+          如果未发货，请点击同意退款给买家。<br>
+          如果实际已发货，请主动与买家联系。<br>
           如果订单整体退款后，优惠券和余额会退还给买家.
         </el-descriptions-item>
       </el-descriptions>
@@ -143,7 +143,7 @@
                   prop="spuName"
                   width="auto"
                 >
-                  <template v-slot="{ row }">
+                  <template slot-scope="{ row }">
                     {{ row.spuName }}
                     <el-tag
                       v-for="property in row.properties"
@@ -159,7 +159,7 @@
                   prop="price"
                   width="150"
                 >
-                  <template v-slot="{ row }">{{ fenToYuan(row.price) }} 元</template>
+                  <template slot-scope="{ row }">{{ fenToYuan(row.price) }} 元</template>
                 </el-table-column>
                 <el-table-column
                   label="数量"
@@ -171,7 +171,7 @@
                   prop="payPrice"
                   width="150"
                 >
-                  <template v-slot="{ row }">{{ fenToYuan(row.payPrice) }} 元</template>
+                  <template slot-scope="{ row }">{{ fenToYuan(row.payPrice) }} 元</template>
                 </el-table-column>
               </el-table>
             </el-col>

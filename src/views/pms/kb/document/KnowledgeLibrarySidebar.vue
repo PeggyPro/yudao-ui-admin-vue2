@@ -16,11 +16,23 @@
         trigger="click"
         @command="$emit('create', $event)"
       >
-        <el-button icon="el-icon-plus" type="text" />
+        <el-button
+          icon="el-icon-plus"
+          type="text"
+        />
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-if="canCreateDocument" command="document">创建文档</el-dropdown-item>
-          <el-dropdown-item v-if="canCreateFolder" command="folder">创建文件夹</el-dropdown-item>
-          <el-dropdown-item v-if="canCreateDocument" command="upload">上传文件</el-dropdown-item>
+          <el-dropdown-item
+            v-if="canCreateDocument"
+            command="document"
+          >创建文档</el-dropdown-item>
+          <el-dropdown-item
+            v-if="canCreateFolder"
+            command="folder"
+          >创建文件夹</el-dropdown-item>
+          <el-dropdown-item
+            v-if="canCreateDocument"
+            command="upload"
+          >上传文件</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -35,7 +47,10 @@
       node-key="key"
       @node-click="$emit('node-click', $event)"
     >
-      <span slot-scope="{ data }" class="tree-node">
+      <span
+        slot-scope="{ data }"
+        class="tree-node"
+      >
         <svg-icon :icon-class="getKnowledgeTreeNodeIcon(data)" />
         <span class="tree-node-label">{{ data.label }}</span>
         <el-dropdown
@@ -44,7 +59,12 @@
           trigger="click"
           @command="handleNodeCommand(data, $event)"
         >
-          <el-button class="node-more" icon="el-icon-more" type="text" @click.stop />
+          <el-button
+            class="node-more"
+            icon="el-icon-more"
+            type="text"
+            @click.stop
+          />
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               v-if="data.kind === 'folder' && canEditKnowledgeContent(data.currentUserLevel)"
@@ -81,7 +101,11 @@
         </el-dropdown>
       </span>
     </el-tree>
-    <el-empty v-else :image-size="72" description="暂无目录或文档" />
+    <el-empty
+      v-else
+      :image-size="72"
+      description="暂无目录或文档"
+    />
     <div v-if="writeStatus">
       <div
         v-hasPermi="['pms:kb:library:delete']"

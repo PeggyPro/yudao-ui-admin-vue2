@@ -7,7 +7,12 @@
     class="member-group-select"
     @input="$emit('input', $event)"
   >
-    <el-option v-for="group in groups" :key="group.id" :label="group.name" :value="group.id" />
+    <el-option
+      v-for="group in groups"
+      :key="group.id"
+      :label="group.name"
+      :value="group.id"
+    />
   </el-select>
 </template>
 

@@ -1,18 +1,51 @@
 <template>
-  <el-dialog title="试算平衡" :visible.sync="visible" width="680px" append-to-body>
+  <el-dialog
+    title="试算平衡"
+    :visible.sync="visible"
+    width="680px"
+    append-to-body
+  >
     <el-result
       :icon="result && result.balanced ? 'success' : 'warning'"
       :title="result && result.balanced ? '期初余额试算平衡' : '期初余额试算不平衡'"
       :sub-title="result && result.balanced ? '借贷金额相等，可以开始记账' : '请检查期初余额和累计发生额'"
     />
-    <el-table :data="rows" border>
-      <el-table-column label="项目" prop="name" min-width="180" />
-      <el-table-column align="right" label="借方" prop="debitAmount" min-width="130" />
-      <el-table-column align="right" label="贷方" prop="creditAmount" min-width="130" />
-      <el-table-column align="right" label="差额" prop="differenceAmount" min-width="130" />
+    <el-table
+      :data="rows"
+      border
+    >
+      <el-table-column
+        label="项目"
+        prop="name"
+        min-width="180"
+      />
+      <el-table-column
+        align="right"
+        label="借方"
+        prop="debitAmount"
+        min-width="130"
+      />
+      <el-table-column
+        align="right"
+        label="贷方"
+        prop="creditAmount"
+        min-width="130"
+      />
+      <el-table-column
+        align="right"
+        label="差额"
+        prop="differenceAmount"
+        min-width="130"
+      />
     </el-table>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="visible = false">我知道了</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        @click="visible = false"
+      >我知道了</el-button>
     </div>
   </el-dialog>
 </template>

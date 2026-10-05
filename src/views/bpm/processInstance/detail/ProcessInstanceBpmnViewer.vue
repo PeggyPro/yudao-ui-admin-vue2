@@ -1,5 +1,8 @@
 <template>
-  <div v-loading="loading" class="process-viewer">
+  <div
+    v-loading="loading"
+    class="process-viewer"
+  >
     <my-process-viewer
       v-if="bpmnXML"
       key="detail-bpmn-viewer"
@@ -7,7 +10,10 @@
       :view="viewerView"
       :prefix="'flowable'"
     />
-    <el-empty v-else description="暂无 BPMN 流程图" />
+    <el-empty
+      v-else
+      description="暂无 BPMN 流程图"
+    />
   </div>
 </template>
 

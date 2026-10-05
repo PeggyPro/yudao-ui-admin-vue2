@@ -9,7 +9,10 @@
       label-width="110px"
       @submit.native.prevent
     >
-      <el-form-item label="单据编号" prop="no">
+      <el-form-item
+        label="单据编号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入单据编号"
@@ -18,14 +21,20 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="单据状态" prop="status">
+      <el-form-item
+        label="单据状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择单据状态"
           clearable
           style="width: 240px"
         >
-          <el-option label="未提交" :value="BpmProcessInstanceStatus.NOT_START" />
+          <el-option
+            label="未提交"
+            :value="BpmProcessInstanceStatus.NOT_START"
+          />
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -34,7 +43,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="会议室名称" prop="roomName">
+      <el-form-item
+        label="会议室名称"
+        prop="roomName"
+      >
         <el-input
           v-model="queryParams.roomName"
           placeholder="请输入会议室名称"
@@ -43,7 +55,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会议主题" prop="title">
+      <el-form-item
+        label="会议主题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入会议主题"
@@ -52,7 +67,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="主持人" prop="moderatorName">
+      <el-form-item
+        label="主持人"
+        prop="moderatorName"
+      >
         <el-input
           v-model="queryParams.moderatorName"
           placeholder="请输入主持人"
@@ -61,10 +79,19 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="申请部门" prop="deptId">
-        <dept-select v-model="queryParams.deptId" style="width: 240px" />
+      <el-form-item
+        label="申请部门"
+        prop="deptId"
+      >
+        <dept-select
+          v-model="queryParams.deptId"
+          style="width: 240px"
+        />
       </el-form-item>
-      <el-form-item label="使用状态" prop="useStatus">
+      <el-form-item
+        label="使用状态"
+        prop="useStatus"
+      >
         <el-select
           v-model="queryParams.useStatus"
           placeholder="请选择使用状态"
@@ -79,7 +106,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="会议开始时间" prop="startTime">
+      <el-form-item
+        label="会议开始时间"
+        prop="startTime"
+      >
         <el-date-picker
           v-model="queryParams.startTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -89,7 +119,10 @@
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="会议结束时间" prop="endTime">
+      <el-form-item
+        label="会议结束时间"
+        prop="endTime"
+      >
         <el-date-picker
           v-model="queryParams.endTime"
           type="datetimerange"
@@ -99,10 +132,19 @@
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="创建人" prop="creator">
-        <user-select-v2 v-model="queryParams.creator" style="width: 240px" />
+      <el-form-item
+        label="创建人"
+        prop="creator"
+      >
+        <user-select-v2
+          v-model="queryParams.creator"
+          style="width: 240px"
+        />
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -113,8 +155,15 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:meeting-room-booking:create']"
           type="primary"
@@ -126,33 +175,87 @@
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="单据编号" prop="no" min-width="220">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="单据编号"
+        prop="no"
+        min-width="220"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="openDetail(scope.row.id)">{{ scope.row.no }}</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="openDetail(scope.row.id)"
+          >{{ scope.row.no }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" min-width="110" align="center">
+      <el-table-column
+        label="单据状态"
+        min-width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+          <el-tag
+            v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
+            type="info"
+            size="small"
+          >
             未提交
           </el-tag>
-          <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            v-else
+            :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="使用状态" min-width="110" align="center">
+      <el-table-column
+        label="使用状态"
+        min-width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_MEETING_ROOM_USE_STATUS" :value="scope.row.useStatus" />
+          <dict-tag
+            :type="DICT_TYPE.OA_MEETING_ROOM_USE_STATUS"
+            :value="scope.row.useStatus"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="会议室名称" prop="roomName" min-width="160" show-overflow-tooltip />
-      <el-table-column label="会议室位置" prop="roomLocation" min-width="160" show-overflow-tooltip />
-      <el-table-column label="会议室类型" width="120" align="center">
+      <el-table-column
+        label="会议室名称"
+        prop="roomName"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="会议室位置"
+        prop="roomLocation"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="会议室类型"
+        width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_MEETING_ROOM_TYPE" :value="scope.row.roomType" />
+          <dict-tag
+            :type="DICT_TYPE.OA_MEETING_ROOM_TYPE"
+            :value="scope.row.roomType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="会议主题" prop="title" min-width="180" show-overflow-tooltip />
+      <el-table-column
+        label="会议主题"
+        prop="title"
+        min-width="180"
+        show-overflow-tooltip
+      />
       <el-table-column
         label="会议开始时间"
         prop="startTime"
@@ -167,9 +270,24 @@
         :formatter="dateFormatter"
         align="center"
       />
-      <el-table-column label="主持人" prop="moderatorName" min-width="120" show-overflow-tooltip />
-      <el-table-column label="申请人" prop="creatorName" min-width="120" show-overflow-tooltip />
-      <el-table-column label="申请部门" prop="deptName" min-width="140" show-overflow-tooltip />
+      <el-table-column
+        label="主持人"
+        prop="moderatorName"
+        min-width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="申请人"
+        prop="creatorName"
+        min-width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="申请部门"
+        prop="deptName"
+        min-width="140"
+        show-overflow-tooltip
+      />
       <el-table-column
         label="创建时间"
         prop="createTime"
@@ -177,7 +295,12 @@
         :formatter="dateFormatter"
         align="center"
       />
-      <el-table-column label="操作" width="200" align="center" fixed="right">
+      <el-table-column
+        label="操作"
+        width="200"
+        align="center"
+        fixed="right"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.processInstanceId"
@@ -250,7 +373,10 @@
     />
 
     <!-- 表单弹窗 -->
-    <oa-meeting-room-booking-form ref="form" @success="getList" />
+    <oa-meeting-room-booking-form
+      ref="form"
+      @success="getList"
+    />
     <!-- 详情弹窗 -->
     <oa-meeting-room-booking-detail ref="detail" />
   </div>

@@ -1,6 +1,14 @@
 <template>
-  <div class="title-bar" :style="{ height: property.height + 'px' }">
-    <el-image v-if="property.bgImgUrl" :src="property.bgImgUrl" fit="cover" class="background-image" />
+  <div
+    class="title-bar"
+    :style="{ height: property.height + 'px' }"
+  >
+    <el-image
+      v-if="property.bgImgUrl"
+      :src="property.bgImgUrl"
+      fit="cover"
+      class="background-image"
+    />
     <div class="title-content">
       <div
         v-if="property.title"
@@ -28,9 +36,16 @@
         {{ property.description }}
       </div>
     </div>
-    <div v-show="property.more.show" class="more" :style="{ color: property.descriptionColor }">
+    <div
+      v-show="property.more.show"
+      class="more"
+      :style="{ color: property.descriptionColor }"
+    >
       <span v-if="property.more.type !== 'icon'">{{ property.more.text }}</span>
-      <svg-icon v-if="property.more.type !== 'text'" icon-class="ep:arrow-right" />
+      <svg-icon
+        v-if="property.more.type !== 'text'"
+        icon-class="ep:arrow-right"
+      />
     </div>
   </div>
 </template>

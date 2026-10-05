@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 /**
  * 语音播放全局互斥
@@ -13,7 +13,7 @@ import { ref } from 'vue';
  * 合并详情）的同一条语音 url 在不同气泡里也是不同 key，避免一处卸载误停另一处仍可见的播放。
  */
 
-const currentTask = ref(null);
+const currentTask = ref(null)
 
 /**
  * 显式停止
@@ -22,19 +22,19 @@ const currentTask = ref(null);
  * - 传 key：仅当当前 task 是该 key 时才停（气泡卸载兜底用，避免误停别人）
  */
 function stop(key) {
-  const task = currentTask.value;
+  const task = currentTask.value
   if (!task) {
-    return;
+    return
   }
   if (key !== undefined && task.key !== key) {
-    return;
+    return
   }
-  task.audio.pause();
+  task.audio.pause()
   // removeAttribute('src') + load() 是 W3C 推荐的释放姿势：不会触发空 src 加载导致的 error 事件，
   // 也能让浏览器立即释放底层 decoder buffer，比 audio.src = '' 更干净
-  task.audio.removeAttribute('src');
-  task.audio.load();
-  currentTask.value = null;
+  task.audio.removeAttribute('src')
+  task.audio.load()
+  currentTask.value = null
 }
 
 /**
@@ -45,42 +45,42 @@ function stop(key) {
  */
 function play(key, url) {
   if (!url) {
-    return;
+    return
   }
   if (currentTask.value?.key === key) {
-    stop(key);
-    return;
+    stop(key)
+    return
   }
-  stop();
-  const audio = new Audio(url);
+  stop()
+  const audio = new Audio(url)
   const task = {
     key,
     url,
     audio
-  };
+  }
   /** 播放结束 / 异常清栈；只清当前任务，避免被后续新任务的回调误清 */
   const finalize = () => {
     if (currentTask.value === task) {
-      currentTask.value = null;
+      currentTask.value = null
     }
-  };
+  }
   audio.addEventListener('ended', finalize, {
     once: true
-  });
+  })
   audio.addEventListener('error', finalize, {
     once: true
-  });
-  currentTask.value = task;
-  audio.play().catch(finalize);
+  })
+  currentTask.value = task
+  audio.play().catch(finalize)
 }
 export function useVoicePlayer() {
   /** 指定 key 是否正在播放 */
   function isPlaying(key) {
-    return currentTask.value?.key === key;
+    return currentTask.value?.key === key
   }
   return {
     isPlaying,
     play,
     stop
-  };
+  }
 }

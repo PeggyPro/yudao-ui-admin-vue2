@@ -16,7 +16,11 @@
         aria-label="清空用车申请"
         @click.stop="handleClear"
       />
-      <i v-else slot="suffix" class="el-input__icon el-icon-search" />
+      <i
+        v-else
+        slot="suffix"
+        class="el-input__icon el-icon-search"
+      />
     </el-input>
     <!-- 用车申请选择弹窗 -->
     <oa-vehicle-apply-select-dialog

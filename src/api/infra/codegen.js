@@ -13,7 +13,7 @@ export function getCodegenTablePage(query) {
 export const getCodegenTableList = (dataSourceConfigId) => {
   return request({
     url: '/infra/codegen/table/list?dataSourceConfigId=' + dataSourceConfigId,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -21,7 +21,7 @@ export const getCodegenTableList = (dataSourceConfigId) => {
 export function getCodegenTable(tableId) {
   return request({
     url: '/infra/codegen/detail?tableId=' + tableId,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -46,7 +46,7 @@ export function syncCodegenFromDB(tableId) {
 export function previewCodegen(tableId) {
   return request({
     url: '/infra/codegen/preview?tableId=' + tableId,
-    method: 'get',
+    method: 'get'
   })
 }
 

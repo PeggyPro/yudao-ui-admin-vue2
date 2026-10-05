@@ -1,7 +1,14 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="fileName" width="900px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="fileName"
+    width="900px"
+  >
     <!-- 获得后端授权地址后预览，关闭弹窗时卸载媒体内容 -->
-    <div v-loading="loading" class="oa-file-preview__body">
+    <div
+      v-loading="loading"
+      class="oa-file-preview__body"
+    >
       <FilePreview
         v-if="dialogVisible && fileUrl"
         :url="fileUrl"
@@ -10,24 +17,31 @@
         :downloadable="true"
       />
     </div>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="loading || !fileUrl" type="primary" @click="handleDownload">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="loading || !fileUrl"
+        type="primary"
+        @click="handleDownload"
+      >
         下 载
       </el-button>
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import FilePreview from '@/components/FilePreview'
 import * as NodeApi from '@/api/oa/file/node'
 import { OA_FILE_PERMISSION_LEVEL } from '@/views/oa/utils/constants'
 
 export default {
   name: 'OaFilePreview',
-  components: { Dialog, FilePreview },
+  components: { AppDialog, FilePreview },
   data() {
     return {
       dialogVisible: false, // 弹窗的是否展示

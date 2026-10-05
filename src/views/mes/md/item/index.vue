@@ -87,7 +87,7 @@
           label="物料编码"
           align="center"
           prop="code"
-        ><template v-slot="scope"><el-link
+        ><template slot-scope="scope"><el-link
           type="primary"
           @click="openForm('detail', scope.row.id)"
         >{{ scope.row.code }}</el-link></template></el-table-column>
@@ -112,7 +112,7 @@
           label="物料/产品"
           align="center"
           prop="itemOrProduct"
-        ><template v-slot="scope"><dict-tag
+        ><template slot-scope="scope"><dict-tag
           :type="DICT_TYPE.MES_MD_ITEM_OR_PRODUCT"
           :value="scope.row.itemOrProduct"
         /></template></el-table-column>
@@ -120,7 +120,7 @@
           label="安全库存"
           align="center"
           prop="safeStockFlag"
-        ><template v-slot="scope"><dict-tag
+        ><template slot-scope="scope"><dict-tag
           :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
           :value="scope.row.safeStockFlag"
         /></template></el-table-column>
@@ -129,7 +129,7 @@
           align="center"
           prop="status"
           width="80"
-        ><template v-slot="scope"><el-switch
+        ><template slot-scope="scope"><el-switch
           v-model="scope.row.status"
           :active-value="0"
           :inactive-value="1"
@@ -141,12 +141,12 @@
           align="center"
           prop="createTime"
           width="180"
-        ><template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
+        ><template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
         <el-table-column
           label="操作"
           align="center"
           width="200"
-        ><template v-slot="scope"><el-button
+        ><template slot-scope="scope"><el-button
           v-hasPermi="['mes:md-item:update']"
           type="text"
           @click="openForm('update', scope.row.id)"

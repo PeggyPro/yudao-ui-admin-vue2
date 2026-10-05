@@ -1,10 +1,25 @@
 <template>
-  <div class="navigation-bar" :style="bgStyle">
+  <div
+    class="navigation-bar"
+    :style="bgStyle"
+  >
     <div class="navigation-cells">
-      <div v-for="(cell, cellIndex) in cellList" :key="cellIndex" :style="getCellStyle(cell)">
+      <div
+        v-for="(cell, cellIndex) in cellList"
+        :key="cellIndex"
+        :style="getCellStyle(cell)"
+      >
         <span v-if="cell.type === 'text'">{{ cell.text }}</span>
-        <img v-else-if="cell.type === 'image'" :src="cell.imgUrl" alt="" class="cell-image" />
-        <SearchBar v-else :property="getSearchProp(cell)" />
+        <img
+          v-else-if="cell.type === 'image'"
+          :src="cell.imgUrl"
+          alt=""
+          class="cell-image"
+        >
+        <SearchBar
+          v-else
+          :property="getSearchProp(cell)"
+        />
       </div>
     </div>
     <img
@@ -12,7 +27,7 @@
       src="@/assets/imgs/diy/app-nav-bar-mp.svg"
       alt=""
       class="mp-capsule"
-    />
+    >
   </div>
 </template>
 

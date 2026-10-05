@@ -38,7 +38,7 @@ export function getSimpleContactList() {
 }
 
 export function getContactListByCustomer(customerId) {
-  return request({ url: '/crm/contact/list-by-customer', method: 'get', params: { customerId } })
+  return request({ url: '/crm/contact/list-by-customer', method: 'get', params: { customerId }})
 }
 
 export function createContactBusinessList(data) {

@@ -39,7 +39,10 @@
               fit="cover"
               :src="template.coverUrl"
             />
-            <div v-else class="template-cover template-cover-placeholder">
+            <div
+              v-else
+              class="template-cover template-cover-placeholder"
+            >
               <i class="el-icon-notebook-2" />
             </div>
             <div class="template-option-text">
@@ -58,7 +61,10 @@
                   fit="cover"
                   :src="selectedTemplate.coverUrl"
                 />
-                <i v-else class="el-icon-notebook-2" />
+                <i
+                  v-else
+                  class="el-icon-notebook-2"
+                />
               </div>
               <div class="template-option-text">
                 <div class="template-name">{{ selectedTemplate.name }}</div>
@@ -76,7 +82,10 @@
               </div>
             </el-scrollbar>
           </template>
-          <div v-else class="blank-preview">
+          <div
+            v-else
+            class="blank-preview"
+          >
             <i class="el-icon-notebook-2 blank-preview-icon" />
             <div class="blank-preview-title">从空白知识库开始</div>
             <div class="blank-preview-description">创建后可自由添加目录和文档</div>
@@ -93,7 +102,10 @@
         :rules="formRules"
         label-width="100px"
       >
-        <el-form-item label="知识库名称" prop="name">
+        <el-form-item
+          label="知识库名称"
+          prop="name"
+        >
           <el-input
             v-model="formData.name"
             maxlength="50"
@@ -101,10 +113,16 @@
             show-word-limit
           />
         </el-form-item>
-        <el-form-item label="知识库封面" prop="coverUrl">
+        <el-form-item
+          label="知识库封面"
+          prop="coverUrl"
+        >
           <upload-img v-model="formData.coverUrl" />
         </el-form-item>
-        <el-form-item label="知识库简介" prop="description">
+        <el-form-item
+          label="知识库简介"
+          prop="description"
+        >
           <el-input
             v-model="formData.description"
             :rows="4"
@@ -114,7 +132,10 @@
             type="textarea"
           />
         </el-form-item>
-        <el-form-item label="可见范围" prop="openStatus">
+        <el-form-item
+          label="可见范围"
+          prop="openStatus"
+        >
           <el-radio-group
             v-model="formData.openStatus"
             :disabled="formType === 'update' && formData.creatorUserId !== currentUserId"
@@ -123,7 +144,10 @@
             <el-radio :label="true">公开：所有人可以查看，成员可以协作</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="formType === 'create'" label="初始管理员">
+        <el-form-item
+          v-if="formType === 'create'"
+          label="初始管理员"
+        >
           <user-select-v2
             v-model="initialAdminUserIds"
             :disabled-ids="[currentUserId]"
@@ -132,7 +156,10 @@
           />
           <div class="form-tip">可管理知识库信息和成员；创建人由系统自动加入</div>
         </el-form-item>
-        <el-form-item v-if="formType === 'create'" label="普通成员">
+        <el-form-item
+          v-if="formType === 'create'"
+          label="普通成员"
+        >
           <user-select-v2
             v-model="initialMemberUserIds"
             :disabled-ids="[currentUserId]"
@@ -142,13 +169,16 @@
           <div class="form-tip">可参与内容协作，具体能力受文档权限控制</div>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="library-dialog-footer">
+      <div
+        slot="footer"
+        class="library-dialog-footer"
+      >
         <el-button
           v-if="formType === 'update'"
           v-hasPermi="['pms:kb:library:update']"
           @click="openMemberForm"
         >成员管理</el-button>
-        <span v-else></span>
+        <span v-else />
         <div>
           <el-button
             v-if="formType === 'create' && templateSelecting"
@@ -162,7 +192,11 @@
               :disabled="formLoading"
               @click="handleTemplateBack"
             >上一步</el-button>
-            <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+            <el-button
+              :disabled="formLoading"
+              type="primary"
+              @click="submitForm"
+            >确 定</el-button>
           </template>
           <el-button @click="dialogVisible = false">取 消</el-button>
         </div>
@@ -170,7 +204,10 @@
     </el-dialog>
 
     <!-- 知识库成员管理 -->
-    <knowledge-member-form ref="memberForm" @success="handleMemberSuccess" />
+    <knowledge-member-form
+      ref="memberForm"
+      @success="handleMemberSuccess"
+    />
   </div>
 </template>
 

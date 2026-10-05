@@ -1,9 +1,24 @@
 <template>
-  <el-card :body-style="bodyStyle" class="content-wrap" shadow="never">
-    <div v-if="title" slot="header" class="content-wrap__header">
+  <el-card
+    :body-style="bodyStyle"
+    class="content-wrap"
+    shadow="never"
+  >
+    <div
+      v-if="title"
+      slot="header"
+      class="content-wrap__header"
+    >
       <span class="content-wrap__title">{{ title }}</span>
-      <el-tooltip v-if="message" effect="dark" placement="right">
-        <div slot="content" class="content-wrap__message">{{ message }}</div>
+      <el-tooltip
+        v-if="message"
+        effect="dark"
+        placement="right"
+      >
+        <div
+          slot="content"
+          class="content-wrap__message"
+        >{{ message }}</div>
         <i class="el-icon-question content-wrap__icon" />
       </el-tooltip>
       <div class="content-wrap__header-right">

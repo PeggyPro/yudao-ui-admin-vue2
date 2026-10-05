@@ -1,19 +1,55 @@
 <template>
   <div class="related-list">
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="出库单编号" align="center" prop="code" min-width="160">
-        <template v-slot="scope">
-          <el-button type="text" @click="handleDetail(scope.row.id)">{{ scope.row.code }}</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="出库单编号"
+        align="center"
+        prop="code"
+        min-width="160"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="handleDetail(scope.row.id)"
+          >{{ scope.row.code }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="出库单名称" align="center" prop="name" min-width="150" />
-      <el-table-column label="销售订单编号" align="center" prop="salesOrderCode" min-width="120" />
-      <el-table-column label="出库日期" align="center" prop="salesDate" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.salesDate) }}</template>
+      <el-table-column
+        label="出库单名称"
+        align="center"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="销售订单编号"
+        align="center"
+        prop="salesOrderCode"
+        min-width="120"
+      />
+      <el-table-column
+        label="出库日期"
+        align="center"
+        prop="salesDate"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.salesDate) }}</template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status" min-width="100">
-        <template v-slot="scope">
-          <dict-tag :type="MES_WM_PRODUCT_SALES_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="单据状态"
+        align="center"
+        prop="status"
+        min-width="100"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="MES_WM_PRODUCT_SALES_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
     </el-table>

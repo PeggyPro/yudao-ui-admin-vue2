@@ -7,27 +7,70 @@
     :before-close="handleBeforeClose"
   >
     <div class="delay-config">
-      <el-form ref="form" :model="draft" :rules="rules" label-position="top" size="small">
-        <el-form-item label="节点名称" prop="name">
-          <el-input v-model="draft.name" maxlength="30" show-word-limit />
+      <el-form
+        ref="form"
+        :model="draft"
+        :rules="rules"
+        label-position="top"
+        size="small"
+      >
+        <el-form-item
+          label="节点名称"
+          prop="name"
+        >
+          <el-input
+            v-model="draft.name"
+            maxlength="30"
+            show-word-limit
+          />
         </el-form-item>
-        <el-form-item label="延迟时间" prop="delayType">
-          <el-radio-group v-model="draft.delayType" @change="changeDelayType">
-            <el-radio-button v-for="item in delayTypes" :key="item.value" :label="item.value">
+        <el-form-item
+          label="延迟时间"
+          prop="delayType"
+        >
+          <el-radio-group
+            v-model="draft.delayType"
+            @change="changeDelayType"
+          >
+            <el-radio-button
+              v-for="item in delayTypes"
+              :key="item.value"
+              :label="item.value"
+            >
               {{ item.label }}
             </el-radio-button>
           </el-radio-group>
         </el-form-item>
         <template v-if="Number(draft.delayType) === DelayTypeEnum.FIXED_TIME_DURATION">
-          <el-form-item label="延迟时长" prop="timeDuration">
-            <el-input-number v-model="draft.timeDuration" :min="1" :precision="0" controls-position="right" />
-            <el-select v-model="draft.timeUnit" class="unit-select">
-              <el-option v-for="item in timeUnitTypes" :key="item.value" :label="item.label" :value="item.value" />
+          <el-form-item
+            label="延迟时长"
+            prop="timeDuration"
+          >
+            <el-input-number
+              v-model="draft.timeDuration"
+              :min="1"
+              :precision="0"
+              controls-position="right"
+            />
+            <el-select
+              v-model="draft.timeUnit"
+              class="unit-select"
+            >
+              <el-option
+                v-for="item in timeUnitTypes"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
             <span class="suffix">后进入下一节点</span>
           </el-form-item>
         </template>
-        <el-form-item v-else label="目标日期时间" prop="dateTime">
+        <el-form-item
+          v-else
+          label="目标日期时间"
+          prop="dateTime"
+        >
           <el-date-picker
             v-model="draft.dateTime"
             type="datetime"
@@ -41,7 +84,10 @@
     </div>
     <div class="drawer-footer">
       <el-button @click="cancelConfig">取 消</el-button>
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
     </div>
   </el-drawer>
 </template>

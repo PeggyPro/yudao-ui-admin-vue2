@@ -16,7 +16,7 @@
           class="material-img"
           :src="item.url"
           :alt="item.name || ''"
-        />
+        >
         <div class="item-name">{{ item.name }}</div>
       </a>
       <el-row class="operation-row">

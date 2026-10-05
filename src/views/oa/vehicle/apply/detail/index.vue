@@ -1,7 +1,11 @@
 <template>
   <div class="app-container oa-vehicle-apply-detail">
     <!-- 申请信息 -->
-    <el-descriptions v-loading="detailLoading" :column="2" border>
+    <el-descriptions
+      v-loading="detailLoading"
+      :column="2"
+      border
+    >
       <el-descriptions-item label="申请单号">{{ detailData.no }}</el-descriptions-item>
       <el-descriptions-item label="车牌号">{{ detailData.vehicleNo }}</el-descriptions-item>
       <el-descriptions-item label="预计出车时间">
@@ -12,11 +16,18 @@
       </el-descriptions-item>
       <el-descriptions-item label="出车地点">{{ detailData.startLocation }}</el-descriptions-item>
       <el-descriptions-item label="预计回车地点">{{ detailData.endLocation }}</el-descriptions-item>
-      <el-descriptions-item label="用车事由" :span="2">
+      <el-descriptions-item
+        label="用车事由"
+        :span="2"
+      >
         {{ detailData.reason }}
       </el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detailData.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+        <el-tag
+          v-if="detailData.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+          size="small"
+        >
           未提交
         </el-tag>
         <dict-tag
@@ -28,9 +39,19 @@
       <el-descriptions-item label="还车状态">
         {{ getDictLabel(DICT_TYPE.OA_VEHICLE_RETURN_STATUS, detailData.returnStatus) }}
       </el-descriptions-item>
-      <el-descriptions-item label="备注" :span="2">{{ detailData.remark }}</el-descriptions-item>
-      <el-descriptions-item label="附件" :span="2">
-        <upload-file :model-value="detailData.fileUrls || []" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="备注"
+        :span="2"
+      >{{ detailData.remark }}</el-descriptions-item>
+      <el-descriptions-item
+        label="附件"
+        :span="2"
+      >
+        <upload-file
+          :model-value="detailData.fileUrls || []"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
     </el-descriptions>
   </div>

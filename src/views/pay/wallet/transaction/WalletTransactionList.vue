@@ -1,20 +1,56 @@
 <template>
   <div>
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" stripe>
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="钱包编号" align="center" prop="walletId" />
-      <el-table-column label="关联业务标题" align="center" prop="title" />
-      <el-table-column label="交易金额" align="center" prop="price">
-        <template v-slot="scope">{{ formatAmount(scope.row.price) }} 元</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      stripe
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="钱包编号"
+        align="center"
+        prop="walletId"
+      />
+      <el-table-column
+        label="关联业务标题"
+        align="center"
+        prop="title"
+      />
+      <el-table-column
+        label="交易金额"
+        align="center"
+        prop="price"
+      >
+        <template slot-scope="scope">{{ formatAmount(scope.row.price) }} 元</template>
       </el-table-column>
-      <el-table-column label="钱包余额" align="center" prop="balance">
-        <template v-slot="scope">{{ formatAmount(scope.row.balance) }} 元</template>
+      <el-table-column
+        label="钱包余额"
+        align="center"
+        prop="balance"
+      >
+        <template slot-scope="scope">{{ formatAmount(scope.row.balance) }} 元</template>
       </el-table-column>
-      <el-table-column label="交易时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="交易时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 

@@ -1,28 +1,64 @@
 <template>
-  <oa-home-panel title="工作计划" v-loading="loading">
+  <oa-home-panel
+    v-loading="loading"
+    title="工作计划"
+  >
     <template slot="actions">
-      <el-button type="text" @click="$router.push('/oa/plan/list')">更多</el-button>
+      <el-button
+        type="text"
+        @click="$router.push('/oa/plan/list')"
+      >更多</el-button>
     </template>
-    <div v-if="loadError" class="load-error">
+    <div
+      v-if="loadError"
+      class="load-error"
+    >
       加载失败，
-      <el-button type="text" @click="getList">重新加载</el-button>
+      <el-button
+        type="text"
+        @click="getList"
+      >重新加载</el-button>
     </div>
-    <el-table :data="list" :show-overflow-tooltip="true" size="small">
-      <el-table-column align="center" label="类型" width="100">
+    <el-table
+      :data="list"
+      :show-overflow-tooltip="true"
+      size="small"
+    >
+      <el-table-column
+        align="center"
+        label="类型"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PLAN_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PLAN_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="计划标题" min-width="260">
+      <el-table-column
+        label="计划标题"
+        min-width="260"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="$router.push('/oa/plan/list')">
+          <el-button
+            type="text"
+            @click="$router.push('/oa/plan/list')"
+          >
             {{ scope.row.title }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" width="100">
+      <el-table-column
+        align="center"
+        label="状态"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PLAN_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PLAN_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
       <el-table-column

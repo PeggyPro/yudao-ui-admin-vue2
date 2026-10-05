@@ -3,11 +3,17 @@
     <div class="user-header">
       <div class="user-info">
         <el-avatar :size="60">
-          <svg-icon icon-class="ep:avatar" :size="60" />
+          <svg-icon
+            icon-class="ep:avatar"
+            :size="60"
+          />
         </el-avatar>
         <span class="user-name">芋道源码</span>
       </div>
-      <svg-icon icon-class="tdesign:qrcode" :size="20" />
+      <svg-icon
+        icon-class="tdesign:qrcode"
+        :size="20"
+      />
     </div>
     <div class="bind-mobile">
       <span class="bind-tip">点击绑定手机号</span>

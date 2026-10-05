@@ -23,7 +23,7 @@
         prop="avatar"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-avatar :src="scope.row.avatar" />
         </template>
       </el-table-column>
@@ -33,7 +33,7 @@
         prop="nickname"
         min-width="120"
       >
-        <template v-slot="scope">{{ scope.row.nickname || (scope.row.userId === 0 ? '虚拟团员' : '-') }}</template>
+        <template slot-scope="scope">{{ scope.row.nickname || (scope.row.userId === 0 ? '虚拟团员' : '-') }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -41,7 +41,7 @@
         prop="headId"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-tag :type="isHead(scope.row) ? 'danger' : 'info'">
             {{ isHead(scope.row) ? '团长' : '团员' }}
           </el-tag>
@@ -53,7 +53,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) || '-' }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) || '-' }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -61,7 +61,7 @@
         prop="endTime"
         width="180"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.endTime) || '-' }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.endTime) || '-' }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -69,7 +69,7 @@
         prop="status"
         min-width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="recordStatusDictType"
             :value="scope.row.status"

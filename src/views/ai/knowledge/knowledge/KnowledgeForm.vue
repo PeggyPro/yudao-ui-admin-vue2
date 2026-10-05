@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="title" v-model="visible" append-to-body>
+  <AppDialog
+    v-model="visible"
+    :title="title"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="loading"
@@ -7,10 +11,19 @@
       :rules="rules"
       label-width="130px"
     >
-      <el-form-item label="知识库名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入知识库名称" />
+      <el-form-item
+        label="知识库名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入知识库名称"
+        />
       </el-form-item>
-      <el-form-item label="知识库描述" prop="description">
+      <el-form-item
+        label="知识库描述"
+        prop="description"
+      >
         <el-input
           v-model="formData.description"
           type="textarea"
@@ -18,7 +31,10 @@
           placeholder="请输入知识库描述"
         />
       </el-form-item>
-      <el-form-item label="向量模型" prop="embeddingModelId">
+      <el-form-item
+        label="向量模型"
+        prop="embeddingModelId"
+      >
         <el-select
           v-model="formData.embeddingModelId"
           clearable
@@ -33,7 +49,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="检索 topK" prop="topK">
+      <el-form-item
+        label="检索 topK"
+        prop="topK"
+      >
         <el-input-number
           v-model="formData.topK"
           :min="0"
@@ -43,7 +62,10 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="检索相似度阈值" prop="similarityThreshold">
+      <el-form-item
+        label="检索相似度阈值"
+        prop="similarityThreshold"
+      >
         <el-input-number
           v-model="formData.similarityThreshold"
           :min="0"
@@ -55,7 +77,10 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="是否启用" prop="status">
+      <el-form-item
+        label="是否启用"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
           <el-radio
             v-for="dict in statusOptions"
@@ -67,15 +92,22 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="loading" @click="submitForm">确 定</el-button>
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="loading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </span>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { KnowledgeApi } from '@/api/ai/knowledge/knowledge'
 import { ModelApi } from '@/api/ai/model/model'
 import { getDictDatas, DICT_TYPE } from '@/utils/dict'
@@ -84,7 +116,7 @@ import { AiModelTypeEnum } from '@/views/ai/utils/constants'
 
 export default {
   name: 'KnowledgeForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       visible: false,

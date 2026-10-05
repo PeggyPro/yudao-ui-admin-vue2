@@ -266,7 +266,9 @@ export default {
           .filter(item => Boolean(item.id))
           .map(item => updateSalarySlipRemark({ id: item.id, remark })))
         if (success) await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     openDetail(id) { this.$refs.detail.open(id) }
   }

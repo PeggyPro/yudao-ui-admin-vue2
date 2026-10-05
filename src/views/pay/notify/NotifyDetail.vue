@@ -1,31 +1,58 @@
 <template>
   <el-dialog
+    v-dialogDrag
     title="通知详情"
     :visible.sync="dialogVisible"
     width="700px"
     append-to-body
-    v-dialogDrag
   >
     <div v-loading="detailLoading">
-      <el-descriptions :column="2" border size="small" label-class-name="desc-label">
-        <el-descriptions-item label="通知状态" :span="2">
-          <dict-tag v-if="hasValue(detailData.status)" :type="DICT_TYPE.PAY_NOTIFY_STATUS" :value="detailData.status" />
+      <el-descriptions
+        :column="2"
+        border
+        size="small"
+        label-class-name="desc-label"
+      >
+        <el-descriptions-item
+          label="通知状态"
+          :span="2"
+        >
+          <dict-tag
+            v-if="hasValue(detailData.status)"
+            :type="DICT_TYPE.PAY_NOTIFY_STATUS"
+            :value="detailData.status"
+          />
           <span v-else>-</span>
         </el-descriptions-item>
-        <el-descriptions-item label="商户订单编号" :span="2">
+        <el-descriptions-item
+          label="商户订单编号"
+          :span="2"
+        >
           <el-tag>{{ detailData.merchantOrderId || '-' }}</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item v-if="detailData.merchantRefundId" label="商户退款编号" :span="2">
+        <el-descriptions-item
+          v-if="detailData.merchantRefundId"
+          label="商户退款编号"
+          :span="2"
+        >
           <el-tag>{{ detailData.merchantRefundId }}</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item v-if="detailData.merchantTransferId" label="商户转账编号" :span="2">
+        <el-descriptions-item
+          v-if="detailData.merchantTransferId"
+          label="商户转账编号"
+          :span="2"
+        >
           <el-tag>{{ detailData.merchantTransferId }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="应用编号">{{ detailData.appId || '-' }}</el-descriptions-item>
         <el-descriptions-item label="应用名称">{{ detailData.appName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="关联编号">{{ detailData.dataId || '-' }}</el-descriptions-item>
         <el-descriptions-item label="通知类型">
-          <dict-tag v-if="hasValue(detailData.type)" :type="DICT_TYPE.PAY_NOTIFY_TYPE" :value="detailData.type" />
+          <dict-tag
+            v-if="hasValue(detailData.type)"
+            :type="DICT_TYPE.PAY_NOTIFY_TYPE"
+            :value="detailData.type"
+          />
           <span v-else>-</span>
         </el-descriptions-item>
         <el-descriptions-item label="通知次数">{{ detailData.notifyTimes == null ? '-' : detailData.notifyTimes }}</el-descriptions-item>
@@ -37,27 +64,59 @@
       </el-descriptions>
 
       <el-divider />
-      <el-descriptions :column="1" border size="small" direction="vertical">
+      <el-descriptions
+        :column="1"
+        border
+        size="small"
+        direction="vertical"
+      >
         <el-descriptions-item label="回调日志">
           <el-table :data="detailData.logs || []">
-            <el-table-column label="日志编号" align="center" prop="id" />
-            <el-table-column label="通知状态" align="center" prop="status">
-              <template v-slot="scope">
-                <dict-tag :type="DICT_TYPE.PAY_NOTIFY_STATUS" :value="scope.row.status" />
+            <el-table-column
+              label="日志编号"
+              align="center"
+              prop="id"
+            />
+            <el-table-column
+              label="通知状态"
+              align="center"
+              prop="status"
+            >
+              <template slot-scope="scope">
+                <dict-tag
+                  :type="DICT_TYPE.PAY_NOTIFY_STATUS"
+                  :value="scope.row.status"
+                />
               </template>
             </el-table-column>
-            <el-table-column label="通知次数" align="center" prop="notifyTimes" />
-            <el-table-column label="通知时间" align="center" prop="lastExecuteTime" width="180">
-              <template v-slot="scope">
+            <el-table-column
+              label="通知次数"
+              align="center"
+              prop="notifyTimes"
+            />
+            <el-table-column
+              label="通知时间"
+              align="center"
+              prop="lastExecuteTime"
+              width="180"
+            >
+              <template slot-scope="scope">
                 <span>{{ parseTime(scope.row.createTime) || '-' }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="响应结果" align="center" prop="response" />
+            <el-table-column
+              label="响应结果"
+              align="center"
+              prop="response"
+            />
           </el-table>
         </el-descriptions-item>
       </el-descriptions>
     </div>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

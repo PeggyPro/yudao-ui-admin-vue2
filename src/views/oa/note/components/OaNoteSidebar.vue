@@ -3,7 +3,10 @@
     <!-- 分类导航 -->
     <div class="sidebar-header">
       <span>分类</span>
-      <el-button type="text" @click="$emit('manage')">管理分类</el-button>
+      <el-button
+        type="text"
+        @click="$emit('manage')"
+      >管理分类</el-button>
     </div>
     <el-menu
       class="sidebar-menu"
@@ -11,14 +14,20 @@
       aria-label="笔记分类"
       @select="handleCategorySelect"
     >
-      <el-menu-item index="all" class="sidebar-menu-item">最近</el-menu-item>
+      <el-menu-item
+        index="all"
+        class="sidebar-menu-item"
+      >最近</el-menu-item>
       <el-menu-item
         v-for="category in categories"
         :key="category.id"
         :index="String(category.id)"
         class="sidebar-menu-item"
       >
-        <span class="truncate" :title="category.name">{{ category.name }}</span>
+        <span
+          class="truncate"
+          :title="category.name"
+        >{{ category.name }}</span>
       </el-menu-item>
     </el-menu>
 
@@ -31,7 +40,10 @@
       aria-label="笔记类型"
       @select="handleTypeSelect"
     >
-      <el-menu-item index="all" class="sidebar-menu-item">全部类型</el-menu-item>
+      <el-menu-item
+        index="all"
+        class="sidebar-menu-item"
+      >全部类型</el-menu-item>
       <el-menu-item
         v-for="dict in typeOptions"
         :key="dict.value"

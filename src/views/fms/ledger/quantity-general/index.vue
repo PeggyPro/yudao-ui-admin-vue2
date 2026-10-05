@@ -1,7 +1,13 @@
 <template>
   <div class="app-container fms-ledger-page">
-    <doc-alert title="【账簿】账簿管理" url="https://doc.iocoder.cn/fms/ledger/" />
-    <el-card class="ledger-toolbar" shadow="never">
+    <doc-alert
+      title="【账簿】账簿管理"
+      url="https://doc.iocoder.cn/fms/ledger/"
+    />
+    <el-card
+      class="ledger-toolbar"
+      shadow="never"
+    >
       <FmsLedgerSearchBar
         :end-month="queryParams.endMonth"
         :export-loading="exportLoading"
@@ -15,37 +21,142 @@
       />
     </el-card>
     <el-card shadow="never">
-      <el-table id="fms-quantity-general-ledger-table" v-loading="loading || accountSetLoading" :data="list" border stripe height="calc(100vh - 285px)">
-        <el-table-column align="center" label="科目编码" prop="subjectCode" width="125" />
-        <el-table-column label="科目名称" min-width="150" prop="subjectName" />
-        <el-table-column align="center" label="单位" prop="quantityUnit" width="80" />
-        <el-table-column align="center" label="期初余额">
-          <el-table-column align="center" label="方向" prop="openingBalanceDirection" width="70" />
-          <el-table-column align="right" label="数量" width="105"><template slot-scope="scope">{{ formatMoney(scope.row.openingQuantity) }}</template></el-table-column>
-          <el-table-column align="right" label="单价" width="110"><template slot-scope="scope">{{ formatMoney(scope.row.openingUnitPrice) }}</template></el-table-column>
-          <el-table-column align="right" label="金额" width="125"><template slot-scope="scope">{{ formatMoney(getOpeningAmount(scope.row)) }}</template></el-table-column>
+      <el-table
+        id="fms-quantity-general-ledger-table"
+        v-loading="loading || accountSetLoading"
+        :data="list"
+        border
+        stripe
+        height="calc(100vh - 285px)"
+      >
+        <el-table-column
+          align="center"
+          label="科目编码"
+          prop="subjectCode"
+          width="125"
+        />
+        <el-table-column
+          label="科目名称"
+          min-width="150"
+          prop="subjectName"
+        />
+        <el-table-column
+          align="center"
+          label="单位"
+          prop="quantityUnit"
+          width="80"
+        />
+        <el-table-column
+          align="center"
+          label="期初余额"
+        >
+          <el-table-column
+            align="center"
+            label="方向"
+            prop="openingBalanceDirection"
+            width="70"
+          />
+          <el-table-column
+            align="right"
+            label="数量"
+            width="105"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.openingQuantity) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="单价"
+            width="110"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.openingUnitPrice) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="金额"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(getOpeningAmount(scope.row)) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本期借方">
-          <el-table-column align="right" label="数量" width="105"><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitQuantity) }}</template></el-table-column>
-          <el-table-column align="right" label="金额" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本期借方"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            width="105"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitQuantity) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="金额"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本期贷方">
-          <el-table-column align="right" label="数量" width="105"><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditQuantity) }}</template></el-table-column>
-          <el-table-column align="right" label="金额" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本期贷方"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            width="105"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditQuantity) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="金额"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本年累计借方">
-          <el-table-column align="right" label="数量" width="105"><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitQuantity) }}</template></el-table-column>
-          <el-table-column align="right" label="金额" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本年累计借方"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            width="105"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitQuantity) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="金额"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本年累计贷方">
-          <el-table-column align="right" label="数量" width="105"><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditQuantity) }}</template></el-table-column>
-          <el-table-column align="right" label="金额" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本年累计贷方"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            width="105"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditQuantity) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="金额"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="期末余额">
-          <el-table-column align="center" label="方向" prop="endingBalanceDirection" width="70" />
-          <el-table-column align="right" label="数量" width="105"><template slot-scope="scope">{{ formatMoney(scope.row.endingQuantity) }}</template></el-table-column>
-          <el-table-column align="right" label="单价" width="110"><template slot-scope="scope">{{ formatMoney(scope.row.endingUnitPrice) }}</template></el-table-column>
-          <el-table-column align="right" label="金额" width="125"><template slot-scope="scope">{{ formatMoney(getEndingAmount(scope.row)) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="期末余额"
+        >
+          <el-table-column
+            align="center"
+            label="方向"
+            prop="endingBalanceDirection"
+            width="70"
+          />
+          <el-table-column
+            align="right"
+            label="数量"
+            width="105"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.endingQuantity) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="单价"
+            width="110"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.endingUnitPrice) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="金额"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(getEndingAmount(scope.row)) }}</template></el-table-column>
         </el-table-column>
       </el-table>
     </el-card>

@@ -1,30 +1,75 @@
 <template>
   <div class="music-list">
     <div class="music-list__body">
-      <el-tabs v-model="currentType" class="music-list__tabs">
-        <el-tab-pane v-loading="loading" label="我的创作" name="mine">
-          <el-row v-if="mySongList.length" :gutter="12">
-            <el-col v-for="song in mySongList" :key="song.id" :span="24">
-              <MusicSongCard :song-info="song" :active="currentSong.id === song.id" @play="setCurrentSong(song)" />
+      <el-tabs
+        v-model="currentType"
+        class="music-list__tabs"
+      >
+        <el-tab-pane
+          v-loading="loading"
+          label="我的创作"
+          name="mine"
+        >
+          <el-row
+            v-if="mySongList.length"
+            :gutter="12"
+          >
+            <el-col
+              v-for="song in mySongList"
+              :key="song.id"
+              :span="24"
+            >
+              <MusicSongCard
+                :song-info="song"
+                :active="currentSong.id === song.id"
+                @play="setCurrentSong(song)"
+              />
             </el-col>
           </el-row>
-          <el-empty v-else description="暂无音乐" />
+          <el-empty
+            v-else
+            description="暂无音乐"
+          />
         </el-tab-pane>
 
-        <el-tab-pane v-loading="loading" label="试听广场" name="square">
-          <el-row v-if="squareSongList.length" :gutter="12">
-            <el-col v-for="song in squareSongList" :key="song.id" :span="24">
-              <MusicSongCard :song-info="song" :active="currentSong.id === song.id" @play="setCurrentSong(song)" />
+        <el-tab-pane
+          v-loading="loading"
+          label="试听广场"
+          name="square"
+        >
+          <el-row
+            v-if="squareSongList.length"
+            :gutter="12"
+          >
+            <el-col
+              v-for="song in squareSongList"
+              :key="song.id"
+              :span="24"
+            >
+              <MusicSongCard
+                :song-info="song"
+                :active="currentSong.id === song.id"
+                @play="setCurrentSong(song)"
+              />
             </el-col>
           </el-row>
-          <el-empty v-else description="暂无音乐" />
+          <el-empty
+            v-else
+            description="暂无音乐"
+          />
         </el-tab-pane>
       </el-tabs>
 
-      <MusicSongInfo class="music-list__info" :song-info="currentSong" />
+      <MusicSongInfo
+        class="music-list__info"
+        :song-info="currentSong"
+      />
     </div>
 
-    <MusicAudioBar class="music-list__bar" :song-info="currentSong" />
+    <MusicAudioBar
+      class="music-list__bar"
+      :song-info="currentSong"
+    />
   </div>
 </template>
 

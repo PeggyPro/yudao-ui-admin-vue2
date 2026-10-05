@@ -6,8 +6,17 @@
     </div>
 
     <div class="metric-card-row">
-      <el-button circle :disabled="!canScrollLeft" icon="el-icon-arrow-left" @click="scrollCards(-1)" />
-      <div ref="cardScroller" class="metric-card-scroller" @scroll="updateScrollState">
+      <el-button
+        circle
+        :disabled="!canScrollLeft"
+        icon="el-icon-arrow-left"
+        @click="scrollCards(-1)"
+      />
+      <div
+        ref="cardScroller"
+        class="metric-card-scroller"
+        @scroll="updateScrollState"
+      >
         <button
           v-for="metric in metrics"
           :key="metric.key"
@@ -18,9 +27,17 @@
           <span class="metric-card-name">{{ metric.name }}</span>
           <strong class="metric-card-amount">{{ formatAmount(metric.amount) }}</strong>
         </button>
-        <div v-if="metrics.length === 0" class="metric-card-empty">暂无财务指标</div>
+        <div
+          v-if="metrics.length === 0"
+          class="metric-card-empty"
+        >暂无财务指标</div>
       </div>
-      <el-button circle :disabled="!canScrollRight" icon="el-icon-arrow-right" @click="scrollCards(1)" />
+      <el-button
+        circle
+        :disabled="!canScrollRight"
+        icon="el-icon-arrow-right"
+        @click="scrollCards(1)"
+      />
     </div>
   </div>
 </template>

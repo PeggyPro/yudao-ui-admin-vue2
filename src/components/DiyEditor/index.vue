@@ -4,24 +4,44 @@
       <slot name="toolBarLeft" />
       <div class="header-center">{{ title }}</div>
       <el-button-group class="header-right">
-        <el-tooltip content="重置" placement="bottom">
+        <el-tooltip
+          content="重置"
+          placement="bottom"
+        >
           <el-button @click="handleReset"><i class="el-icon-refresh-left" /></el-button>
         </el-tooltip>
-        <el-tooltip v-if="previewUrl" content="预览" placement="bottom">
+        <el-tooltip
+          v-if="previewUrl"
+          content="预览"
+          placement="bottom"
+        >
           <el-button @click="handlePreview"><i class="el-icon-view" /></el-button>
         </el-tooltip>
-        <el-tooltip content="保存" placement="bottom">
+        <el-tooltip
+          content="保存"
+          placement="bottom"
+        >
           <el-button @click="handleSave"><i class="el-icon-check" /></el-button>
         </el-tooltip>
       </el-button-group>
     </el-header>
 
     <el-container class="editor-body">
-      <ComponentLibrary v-if="libs && libs.length > 0" :list="libs" />
+      <ComponentLibrary
+        v-if="libs && libs.length > 0"
+        :list="libs"
+      />
 
-      <div class="editor-center page-prop-area" @click="handlePageSelected">
+      <div
+        class="editor-center page-prop-area"
+        @click="handlePageSelected"
+      >
         <div class="editor-design-top">
-          <img alt="" class="status-bar" src="@/assets/imgs/diy/statusBar.svg" />
+          <img
+            alt=""
+            class="status-bar"
+            src="@/assets/imgs/diy/statusBar.svg"
+          >
           <ComponentContainer
             v-if="showNavigationBar"
             :active="selectedComponent && selectedComponent.id === navigationBarComponent.id"
@@ -76,7 +96,10 @@
           </VueDraggable>
         </el-scrollbar>
 
-        <div v-if="showTabBar" class="editor-design-bottom">
+        <div
+          v-if="showTabBar"
+          class="editor-design-bottom"
+        >
           <ComponentContainer
             :active="selectedComponent && selectedComponent.id === tabBarComponent.id"
             :component="tabBarComponent"
@@ -110,9 +133,19 @@
         </div>
       </div>
 
-      <el-aside v-if="selectedComponent && selectedComponent.property" class="editor-right" width="350px">
-        <el-card class="property-card" shadow="never">
-          <div slot="header" class="property-title">
+      <el-aside
+        v-if="selectedComponent && selectedComponent.property"
+        class="editor-right"
+        width="350px"
+      >
+        <el-card
+          class="property-card"
+          shadow="never"
+        >
+          <div
+            slot="header"
+            class="property-title"
+          >
             <svg-icon :icon-class="selectedComponent.icon" />
             <span>{{ selectedComponent.name }}</span>
           </div>
@@ -127,12 +160,24 @@
       </el-aside>
     </el-container>
 
-    <el-dialog title="预览" :visible.sync="previewDialogVisible" width="700px" append-to-body>
+    <el-dialog
+      title="预览"
+      :visible.sync="previewDialogVisible"
+      width="700px"
+      append-to-body
+    >
       <div class="preview-dialog">
-        <iframe :src="previewUrl" class="preview-frame" frameborder="0"></iframe>
+        <iframe
+          :src="previewUrl"
+          class="preview-frame"
+          frameborder="0"
+        />
         <div class="preview-qrcode">
           <span>手机扫码预览</span>
-          <QrcodeVue :value="previewUrl" :size="180" />
+          <QrcodeVue
+            :value="previewUrl"
+            :size="180"
+          />
         </div>
       </div>
     </el-dialog>

@@ -1,8 +1,18 @@
 <template>
-  <div v-if="property.items.length === 0" class="carousel-placeholder">
-    <svg-icon icon-class="tdesign:image" :size="120" color="#606266" />
+  <div
+    v-if="property.items.length === 0"
+    class="carousel-placeholder"
+  >
+    <svg-icon
+      icon-class="tdesign:image"
+      :size="120"
+      color="#606266"
+    />
   </div>
-  <div v-else class="carousel-wrap">
+  <div
+    v-else
+    class="carousel-wrap"
+  >
     <el-carousel
       :height="property.height + 'px'"
       :type="property.type === 'card' ? 'card' : ''"
@@ -11,11 +21,20 @@
       :indicator-position="property.indicator === 'number' ? 'none' : undefined"
       @change="handleIndexChange"
     >
-      <el-carousel-item v-for="(item, index) in property.items" :key="index">
-        <el-image class="carousel-image" :src="item.imgUrl" />
+      <el-carousel-item
+        v-for="(item, index) in property.items"
+        :key="index"
+      >
+        <el-image
+          class="carousel-image"
+          :src="item.imgUrl"
+        />
       </el-carousel-item>
     </el-carousel>
-    <div v-if="property.indicator === 'number'" class="number-indicator">
+    <div
+      v-if="property.indicator === 'number'"
+      class="number-indicator"
+    >
       {{ currentIndex }} / {{ property.items.length }}
     </div>
   </div>

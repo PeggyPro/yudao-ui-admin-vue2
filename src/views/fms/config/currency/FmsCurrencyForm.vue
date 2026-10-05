@@ -1,19 +1,65 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="480px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="币别编码" prop="code">
-        <el-input v-model="formData.code" :disabled="standardCurrency" maxlength="64" placeholder="请输入币别编码，如 USD" @blur="formData.code = (formData.code || '').toUpperCase()" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="480px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
+      <el-form-item
+        label="币别编码"
+        prop="code"
+      >
+        <el-input
+          v-model="formData.code"
+          :disabled="standardCurrency"
+          maxlength="64"
+          placeholder="请输入币别编码，如 USD"
+          @blur="formData.code = (formData.code || '').toUpperCase()"
+        />
       </el-form-item>
-      <el-form-item label="币别名称" prop="name">
-        <el-input v-model="formData.name" maxlength="255" placeholder="请输入币别名称" />
+      <el-form-item
+        label="币别名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="255"
+          placeholder="请输入币别名称"
+        />
       </el-form-item>
-      <el-form-item label="汇率" prop="exchangeRate">
-        <el-input-number v-model="formData.exchangeRate" :disabled="standardCurrency" :min="0.000001" :max="999999999999.999999" :precision="6" :step="0.01" controls-position="right" style="width: 100%" />
+      <el-form-item
+        label="汇率"
+        prop="exchangeRate"
+      >
+        <el-input-number
+          v-model="formData.exchangeRate"
+          :disabled="standardCurrency"
+          :min="0.000001"
+          :max="999999999999.999999"
+          :precision="6"
+          :step="0.01"
+          controls-position="right"
+          style="width: 100%"
+        />
         <div class="form-tip">{{ standardCurrency ? '本位币汇率固定为 1' : '按 1 单位外币折算本位币填写' }}</div>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

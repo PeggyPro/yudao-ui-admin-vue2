@@ -1,18 +1,25 @@
 <template>
   <el-dialog
+    v-dialogDrag
     title="转账单详情"
     :visible.sync="visible"
     width="700px"
     append-to-body
-    v-dialogDrag
   >
     <div v-loading="loading">
-      <el-descriptions :column="2" label-class-name="desc-label">
+      <el-descriptions
+        :column="2"
+        label-class-name="desc-label"
+      >
         <el-descriptions-item label="商户单号">
           <el-tag size="small">{{ detailData.merchantTransferId }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="转账单号">
-          <el-tag v-if="detailData.no" type="warning" size="small">{{ detailData.no }}</el-tag>
+          <el-tag
+            v-if="detailData.no"
+            type="warning"
+            size="small"
+          >{{ detailData.no }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="应用编号">{{ detailData.appId }}</el-descriptions-item>
         <el-descriptions-item label="转账状态">
@@ -23,7 +30,10 @@
           />
         </el-descriptions-item>
         <el-descriptions-item label="转账金额">
-          <el-tag type="success" size="small">￥{{ formatPrice(detailData.price) }}</el-tag>
+          <el-tag
+            type="success"
+            size="small"
+          >￥{{ formatPrice(detailData.price) }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="转账时间">{{ parseTime(detailData.successTime) }}</el-descriptions-item>
         <el-descriptions-item label="创建时间">{{ parseTime(detailData.createTime) }}</el-descriptions-item>
@@ -31,7 +41,10 @@
 
       <el-divider />
 
-      <el-descriptions :column="2" label-class-name="desc-label">
+      <el-descriptions
+        :column="2"
+        label-class-name="desc-label"
+      >
         <el-descriptions-item label="收款人姓名">{{ detailData.userName }}</el-descriptions-item>
         <el-descriptions-item label="收款人账号">{{ detailData.userAccount }}</el-descriptions-item>
         <el-descriptions-item label="支付渠道">
@@ -43,7 +56,11 @@
         </el-descriptions-item>
         <el-descriptions-item label="支付 IP">{{ detailData.userIp }}</el-descriptions-item>
         <el-descriptions-item label="渠道单号">
-          <el-tag v-if="detailData.channelTransferNo" type="success" size="small">
+          <el-tag
+            v-if="detailData.channelTransferNo"
+            type="success"
+            size="small"
+          >
             {{ detailData.channelTransferNo }}
           </el-tag>
         </el-descriptions-item>
@@ -52,13 +69,21 @@
 
       <el-divider />
 
-      <el-descriptions :column="1" label-class-name="desc-label" direction="vertical" border>
+      <el-descriptions
+        :column="1"
+        label-class-name="desc-label"
+        direction="vertical"
+        border
+      >
         <el-descriptions-item label="转账渠道通知内容">
           <pre class="notify-content">{{ detailData.channelNotifyData }}</pre>
         </el-descriptions-item>
       </el-descriptions>
     </div>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="visible = false">取 消</el-button>
     </div>
   </el-dialog>

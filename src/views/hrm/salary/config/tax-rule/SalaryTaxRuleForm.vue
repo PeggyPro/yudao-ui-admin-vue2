@@ -12,12 +12,22 @@
       :rules="formRules"
       label-width="96px"
     >
-      <el-form-item label="方案名称" prop="name">
-        <el-input v-model="formData.name" maxlength="64" placeholder="请输入方案名称" />
+      <el-form-item
+        label="方案名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="64"
+          placeholder="请输入方案名称"
+        />
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="个税类型" prop="type">
+          <el-form-item
+            label="个税类型"
+            prop="type"
+          >
             <el-select
               v-model="formData.type"
               class="full-width"
@@ -34,7 +44,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="是否计税" prop="taxEnabled">
+          <el-form-item
+            label="是否计税"
+            prop="taxEnabled"
+          >
             <el-switch
               v-model="formData.taxEnabled"
               :disabled="formData.type === HrmSalaryTaxType.NONE"
@@ -42,15 +55,34 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row v-if="formData.type !== HrmSalaryTaxType.NONE" :gutter="20">
+      <el-row
+        v-if="formData.type !== HrmSalaryTaxType.NONE"
+        :gutter="20"
+      >
         <el-col :span="12">
-          <el-form-item label="起征点" prop="threshold">
-            <el-input-number v-model="formData.threshold" :min="0" :precision="2" class="full-width" />
+          <el-form-item
+            label="起征点"
+            prop="threshold"
+          >
+            <el-input-number
+              v-model="formData.threshold"
+              :min="0"
+              :precision="2"
+              class="full-width"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="小数位" prop="decimalScale">
-            <el-input-number v-model="formData.decimalScale" :min="0" :max="4" class="full-width" />
+          <el-form-item
+            label="小数位"
+            prop="decimalScale"
+          >
+            <el-input-number
+              v-model="formData.decimalScale"
+              :min="0"
+              :max="4"
+              class="full-width"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -77,7 +109,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

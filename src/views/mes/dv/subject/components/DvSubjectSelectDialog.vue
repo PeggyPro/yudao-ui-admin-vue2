@@ -1,22 +1,67 @@
 <!-- MES 点检保养项目弹窗选择器 -->
 <template>
-  <el-dialog title="点检保养项目选择" :visible.sync="dialogVisible" width="70%" append-to-body>
-    <el-form :inline="true" :model="queryParams" label-width="85px" size="small" @submit.native.prevent>
-      <el-form-item label="项目编码"><el-input v-model="queryParams.code" placeholder="请输入项目编码" clearable @keyup.enter.native="handleQuery" /></el-form-item>
-      <el-form-item label="项目名称"><el-input v-model="queryParams.name" placeholder="请输入项目名称" clearable @keyup.enter.native="handleQuery" /></el-form-item>
+  <el-dialog
+    title="点检保养项目选择"
+    :visible.sync="dialogVisible"
+    width="70%"
+    append-to-body
+  >
+    <el-form
+      :inline="true"
+      :model="queryParams"
+      label-width="85px"
+      size="small"
+      @submit.native.prevent
+    >
+      <el-form-item label="项目编码"><el-input
+        v-model="queryParams.code"
+        placeholder="请输入项目编码"
+        clearable
+        @keyup.enter.native="handleQuery"
+      /></el-form-item>
+      <el-form-item label="项目名称"><el-input
+        v-model="queryParams.name"
+        placeholder="请输入项目名称"
+        clearable
+        @keyup.enter.native="handleQuery"
+      /></el-form-item>
       <el-form-item label="项目类型">
-        <el-select v-model="queryParams.type" placeholder="请选择项目类型" clearable>
-          <el-option v-for="dict in subjectTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+        <el-select
+          v-model="queryParams.type"
+          placeholder="请选择项目类型"
+          clearable
+        >
+          <el-option
+            v-for="dict in subjectTypeOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
-          <el-option v-for="dict in statusOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -31,25 +76,90 @@
       @row-click="handleRowClick"
       @row-dblclick="handleRowDblClick"
     >
-      <el-table-column v-if="multiple" type="selection" :reserve-selection="true" width="50" align="center" />
-      <el-table-column v-else width="50" align="center">
-        <template v-slot="scope"><el-radio v-model="selectedRadioId" :label="scope.row.id" class="radio-no-label" @change="handleRadioChange(scope.row)" /></template>
+      <el-table-column
+        v-if="multiple"
+        type="selection"
+        :reserve-selection="true"
+        width="50"
+        align="center"
+      />
+      <el-table-column
+        v-else
+        width="50"
+        align="center"
+      >
+        <template slot-scope="scope"><el-radio
+          v-model="selectedRadioId"
+          :label="scope.row.id"
+          class="radio-no-label"
+          @change="handleRadioChange(scope.row)"
+        /></template>
       </el-table-column>
-      <el-table-column label="项目编码" align="center" prop="code" width="200" />
-      <el-table-column label="项目名称" align="left" prop="name" min-width="150" />
-      <el-table-column label="项目类型" align="center" prop="type" width="120">
-        <template v-slot="scope"><dict-tag :type="MES_DV_SUBJECT_TYPE" :value="scope.row.type" /></template>
+      <el-table-column
+        label="项目编码"
+        align="center"
+        prop="code"
+        width="200"
+      />
+      <el-table-column
+        label="项目名称"
+        align="left"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="项目类型"
+        align="center"
+        prop="type"
+        width="120"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="MES_DV_SUBJECT_TYPE"
+          :value="scope.row.type"
+        /></template>
       </el-table-column>
-      <el-table-column label="项目内容" align="center" prop="content" min-width="150" />
-      <el-table-column label="标准" align="center" prop="standard" min-width="120" />
-      <el-table-column label="状态" align="center" prop="status" width="80">
-        <template v-slot="scope"><dict-tag :type="COMMON_STATUS" :value="scope.row.status" /></template>
+      <el-table-column
+        label="项目内容"
+        align="center"
+        prop="content"
+        min-width="150"
+      />
+      <el-table-column
+        label="标准"
+        align="center"
+        prop="standard"
+        min-width="120"
+      />
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+        width="80"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="COMMON_STATUS"
+          :value="scope.row.status"
+        /></template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" min-width="120" />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        min-width="120"
+      />
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
     <span slot="footer">
-      <el-button type="primary" @click="confirmSelect">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="confirmSelect"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

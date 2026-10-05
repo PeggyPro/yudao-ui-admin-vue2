@@ -8,7 +8,10 @@
       size="76%"
       :with-header="false"
     >
-      <div v-loading="loading" class="detail-shell">
+      <div
+        v-loading="loading"
+        class="detail-shell"
+      >
         <header class="detail-header">
           <div class="detail-title-area">
             <div class="detail-created">创建于 {{ formatDate(workItem && workItem.createTime) }}</div>
@@ -35,24 +38,54 @@
             </div>
           </div>
           <div class="detail-actions">
-            <el-dropdown v-if="editable" trigger="click" @command="handleMoreCommand">
-              <el-button aria-label="更多操作" icon="el-icon-more" />
+            <el-dropdown
+              v-if="editable"
+              trigger="click"
+              @command="handleMoreCommand"
+            >
+              <el-button
+                aria-label="更多操作"
+                icon="el-icon-more"
+              />
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="edit">编辑</el-dropdown-item>
-                <el-dropdown-item v-if="canUpdate" command="archive">归档</el-dropdown-item>
-                <el-dropdown-item v-if="canUpdate" command="recycle" divided>移入回收站</el-dropdown-item>
+                <el-dropdown-item
+                  v-if="canUpdate"
+                  command="archive"
+                >归档</el-dropdown-item>
+                <el-dropdown-item
+                  v-if="canUpdate"
+                  command="recycle"
+                  divided
+                >移入回收站</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <el-button aria-label="关闭" circle icon="el-icon-close" @click="drawerVisible = false" />
+            <el-button
+              aria-label="关闭"
+              circle
+              icon="el-icon-close"
+              @click="drawerVisible = false"
+            />
           </div>
         </header>
 
         <div class="detail-grid">
           <main class="detail-main">
             <section class="detail-section">
-              <div v-if="editable" class="description-actions">
-                <el-button type="text" icon="el-icon-edit" @click="openEditForm">编辑描述</el-button>
-                <el-button type="text" icon="el-icon-paperclip" @click="openEditForm">上传附件</el-button>
+              <div
+                v-if="editable"
+                class="description-actions"
+              >
+                <el-button
+                  type="text"
+                  icon="el-icon-edit"
+                  @click="openEditForm"
+                >编辑描述</el-button>
+                <el-button
+                  type="text"
+                  icon="el-icon-paperclip"
+                  @click="openEditForm"
+                >上传附件</el-button>
               </div>
               <h3>{{ workItemTypeName }}描述</h3>
               <div
@@ -60,10 +93,16 @@
                 v-dompurify-html="workItem.description"
                 class="description-html"
               />
-              <div v-else class="empty-copy">暂无描述</div>
+              <div
+                v-else
+                class="empty-copy"
+              >暂无描述</div>
             </section>
 
-            <section v-if="workItemFileUrls.length" class="detail-section">
+            <section
+              v-if="workItemFileUrls.length"
+              class="detail-section"
+            >
               <h3>附件</h3>
               <div class="file-list">
                 <el-link
@@ -82,7 +121,10 @@
             <section v-if="workItem && workItem.id">
               <h3>活动日志</h3>
               <el-tabs v-model="activeTab">
-                <el-tab-pane label="评论" name="comment">
+                <el-tab-pane
+                  label="评论"
+                  name="comment"
+                >
                   <WorkItemComment
                     :editable="editable"
                     :show-title="false"
@@ -90,14 +132,20 @@
                     @changed="handleCommentChanged"
                   />
                 </el-tab-pane>
-                <el-tab-pane label="活动" name="activity">
+                <el-tab-pane
+                  label="活动"
+                  name="activity"
+                >
                   <WorkItemActivity
                     ref="workItemActivityRef"
                     :show-title="false"
                     :work-item-id="workItem.id"
                   />
                 </el-tab-pane>
-                <el-tab-pane label="子工作项" name="subtask">
+                <el-tab-pane
+                  label="子工作项"
+                  name="subtask"
+                >
                   <WorkItemSubtaskList
                     :editable="editable"
                     :parent-work-item="workItem"
@@ -105,7 +153,10 @@
                     @changed="handleExtensionChanged"
                   />
                 </el-tab-pane>
-                <el-tab-pane label="工时记录" name="worklog">
+                <el-tab-pane
+                  label="工时记录"
+                  name="worklog"
+                >
                   <WorkItemWorkLogList
                     :editable="editable"
                     :show-title="false"
@@ -119,7 +170,10 @@
 
           <aside class="detail-aside">
             <el-collapse v-model="expandedPanels">
-              <el-collapse-item name="basic" title="基础信息">
+              <el-collapse-item
+                name="basic"
+                title="基础信息"
+              >
                 <div class="property-list">
                   <div class="property-row">
                     <span>状态</span>
@@ -139,7 +193,10 @@
                       type="text"
                       @click="startInlineEditing('statusId')"
                     >{{ workItem.statusName }}</el-button>
-                    <el-tag v-else :type="getWorkItemStatusTagType(workItem && workItem.status)">
+                    <el-tag
+                      v-else
+                      :type="getWorkItemStatusTagType(workItem && workItem.status)"
+                    >
                       {{ workItem && workItem.statusName }}
                     </el-tag>
                   </div>
@@ -187,7 +244,10 @@
                     >{{ getPriorityName(workItem.priority) }}</el-button>
                     <strong v-else>{{ getPriorityName(workItem && workItem.priority) }}</strong>
                   </div>
-                  <div v-if="projectType === PmsProjectType.AGILE" class="property-row">
+                  <div
+                    v-if="projectType === PmsProjectType.AGILE"
+                    class="property-row"
+                  >
                     <span>所属迭代</span>
                     <IterationSelect
                       v-if="workItem && canUpdate && isInlineEditing('iterationId')"
@@ -230,7 +290,10 @@
                     >{{ workItem.relatedRequirementName || '未关联' }}</el-button>
                     <strong v-else>{{ workItem.relatedRequirementName || '未关联' }}</strong>
                   </div>
-                  <div v-if="workItem && workItem.type === PmsWorkItemType.DEFECT" class="property-row">
+                  <div
+                    v-if="workItem && workItem.type === PmsWorkItemType.DEFECT"
+                    class="property-row"
+                  >
                     <span>缺陷类型</span>
                     <strong>{{ getWorkItemDefectTypeName(workItem.defectType) }}</strong>
                   </div>
@@ -332,7 +395,10 @@
         </div>
       </div>
     </el-drawer>
-    <WorkItemForm ref="workItemFormRef" @success="handleFormSuccess" />
+    <WorkItemForm
+      ref="workItemFormRef"
+      @success="handleFormSuccess"
+    />
   </div>
 </template>
 

@@ -1,30 +1,71 @@
 <template>
   <div class="model-step-form">
-    <el-form ref="form" :model="modelData" :rules="rules" label-width="120px">
-      <el-form-item label="表单类型" prop="formType">
+    <el-form
+      ref="form"
+      :model="modelData"
+      :rules="rules"
+      label-width="120px"
+    >
+      <el-form-item
+        label="表单类型"
+        prop="formType"
+      >
         <el-radio-group v-model="modelData.formType">
           <el-radio :label="BpmModelFormType.NORMAL">流程表单</el-radio>
           <el-radio :label="BpmModelFormType.CUSTOM">业务表单</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="Number(modelData.formType) === Number(BpmModelFormType.NORMAL)" label="流程表单" prop="formId">
-        <el-select v-model="modelData.formId" filterable clearable placeholder="请选择流程表单" style="width: 100%">
-          <el-option v-for="item in formList" :key="item.id" :label="item.name" :value="item.id" />
+      <el-form-item
+        v-if="Number(modelData.formType) === Number(BpmModelFormType.NORMAL)"
+        label="流程表单"
+        prop="formId"
+      >
+        <el-select
+          v-model="modelData.formId"
+          filterable
+          clearable
+          placeholder="请选择流程表单"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in formList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
       <template v-if="Number(modelData.formType) === Number(BpmModelFormType.CUSTOM)">
-        <el-form-item label="提交路由" prop="formCustomCreatePath">
-          <el-input v-model="modelData.formCustomCreatePath" placeholder="例如：/bpm/oa/leave/create" />
+        <el-form-item
+          label="提交路由"
+          prop="formCustomCreatePath"
+        >
+          <el-input
+            v-model="modelData.formCustomCreatePath"
+            placeholder="例如：/bpm/oa/leave/create"
+          />
         </el-form-item>
-        <el-form-item label="查看组件" prop="formCustomViewPath">
-          <el-input v-model="modelData.formCustomViewPath" placeholder="例如：/bpm/oa/leave/detail" />
+        <el-form-item
+          label="查看组件"
+          prop="formCustomViewPath"
+        >
+          <el-input
+            v-model="modelData.formCustomViewPath"
+            placeholder="例如：/bpm/oa/leave/detail"
+          />
         </el-form-item>
       </template>
     </el-form>
 
-    <div v-if="Number(modelData.formType) === Number(BpmModelFormType.NORMAL) && formPreview.rule.length" class="form-preview">
+    <div
+      v-if="Number(modelData.formType) === Number(BpmModelFormType.NORMAL) && formPreview.rule.length"
+      class="form-preview"
+    >
       <div class="form-preview__title">表单预览</div>
-      <form-create :rule="formPreview.rule" :option="formPreview.option" />
+      <form-create
+        :rule="formPreview.rule"
+        :option="formPreview.option"
+      />
     </div>
   </div>
 </template>

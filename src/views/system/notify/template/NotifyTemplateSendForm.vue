@@ -1,10 +1,10 @@
 <template>
   <el-dialog
+    v-dialogDrag
     title="测试发送"
     :visible.sync="dialogVisible"
     width="500px"
     append-to-body
-    v-dialogDrag
   >
     <el-form
       ref="form"
@@ -13,7 +13,10 @@
       :rules="formRules"
       label-width="140px"
     >
-      <el-form-item label="模板内容" prop="content">
+      <el-form-item
+        label="模板内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           type="textarea"
@@ -21,7 +24,10 @@
           readonly
         />
       </el-form-item>
-      <el-form-item label="用户类型" prop="userType">
+      <el-form-item
+        label="用户类型"
+        prop="userType"
+      >
         <el-radio-group v-model="formData.userType">
           <el-radio
             v-for="dict in getDictDatas(DICT_TYPE.USER_TYPE)"
@@ -32,11 +38,28 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-show="formData.userType === 1" label="接收人ID" prop="userId">
-        <el-input v-model="formData.userId" style="width: 160px" placeholder="请输入会员编号" />
+      <el-form-item
+        v-show="formData.userType === 1"
+        label="接收人ID"
+        prop="userId"
+      >
+        <el-input
+          v-model="formData.userId"
+          style="width: 160px"
+          placeholder="请输入会员编号"
+        />
       </el-form-item>
-      <el-form-item v-show="formData.userType === 2" label="接收人" prop="userId">
-        <el-select v-model="formData.userId" placeholder="请选择接收人" filterable clearable>
+      <el-form-item
+        v-show="formData.userType === 2"
+        label="接收人"
+        prop="userId"
+      >
+        <el-select
+          v-model="formData.userId"
+          placeholder="请选择接收人"
+          filterable
+          clearable
+        >
           <el-option
             v-for="item in userOption"
             :key="item.id"
@@ -57,8 +80,15 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

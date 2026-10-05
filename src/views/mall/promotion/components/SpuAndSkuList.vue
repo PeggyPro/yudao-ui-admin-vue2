@@ -8,7 +8,7 @@
       type="expand"
       width="30"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <el-table
           :ref="'skuTable-' + scope.row.id"
           :data="scope.row.skus || []"
@@ -22,7 +22,7 @@
             label="图片"
             min-width="80"
           >
-            <template v-slot="skuScope">
+            <template slot-scope="skuScope">
               <el-image
                 :src="skuScope.row.picUrl"
                 :preview-src-list="skuScope.row.picUrl ? [skuScope.row.picUrl] : []"
@@ -37,7 +37,7 @@
             align="center"
             min-width="80"
           >
-            <template v-slot="skuScope">
+            <template slot-scope="skuScope">
               <span class="property-value">
                 {{ propertyValue(skuScope.row, index) }}
               </span>
@@ -54,21 +54,21 @@
             label="销售价(元)"
             min-width="80"
           >
-            <template v-slot="skuScope">{{ formatToFraction(skuScope.row.price) }}</template>
+            <template slot-scope="skuScope">{{ formatToFraction(skuScope.row.price) }}</template>
           </el-table-column>
           <el-table-column
             align="center"
             label="市场价(元)"
             min-width="80"
           >
-            <template v-slot="skuScope">{{ formatToFraction(skuScope.row.marketPrice) }}</template>
+            <template slot-scope="skuScope">{{ formatToFraction(skuScope.row.marketPrice) }}</template>
           </el-table-column>
           <el-table-column
             align="center"
             label="成本价(元)"
             min-width="80"
           >
-            <template v-slot="skuScope">{{ formatToFraction(skuScope.row.costPrice) }}</template>
+            <template slot-scope="skuScope">{{ formatToFraction(skuScope.row.costPrice) }}</template>
           </el-table-column>
           <el-table-column
             align="center"
@@ -90,7 +90,7 @@
       label="商品图"
       min-width="80"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <el-image
           :src="scope.row.picUrl"
           :preview-src-list="scope.row.picUrl ? [scope.row.picUrl] : []"
@@ -110,7 +110,7 @@
       min-width="90"
       prop="price"
     >
-      <template v-slot="scope">{{ formatToFraction(scope.row.price) }}</template>
+      <template slot-scope="scope">{{ formatToFraction(scope.row.price) }}</template>
     </el-table-column>
     <el-table-column
       align="center"
@@ -130,7 +130,7 @@
       label="操作"
       min-width="90"
     >
-      <template v-slot="scope">
+      <template slot-scope="scope">
         <el-button
           type="text"
           @click="deleteSpu(scope.row.id)"

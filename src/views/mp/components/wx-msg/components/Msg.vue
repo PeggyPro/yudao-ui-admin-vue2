@@ -23,7 +23,7 @@
           :src="item.mediaUrl"
           style="width: 100px"
           alt="消息图片"
-        />
+        >
       </a>
     </div>
 

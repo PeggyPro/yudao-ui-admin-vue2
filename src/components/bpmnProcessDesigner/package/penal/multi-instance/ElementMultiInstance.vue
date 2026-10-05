@@ -1,11 +1,23 @@
 <template>
   <div class="panel-tab__content">
     <!-- Flowable exposes the business-level approval mode on UserTask. -->
-    <el-form v-if="type === 'UserTask' && supportsApproveMethod" size="mini" label-width="110px" @submit.native.prevent>
+    <el-form
+      v-if="type === 'UserTask' && supportsApproveMethod"
+      size="mini"
+      label-width="110px"
+      @submit.native.prevent
+    >
       <el-form-item label="多人审批方式">
-        <el-radio-group v-model="approveMethod" @change="onApproveMethodChange">
+        <el-radio-group
+          v-model="approveMethod"
+          @change="onApproveMethodChange"
+        >
           <div class="flex-col">
-            <div v-for="item in approveMethods" :key="item.value" class="approve-method-row">
+            <div
+              v-for="item in approveMethods"
+              :key="item.value"
+              class="approve-method-row"
+            >
               <el-radio :label="item.value">{{ item.label }}</el-radio>
               <el-input-number
                 v-if="Number(item.value) === ApproveMethodType.APPROVE_BY_RATIO && Number(approveMethod) === ApproveMethodType.APPROVE_BY_RATIO"
@@ -26,42 +38,115 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <div v-else class="multi-instance-tip">
+    <div
+      v-else
+      class="multi-instance-tip"
+    >
       {{ supportsApproveMethod ? '除了 UserTask 以外节点的多实例待实现' : '当前 BPMN 方言不支持 Flowable 多人审批方式' }}
     </div>
 
     <!-- 与 Simple 设计器配置合并。业务面板默认隐藏，方法仍解析已持久化
          XML 中的 StandardLoop/异步属性。 -->
-    <el-form label-width="90px" style="display: none" @submit.native.prevent>
+    <el-form
+      label-width="90px"
+      style="display: none"
+      @submit.native.prevent
+    >
       <el-form-item label="快捷配置">
-        <el-button size="small" @click="changeConfig('依次审批')">依次审批</el-button>
-        <el-button size="small" @click="changeConfig('会签')">会签</el-button>
-        <el-button size="small" @click="changeConfig('或签')">或签</el-button>
+        <el-button
+          size="small"
+          @click="changeConfig('依次审批')"
+        >依次审批</el-button>
+        <el-button
+          size="small"
+          @click="changeConfig('会签')"
+        >会签</el-button>
+        <el-button
+          size="small"
+          @click="changeConfig('或签')"
+        >或签</el-button>
       </el-form-item>
       <el-form-item label="回路特性">
-        <el-select v-model="loopCharacteristics" @change="changeLoopCharacteristicsType">
-          <el-option label="并行多重事件" value="ParallelMultiInstance" />
-          <el-option label="时序多重事件" value="SequentialMultiInstance" />
-          <el-option label="循环事件" value="StandardLoop" />
-          <el-option label="无" value="Null" />
+        <el-select
+          v-model="loopCharacteristics"
+          @change="changeLoopCharacteristicsType"
+        >
+          <el-option
+            label="并行多重事件"
+            value="ParallelMultiInstance"
+          />
+          <el-option
+            label="时序多重事件"
+            value="SequentialMultiInstance"
+          />
+          <el-option
+            label="循环事件"
+            value="StandardLoop"
+          />
+          <el-option
+            label="无"
+            value="Null"
+          />
         </el-select>
       </el-form-item>
       <template v-if="loopCharacteristics === 'ParallelMultiInstance' || loopCharacteristics === 'SequentialMultiInstance'">
-        <el-form-item label="循环数量" key="loopCardinality">
-          <el-input v-model="loopInstanceForm.loopCardinality" clearable @change="updateLoopCardinality" />
+        <el-form-item
+          key="loopCardinality"
+          label="循环数量"
+        >
+          <el-input
+            v-model="loopInstanceForm.loopCardinality"
+            clearable
+            @change="updateLoopCardinality"
+          />
         </el-form-item>
-        <el-form-item label="集合" key="collection" v-show="false">
-          <el-input v-model="loopInstanceForm.collection" clearable @change="updateLoopBase" />
+        <el-form-item
+          v-show="false"
+          key="collection"
+          label="集合"
+        >
+          <el-input
+            v-model="loopInstanceForm.collection"
+            clearable
+            @change="updateLoopBase"
+          />
         </el-form-item>
-        <el-form-item label="元素变量" key="elementVariable" style="display: none">
-          <el-input v-model="loopInstanceForm.elementVariable" clearable @change="updateLoopBase" />
+        <el-form-item
+          key="elementVariable"
+          label="元素变量"
+          style="display: none"
+        >
+          <el-input
+            v-model="loopInstanceForm.elementVariable"
+            clearable
+            @change="updateLoopBase"
+          />
         </el-form-item>
-        <el-form-item label="完成条件" key="completionCondition">
-          <el-input v-model="loopInstanceForm.completionCondition" clearable @change="updateLoopCondition" />
+        <el-form-item
+          key="completionCondition"
+          label="完成条件"
+        >
+          <el-input
+            v-model="loopInstanceForm.completionCondition"
+            clearable
+            @change="updateLoopCondition"
+          />
         </el-form-item>
-        <el-form-item label="异步状态" key="async" style="display: none">
-          <el-checkbox v-model="loopInstanceForm.asyncBefore" label="异步前" @change="updateLoopAsync('asyncBefore')" />
-          <el-checkbox v-model="loopInstanceForm.asyncAfter" label="异步后" @change="updateLoopAsync('asyncAfter')" />
+        <el-form-item
+          key="async"
+          label="异步状态"
+          style="display: none"
+        >
+          <el-checkbox
+            v-model="loopInstanceForm.asyncBefore"
+            label="异步前"
+            @change="updateLoopAsync('asyncBefore')"
+          />
+          <el-checkbox
+            v-model="loopInstanceForm.asyncAfter"
+            label="异步后"
+            @change="updateLoopAsync('asyncAfter')"
+          />
           <el-checkbox
             v-if="loopInstanceForm.asyncAfter || loopInstanceForm.asyncBefore"
             v-model="loopInstanceForm.exclusive"
@@ -71,11 +156,15 @@
         </el-form-item>
         <el-form-item
           v-if="loopInstanceForm.asyncAfter || loopInstanceForm.asyncBefore"
+          key="timeCycle"
           label="重试周期"
           prop="timeCycle"
-          key="timeCycle"
         >
-          <el-input v-model="loopInstanceForm.timeCycle" clearable @change="updateLoopTimeCycle" />
+          <el-input
+            v-model="loopInstanceForm.timeCycle"
+            clearable
+            @change="updateLoopTimeCycle"
+          />
         </el-form-item>
       </template>
     </el-form>
@@ -91,16 +180,16 @@ function asArray(value) {
 
 export default {
   name: 'ElementMultiInstance',
-  props: {
-    businessObject: Object,
-    type: String,
-    id: String
-  },
   inject: {
     prefixRef: {
       from: 'prefix',
       default: 'flowable'
     }
+  },
+  props: {
+    businessObject: Object,
+    type: String,
+    id: String
   },
   data() {
     return {
@@ -160,6 +249,10 @@ export default {
         })
       }
     }
+  },
+  beforeDestroy() {
+    this.multiLoopInstance = null
+    this.bpmnElement = null
   },
   methods: {
     getBpmnInstances() {
@@ -389,10 +482,6 @@ export default {
         this.approveMethodUnsupported = true
       }
     }
-  },
-  beforeDestroy() {
-    this.multiLoopInstance = null
-    this.bpmnElement = null
   }
 }
 </script>

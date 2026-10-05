@@ -30,7 +30,7 @@ export function transferClue(data) {
 }
 
 export function transformClue(id) {
-  return request({ url: '/crm/clue/transform', method: 'put', params: { id } })
+  return request({ url: '/crm/clue/transform', method: 'put', params: { id }})
 }
 
 export function getFollowClueCount() {

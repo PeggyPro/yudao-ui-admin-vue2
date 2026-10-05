@@ -20,7 +20,7 @@ const actions = {
     getSimpleDictDataList().then(response => {
       // 如果未加载到数据，则直接返回
       if (!response || !response.data) {
-        return;
+        return
       }
       // 设置数据
       const dictDataMap = {}
@@ -35,7 +35,7 @@ const actions = {
           value: dictData.value,
           label: dictData.label,
           colorType: dictData.colorType,
-          cssClass: dictData.cssClass,
+          cssClass: dictData.cssClass
         })
       })
       // 存储到 Store 中

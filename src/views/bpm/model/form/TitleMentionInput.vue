@@ -26,7 +26,10 @@
         <span>{{ option.label }}</span>
         <small>{{ formatToken(option.value) }}</small>
       </div>
-      <div v-if="filteredOptions.length === 0" class="title-mention-input__empty">
+      <div
+        v-if="filteredOptions.length === 0"
+        class="title-mention-input__empty"
+      >
         暂无匹配字段
       </div>
     </div>

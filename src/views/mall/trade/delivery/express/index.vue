@@ -80,13 +80,13 @@
         label="公司 logo"
         prop="logo"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <img
             v-if="scope.row.logo"
             :src="scope.row.logo"
             alt="公司logo"
             style="height: 40px"
-          />
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -99,7 +99,7 @@
         align="center"
         prop="status"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -112,7 +112,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -121,7 +121,7 @@
         align="center"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['trade:delivery:express:update']"
             type="text"

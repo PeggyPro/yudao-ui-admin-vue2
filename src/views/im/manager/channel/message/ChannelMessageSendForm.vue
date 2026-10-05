@@ -1,5 +1,5 @@
 <template>
-  <Dialog
+  <AppDialog
     v-model="dialogVisible"
     title="立即推送频道消息"
     width="640px"
@@ -61,11 +61,11 @@
       >确认推送</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { sendManagerChannelMessage } from '@/api/im/manager/channel/message'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 import ChannelSelect from '../list/components/ChannelSelect.vue'
@@ -73,7 +73,7 @@ import MaterialSelect from '../material/components/MaterialSelect.vue'
 
 export default {
   name: 'ImChannelMessageSendForm',
-  components: { Dialog, ChannelSelect, MaterialSelect, UserSelectV2 },
+  components: { AppDialog, ChannelSelect, MaterialSelect, UserSelectV2 },
   data() {
     return {
       dialogVisible: false,

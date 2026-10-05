@@ -17,15 +17,20 @@
     <div class="h-[480px]">
       <FriendPickerPanel
         :selected-ids="selectedIds"
-        @update:selectedIds="selectedIds = $event"
         :friends="friends"
         :locked-ids="lockedIds"
+        @update:selectedIds="selectedIds = $event"
       />
     </div>
 
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" :loading="submitting" :disabled="!canSubmit" @click="handleOk">
+      <el-button
+        type="primary"
+        :loading="submitting"
+        :disabled="!canSubmit"
+        @click="handleOk"
+      >
         完成
       </el-button>
     </template>
@@ -33,15 +38,15 @@
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, ref } from 'vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { createGroup } from '@/api/im/group';
-import { useFriendStore } from '../../store/friendStore';
-import { useGroupStore } from '../../store/groupStore';
-import { buildDefaultGroupName } from '../../../utils/group';
-import FriendPickerPanel from '../picker/FriendPickerPanel.vue';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { createGroup } from '@/api/im/group'
+import { useFriendStore } from '../../store/friendStore'
+import { useGroupStore } from '../../store/groupStore'
+import { buildDefaultGroupName } from '../../../utils/group'
+import FriendPickerPanel from '../picker/FriendPickerPanel.vue'
+export default /* #__PURE__*/_defineComponent({
   components: {
     FriendPickerPanel
   },
@@ -50,74 +55,74 @@ export default /*#__PURE__*/_defineComponent({
     expose,
     emit
   }) {
-    const message = useMessage();
-    const friendStore = useFriendStore();
-    const groupStore = useGroupStore();
-    const visible = ref(false);
-    const submitting = ref(false);
-    const lockedIds = ref([]);
-    const selectedIds = ref([]);
+    const message = useMessage()
+    const friendStore = useFriendStore()
+    const groupStore = useGroupStore()
+    const visible = ref(false)
+    const submitting = ref(false)
+    const lockedIds = ref([])
+    const selectedIds = ref([])
     expose({
       /** 打开发起群聊弹窗：reset → 灌参 → visible=true */
       open(opts) {
-        lockedIds.value = opts?.lockedIds ? [...opts.lockedIds] : [];
-        selectedIds.value = [];
-        submitting.value = false;
-        visible.value = true;
+        lockedIds.value = opts?.lockedIds ? [...opts.lockedIds] : []
+        selectedIds.value = []
+        submitting.value = false
+        visible.value = true
       }
-    });
+    })
 
     /** 全量好友：直接复用 friendStore Lite 视图（带拼音字段供分桶用） */
-    const friends = computed(() => friendStore.getActiveFriendLiteList);
+    const friends = computed(() => friendStore.getActiveFriendLiteList)
 
     /** 完成按钮可点：至少有 1 个非 locked 勾选（locked 是入口锁定项，不算"用户主动选择"） */
-    const canSubmit = computed(() => selectedIds.value.length > 0);
+    const canSubmit = computed(() => selectedIds.value.length > 0)
 
     /** 拿到所有要进群的好友（locked + selected）；建群默认群名按这批人生成 */
     function resolveMembersToInvite() {
-      const seen = new Set();
-      const result = [];
-      const byId = new Map(friends.value.map(f => [f.id, f]));
+      const seen = new Set()
+      const result = []
+      const byId = new Map(friends.value.map(f => [f.id, f]))
       for (const id of lockedIds.value) {
         if (seen.has(id)) {
-          continue;
+          continue
         }
-        const friend = byId.get(id);
+        const friend = byId.get(id)
         if (friend) {
-          seen.add(id);
-          result.push(friend);
+          seen.add(id)
+          result.push(friend)
         }
       }
       for (const id of selectedIds.value) {
         if (seen.has(id)) {
-          continue;
+          continue
         }
-        const friend = byId.get(id);
+        const friend = byId.get(id)
         if (friend) {
-          seen.add(id);
-          result.push(friend);
+          seen.add(id)
+          result.push(friend)
         }
       }
-      return result;
+      return result
     }
 
     /** 创建群聊：建群（同时邀请初始成员）→ upsert groupStore → emit created 让父页跳转新会话 */
     async function handleOk() {
-      const members = resolveMembersToInvite();
+      const members = resolveMembersToInvite()
       if (members.length === 0) {
-        return;
+        return
       }
-      submitting.value = true;
+      submitting.value = true
       try {
-        const memberUserIds = members.map(m => m.id);
-        const name = buildDefaultGroupName(members);
+        const memberUserIds = members.map(m => m.id)
+        const name = buildDefaultGroupName(members)
         const group = (await createGroup({
           name,
           memberUserIds,
           joinApproval: false
-        })).data;
+        })).data
         if (!group?.id) {
-          throw new Error('创建群失败：未返回群编号');
+          throw new Error('创建群失败：未返回群编号')
         }
         // 直接 upsert 进 groupStore，省一次 fetchGroupList —— 服务端返回 VO 已经够建会话了
         groupStore.upsertGroup({
@@ -126,12 +131,12 @@ export default /*#__PURE__*/_defineComponent({
           avatar: group.avatar,
           notice: group.notice,
           ownerUserId: group.ownerUserId
-        });
-        message.success('群聊创建成功');
-        emit('created', group.id);
-        visible.value = false;
+        })
+        message.success('群聊创建成功')
+        emit('created', group.id)
+        visible.value = false
       } finally {
-        submitting.value = false;
+        submitting.value = false
       }
     }
     const __returned__ = {
@@ -148,14 +153,14 @@ export default /*#__PURE__*/_defineComponent({
       resolveMembersToInvite,
       handleOk,
       FriendPickerPanel
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped lang="scss">
 

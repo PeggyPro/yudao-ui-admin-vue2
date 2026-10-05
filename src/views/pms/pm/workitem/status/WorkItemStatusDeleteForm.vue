@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="迁移并删除状态" width="480px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="迁移并删除状态"
+    width="480px"
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -8,8 +13,15 @@
       label-width="100px"
     >
       <el-form-item label="待删除状态">{{ formData.statusName }}</el-form-item>
-      <el-form-item label="迁移到" prop="transferStatusId">
-        <el-select v-model="formData.transferStatusId" style="width: 100%" placeholder="请选择目标状态">
+      <el-form-item
+        label="迁移到"
+        prop="transferStatusId"
+      >
+        <el-select
+          v-model="formData.transferStatusId"
+          style="width: 100%"
+          placeholder="请选择目标状态"
+        >
           <el-option
             v-for="status in statusList"
             :key="status.id"
@@ -20,7 +32,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

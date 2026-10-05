@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" append-to-body width="480px">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    append-to-body
+    width="480px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,13 +12,30 @@
       :rules="formRules"
       label-width="90px"
     >
-      <el-form-item label="凭证字" prop="name">
-        <el-input v-model="formData.name" maxlength="255" placeholder="请输入凭证字" />
+      <el-form-item
+        label="凭证字"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="255"
+          placeholder="请输入凭证字"
+        />
       </el-form-item>
-      <el-form-item label="打印标题" prop="printTitle">
-        <el-input v-model="formData.printTitle" maxlength="255" placeholder="请输入打印标题" />
+      <el-form-item
+        label="打印标题"
+        prop="printTitle"
+      >
+        <el-input
+          v-model="formData.printTitle"
+          maxlength="255"
+          placeholder="请输入打印标题"
+        />
       </el-form-item>
-      <el-form-item label="是否默认" prop="defaultStatus">
+      <el-form-item
+        label="是否默认"
+        prop="defaultStatus"
+      >
         <el-radio-group v-model="formData.defaultStatus">
           <el-radio
             v-for="dict in defaultStatusOptions"
@@ -25,8 +47,15 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

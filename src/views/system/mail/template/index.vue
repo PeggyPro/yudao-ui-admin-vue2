@@ -1,151 +1,433 @@
 <template>
   <div class="app-container">
-    <doc-alert title="邮件配置" url="https://doc.iocoder.cn/mail" />
+    <doc-alert
+      title="邮件配置"
+      url="https://doc.iocoder.cn/mail"
+    />
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="模板名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入模板名称" clearable @keyup.enter.native="handleQuery"/>
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="模板名称"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入模板名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="模板编码" prop="code">
-        <el-input v-model="queryParams.code" placeholder="请输入模板编码" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="模板编码"
+        prop="code"
+      >
+        <el-input
+          v-model="queryParams.code"
+          placeholder="请输入模板编码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="邮箱账号" prop="accountId">
-        <el-select v-model="queryParams.accountId" placeholder="请输入邮箱账号" clearable>
-          <el-option v-for="account in accountOptions" :key="account.id" :value="account.id" :label="account.mail" />
+      <el-form-item
+        label="邮箱账号"
+        prop="accountId"
+      >
+        <el-select
+          v-model="queryParams.accountId"
+          placeholder="请输入邮箱账号"
+          clearable
+        >
+          <el-option
+            v-for="account in accountOptions"
+            :key="account.id"
+            :value="account.id"
+            :label="account.mail"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="开启状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择开启状态" clearable size="small">
-          <el-option v-for="dict in this.getDictDatas(DICT_TYPE.COMMON_STATUS)"
-                     :key="dict.value" :label="dict.label" :value="dict.value"/>
+      <el-form-item
+        label="开启状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择开启状态"
+          clearable
+          size="small"
+        >
+          <el-option
+            v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
+        <el-date-picker
+          v-model="queryParams.createTime"
+          style="width: 240px"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="['00:00:00', '23:59:59']"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['system:mail-template:create']">新增</el-button>
+        <el-button
+          v-hasPermi="['system:mail-template:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+        >新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="checkedIds.length === 0"
-                   @click="handleDeleteBatch" v-hasPermi="['system:mail-template:delete']">批量删除</el-button>
+        <el-button
+          v-hasPermi="['system:mail-template:delete']"
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          :disabled="checkedIds.length === 0"
+          @click="handleDeleteBatch"
+        >批量删除</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" />
-      <el-table-column label="模板编码" align="center" prop="code" />
-      <el-table-column label="模板名称" align="center" prop="name" />
-      <el-table-column label="模板标题" align="center" prop="title" />
-      <el-table-column label="模板内容" align="center" prop="content" :show-overflow-tooltip="true" />
-      <el-table-column label="邮箱账号" align="center" prop="accountId" width="200">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column
+        type="selection"
+        width="55"
+      />
+      <el-table-column
+        label="模板编码"
+        align="center"
+        prop="code"
+      />
+      <el-table-column
+        label="模板名称"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="模板标题"
+        align="center"
+        prop="title"
+      />
+      <el-table-column
+        label="模板内容"
+        align="center"
+        prop="content"
+        :show-overflow-tooltip="true"
+      />
+      <el-table-column
+        label="邮箱账号"
+        align="center"
+        prop="accountId"
+        width="200"
+      >
+        <template slot-scope="scope">
           {{ accountOptions.find(account => account.id === scope.row.accountId)?.mail }}
         </template>
       </el-table-column>
-      <el-table-column label="发送人名称" align="center" prop="nickname" />
-      <el-table-column label="开启状态" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status"/>
+      <el-table-column
+        label="发送人名称"
+        align="center"
+        prop="nickname"
+      />
+      <el-table-column
+        label="开启状态"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="150">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-share" @click="handleSend(scope.row)"
-                     v-hasPermi="['system:mail-template:send-mail']">测试</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['system:mail-template:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['system:mail-template:delete']">删除</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+        width="150"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['system:mail-template:send-mail']"
+            size="mini"
+            type="text"
+            icon="el-icon-share"
+            @click="handleSend(scope.row)"
+          >测试</el-button>
+          <el-button
+            v-hasPermi="['system:mail-template:update']"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+          >修改</el-button>
+          <el-button
+            v-hasPermi="['system:mail-template:delete']"
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
 
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" v-dialogDrag append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="模板名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入模板名称" />
+    <el-dialog
+      v-dialogDrag
+      :title="title"
+      :visible.sync="open"
+      width="600px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="模板名称"
+          prop="name"
+        >
+          <el-input
+            v-model="form.name"
+            placeholder="请输入模板名称"
+          />
         </el-form-item>
-        <el-form-item label="模板编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入模板编码" />
+        <el-form-item
+          label="模板编码"
+          prop="code"
+        >
+          <el-input
+            v-model="form.code"
+            placeholder="请输入模板编码"
+          />
         </el-form-item>
-        <el-form-item label="邮箱账号" prop="accountId">
-          <el-select v-model="form.accountId" placeholder="请输入邮箱账号">
-            <el-option v-for="account in accountOptions" :key="account.id" :value="account.id" :label="account.mail" />
+        <el-form-item
+          label="邮箱账号"
+          prop="accountId"
+        >
+          <el-select
+            v-model="form.accountId"
+            placeholder="请输入邮箱账号"
+          >
+            <el-option
+              v-for="account in accountOptions"
+              :key="account.id"
+              :value="account.id"
+              :label="account.mail"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="发送人名称" prop="nickname">
-          <el-input v-model="form.nickname" placeholder="请输入发送人名称" />
+        <el-form-item
+          label="发送人名称"
+          prop="nickname"
+        >
+          <el-input
+            v-model="form.nickname"
+            placeholder="请输入发送人名称"
+          />
         </el-form-item>
-        <el-form-item label="模板标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入模板标题" />
+        <el-form-item
+          label="模板标题"
+          prop="title"
+        >
+          <el-input
+            v-model="form.title"
+            placeholder="请输入模板标题"
+          />
         </el-form-item>
         <el-form-item label="模板内容">
-          <editor v-model="form.content" :min-height="192"/>
+          <editor
+            v-model="form.content"
+            :min-height="192"
+          />
         </el-form-item>
-        <el-form-item label="开启状态" prop="status">
+        <el-form-item
+          label="开启状态"
+          prop="status"
+        >
           <el-radio-group v-model="form.status">
-            <el-radio v-for="dict in this.getDictDatas(DICT_TYPE.COMMON_STATUS)"
-                      :key="dict.value" :label="parseInt(dict.value)">{{dict.label}}</el-radio>
+            <el-radio
+              v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
+              :key="dict.value"
+              :label="parseInt(dict.value)"
+            >{{ dict.label }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注" />
+        <el-form-item
+          label="备注"
+          prop="remark"
+        >
+          <el-input
+            v-model="form.remark"
+            placeholder="请输入备注"
+          />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 
     <!-- 对话框(发送邮件) -->
-    <el-dialog title="测试发送邮件" :visible.sync="sendOpen" width="500px" append-to-body>
-      <el-form ref="sendForm" :model="sendForm" :rules="sendRules" label-width="140px">
-        <el-form-item label="模板内容" prop="content">
-          <editor v-model="sendForm.content" :min-height="192" readonly />
+    <el-dialog
+      title="测试发送邮件"
+      :visible.sync="sendOpen"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="sendForm"
+        :model="sendForm"
+        :rules="sendRules"
+        label-width="140px"
+      >
+        <el-form-item
+          label="模板内容"
+          prop="content"
+        >
+          <editor
+            v-model="sendForm.content"
+            :min-height="192"
+            readonly
+          />
         </el-form-item>
-        <el-form-item label="收件邮箱" prop="toMails">
-          <el-input v-model="sendForm.toMails" type="textarea" rows="2" placeholder="请输入收件邮箱，多个邮箱请换行分隔" />
+        <el-form-item
+          label="收件邮箱"
+          prop="toMails"
+        >
+          <el-input
+            v-model="sendForm.toMails"
+            type="textarea"
+            rows="2"
+            placeholder="请输入收件邮箱，多个邮箱请换行分隔"
+          />
         </el-form-item>
-        <el-form-item label="抄送邮箱" prop="ccMails">
-          <el-input v-model="sendForm.ccMails" type="textarea" rows="2" placeholder="请输入抄送邮箱，多个邮箱请换行分隔" />
+        <el-form-item
+          label="抄送邮箱"
+          prop="ccMails"
+        >
+          <el-input
+            v-model="sendForm.ccMails"
+            type="textarea"
+            rows="2"
+            placeholder="请输入抄送邮箱，多个邮箱请换行分隔"
+          />
         </el-form-item>
-        <el-form-item label="密送邮箱" prop="bccMails">
-          <el-input v-model="sendForm.bccMails" type="textarea" rows="2" placeholder="请输入密送邮箱，多个邮箱请换行分隔" />
+        <el-form-item
+          label="密送邮箱"
+          prop="bccMails"
+        >
+          <el-input
+            v-model="sendForm.bccMails"
+            type="textarea"
+            rows="2"
+            placeholder="请输入密送邮箱，多个邮箱请换行分隔"
+          />
         </el-form-item>
-        <el-form-item v-for="param in sendForm.params" :key="param" :label="'参数 {' + param + '}'" :prop="'templateParams.' + param">
-          <el-input v-model="sendForm.templateParams[param]" :placeholder="'请输入 ' + param + ' 参数'" />
+        <el-form-item
+          v-for="param in sendForm.params"
+          :key="param"
+          :label="'参数 {' + param + '}'"
+          :prop="'templateParams.' + param"
+        >
+          <el-input
+            v-model="sendForm.templateParams[param]"
+            :placeholder="'请输入 ' + param + ' 参数'"
+          />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitSendForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitSendForm"
+        >确 定</el-button>
         <el-button @click="cancelSend">取 消</el-button>
       </div>
     </el-dialog>
-    <MailTemplateForm ref="mailTemplateForm" @success="getList" />
+    <MailTemplateForm
+      ref="mailTemplateForm"
+      @success="getList"
+    />
     <MailTemplateSendForm ref="mailTemplateSendForm" />
   </div>
 </template>
@@ -153,13 +435,13 @@
 <script>
 import MailTemplateForm from './MailTemplateForm.vue'
 import MailTemplateSendForm from './MailTemplateSendForm.vue'
-import { createMailTemplate, updateMailTemplate, deleteMailTemplate, deleteMailTemplateList, getMailTemplate, getMailTemplatePage, sendMail } from "@/api/system/mail/template";
-import Editor from '@/components/Editor';
-import { CommonStatusEnum } from "@/utils/constants";
-import { getSimpleMailAccountList } from "@/api/system/mail/account";
+import { createMailTemplate, updateMailTemplate, deleteMailTemplate, deleteMailTemplateList, getMailTemplatePage, sendMail } from '@/api/system/mail/template'
+import Editor from '@/components/Editor'
+import { CommonStatusEnum } from '@/utils/constants'
+import { getSimpleMailAccountList } from '@/api/system/mail/account'
 
 export default {
-  name: "SystemMailTemplate",
+  name: 'SystemMailTemplate',
   components: { Editor, MailTemplateForm, MailTemplateSendForm },
   data() {
     return {
@@ -174,7 +456,7 @@ export default {
       // 选中的邮件模版编号
       checkedIds: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -185,18 +467,18 @@ export default {
         code: null,
         accountId: null,
         status: null,
-        createTime: [],
+        createTime: []
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [{ required: true, message: "模板名称不能为空", trigger: "blur" }],
-        code: [{ required: true, message: "模板编码不能为空", trigger: "blur" }],
-        accountId: [{ required: true, message: "邮箱账号不能为空", trigger: "blur" }],
-        title: [{ required: true, message: "模板标题不能为空", trigger: "blur" }],
-        content: [{ required: true, message: "模板内容不能为空", trigger: "blur" }],
-        status: [{ required: true, message: "开启状态不能为空", trigger: "blur" }],
+        name: [{ required: true, message: '模板名称不能为空', trigger: 'blur' }],
+        code: [{ required: true, message: '模板编码不能为空', trigger: 'blur' }],
+        accountId: [{ required: true, message: '邮箱账号不能为空', trigger: 'blur' }],
+        title: [{ required: true, message: '模板标题不能为空', trigger: 'blur' }],
+        content: [{ required: true, message: '模板内容不能为空', trigger: 'blur' }],
+        status: [{ required: true, message: '开启状态不能为空', trigger: 'blur' }]
       },
       // 邮箱账号
       accountOptions: [],
@@ -204,16 +486,16 @@ export default {
       // 发送邮箱
       sendOpen: false,
       sendForm: {
-        params: [], // 模板的参数列表
+        params: [] // 模板的参数列表
       },
       sendRules: {
-        templateCode: [{ required: true, message: "模版编码不能为空", trigger: "blur" }],
+        templateCode: [{ required: true, message: '模版编码不能为空', trigger: 'blur' }],
         templateParams: { }
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
     // 获得邮箱账号列表
     getSimpleMailAccountList().then(response => {
       this.accountOptions = response.data
@@ -222,18 +504,18 @@ export default {
   methods: {
     /** 查询列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       // 执行查询
       getMailTemplatePage(this.queryParams).then(response => {
-        this.list = response.data.list;
-        this.total = response.data.total;
-        this.loading = false;
-      });
+        this.list = response.data.list
+        this.total = response.data.total
+        this.loading = false
+      })
     },
     /** 取消按钮 */
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     /** 表单重置 */
     reset() {
@@ -246,76 +528,76 @@ export default {
         title: undefined,
         content: undefined,
         status: CommonStatusEnum.ENABLE,
-        remark: undefined,
-      };
-      this.resetForm("form");
+        remark: undefined
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
-      this.getList();
+      this.queryParams.pageNo = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 表格复选框选中数据 */
     handleSelectionChange(selection) {
-      this.checkedIds = selection.map(item => item.id);
+      this.checkedIds = selection.map(item => item.id)
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.$refs.mailTemplateForm.open('create');
+      this.$refs.mailTemplateForm.open('create')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.$refs.mailTemplateForm.open('update', row.id);
+      this.$refs.mailTemplateForm.open('update', row.id)
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (!valid) {
-          return;
+          return
         }
         // 修改的提交
         if (this.form.id != null) {
           updateMailTemplate(this.form).then(response => {
-            this.$modal.msgSuccess("修改成功");
-            this.open = false;
-            this.getList();
-          });
-          return;
+            this.$modal.msgSuccess('修改成功')
+            this.open = false
+            this.getList()
+          })
+          return
         }
         // 添加的提交
         createMailTemplate(this.form).then(response => {
-          this.$modal.msgSuccess("新增成功");
-          this.open = false;
-          this.getList();
-        });
-      });
+          this.$modal.msgSuccess('新增成功')
+          this.open = false
+          this.getList()
+        })
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const id = row.id;
+      const id = row.id
       this.$modal.confirm('是否确认删除邮件模版编号为"' + id + '"的数据项?').then(function() {
-          return deleteMailTemplate(id);
-        }).then(() => {
-          this.getList();
-          this.$modal.msgSuccess("删除成功");
-        }).catch(() => {});
+        return deleteMailTemplate(id)
+      }).then(() => {
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {})
     },
     /** 批量删除按钮操作 */
     handleDeleteBatch() {
-      const ids = this.checkedIds;
+      const ids = this.checkedIds
       this.$modal.confirm('是否确认删除选中的邮件模版数据项?').then(() => deleteMailTemplateList(ids)).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {})
     },
     /** 发送短息按钮 */
     handleSend(row) {
-      this.$refs.mailTemplateSendForm.open(row.id);
+      this.$refs.mailTemplateSendForm.open(row.id)
     },
     /** 重置发送邮箱的表单 */
     resetSend() {
@@ -328,38 +610,38 @@ export default {
         bccMails: undefined,
         templateCode: undefined,
         templateParams: {}
-      };
-      this.resetForm("sendForm");
+      }
+      this.resetForm('sendForm')
     },
     /** 取消发送邮箱 */
     cancelSend() {
-      this.sendOpen = false;
-      this.resetSend();
+      this.sendOpen = false
+      this.resetSend()
     },
     /** 提交按钮 */
     submitSendForm() {
-      this.$refs["sendForm"].validate(valid => {
+      this.$refs['sendForm'].validate(valid => {
         if (!valid) {
-          return;
+          return
         }
         // 处理邮箱字段，将换行分隔的字符串转换为数组
-        const submitData = { ...this.sendForm };
+        const submitData = { ...this.sendForm }
         if (submitData.toMails) {
-          submitData.toMails = submitData.toMails.split('\n').filter(email => email.trim() !== '').map(email => email.trim());
+          submitData.toMails = submitData.toMails.split('\n').filter(email => email.trim() !== '').map(email => email.trim())
         }
         if (submitData.ccMails) {
-          submitData.ccMails = submitData.ccMails.split('\n').filter(email => email.trim() !== '').map(email => email.trim());
+          submitData.ccMails = submitData.ccMails.split('\n').filter(email => email.trim() !== '').map(email => email.trim())
         }
         if (submitData.bccMails) {
-          submitData.bccMails = submitData.bccMails.split('\n').filter(email => email.trim() !== '').map(email => email.trim());
+          submitData.bccMails = submitData.bccMails.split('\n').filter(email => email.trim() !== '').map(email => email.trim())
         }
         // 添加的提交
         sendMail(submitData).then(response => {
-          this.$modal.msgSuccess("提交发送成功！发送结果，见发送日志编号：" + response.data);
-          this.sendOpen = false;
-        });
-      });
-    },
+          this.$modal.msgSuccess('提交发送成功！发送结果，见发送日志编号：' + response.data)
+          this.sendOpen = false
+        })
+      })
+    }
   }
-};
+}
 </script>

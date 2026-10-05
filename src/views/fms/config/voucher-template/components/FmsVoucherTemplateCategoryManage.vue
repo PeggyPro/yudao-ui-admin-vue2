@@ -1,12 +1,20 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="凭证模板分类" width="560px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="凭证模板分类"
+    width="560px"
+  >
     <el-form
       ref="categoryForm"
       :model="categoryFormData"
       :rules="categoryFormRules"
       class="category-form"
     >
-      <el-form-item class="category-name-field" prop="name">
+      <el-form-item
+        class="category-name-field"
+        prop="name"
+      >
         <el-input
           v-model="categoryFormData.name"
           maxlength="255"
@@ -28,13 +36,29 @@
           type="primary"
           @click="saveCategory"
         >新增</el-button>
-        <el-button v-if="categoryFormData.id" @click="resetCategoryForm">取消</el-button>
+        <el-button
+          v-if="categoryFormData.id"
+          @click="resetCategoryForm"
+        >取消</el-button>
       </div>
     </el-form>
 
-    <el-table :data="categories" border stripe @row-dblclick="selectCategory">
-      <el-table-column label="分类名称" min-width="260" prop="name" />
-      <el-table-column align="center" label="操作" width="150">
+    <el-table
+      :data="categories"
+      border
+      stripe
+      @row-dblclick="selectCategory"
+    >
+      <el-table-column
+        label="分类名称"
+        min-width="260"
+        prop="name"
+      />
+      <el-table-column
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="isWritable"

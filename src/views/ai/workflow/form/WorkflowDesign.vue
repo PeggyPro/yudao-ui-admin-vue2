@@ -10,8 +10,8 @@
     />
     <div class="test-entry">
       <el-button
-        type="primary"
         v-hasPermi="['ai:workflow:test']"
+        type="primary"
         @click="testWorkflowModel"
       >
         测试
@@ -29,8 +29,16 @@
         <fieldset>
           <legend><h3>运行参数配置</h3></legend>
           <div class="field-content">
-            <div v-for="(param, index) in params4Test" :key="index" class="param-row">
-              <el-select v-model="param.key" placeholder="参数名" class="param-control">
+            <div
+              v-for="(param, index) in params4Test"
+              :key="index"
+              class="param-row"
+            >
+              <el-select
+                v-model="param.key"
+                placeholder="参数名"
+                class="param-control"
+              >
                 <el-option
                   v-for="(definition, key) in paramsOfStartNode"
                   :key="key"
@@ -39,7 +47,11 @@
                   :disabled="isParamDisabled(key)"
                 />
               </el-select>
-              <el-input v-model="param.value" placeholder="参数值" class="param-control" />
+              <el-input
+                v-model="param.value"
+                placeholder="参数值"
+                class="param-control"
+              />
               <el-button
                 type="danger"
                 plain
@@ -48,23 +60,45 @@
                 @click="removeParam(index)"
               />
             </div>
-            <el-button type="primary" plain @click="addParam">添加参数</el-button>
+            <el-button
+              type="primary"
+              plain
+              @click="addParam"
+            >添加参数</el-button>
           </div>
         </fieldset>
 
         <fieldset class="result-fieldset">
           <legend><h3>运行结果</h3></legend>
           <div class="field-content result-panel">
-            <span v-if="loading" class="text-primary">执行中...</span>
-            <span v-else-if="error" class="text-danger">{{ error }}</span>
-            <pre v-else-if="testResult" class="result-content">{{
+            <span
+              v-if="loading"
+              class="text-primary"
+            >执行中...</span>
+            <span
+              v-else-if="error"
+              class="text-danger"
+            >{{ error }}</span>
+            <pre
+              v-else-if="testResult"
+              class="result-content"
+            >{{
               JSON.stringify(testResult, null, 2)
             }}</pre>
-            <span v-else class="text-info">点击运行查看结果</span>
+            <span
+              v-else
+              class="text-info"
+            >点击运行查看结果</span>
           </div>
         </fieldset>
 
-        <el-button class="run-button" size="medium" type="success" :loading="loading" @click="goRun">
+        <el-button
+          class="run-button"
+          size="medium"
+          type="success"
+          :loading="loading"
+          @click="goRun"
+        >
           运行流程
         </el-button>
       </div>

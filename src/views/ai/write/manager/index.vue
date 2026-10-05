@@ -1,6 +1,9 @@
 <template>
   <div class="app-container ai-write-manager">
-    <doc-alert title="AI 写作助手" url="https://doc.iocoder.cn/ai/write/" />
+    <doc-alert
+      title="AI 写作助手"
+      url="https://doc.iocoder.cn/ai/write/"
+    />
 
     <el-form
       ref="queryForm"
@@ -10,8 +13,15 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="用户编号" prop="userId">
-        <el-select v-model="queryParams.userId" clearable placeholder="请输入用户编号">
+      <el-form-item
+        label="用户编号"
+        prop="userId"
+      >
+        <el-select
+          v-model="queryParams.userId"
+          clearable
+          placeholder="请输入用户编号"
+        >
           <el-option
             v-for="item in userList"
             :key="item.id"
@@ -20,8 +30,15 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="写作类型" prop="type">
-        <el-select v-model="queryParams.type" clearable placeholder="请选择写作类型">
+      <el-form-item
+        label="写作类型"
+        prop="type"
+      >
+        <el-select
+          v-model="queryParams.type"
+          clearable
+          placeholder="请选择写作类型"
+        >
           <el-option
             v-for="item in typeDictDatas"
             :key="item.value"
@@ -30,8 +47,15 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="平台" prop="platform">
-        <el-select v-model="queryParams.platform" clearable placeholder="请选择平台">
+      <el-form-item
+        label="平台"
+        prop="platform"
+      >
+        <el-select
+          v-model="queryParams.platform"
+          clearable
+          placeholder="请选择平台"
+        >
           <el-option
             v-for="item in platformDictDatas"
             :key="item.value"
@@ -40,7 +64,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           type="daterange"
@@ -53,60 +80,170 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe>
-      <el-table-column label="编号" prop="id" align="center" width="120" fixed="left" show-overflow-tooltip />
-      <el-table-column label="用户" prop="userId" align="center" width="180" show-overflow-tooltip>
-        <template v-slot="scope">{{ userNames[scope.row.userId] }}</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+    >
+      <el-table-column
+        label="编号"
+        prop="id"
+        align="center"
+        width="120"
+        fixed="left"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="用户"
+        prop="userId"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">{{ userNames[scope.row.userId] }}</template>
       </el-table-column>
-      <el-table-column label="写作类型" prop="type" align="center" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_WRITE_TYPE" :value="scope.row.type" />
+      <el-table-column
+        label="写作类型"
+        prop="type"
+        align="center"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_WRITE_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="平台" prop="platform" align="center" width="120" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_PLATFORM" :value="scope.row.platform" />
+      <el-table-column
+        label="平台"
+        prop="platform"
+        align="center"
+        width="120"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_PLATFORM"
+            :value="scope.row.platform"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="模型" prop="model" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="生成内容提示" prop="prompt" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="生成的内容" prop="generatedContent" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="原文" prop="originalContent" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="长度" prop="length" align="center" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_WRITE_LENGTH" :value="scope.row.length" />
+      <el-table-column
+        label="模型"
+        prop="model"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="生成内容提示"
+        prop="prompt"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="生成的内容"
+        prop="generatedContent"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="原文"
+        prop="originalContent"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="长度"
+        prop="length"
+        align="center"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_WRITE_LENGTH"
+            :value="scope.row.length"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="格式" prop="format" align="center" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_WRITE_FORMAT" :value="scope.row.format" />
+      <el-table-column
+        label="格式"
+        prop="format"
+        align="center"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_WRITE_FORMAT"
+            :value="scope.row.format"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="语气" prop="tone" align="center" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_WRITE_TONE" :value="scope.row.tone" />
+      <el-table-column
+        label="语气"
+        prop="tone"
+        align="center"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_WRITE_TONE"
+            :value="scope.row.tone"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="语言" prop="language" align="center" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_WRITE_LANGUAGE" :value="scope.row.language" />
+      <el-table-column
+        label="语言"
+        prop="language"
+        align="center"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_WRITE_LANGUAGE"
+            :value="scope.row.language"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" prop="createTime" align="center" width="180" show-overflow-tooltip>
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="创建时间"
+        prop="createTime"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="错误信息" prop="errorMessage" align="center" show-overflow-tooltip />
-      <el-table-column label="操作" align="center">
-        <template v-slot="scope">
+      <el-table-column
+        label="错误信息"
+        prop="errorMessage"
+        align="center"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+      >
+        <template slot-scope="scope">
           <el-button
+            v-hasPermi="['ai:write:delete']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:write:delete']"
             class="ai-write-manager__delete"
             @click="handleDelete(scope.row.id)"
           >删除</el-button>

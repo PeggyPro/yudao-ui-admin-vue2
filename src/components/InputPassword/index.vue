@@ -14,8 +14,14 @@
         />
       </template>
     </el-input>
-    <div v-if="strength" class="input-password__bar">
-      <div class="input-password__bar--fill" :data-score="passwordStrength" />
+    <div
+      v-if="strength"
+      class="input-password__bar"
+    >
+      <div
+        class="input-password__bar--fill"
+        :data-score="passwordStrength"
+      />
     </div>
   </div>
 </template>

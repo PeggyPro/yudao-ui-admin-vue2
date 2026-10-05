@@ -1,5 +1,10 @@
 <template>
-  <el-dialog title="科目导入" :visible.sync="visible" width="620px" append-to-body>
+  <el-dialog
+    title="科目导入"
+    :visible.sync="visible"
+    width="620px"
+    append-to-body
+  >
     <template v-if="!result">
       <el-upload
         ref="upload"
@@ -15,26 +20,63 @@
       >
         <i class="el-icon-upload" />
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div slot="tip" class="el-upload__tip">仅允许导入 xls、xlsx 格式，且文件不超过 2 MB。</div>
+        <div
+          slot="tip"
+          class="el-upload__tip"
+        >仅允许导入 xls、xlsx 格式，且文件不超过 2 MB。</div>
       </el-upload>
       <div class="import-tip">一级科目的上级科目编码填写 0，多项辅助核算使用“/”分隔。</div>
-      <el-link type="primary" :underline="false" :disabled="loading" @click="downloadTemplate">下载导入模板</el-link>
+      <el-link
+        type="primary"
+        :underline="false"
+        :disabled="loading"
+        @click="downloadTemplate"
+      >下载导入模板</el-link>
     </template>
     <template v-else>
-      <el-result :icon="failureRows.length ? 'warning' : 'success'" :title="failureRows.length ? '科目导入完成，部分失败' : '科目导入成功'" :sub-title="resultSummary" />
-      <el-table v-if="failureRows.length" :data="failureRows" border max-height="260px">
-        <el-table-column label="导入行" prop="label" min-width="200" show-overflow-tooltip />
-        <el-table-column label="失败原因" prop="reason" min-width="260" show-overflow-tooltip />
+      <el-result
+        :icon="failureRows.length ? 'warning' : 'success'"
+        :title="failureRows.length ? '科目导入完成，部分失败' : '科目导入成功'"
+        :sub-title="resultSummary"
+      />
+      <el-table
+        v-if="failureRows.length"
+        :data="failureRows"
+        border
+        max-height="260px"
+      >
+        <el-table-column
+          label="导入行"
+          prop="label"
+          min-width="200"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="失败原因"
+          prop="reason"
+          min-width="260"
+          show-overflow-tooltip
+        />
       </el-table>
     </template>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <template v-if="!result">
-        <el-button type="primary" :loading="loading" @click="submit">确 定</el-button>
+        <el-button
+          type="primary"
+          :loading="loading"
+          @click="submit"
+        >确 定</el-button>
         <el-button @click="visible = false">取 消</el-button>
       </template>
       <template v-else>
         <el-button @click="reset">继续导入</el-button>
-        <el-button type="primary" @click="visible = false">完 成</el-button>
+        <el-button
+          type="primary"
+          @click="visible = false"
+        >完 成</el-button>
       </template>
     </div>
   </el-dialog>

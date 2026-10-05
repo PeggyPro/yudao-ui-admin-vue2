@@ -1,9 +1,19 @@
 <template>
   <div class="app-container fms-closing-page">
-    <doc-alert title="【结账】期末结账" url="https://doc.iocoder.cn/fms/closing/" />
+    <doc-alert
+      title="【结账】期末结账"
+      url="https://doc.iocoder.cn/fms/closing/"
+    />
 
-    <el-card shadow="never" class="section-card">
-      <el-form class="period-form" :inline="true" label-width="68px">
+    <el-card
+      shadow="never"
+      class="section-card"
+    >
+      <el-form
+        class="period-form"
+        :inline="true"
+        label-width="68px"
+      >
         <el-form-item label="会计期间">
           <el-date-picker
             v-model="month"
@@ -17,7 +27,12 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button :loading="loading" :disabled="!ready" icon="el-icon-refresh" @click="getOverview">刷新</el-button>
+          <el-button
+            :loading="loading"
+            :disabled="!ready"
+            icon="el-icon-refresh"
+            @click="getOverview"
+          >刷新</el-button>
         </el-form-item>
       </el-form>
       <el-alert
@@ -42,7 +57,11 @@
       @success="getOverview"
     />
 
-    <el-card v-if="ready" shadow="never" class="section-card">
+    <el-card
+      v-if="ready"
+      shadow="never"
+      class="section-card"
+    >
       <el-alert
         :title="overview.closed ? monthLabel + ' 已结账' : monthLabel + ' 尚未结账'"
         :type="overview.closed ? 'success' : 'info'"
@@ -50,8 +69,15 @@
         show-icon
         class="overview-alert"
       />
-      <el-row v-loading="loading" :gutter="16">
-        <el-col :xs="24" :sm="12" :lg="6">
+      <el-row
+        v-loading="loading"
+        :gutter="16"
+      >
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="凭证审核"
             :value="overview.pendingVoucherCount + ' 张待审核'"
@@ -59,7 +85,11 @@
             :tag-label="overview.voucherReviewRequired ? '结账前必须审核' : '当前未强制审核'"
           />
         </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="初始余额"
             :value="overview.initialBalanceBalanced ? '试算平衡' : '试算不平衡'"
@@ -67,7 +97,11 @@
             :tag-label="overview.initialBalanceBalanced ? '检查通过' : '需要处理'"
           />
         </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="凭证编号"
             :value="overview.voucherNumberContinuous ? '编号连续' : '存在断号'"
@@ -75,7 +109,11 @@
             :tag-label="overview.voucherNumberContinuous ? '检查通过' : '需要整理'"
           />
         </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="损益结转"
             :value="formatMoney(overview.profitLossBalance)"
@@ -83,7 +121,11 @@
             :tag-label="profitLossCheckLabel"
           />
         </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="利润表检查"
             :value="incomeStatementCheckValue"
@@ -91,7 +133,11 @@
             :tag-label="overview.incomeStatementBalanced && overview.incomeStatementUnmappedSubjectCount === 0 ? '检查通过' : '需要处理'"
           />
         </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="资产负债平衡"
             :value="'差额 ' + formatMoney(overview.balanceSheetDifference)"
@@ -99,7 +145,11 @@
             :tag-label="balanceSheetCheckLabel"
           />
         </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :lg="6"
+        >
           <ClosingStatusCard
             title="期间状态"
             :value="overview.closed ? '已结账' : '未结账'"
@@ -110,7 +160,11 @@
       </el-row>
     </el-card>
 
-    <el-card v-if="ready" shadow="never" class="section-card">
+    <el-card
+      v-if="ready"
+      shadow="never"
+      class="section-card"
+    >
       <div slot="header">执行结账</div>
       <div class="closing-actions">
         <el-button
@@ -129,8 +183,14 @@
           :loading="submitting"
           @click="cancelToPeriod"
         >{{ isCurrentPeriod ? '反结账' : '反结账到 ' + monthLabel }}</el-button>
-        <span v-if="!overview.closed && !isBeforeCurrentPeriod && !canClose" class="warning-text">完成上方检查后才可结账</span>
-        <span v-if="!overview.closed && isBeforeCurrentPeriod" class="warning-text">结账目标不能早于当前会计期间 {{ currentMonthLabel }}</span>
+        <span
+          v-if="!overview.closed && !isBeforeCurrentPeriod && !canClose"
+          class="warning-text"
+        >完成上方检查后才可结账</span>
+        <span
+          v-if="!overview.closed && isBeforeCurrentPeriod"
+          class="warning-text"
+        >结账目标不能早于当前会计期间 {{ currentMonthLabel }}</span>
       </div>
     </el-card>
   </div>

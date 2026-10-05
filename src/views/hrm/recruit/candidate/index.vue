@@ -598,8 +598,16 @@ export default {
     async handleMoreCommand(command, candidate) { if (command === 'primary-pass') return this.handleStatus(candidate, HrmRecruitCandidateStatus.PRIMARY_PASS); if (command === 'offer') return this.handleStatus(candidate, HrmRecruitCandidateStatus.OFFER_SENT); if (command === 'restore') return this.handleStatus(candidate, HrmRecruitCandidateStatus.NEW); if (command === 'interview-change') return this.openInterviewChange(candidate); if (command === 'interview-cancel') return this.openInterviewCancel(candidate); if (command === 'reinterview' && candidate.id) return this.openReinterview(candidate.id); if (command === 'eliminate') return this.openEliminateForm(candidate); if (command === 'delete') await this.handleDelete(candidate.id) },
     async handleStatus(candidate, status) { if (!candidate.id) return; await RecruitCandidateApi.updateRecruitCandidateStatus({ id: candidate.id, status }); this.$modal.msgSuccess(this.$t('common.updateSuccess')); await this.refreshList() },
     handleConfirmEntry(candidate) { if (candidate.employeeId) this.$refs.employeeForm.open('confirm', candidate.employeeId) },
-    async handleDelete(id) { if (!id) return; try { await this.$modal.confirm('是否确认删除该候选人?'); await RecruitCandidateApi.deleteRecruitCandidate(id); this.$modal.msgSuccess(this.$t('common.delSuccess')); await this.refreshList() } catch (error) {} },
-    async handleBatchDelete() { if (!this.selectedIds.length) return; try { await this.$modal.confirm(`确认删除选中的 ${this.selectedIds.length} 位候选人吗？`); const success = await executeHrmBatch(this, this.selectedIds.map(id => RecruitCandidateApi.deleteRecruitCandidate(id))); if (success) await this.handleBatchSuccess() } catch (error) {} },
+    async handleDelete(id) {
+      if (!id) return; try { await this.$modal.confirm('是否确认删除该候选人?'); await RecruitCandidateApi.deleteRecruitCandidate(id); this.$modal.msgSuccess(this.$t('common.delSuccess')); await this.refreshList() } catch (error) {
+      // 取消操作或请求失败时保留当前状态
+      }
+    },
+    async handleBatchDelete() {
+      if (!this.selectedIds.length) return; try { await this.$modal.confirm(`确认删除选中的 ${this.selectedIds.length} 位候选人吗？`); const success = await executeHrmBatch(this, this.selectedIds.map(id => RecruitCandidateApi.deleteRecruitCandidate(id))); if (success) await this.handleBatchSuccess() } catch (error) {
+      // 取消操作或请求失败时保留当前状态
+      }
+    },
     async handleBatchCommand(command) { if (command === 'status') return this.openBatchStatusForm(); if (command === 'interview') return this.openBatchInterview(); if (command === 'post') return this.openBatchPostForm(); if (command === 'channel') return this.openBatchChannelForm(); if (command === 'eliminate') return this.openBatchEliminateForm(); if (command === 'delete') await this.handleBatchDelete() },
     async handleBatchSuccess() { this.selectedIds = []; await this.refreshList() },
     formatNames(names) { return (names || []).join('、') || '-' }

@@ -1,10 +1,19 @@
 <template>
-  <div v-loading="detailLoading" class="oa-supply-apply-detail">
+  <div
+    v-loading="detailLoading"
+    class="oa-supply-apply-detail"
+  >
     <content-wrap>
-      <el-descriptions :column="2" border>
+      <el-descriptions
+        :column="2"
+        border
+      >
         <el-descriptions-item label="单据编号">{{ detailData.no }}</el-descriptions-item>
         <el-descriptions-item label="单据状态">
-          <el-tag v-if="detailData.status === -1" type="info">未提交</el-tag>
+          <el-tag
+            v-if="detailData.status === -1"
+            type="info"
+          >未提交</el-tag>
           <dict-tag
             v-else-if="detailData.status !== undefined"
             :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
@@ -33,27 +42,74 @@
         <el-descriptions-item label="创建时间">
           {{ formatDate(detailData.createTime) }}
         </el-descriptions-item>
-        <el-descriptions-item label="申请事由" :span="2">
+        <el-descriptions-item
+          label="申请事由"
+          :span="2"
+        >
           {{ detailData.reason }}
         </el-descriptions-item>
-        <el-descriptions-item label="备注" :span="2">{{ detailData.remark }}</el-descriptions-item>
-        <el-descriptions-item label="附件" :span="2">
-          <upload-file :value="detailData.fileUrls || []" disabled :is-show-tip="false" />
+        <el-descriptions-item
+          label="备注"
+          :span="2"
+        >{{ detailData.remark }}</el-descriptions-item>
+        <el-descriptions-item
+          label="附件"
+          :span="2"
+        >
+          <upload-file
+            :value="detailData.fileUrls || []"
+            disabled
+            :is-show-tip="false"
+          />
         </el-descriptions-item>
       </el-descriptions>
       <!-- 领用明细 -->
       <div class="detail-title">领用明细</div>
-      <el-table :data="detailData.items" border show-overflow-tooltip>
-        <el-table-column type="index" label="序号" width="60" align="center" />
-        <el-table-column label="物品名称" prop="itemName" min-width="160" />
-        <el-table-column label="规格型号" prop="model" min-width="120" />
-        <el-table-column label="计量单位" prop="unit" width="90" align="center" />
-        <el-table-column label="管理类型" width="110" align="center">
+      <el-table
+        :data="detailData.items"
+        border
+        show-overflow-tooltip
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="60"
+          align="center"
+        />
+        <el-table-column
+          label="物品名称"
+          prop="itemName"
+          min-width="160"
+        />
+        <el-table-column
+          label="规格型号"
+          prop="model"
+          min-width="120"
+        />
+        <el-table-column
+          label="计量单位"
+          prop="unit"
+          width="90"
+          align="center"
+        />
+        <el-table-column
+          label="管理类型"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE" :value="scope.row.manageType" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE"
+              :value="scope.row.manageType"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="领用数量" prop="applyQuantity" width="140" align="center" />
+        <el-table-column
+          label="领用数量"
+          prop="applyQuantity"
+          width="140"
+          align="center"
+        />
       </el-table>
     </content-wrap>
   </div>

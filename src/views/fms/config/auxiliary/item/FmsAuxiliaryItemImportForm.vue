@@ -1,9 +1,18 @@
 <template>
-  <el-dialog title="导入辅助核算项目" :visible.sync="dialogVisible" append-to-body width="680px">
+  <el-dialog
+    title="导入辅助核算项目"
+    :visible.sync="dialogVisible"
+    append-to-body
+    width="680px"
+  >
     <template v-if="!importResult">
       <div class="import-section">
         <div class="section-title">一、请按照数据模板的格式准备要导入的辅助核算项目</div>
-        <el-button type="text" :loading="templateLoading" @click="downloadTemplate">
+        <el-button
+          type="text"
+          :loading="templateLoading"
+          @click="downloadTemplate"
+        >
           <i class="el-icon-download" /> 下载《{{ auxiliaryType && auxiliaryType.name }}导入模板》
         </el-button>
         <div class="import-tip">{{ templateTip }}</div>
@@ -24,7 +33,10 @@
         >
           <i class="el-icon-upload upload-icon" />
           <div class="el-upload__text">将文件拖到此处，或<em>点击选择文件</em></div>
-          <div slot="tip" class="el-upload__tip">仅支持 xls、xlsx 格式，文件不能超过 2MB</div>
+          <div
+            slot="tip"
+            class="el-upload__tip"
+          >仅支持 xls、xlsx 格式，文件不能超过 2MB</div>
         </el-upload>
       </div>
     </template>
@@ -35,13 +47,31 @@
         :sub-title="resultSummary"
         :title="failureCount ? '导入完成，部分数据未导入' : '辅助核算项目导入成功'"
       />
-      <el-table v-if="failureCount" :data="failureRows" border max-height="260px">
-        <el-table-column label="导入行" min-width="220" prop="label" show-overflow-tooltip />
-        <el-table-column label="失败原因" min-width="260" prop="reason" show-overflow-tooltip />
+      <el-table
+        v-if="failureCount"
+        :data="failureRows"
+        border
+        max-height="260px"
+      >
+        <el-table-column
+          label="导入行"
+          min-width="220"
+          prop="label"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="失败原因"
+          min-width="260"
+          prop="reason"
+          show-overflow-tooltip
+        />
       </el-table>
     </template>
 
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <template v-if="!importResult">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button
@@ -53,7 +83,10 @@
       </template>
       <template v-else>
         <el-button @click="resetImport">继续导入</el-button>
-        <el-button type="primary" @click="dialogVisible = false">完 成</el-button>
+        <el-button
+          type="primary"
+          @click="dialogVisible = false"
+        >完 成</el-button>
       </template>
     </div>
   </el-dialog>

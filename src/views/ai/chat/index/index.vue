@@ -17,14 +17,37 @@
             {{ activeConversation && activeConversation.title ? activeConversation.title : '对话' }}
             <span v-if="activeMessageList.length">（{{ activeMessageList.length }}）</span>
           </div>
-          <div v-if="activeConversation" class="ai-chat-header__actions">
-            <el-button type="primary" plain size="mini" @click="openChatConversationUpdateForm">
+          <div
+            v-if="activeConversation"
+            class="ai-chat-header__actions"
+          >
+            <el-button
+              type="primary"
+              plain
+              size="mini"
+              @click="openChatConversationUpdateForm"
+            >
               {{ activeConversationModelName }}
               <i class="el-icon-setting el-icon--right" />
             </el-button>
-            <el-button size="mini" icon="el-icon-delete" title="清空消息" @click="handlerMessageClear" />
-            <el-button size="mini" icon="el-icon-download" title="导出对话" @click="downloadConversation" />
-            <el-button size="mini" icon="el-icon-top" title="回到顶部" @click="handleGoTopMessage" />
+            <el-button
+              size="mini"
+              icon="el-icon-delete"
+              title="清空消息"
+              @click="handlerMessageClear"
+            />
+            <el-button
+              size="mini"
+              icon="el-icon-download"
+              title="导出对话"
+              @click="downloadConversation"
+            />
+            <el-button
+              size="mini"
+              icon="el-icon-top"
+              title="回到顶部"
+              @click="handleGoTopMessage"
+            />
           </div>
         </el-header>
 
@@ -50,7 +73,10 @@
         </el-main>
 
         <el-footer class="ai-chat-footer">
-          <form class="ai-chat-composer" @submit.prevent="handleSendByButton">
+          <form
+            class="ai-chat-composer"
+            @submit.prevent="handleSendByButton"
+          >
             <textarea
               v-model="prompt"
               placeholder="问我任何问题...（Shift+Enter 换行，按下 Enter 发送）"
@@ -81,7 +107,12 @@
               >
                 发送
               </el-button>
-              <el-button v-else type="danger" size="small" @click="stopStream">停止</el-button>
+              <el-button
+                v-else
+                type="danger"
+                size="small"
+                @click="stopStream"
+              >停止</el-button>
             </div>
           </form>
         </el-footer>

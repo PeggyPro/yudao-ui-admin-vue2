@@ -1,17 +1,53 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="600px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="签到天数" prop="day">
-        <el-input-number v-model="formData.day" :min="1" :max="7" :precision="0" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="600px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
+      <el-form-item
+        label="签到天数"
+        prop="day"
+      >
+        <el-input-number
+          v-model="formData.day"
+          :min="1"
+          :max="7"
+          :precision="0"
+        />
         <span class="day-help">只允许设置 1-7，默认签到 7 天为一个周期</span>
       </el-form-item>
-      <el-form-item label="奖励积分" prop="point">
-        <el-input-number v-model="formData.point" :min="0" :precision="0" />
+      <el-form-item
+        label="奖励积分"
+        prop="point"
+      >
+        <el-input-number
+          v-model="formData.point"
+          :min="0"
+          :precision="0"
+        />
       </el-form-item>
-      <el-form-item label="奖励经验" prop="experience">
-        <el-input-number v-model="formData.experience" :min="0" :precision="0" />
+      <el-form-item
+        label="奖励经验"
+        prop="experience"
+      >
+        <el-input-number
+          v-model="formData.experience"
+          :min="0"
+          :precision="0"
+        />
       </el-form-item>
-      <el-form-item label="开启状态" prop="status">
+      <el-form-item
+        label="开启状态"
+        prop="status"
+      >
         <el-radio-group v-model="formData.status">
           <el-radio
             v-for="dict in statusDictDatas"
@@ -21,8 +57,15 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

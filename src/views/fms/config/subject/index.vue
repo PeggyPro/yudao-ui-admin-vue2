@@ -1,34 +1,110 @@
 <template>
   <div class="app-container fms-subject-page">
-    <doc-alert title="【设置】币别、科目、辅助核算、初始余额" url="https://doc.iocoder.cn/fms/config/accounting/" />
+    <doc-alert
+      title="【设置】币别、科目、辅助核算、初始余额"
+      url="https://doc.iocoder.cn/fms/config/accounting/"
+    />
 
-    <el-form ref="queryForm" :inline="true" label-width="78px" class="subject-toolbar">
+    <el-form
+      ref="queryForm"
+      :inline="true"
+      label-width="78px"
+      class="subject-toolbar"
+    >
       <el-form-item label="当前账套">
-        <el-select v-model="accountSetId" filterable clearable placeholder="请选择账套" style="width: 240px" @change="handleAccountSetChange">
-          <el-option v-for="item in accountSets" :key="item.id" :label="item.companyName" :value="item.id" />
+        <el-select
+          v-model="accountSetId"
+          filterable
+          clearable
+          placeholder="请选择账套"
+          style="width: 240px"
+          @change="handleAccountSetChange"
+        >
+          <el-option
+            v-for="item in accountSets"
+            :key="item.id"
+            :label="item.companyName"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="科目类别">
-        <el-select v-model="subjectType" style="width: 180px" @change="getList">
-          <el-option v-for="item in subjectTypeOptions" :key="item.value" :label="item.label" :value="item.value" />
+        <el-select
+          v-model="subjectType"
+          style="width: 180px"
+          @change="getList"
+        >
+          <el-option
+            v-for="item in subjectTypeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="isWritable" v-hasPermi="['fms:config:subject:create']" type="primary" plain icon="el-icon-plus" @click="openForm('create')">新增</el-button>
-        <el-button v-if="isWritable" v-hasPermi="['fms:config:subject:import']" type="warning" plain icon="el-icon-upload2" @click="handleImport">导入</el-button>
-        <el-button v-hasPermi="['fms:config:subject:export']" type="success" plain icon="el-icon-download" :loading="exportLoading" @click="handleExport">导出</el-button>
-        <el-dropdown v-if="isWritable && selectedRows.length && canOperate" class="ml10" :disabled="batchLoading" @command="handleBatchCommand">
-          <el-button plain :loading="batchLoading" icon="el-icon-operation">批量操作<i class="el-icon-arrow-down el-icon--right" /></el-button>
+        <el-button
+          v-if="isWritable"
+          v-hasPermi="['fms:config:subject:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          @click="openForm('create')"
+        >新增</el-button>
+        <el-button
+          v-if="isWritable"
+          v-hasPermi="['fms:config:subject:import']"
+          type="warning"
+          plain
+          icon="el-icon-upload2"
+          @click="handleImport"
+        >导入</el-button>
+        <el-button
+          v-hasPermi="['fms:config:subject:export']"
+          type="success"
+          plain
+          icon="el-icon-download"
+          :loading="exportLoading"
+          @click="handleExport"
+        >导出</el-button>
+        <el-dropdown
+          v-if="isWritable && selectedRows.length && canOperate"
+          class="ml10"
+          :disabled="batchLoading"
+          @command="handleBatchCommand"
+        >
+          <el-button
+            plain
+            :loading="batchLoading"
+            icon="el-icon-operation"
+          >批量操作<i class="el-icon-arrow-down el-icon--right" /></el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-if="canUpdate" command="enable">批量启用</el-dropdown-item>
-            <el-dropdown-item v-if="canUpdate" command="disable">批量禁用</el-dropdown-item>
-            <el-dropdown-item v-if="canDelete" command="delete" divided>批量删除</el-dropdown-item>
+            <el-dropdown-item
+              v-if="canUpdate"
+              command="enable"
+            >批量启用</el-dropdown-item>
+            <el-dropdown-item
+              v-if="canUpdate"
+              command="disable"
+            >批量禁用</el-dropdown-item>
+            <el-dropdown-item
+              v-if="canDelete"
+              command="delete"
+              divided
+            >批量删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-form-item>
     </el-form>
 
-    <el-alert v-if="!accountSetId" class="mb12" type="info" :closable="false" show-icon title="请先选择已初始化的账套" />
+    <el-alert
+      v-if="!accountSetId"
+      class="mb12"
+      type="info"
+      :closable="false"
+      show-icon
+      title="请先选择已初始化的账套"
+    />
     <el-table
       v-loading="loading"
       :data="list"
@@ -39,27 +115,74 @@
       :tree-props="{ children: 'children' }"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column v-if="isWritable" type="selection" width="48" />
-      <el-table-column label="编码" prop="code" min-width="130" />
-      <el-table-column label="名称" prop="name" min-width="190" show-overflow-tooltip />
-      <el-table-column label="类别" min-width="120">
+      <el-table-column
+        v-if="isWritable"
+        type="selection"
+        width="48"
+      />
+      <el-table-column
+        label="编码"
+        prop="code"
+        min-width="130"
+      />
+      <el-table-column
+        label="名称"
+        prop="name"
+        min-width="190"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="类别"
+        min-width="120"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.FMS_SUBJECT_CATEGORY" :value="String(scope.row.type) + '-' + String(scope.row.category)" />
+          <dict-tag
+            :type="DICT_TYPE.FMS_SUBJECT_CATEGORY"
+            :value="String(scope.row.type) + '-' + String(scope.row.category)"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="余额方向" prop="balanceDirection" align="center" width="90">
-        <template slot-scope="scope"><dict-tag :type="DICT_TYPE.FMS_DEBIT_CREDIT_DIRECTION" :value="scope.row.balanceDirection" /></template>
+      <el-table-column
+        label="余额方向"
+        prop="balanceDirection"
+        align="center"
+        width="90"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="DICT_TYPE.FMS_DEBIT_CREDIT_DIRECTION"
+          :value="scope.row.balanceDirection"
+        /></template>
       </el-table-column>
-      <el-table-column label="辅助核算" min-width="150" show-overflow-tooltip>
+      <el-table-column
+        label="辅助核算"
+        min-width="150"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">{{ (scope.row.auxiliaryTypeNames || []).join('、') }}</template>
       </el-table-column>
-      <el-table-column label="数量" prop="quantityUnit" align="center" width="90">
+      <el-table-column
+        label="数量"
+        prop="quantityUnit"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">{{ scope.row.quantityAccounting ? scope.row.quantityUnit : '' }}</template>
       </el-table-column>
-      <el-table-column label="现金项" align="center" width="90">
-        <template slot-scope="scope"><dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.cash" /></template>
+      <el-table-column
+        label="现金项"
+        align="center"
+        width="90"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+          :value="scope.row.cash"
+        /></template>
       </el-table-column>
-      <el-table-column label="状态" align="center" width="100">
+      <el-table-column
+        label="状态"
+        align="center"
+        width="100"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -70,17 +193,44 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="220">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="220"
+      >
         <template slot-scope="scope">
-          <el-button v-if="isWritable && canUpdate" v-hasPermi="['fms:config:subject:update']" type="text" @click="openForm('update', scope.row)">编辑</el-button>
-          <el-button v-if="isWritable && canCreate" v-hasPermi="['fms:config:subject:create']" type="text" @click="openForm('create', null, scope.row)">新建下级</el-button>
-          <el-button v-if="isWritable && canDelete" v-hasPermi="['fms:config:subject:delete']" type="text" class="danger-text" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button
+            v-if="isWritable && canUpdate"
+            v-hasPermi="['fms:config:subject:update']"
+            type="text"
+            @click="openForm('update', scope.row)"
+          >编辑</el-button>
+          <el-button
+            v-if="isWritable && canCreate"
+            v-hasPermi="['fms:config:subject:create']"
+            type="text"
+            @click="openForm('create', null, scope.row)"
+          >新建下级</el-button>
+          <el-button
+            v-if="isWritable && canDelete"
+            v-hasPermi="['fms:config:subject:delete']"
+            type="text"
+            class="danger-text"
+            @click="handleDelete(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <fms-subject-form ref="form" @success="getList" />
-    <fms-subject-import-form ref="importForm" @success="getList" />
+    <fms-subject-form
+      ref="form"
+      @success="getList"
+    />
+    <fms-subject-import-form
+      ref="importForm"
+      @success="getList"
+    />
   </div>
 </template>
 

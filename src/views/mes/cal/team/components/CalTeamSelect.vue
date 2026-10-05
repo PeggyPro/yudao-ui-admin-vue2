@@ -9,8 +9,16 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-        <div v-if="selectedItem" slot="content" class="team-tooltip">
+      <el-tooltip
+        :disabled="!selectedItem"
+        placement="top"
+        :open-delay="500"
+      >
+        <div
+          v-if="selectedItem"
+          slot="content"
+          class="team-tooltip"
+        >
           <div>编码：{{ selectedItem.code }}</div>
           <div>名称：{{ selectedItem.name }}</div>
         </div>
@@ -23,7 +31,11 @@
         />
       </el-tooltip>
     </div>
-    <cal-team-select-dialog ref="dialog" :multiple="false" @selected="handleSelected" />
+    <cal-team-select-dialog
+      ref="dialog"
+      :multiple="false"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 
@@ -33,8 +45,8 @@ import CalTeamSelectDialog from './CalTeamSelectDialog.vue'
 
 export default {
   name: 'CalTeamSelect',
-  inheritAttrs: false,
   components: { CalTeamSelectDialog },
+  inheritAttrs: false,
   props: {
     value: Number,
     modelValue: Number,

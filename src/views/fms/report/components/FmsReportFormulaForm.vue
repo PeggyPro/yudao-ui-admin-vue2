@@ -6,7 +6,10 @@
     width="900px"
   >
     <div v-loading="loading">
-      <el-form class="formula-toolbar" :inline="true">
+      <el-form
+        class="formula-toolbar"
+        :inline="true"
+      >
         <el-form-item label="科目">
           <fms-subject-select
             v-model="subjectId"
@@ -15,7 +18,10 @@
           />
         </el-form-item>
         <el-form-item label="取数规则">
-          <el-select v-model="rules" class="rule-select">
+          <el-select
+            v-model="rules"
+            class="rule-select"
+          >
             <el-option
               v-for="option in ruleOptions"
               :key="option.value"
@@ -31,7 +37,10 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addFormula">添加</el-button>
+          <el-button
+            type="primary"
+            @click="addFormula"
+          >添加</el-button>
         </el-form-item>
       </el-form>
 
@@ -43,31 +52,71 @@
         max-height="320"
         show-summary
       >
-        <el-table-column label="科目" min-width="240">
+        <el-table-column
+          label="科目"
+          min-width="240"
+        >
           <template slot-scope="scope">
             {{ scope.row.subjectNumber }} {{ scope.row.subjectName }}
-            <el-tag v-if="!scope.row.subjectId" class="invalid-tag" size="mini" type="danger">科目已失效</el-tag>
+            <el-tag
+              v-if="!scope.row.subjectId"
+              class="invalid-tag"
+              size="mini"
+              type="danger"
+            >科目已失效</el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="运算符号" prop="operator" width="90" />
-        <el-table-column label="取数规则" width="150">
+        <el-table-column
+          align="center"
+          label="运算符号"
+          prop="operator"
+          width="90"
+        />
+        <el-table-column
+          label="取数规则"
+          width="150"
+        >
           <template slot-scope="scope">{{ getRuleName(scope.row.rules) }}</template>
         </el-table-column>
-        <el-table-column v-if="formulaType === 'balance'" align="right" label="期末数">
+        <el-table-column
+          v-if="formulaType === 'balance'"
+          align="right"
+          label="期末数"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.closingAmount) }}</template>
         </el-table-column>
-        <el-table-column v-if="formulaType === 'balance'" align="right" label="年初数">
+        <el-table-column
+          v-if="formulaType === 'balance'"
+          align="right"
+          label="年初数"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.openingAmount) }}</template>
         </el-table-column>
-        <el-table-column v-if="formulaType !== 'balance'" align="right" label="本期金额">
+        <el-table-column
+          v-if="formulaType !== 'balance'"
+          align="right"
+          label="本期金额"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.currentAmount) }}</template>
         </el-table-column>
-        <el-table-column v-if="formulaType !== 'balance'" align="right" label="本年累计金额">
+        <el-table-column
+          v-if="formulaType !== 'balance'"
+          align="right"
+          label="本年累计金额"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.yearAmount) }}</template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="80">
+        <el-table-column
+          align="center"
+          label="操作"
+          width="80"
+        >
           <template slot-scope="scope">
-            <el-button class="danger-text" type="text" @click="removeFormula(scope.$index)">删除</el-button>
+            <el-button
+              class="danger-text"
+              type="text"
+              @click="removeFormula(scope.$index)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -81,7 +130,11 @@
       />
     </div>
     <div slot="footer">
-      <el-button :disabled="loading" type="primary" @click="submitForm">保 存</el-button>
+      <el-button
+        :disabled="loading"
+        type="primary"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

@@ -22,7 +22,7 @@ export function updateMailMessageRead(id, readStatus) {
 
 // 恢复已删除邮件到收件箱
 export function restoreMailMessage(id) {
-  return request({ url: '/oa/mail-message/restore', method: 'put', params: { id } })
+  return request({ url: '/oa/mail-message/restore', method: 'put', params: { id }})
 }
 
 // 删除邮件

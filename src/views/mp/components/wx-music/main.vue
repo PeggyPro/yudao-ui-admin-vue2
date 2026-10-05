@@ -17,7 +17,7 @@
           <img
             :src="thumbMediaUrl"
             alt=""
-          />
+          >
         </div>
         <div class="avue-card__detail">
           <div

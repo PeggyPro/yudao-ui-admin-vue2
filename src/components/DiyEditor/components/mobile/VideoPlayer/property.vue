@@ -1,7 +1,10 @@
 <template>
   <ComponentContainerProperty v-model="formData.style">
     <template slot="style">
-      <el-form-item label="高度" prop="height">
+      <el-form-item
+        label="高度"
+        prop="height"
+      >
         <el-slider
           v-model="formData.style.height"
           :max="500"
@@ -12,8 +15,14 @@
         />
       </el-form-item>
     </template>
-    <el-form label-width="80px" :model="formData">
-      <el-form-item label="上传视频" prop="videoUrl">
+    <el-form
+      label-width="80px"
+      :model="formData"
+    >
+      <el-form-item
+        label="上传视频"
+        prop="videoUrl"
+      >
         <UploadFile
           v-model="formData.videoUrl"
           :file-type="['mp4']"
@@ -22,7 +31,10 @@
           class="media-upload"
         />
       </el-form-item>
-      <el-form-item label="上传封面" prop="posterUrl">
+      <el-form-item
+        label="上传封面"
+        prop="posterUrl"
+      >
         <UploadImg
           v-model="formData.posterUrl"
           :draggable="false"
@@ -33,7 +45,10 @@
           <template slot="tip">建议宽度750</template>
         </UploadImg>
       </el-form-item>
-      <el-form-item label="自动播放" prop="autoplay">
+      <el-form-item
+        label="自动播放"
+        prop="autoplay"
+      >
         <el-switch v-model="formData.autoplay" />
       </el-form-item>
     </el-form>

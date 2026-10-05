@@ -108,7 +108,7 @@ const filterSearchSchema = (crudSchema, allSchemas) => {
         { componentProps: comonentProps }
       )
       if (searchSchemaItem.api) {
-        searchRequestTask.push(async () => {
+        searchRequestTask.push(async() => {
           const res = await searchSchemaItem.api()
           if (res) {
             const index = findIndex(allSchemas.searchSchema, (v) => {
@@ -219,7 +219,7 @@ const filterFormSchema = (crudSchema, allSchemas) => {
       )
 
       if (formSchemaItem.api) {
-        formRequestTask.push(async () => {
+        formRequestTask.push(async() => {
           const res = await formSchemaItem.api()
           if (res) {
             const index = findIndex(allSchemas.formSchema, (v) => {

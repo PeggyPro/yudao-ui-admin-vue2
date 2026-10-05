@@ -1,68 +1,91 @@
 <template>
   <div class="app-container">
-  <doc-alert
-    title="【PMS】项目中心、工作台与项目管理"
-    url="https://doc.iocoder.cn/pms/pm/project/"
-  />
-
-  <el-card shadow="never">
-    <!-- 搜索 -->
-    <el-form
-      ref="queryFormRef"
-      :inline="true"
-      :model="queryParams"
-      style="margin-bottom: -15px"
-      label-width="68px"
-    >
-      <el-form-item label="项目名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          style="width: 240px"
-          clearable
-          placeholder="请输入项目名称"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="handleQuery">
-          <Icon icon="ep:search" />
-          搜索
-        </el-button>
-        <el-button @click="resetQuery">
-          <Icon icon="ep:refresh" />
-          重置
-        </el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-table v-loading="loading" :data="projectList" :show-overflow-tooltip="true">
-      <el-table-column label="项目名称" min-width="320" prop="name" />
-      <el-table-column :formatter="dateFormatter" label="删除时间" prop="recycleTime" width="220" />
-      <el-table-column fixed="right" label="操作" width="180">
-        <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.adminStatus && checkPermi(['pms:pm:project:update'])" type="text"
-            @click="handleRestore(scope.row)"
-          >
-            恢复项目
-          </el-button>
-          <el-button
-            v-if="scope.row.ownerStatus && checkPermi(['pms:pm:project:delete'])" type="text" class="delete-project"
-            @click="handleDelete(scope.row)"
-          >
-            彻底删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!-- 分页 -->
-    <Pagination
-      :limit.sync="queryParams.pageSize"
-      :page.sync="queryParams.pageNo"
-      :total="total"
-      @pagination="getProjectList"
+    <doc-alert
+      title="【PMS】项目中心、工作台与项目管理"
+      url="https://doc.iocoder.cn/pms/pm/project/"
     />
-  </el-card>
+
+    <el-card shadow="never">
+      <!-- 搜索 -->
+      <el-form
+        ref="queryFormRef"
+        :inline="true"
+        :model="queryParams"
+        style="margin-bottom: -15px"
+        label-width="68px"
+      >
+        <el-form-item
+          label="项目名称"
+          prop="name"
+        >
+          <el-input
+            v-model="queryParams.name"
+            style="width: 240px"
+            clearable
+            placeholder="请输入项目名称"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="handleQuery">
+            <Icon icon="ep:search" />
+            搜索
+          </el-button>
+          <el-button @click="resetQuery">
+            <Icon icon="ep:refresh" />
+            重置
+          </el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-table
+        v-loading="loading"
+        :data="projectList"
+        :show-overflow-tooltip="true"
+      >
+        <el-table-column
+          label="项目名称"
+          min-width="320"
+          prop="name"
+        />
+        <el-table-column
+          :formatter="dateFormatter"
+          label="删除时间"
+          prop="recycleTime"
+          width="220"
+        />
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="180"
+        >
+          <template slot-scope="scope">
+            <el-button
+              v-if="scope.row.adminStatus && checkPermi(['pms:pm:project:update'])"
+              type="text"
+              @click="handleRestore(scope.row)"
+            >
+              恢复项目
+            </el-button>
+            <el-button
+              v-if="scope.row.ownerStatus && checkPermi(['pms:pm:project:delete'])"
+              type="text"
+              class="delete-project"
+              @click="handleDelete(scope.row)"
+            >
+              彻底删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- 分页 -->
+      <Pagination
+        :limit.sync="queryParams.pageSize"
+        :page.sync="queryParams.pageNo"
+        :total="total"
+        @pagination="getProjectList"
+      />
+    </el-card>
   </div>
 </template>
 <script>

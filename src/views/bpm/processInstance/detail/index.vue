@@ -1,6 +1,9 @@
 <template>
   <div class="app-container process-detail-page">
-    <el-card shadow="never" v-loading="processInstanceLoading">
+    <el-card
+      v-loading="processInstanceLoading"
+      shadow="never"
+    >
       <div class="detail-top">
         <div>
           <div class="detail-id">编号：{{ currentId }}</div>
@@ -17,11 +20,17 @@
             <span>提交时间：{{ parseTime(processInstance.startTime || processInstance.createTime) }}</span>
           </div>
         </div>
-        <el-button icon="el-icon-printer" @click="handlePrint">打印</el-button>
+        <el-button
+          icon="el-icon-printer"
+          @click="handlePrint"
+        >打印</el-button>
       </div>
 
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="审批详情" name="form">
+        <el-tab-pane
+          label="审批详情"
+          name="form"
+        >
           <el-row :gutter="24">
             <el-col :span="16">
               <el-card shadow="never">
@@ -33,24 +42,40 @@
                     :rule="detailForm.rule"
                     :option="detailForm.option"
                   />
-                  <el-empty v-else description="暂无表单信息" />
+                  <el-empty
+                    v-else
+                    description="暂无表单信息"
+                  />
                 </template>
                 <template v-else-if="isCustomForm && BusinessFormComponent">
-                  <component :is="BusinessFormComponent" :id="processInstance.businessKey" />
+                  <component
+                    :is="BusinessFormComponent"
+                    :id="processInstance.businessKey"
+                  />
                 </template>
-                <el-empty v-else description="暂无业务表单" />
+                <el-empty
+                  v-else
+                  description="暂无业务表单"
+                />
               </el-card>
             </el-col>
             <el-col :span="8">
               <el-card shadow="never">
                 <div slot="header">审批时间线</div>
-                <ProcessInstanceTimeline ref="timeline" :activity-nodes="activityNodes" />
+                <ProcessInstanceTimeline
+                  ref="timeline"
+                  :activity-nodes="activityNodes"
+                />
               </el-card>
             </el-col>
           </el-row>
         </el-tab-pane>
 
-        <el-tab-pane label="流程图" name="diagram" lazy>
+        <el-tab-pane
+          label="流程图"
+          name="diagram"
+          lazy
+        >
           <ProcessInstanceSimpleViewer
             v-if="isSimpleModel"
             :loading="processInstanceLoading"
@@ -68,11 +93,25 @@
           />
         </el-tab-pane>
 
-        <el-tab-pane label="流转记录" name="record">
-          <ProcessInstanceTaskList ref="taskList" :loading="processInstanceLoading" :id="currentId" />
+        <el-tab-pane
+          label="流转记录"
+          name="record"
+        >
+          <ProcessInstanceTaskList
+            :id="currentId"
+            ref="taskList"
+            :loading="processInstanceLoading"
+          />
         </el-tab-pane>
-        <el-tab-pane label="流程评论" name="comment">
-          <ProcessInstanceCommentList ref="commentList" :loading="processInstanceLoading" :id="currentId" />
+        <el-tab-pane
+          label="流程评论"
+          name="comment"
+        >
+          <ProcessInstanceCommentList
+            :id="currentId"
+            ref="commentList"
+            :loading="processInstanceLoading"
+          />
         </el-tab-pane>
       </el-tabs>
 
@@ -187,16 +226,6 @@ export default {
         !!(this.processModelView && this.processModelView.simpleModel)
     }
   },
-  created() {
-    this.loadUsers()
-    this.getDetail()
-  },
-  beforeDestroy() {
-    if (this.routeReloadTimer) {
-      clearTimeout(this.routeReloadTimer)
-      this.routeReloadTimer = null
-    }
-  },
   watch: {
     // Vue Router 会复用同一个详情组件实例，仅更新 query。若不监听，
     // 从任务/抄送列表连续打开两个流程时页面会继续展示上一个实例。
@@ -244,6 +273,16 @@ export default {
           }
         })
       }
+    }
+  },
+  created() {
+    this.loadUsers()
+    this.getDetail()
+  },
+  beforeDestroy() {
+    if (this.routeReloadTimer) {
+      clearTimeout(this.routeReloadTimer)
+      this.routeReloadTimer = null
     }
   },
   methods: {

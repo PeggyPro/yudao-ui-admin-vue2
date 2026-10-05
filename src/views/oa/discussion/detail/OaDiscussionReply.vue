@@ -4,19 +4,47 @@
     <div class="reply-toolbar">
       <h3 class="reply-title">回复 {{ detail.replyCount || 0 }}</h3>
       <div class="reply-filters">
-        <el-select v-model="replyScope" style="width: 120px" size="small" @change="handleReplyScopeChange">
-          <el-option label="查看所有" value="all" />
-          <el-option label="只看楼主" value="owner" />
-          <el-option label="只看我的" value="mine" />
+        <el-select
+          v-model="replyScope"
+          style="width: 120px"
+          size="small"
+          @change="handleReplyScopeChange"
+        >
+          <el-option
+            label="查看所有"
+            value="all"
+          />
+          <el-option
+            label="只看楼主"
+            value="owner"
+          />
+          <el-option
+            label="只看我的"
+            value="mine"
+          />
         </el-select>
-        <el-select v-model="replySortOrder" style="width: 120px" size="small" @change="handleReplySortChange">
-          <el-option label="时间升序" value="asc" />
-          <el-option label="时间降序" value="desc" />
+        <el-select
+          v-model="replySortOrder"
+          style="width: 120px"
+          size="small"
+          @change="handleReplySortChange"
+        >
+          <el-option
+            label="时间升序"
+            value="asc"
+          />
+          <el-option
+            label="时间降序"
+            value="desc"
+          />
         </el-select>
       </div>
     </div>
     <!-- 发表主回复 -->
-    <div v-if="replyVisible" class="reply-editor">
+    <div
+      v-if="replyVisible"
+      class="reply-editor"
+    >
       <el-input
         ref="replyInputRef"
         v-model="replyContent"
@@ -27,7 +55,11 @@
         placeholder="分享你的看法，参与讨论"
       />
       <div class="reply-actions">
-        <el-button size="small" :disabled="submitLoading" @click="handleCancelReply">取消</el-button>
+        <el-button
+          size="small"
+          :disabled="submitLoading"
+          @click="handleCancelReply"
+        >取消</el-button>
         <el-button
           type="primary"
           size="small"
@@ -61,8 +93,14 @@
         <!-- 楼层操作与楼层编号 -->
         <div class="floor-toolbar">
           <div class="floor-ops">
-            <el-button type="text" @click="handleReply(reply, reply.id)">回复</el-button>
-            <el-button type="text" @click="handleReplyLike(reply)">
+            <el-button
+              type="text"
+              @click="handleReply(reply, reply.id)"
+            >回复</el-button>
+            <el-button
+              type="text"
+              @click="handleReplyLike(reply)"
+            >
               {{ reply.liked ? '取消点赞' : '点赞' }}（{{ reply.likeCount || 0 }}）
             </el-button>
             <el-button
@@ -81,10 +119,20 @@
           <span class="floor-number">{{ (replyQueryParams.pageNo - 1) * replyQueryParams.pageSize + index + 1 }} 楼</span>
         </div>
         <!-- 点赞摘要，完整名单按需查看 -->
-        <div v-if="reply.likeUserNames && reply.likeUserNames.length" class="like-summary">
+        <div
+          v-if="reply.likeUserNames && reply.likeUserNames.length"
+          class="like-summary"
+        >
           {{ reply.likeUserNames.slice(0, 3).join('、') }}，
-          <el-popover trigger="click" title="点赞人" width="260">
-            <el-button slot="reference" type="text">共 {{ reply.likeCount || 0 }} 人觉得很赞</el-button>
+          <el-popover
+            trigger="click"
+            title="点赞人"
+            width="260"
+          >
+            <el-button
+              slot="reference"
+              type="text"
+            >共 {{ reply.likeCount || 0 }} 人觉得很赞</el-button>
             <div class="like-names">{{ reply.likeUserNames.join('、') }}</div>
           </el-popover>
         </div>
@@ -102,7 +150,10 @@
               <el-avatar :size="24">{{ child.userName ? child.userName.slice(0, 1) : '' }}</el-avatar>
               <div class="child-content">
                 <span class="child-author">{{ child.userName }}：</span>
-                <span v-if="child.replyUserName" class="child-reply-to">
+                <span
+                  v-if="child.replyUserName"
+                  class="child-reply-to"
+                >
                   @{{ child.replyUserName }}
                 </span>
                 <span class="child-text">{{ child.content }}</span>
@@ -110,7 +161,10 @@
             </div>
             <div class="child-ops">
               <span class="child-time">{{ formatDate(child.createTime) }}</span>
-              <el-button type="text" @click="handleReply(child, reply.id)">回复</el-button>
+              <el-button
+                type="text"
+                @click="handleReply(child, reply.id)"
+              >回复</el-button>
               <el-button
                 v-if="detail.userId === currentUserId || isSuperAdmin"
                 type="text"
@@ -121,7 +175,10 @@
           </div>
         </div>
         <!-- 在所选楼层内回复，保持实际被回复人 -->
-        <div v-if="replyTarget && replyRootId === reply.id" class="inline-reply">
+        <div
+          v-if="replyTarget && replyRootId === reply.id"
+          class="inline-reply"
+        >
           <el-input
             v-model="inlineContent"
             type="textarea"
@@ -131,7 +188,11 @@
             :placeholder="'回复 ' + replyTarget.userName"
           />
           <div class="reply-actions">
-            <el-button size="small" :disabled="submitLoading" @click="handleCancelReply">取消</el-button>
+            <el-button
+              size="small"
+              :disabled="submitLoading"
+              @click="handleCancelReply"
+            >取消</el-button>
             <el-button
               type="primary"
               size="small"

@@ -9,11 +9,23 @@
       @keyup.enter.native="handleQuery"
     />
     <div class="ai-image-square__grid">
-      <div v-for="item in list" :key="item.id" class="ai-image-square__item">
-        <img :src="item.picUrl" alt="" />
+      <div
+        v-for="item in list"
+        :key="item.id"
+        class="ai-image-square__item"
+      >
+        <img
+          :src="item.picUrl"
+          alt=""
+        >
       </div>
     </div>
-    <pagination :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 

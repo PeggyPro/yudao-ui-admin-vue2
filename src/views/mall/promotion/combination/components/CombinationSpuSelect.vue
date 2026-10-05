@@ -72,7 +72,7 @@
         align="center"
         width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             :src="scope.row.picUrl"
             :preview-src-list="[scope.row.picUrl]"
@@ -92,7 +92,7 @@
         align="center"
         width="110"
       >
-        <template v-slot="scope">￥{{ fenToYuan(scope.row.price) }}</template>
+        <template slot-scope="scope">￥{{ fenToYuan(scope.row.price) }}</template>
       </el-table-column>
       <el-table-column
         label="销量"
@@ -118,7 +118,7 @@
         align="center"
         width="160"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
       <el-table-column
         label="操作"
@@ -126,7 +126,7 @@
         width="100"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             type="text"
             size="mini"
@@ -176,7 +176,7 @@
           align="center"
           width="110"
         >
-          <template v-slot="scope">￥{{ fenToYuan(scope.row.price) }}</template>
+          <template slot-scope="scope">￥{{ fenToYuan(scope.row.price) }}</template>
         </el-table-column>
         <el-table-column
           label="库存"

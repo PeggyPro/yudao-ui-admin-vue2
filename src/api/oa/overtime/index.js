@@ -22,5 +22,5 @@ export function updateOvertimeApply(data) {
 
 // 提交加班申请
 export function submitOvertimeApply(id, startUserSelectAssignees) {
-  return request({ url: '/oa/overtime-apply/submit', method: 'post', data: { id, startUserSelectAssignees } })
+  return request({ url: '/oa/overtime-apply/submit', method: 'post', data: { id, startUserSelectAssignees }})
 }

@@ -128,7 +128,7 @@
             label="秒杀库存"
             min-width="168"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.productConfig.stock"
                 :min="0"
@@ -142,7 +142,7 @@
             label="秒杀价格(元)"
             min-width="168"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.productConfig.seckillPrice"
                 :min="0"

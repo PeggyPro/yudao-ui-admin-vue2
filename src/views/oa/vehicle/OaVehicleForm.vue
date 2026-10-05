@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,25 +13,50 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="所属部门" prop="deptId">
-            <dept-select v-model="formData.deptId" style="width: 100%" />
+          <el-form-item
+            label="所属部门"
+            prop="deptId"
+          >
+            <dept-select
+              v-model="formData.deptId"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="车牌号" prop="no">
-            <el-input v-model="formData.no" placeholder="请输入车牌号" />
+          <el-form-item
+            label="车牌号"
+            prop="no"
+          >
+            <el-input
+              v-model="formData.no"
+              placeholder="请输入车牌号"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="车辆名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入车辆名称" />
+          <el-form-item
+            label="车辆名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入车辆名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="状态" prop="status">
-            <el-select v-model="formData.status" placeholder="请选择状态" style="width: 100%">
+          <el-form-item
+            label="状态"
+            prop="status"
+          >
+            <el-select
+              v-model="formData.status"
+              placeholder="请选择状态"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in statusOptions"
                 :key="dict.value"
@@ -40,13 +69,27 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="车型" prop="type">
-            <el-input v-model="formData.type" placeholder="请输入车型" />
+          <el-form-item
+            label="车型"
+            prop="type"
+          >
+            <el-input
+              v-model="formData.type"
+              placeholder="请输入车型"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="车辆分类" prop="category">
-            <el-select v-model="formData.category" placeholder="请选择车辆分类" clearable style="width: 100%">
+          <el-form-item
+            label="车辆分类"
+            prop="category"
+          >
+            <el-select
+              v-model="formData.category"
+              placeholder="请选择车辆分类"
+              clearable
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in categoryOptions"
                 :key="dict.value"
@@ -59,12 +102,21 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="品牌型号" prop="brandModel">
-            <el-input v-model="formData.brandModel" placeholder="请输入品牌型号" />
+          <el-form-item
+            label="品牌型号"
+            prop="brandModel"
+          >
+            <el-input
+              v-model="formData.brandModel"
+              placeholder="请输入品牌型号"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="座位数" prop="seatCount">
+          <el-form-item
+            label="座位数"
+            prop="seatCount"
+          >
             <el-input-number
               v-model="formData.seatCount"
               :min="1"
@@ -77,7 +129,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="裸车价格（元）" prop="barePrice">
+          <el-form-item
+            label="裸车价格（元）"
+            prop="barePrice"
+          >
             <el-input-number
               v-model="formData.barePrice"
               :min="0"
@@ -88,7 +143,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="交强险到期时间" prop="compulsoryInsuranceExpireTime">
+          <el-form-item
+            label="交强险到期时间"
+            prop="compulsoryInsuranceExpireTime"
+          >
             <el-date-picker
               v-model="formData.compulsoryInsuranceExpireTime"
               type="datetime"
@@ -101,7 +159,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="商业险到期时间" prop="commercialInsuranceExpireTime">
+          <el-form-item
+            label="商业险到期时间"
+            prop="commercialInsuranceExpireTime"
+          >
             <el-date-picker
               v-model="formData.commercialInsuranceExpireTime"
               type="datetime"
@@ -112,7 +173,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="年检到期时间" prop="inspectionExpireTime">
+          <el-form-item
+            label="年检到期时间"
+            prop="inspectionExpireTime"
+          >
             <el-date-picker
               v-model="formData.inspectionExpireTime"
               type="datetime"
@@ -125,12 +189,18 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="车辆照片" prop="picUrl">
+          <el-form-item
+            label="车辆照片"
+            prop="picUrl"
+          >
             <upload-img v-model="formData.picUrl" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="显示顺序" prop="sort">
+          <el-form-item
+            label="显示顺序"
+            prop="sort"
+          >
             <el-input-number
               v-model="formData.sort"
               :min="0"
@@ -143,7 +213,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               placeholder="请输入备注"
@@ -154,15 +227,22 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import DeptSelect from '@/views/system/dept/components/DeptSelect.vue'
 import { DICT_TYPE, getIntDictOptions, getStrDictOptions } from '@/utils/dict'
 import { OA_VEHICLE_STATUS } from '@/views/oa/utils/constants'
@@ -191,7 +271,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaVehicleForm',
-  components: { Dialog, DeptSelect },
+  components: { AppDialog, DeptSelect },
   data() {
     return {
       dialogVisible: false,

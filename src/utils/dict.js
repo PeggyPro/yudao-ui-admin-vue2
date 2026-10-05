@@ -290,7 +290,6 @@ export const DICT_TYPE = {
   OA_APPLY_URGENCY: 'oa_apply_urgency', // OA 申请紧急程度
   OA_OVERTIME_TYPE: 'oa_overtime_type', // OA 加班类型
   OA_LEAVE_TYPE: 'oa_leave_type', // OA 请假类型
-  OA_EXPENSE_TYPE: 'oa_expense_type', // OA 费用类型
   OA_REIMBURSEMENT_PAYMENT_METHOD: 'oa_reimbursement_payment_method', // OA 报销方式
   OA_PRIORITY: 'oa_priority', // OA 优先级
   OA_SCHEDULE_TYPE: 'oa_schedule_type', // OA 日程类型

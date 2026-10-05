@@ -5,7 +5,10 @@
     size="640px"
     :before-close="handleBeforeClose"
   >
-    <div slot="title" class="user-task-config-title">
+    <div
+      slot="title"
+      class="user-task-config-title"
+    >
       <el-input
         v-if="editingName"
         v-model="draft.name"
@@ -15,21 +18,42 @@
       />
       <span v-else>
         {{ draft.name || (isApprovalNode ? '审批人' : '办理人') }}
-        <i class="el-icon-edit" title="编辑节点名称" @click="editingName = true" />
+        <i
+          class="el-icon-edit"
+          title="编辑节点名称"
+          @click="editingName = true"
+        />
       </span>
     </div>
     <div class="user-task-config">
-      <el-form ref="configForm" :model="draft" label-width="128px" label-position="top" size="small">
-        <el-form-item v-if="isApprovalNode" label="审批类型">
+      <el-form
+        ref="configForm"
+        :model="draft"
+        label-width="128px"
+        label-position="top"
+        size="small"
+      >
+        <el-form-item
+          v-if="isApprovalNode"
+          label="审批类型"
+        >
           <el-radio-group v-model="draft.approveType">
-            <el-radio v-for="item in approveTypes" :key="item.value" :label="item.value">
+            <el-radio
+              v-for="item in approveTypes"
+              :key="item.value"
+              :label="item.value"
+            >
               {{ item.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
 
         <template v-if="!isApprovalNode || Number(draft.approveType) === ApproveType.USER">
-          <el-form-item label="候选策略" prop="candidateStrategy" :rules="requiredRule('请选择候选策略')">
+          <el-form-item
+            label="候选策略"
+            prop="candidateStrategy"
+            :rules="requiredRule('请选择候选策略')"
+          >
             <el-select
               v-model="draft.candidateStrategy"
               filterable
@@ -52,8 +76,19 @@
             prop="roleIds"
             :rules="requiredArrayRule('请选择角色')"
           >
-            <el-select v-model="draft.roleIds" filterable clearable multiple style="width: 100%">
-              <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-select
+              v-model="draft.roleIds"
+              filterable
+              clearable
+              multiple
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in roleList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -62,8 +97,19 @@
             prop="deptIds"
             :rules="requiredArrayRule('请选择部门')"
           >
-            <el-select v-model="draft.deptIds" filterable clearable multiple style="width: 100%">
-              <el-option v-for="item in deptList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-select
+              v-model="draft.deptIds"
+              filterable
+              clearable
+              multiple
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in deptList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -72,8 +118,19 @@
             prop="postIds"
             :rules="requiredArrayRule('请选择岗位')"
           >
-            <el-select v-model="draft.postIds" filterable clearable multiple style="width: 100%">
-              <el-option v-for="item in postList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-select
+              v-model="draft.postIds"
+              filterable
+              clearable
+              multiple
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in postList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -82,7 +139,13 @@
             prop="userIds"
             :rules="requiredArrayRule('请选择用户')"
           >
-            <el-select v-model="draft.userIds" filterable clearable multiple style="width: 100%">
+            <el-select
+              v-model="draft.userIds"
+              filterable
+              clearable
+              multiple
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in userList"
                 :key="item.id"
@@ -97,8 +160,19 @@
             prop="userGroups"
             :rules="requiredArrayRule('请选择用户组')"
           >
-            <el-select v-model="draft.userGroups" filterable clearable multiple style="width: 100%">
-              <el-option v-for="item in userGroupList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-select
+              v-model="draft.userGroups"
+              filterable
+              clearable
+              multiple
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in userGroupList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -107,7 +181,12 @@
             prop="formUser"
             :rules="requiredRule('请选择表单内用户字段')"
           >
-            <el-select v-model="draft.formUser" filterable clearable style="width: 100%">
+            <el-select
+              v-model="draft.formUser"
+              filterable
+              clearable
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in userFieldList"
                 :key="item.field"
@@ -123,7 +202,12 @@
             prop="formDept"
             :rules="requiredRule('请选择表单内部门字段')"
           >
-            <el-select v-model="draft.formDept" filterable clearable style="width: 100%">
+            <el-select
+              v-model="draft.formDept"
+              filterable
+              clearable
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in deptFieldList"
                 :key="item.field"
@@ -139,8 +223,18 @@
             prop="deptLevel"
             :rules="positiveRule('请选择部门层级')"
           >
-            <el-select v-model="draft.deptLevel" filterable clearable style="width: 100%">
-              <el-option v-for="item in multiLevelDeptOptions" :key="item.value" :label="item.label" :value="item.value" />
+            <el-select
+              v-model="draft.deptLevel"
+              filterable
+              clearable
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in multiLevelDeptOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -149,13 +243,29 @@
             prop="expression"
             :rules="requiredRule('请输入流程表达式')"
           >
-            <el-input v-model="draft.expression" type="textarea" :rows="3" clearable />
+            <el-input
+              v-model="draft.expression"
+              type="textarea"
+              :rows="3"
+              clearable
+            />
           </el-form-item>
 
           <el-divider>多人{{ nodeTypeName }}方式</el-divider>
-          <el-form-item label="审批方式" prop="approveMethod" :rules="requiredRule('请选择多人审批方式')">
-            <el-radio-group v-model="draft.approveMethod" @change="approveMethodChanged">
-              <div v-for="item in approveMethods" :key="item.value" class="radio-line">
+          <el-form-item
+            label="审批方式"
+            prop="approveMethod"
+            :rules="requiredRule('请选择多人审批方式')"
+          >
+            <el-radio-group
+              v-model="draft.approveMethod"
+              @change="approveMethodChanged"
+            >
+              <div
+                v-for="item in approveMethods"
+                :key="item.value"
+                class="radio-line"
+              >
                 <el-radio :label="item.value">{{ item.label }}</el-radio>
                 <el-input-number
                   v-if="Number(item.value) === ApproveMethodType.APPROVE_BY_RATIO && Number(draft.approveMethod) === ApproveMethodType.APPROVE_BY_RATIO"
@@ -172,9 +282,17 @@
 
           <template v-if="isApprovalNode">
             <el-divider content-position="left">审批人拒绝时</el-divider>
-            <el-form-item label="拒绝处理" prop="rejectHandler.type" :rules="requiredRule('请选择拒绝处理')">
+            <el-form-item
+              label="拒绝处理"
+              prop="rejectHandler.type"
+              :rules="requiredRule('请选择拒绝处理')"
+            >
               <el-radio-group v-model="draft.rejectHandler.type">
-                <el-radio v-for="item in rejectHandlerTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+                <el-radio
+                  v-for="item in rejectHandlerTypes"
+                  :key="item.value"
+                  :label="item.value"
+                >{{ item.label }}</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item
@@ -183,37 +301,98 @@
               prop="rejectHandler.returnNodeId"
               :rules="requiredRule('请选择驳回节点')"
             >
-              <el-select v-model="draft.rejectHandler.returnNodeId" filterable clearable style="width: 100%">
-                <el-option v-for="item in returnTaskList" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select
+                v-model="draft.rejectHandler.returnNodeId"
+                filterable
+                clearable
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in returnTaskList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
               </el-select>
             </el-form-item>
 
             <el-divider content-position="left">审批人超时未处理时</el-divider>
             <el-form-item label="启用超时处理">
-              <el-switch v-model="draft.timeoutHandler.enable" active-text="开启" inactive-text="关闭" @change="timeoutHandlerChange" />
+              <el-switch
+                v-model="draft.timeoutHandler.enable"
+                active-text="开启"
+                inactive-text="关闭"
+                @change="timeoutHandlerChange"
+              />
             </el-form-item>
             <template v-if="draft.timeoutHandler.enable">
-              <el-form-item label="执行动作" prop="timeoutHandler.type" :rules="requiredRule('请选择超时动作')">
-                <el-radio-group v-model="draft.timeoutHandler.type" @change="timeoutHandlerTypeChanged">
-                  <el-radio v-for="item in timeoutHandlerTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+              <el-form-item
+                label="执行动作"
+                prop="timeoutHandler.type"
+                :rules="requiredRule('请选择超时动作')"
+              >
+                <el-radio-group
+                  v-model="draft.timeoutHandler.type"
+                  @change="timeoutHandlerTypeChanged"
+                >
+                  <el-radio
+                    v-for="item in timeoutHandlerTypes"
+                    :key="item.value"
+                    :label="item.value"
+                  >{{ item.label }}</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="超时时间" prop="timeoutDuration" :rules="positiveRule('请输入超时时间')">
-                <el-input-number v-model="draft.timeoutDuration" :min="1" size="mini" />
-                <el-select v-model="draft.timeoutUnit" style="width: 110px; margin-left: 8px" @change="timeoutUnitChanged">
-                  <el-option v-for="item in timeUnitTypes" :key="item.value" :label="item.label" :value="item.value" />
+              <el-form-item
+                label="超时时间"
+                prop="timeoutDuration"
+                :rules="positiveRule('请输入超时时间')"
+              >
+                <el-input-number
+                  v-model="draft.timeoutDuration"
+                  :min="1"
+                  size="mini"
+                />
+                <el-select
+                  v-model="draft.timeoutUnit"
+                  style="width: 110px; margin-left: 8px"
+                  @change="timeoutUnitChanged"
+                >
+                  <el-option
+                    v-for="item in timeUnitTypes"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
                 </el-select>
               </el-form-item>
-              <el-form-item v-if="Number(draft.timeoutHandler.type) === TimeoutHandlerType.REMINDER" label="最大提醒次数" prop="timeoutHandler.maxRemindCount" :rules="positiveRule('请输入提醒次数')">
-                <el-input-number v-model="draft.timeoutHandler.maxRemindCount" :min="1" :max="10" size="mini" />
+              <el-form-item
+                v-if="Number(draft.timeoutHandler.type) === TimeoutHandlerType.REMINDER"
+                label="最大提醒次数"
+                prop="timeoutHandler.maxRemindCount"
+                :rules="positiveRule('请输入提醒次数')"
+              >
+                <el-input-number
+                  v-model="draft.timeoutHandler.maxRemindCount"
+                  :min="1"
+                  :max="10"
+                  size="mini"
+                />
               </el-form-item>
             </template>
           </template>
 
           <el-divider>{{ nodeTypeName }}人为空时</el-divider>
-          <el-form-item label="空处理策略" prop="assignEmptyHandler.type" :rules="requiredRule('请选择空处理策略')">
+          <el-form-item
+            label="空处理策略"
+            prop="assignEmptyHandler.type"
+            :rules="requiredRule('请选择空处理策略')"
+          >
             <el-radio-group v-model="draft.assignEmptyHandler.type">
-              <el-radio v-for="item in assignEmptyHandlerTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+              <el-radio
+                v-for="item in assignEmptyHandlerTypes"
+                :key="item.value"
+                :label="item.value"
+              >{{ item.label }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item
@@ -222,48 +401,113 @@
             prop="assignEmptyHandler.userIds"
             :rules="requiredArrayRule('请选择指定用户')"
           >
-            <el-select v-model="draft.assignEmptyHandler.userIds" filterable clearable multiple style="width: 100%">
-              <el-option v-for="item in userList" :key="item.id" :label="item.nickname || item.name" :value="item.id" />
+            <el-select
+              v-model="draft.assignEmptyHandler.userIds"
+              filterable
+              clearable
+              multiple
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in userList"
+                :key="item.id"
+                :label="item.nickname || item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
 
           <template v-if="isApprovalNode">
             <el-divider>审批人与发起人相同时</el-divider>
-            <el-form-item label="处理方式" prop="assignStartUserHandlerType" :rules="requiredRule('请选择处理方式')">
+            <el-form-item
+              label="处理方式"
+              prop="assignStartUserHandlerType"
+              :rules="requiredRule('请选择处理方式')"
+            >
               <el-radio-group v-model="draft.assignStartUserHandlerType">
-                <el-radio v-for="item in assignStartUserHandlerTypes" :key="item.value" :label="item.value">{{ item.label }}</el-radio>
+                <el-radio
+                  v-for="item in assignStartUserHandlerTypes"
+                  :key="item.value"
+                  :label="item.value"
+                >{{ item.label }}</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-divider>任务附加设置</el-divider>
             <el-form-item label="需要签名">
-              <el-switch v-model="draft.signEnable" active-text="是" inactive-text="否" />
+              <el-switch
+                v-model="draft.signEnable"
+                active-text="是"
+                inactive-text="否"
+              />
             </el-form-item>
             <el-form-item label="审批意见必填">
-              <el-switch v-model="draft.reasonRequire" active-text="必填" inactive-text="非必填" />
+              <el-switch
+                v-model="draft.reasonRequire"
+                active-text="必填"
+                inactive-text="非必填"
+              />
             </el-form-item>
           </template>
           <el-form-item label="跳过表达式">
-            <el-input v-model="draft.skipExpression" type="textarea" :rows="2" placeholder="可选，如：${amount == 0}" />
+            <el-input
+              v-model="draft.skipExpression"
+              type="textarea"
+              :rows="2"
+              placeholder="可选，如：${amount == 0}"
+            />
           </el-form-item>
         </template>
       </el-form>
 
-      <el-tabs v-model="activeTab" type="border-card" class="advanced-tabs">
-        <el-tab-pane v-if="isApprovalNode" label="操作按钮" name="buttons">
+      <el-tabs
+        v-model="activeTab"
+        type="border-card"
+        class="advanced-tabs"
+      >
+        <el-tab-pane
+          v-if="isApprovalNode"
+          label="操作按钮"
+          name="buttons"
+        >
           <div class="button-setting-title"><span>按钮</span><span>显示名称</span><span>启用</span></div>
-          <div v-for="item in buttonsSetting" :key="item.id" class="button-setting-row">
+          <div
+            v-for="item in buttonsSetting"
+            :key="item.id"
+            class="button-setting-row"
+          >
             <span>{{ operationButtonName(item.id) }}</span>
-            <el-input v-model="item.displayName" size="mini" class="button-name" />
+            <el-input
+              v-model="item.displayName"
+              size="mini"
+              class="button-name"
+            />
             <el-switch v-model="item.enable" />
           </div>
         </el-tab-pane>
-        <el-tab-pane v-if="isNormalForm" label="表单字段权限" name="fields">
+        <el-tab-pane
+          v-if="isNormalForm"
+          label="表单字段权限"
+          name="fields"
+        >
           <div class="permission-actions">
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.READ)">全部只读</el-button>
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.WRITE)">全部可编辑</el-button>
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.NONE)">全部隐藏</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.READ)"
+            >全部只读</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.WRITE)"
+            >全部可编辑</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.NONE)"
+            >全部隐藏</el-button>
           </div>
-          <div v-for="item in fieldsPermission" :key="item.field" class="permission-row">
+          <div
+            v-for="item in fieldsPermission"
+            :key="item.field"
+            class="permission-row"
+          >
             <span class="permission-field">{{ item.title }}</span>
             <el-radio-group v-model="item.permission">
               <el-radio :label="FieldPermissionType.READ">只读</el-radio>
@@ -271,10 +515,20 @@
               <el-radio :label="FieldPermissionType.NONE">隐藏</el-radio>
             </el-radio-group>
           </div>
-          <div v-if="!fieldsPermission.length" class="empty-tip">当前表单暂无可配置字段</div>
+          <div
+            v-if="!fieldsPermission.length"
+            class="empty-tip"
+          >当前表单暂无可配置字段</div>
         </el-tab-pane>
-        <el-tab-pane label="任务监听器" name="listeners">
-          <UserTaskListener ref="listener" v-model="draft" :form-fields="listenerFormFields" />
+        <el-tab-pane
+          label="任务监听器"
+          name="listeners"
+        >
+          <UserTaskListener
+            ref="listener"
+            v-model="draft"
+            :form-fields="listenerFormFields"
+          />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -282,7 +536,10 @@
          action bar in the default slot so it is actually rendered. -->
     <div class="drawer-footer">
       <el-button @click="visible = false">取 消</el-button>
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
     </div>
   </el-drawer>
 </template>
@@ -395,9 +652,6 @@ function durationIso(duration, unit) {
 export default {
   name: 'UserTaskNodeConfig',
   components: { UserTaskListener },
-  props: {
-    flowNode: { type: Object, required: true }
-  },
   inject: {
     roleListRef: { from: 'roleList', default: () => ({ value: [] }) },
     postListRef: { from: 'postList', default: () => ({ value: [] }) },
@@ -406,6 +660,9 @@ export default {
     userGroupListRef: { from: 'userGroupList', default: () => ({ value: [] }) },
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
     formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
+  },
+  props: {
+    flowNode: { type: Object, required: true }
   },
   data() {
     return {

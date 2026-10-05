@@ -16,7 +16,10 @@
           size="small"
           @click="$emit('permission')"
         ><i class="el-icon-user" />协作</el-button>
-        <el-button size="small" @click="$emit('collect')">
+        <el-button
+          size="small"
+          @click="$emit('collect')"
+        >
           <i :class="folder.favoriteStatus ? 'el-icon-star-on' : 'el-icon-star-off'" />
           {{ folder.favoriteStatus ? '已关注' : '关注' }}
         </el-button>
@@ -24,9 +27,15 @@
           v-if="canEditKnowledgeContent(folder.currentUserLevel)"
           @command="handleMoreCommand"
         >
-          <el-button icon="el-icon-more" size="small" />
+          <el-button
+            icon="el-icon-more"
+            size="small"
+          />
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-hasPermi="['pms:kb:library:update']" command="update">
+            <el-dropdown-item
+              v-hasPermi="['pms:kb:library:update']"
+              command="update"
+            >
               重命名
             </el-dropdown-item>
             <el-dropdown-item
@@ -60,13 +69,19 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column align="right" width="100">
+      <el-table-column
+        align="right"
+        width="100"
+      >
         <template slot-scope="scope">
           <span class="content-type">{{ getKnowledgeTreeNodeTypeName(scope.row) }}</span>
         </template>
       </el-table-column>
     </el-table>
-    <el-empty v-else description="该文件夹暂无内容" />
+    <el-empty
+      v-else
+      description="该文件夹暂无内容"
+    />
   </div>
 </template>
 

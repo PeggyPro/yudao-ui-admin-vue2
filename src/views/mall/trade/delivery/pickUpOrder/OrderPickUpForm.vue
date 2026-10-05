@@ -80,7 +80,7 @@
             prop="spuName"
             min-width="240"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <div class="order-item-product">
                 <el-image
                   v-if="scope.row.picUrl"
@@ -107,7 +107,7 @@
             width="120"
             align="center"
           >
-            <template v-slot="scope">￥{{ fenToYuan(scope.row.price) }}</template>
+            <template slot-scope="scope">￥{{ fenToYuan(scope.row.price) }}</template>
           </el-table-column>
           <el-table-column
             label="数量"
@@ -121,7 +121,7 @@
             width="120"
             align="center"
           >
-            <template v-slot="scope">￥{{ fenToYuan(scope.row.payPrice) }}</template>
+            <template slot-scope="scope">￥{{ fenToYuan(scope.row.payPrice) }}</template>
           </el-table-column>
           <el-table-column
             label="售后状态"
@@ -129,7 +129,7 @@
             width="120"
             align="center"
           >
-            <template v-slot="scope">
+            <template slot-scope="scope">
               <dict-tag
                 :type="DICT_TYPE.TRADE_ORDER_ITEM_AFTER_SALE_STATUS"
                 :value="scope.row.afterSaleStatus"

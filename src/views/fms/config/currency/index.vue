@@ -1,40 +1,123 @@
 <template>
   <div class="app-container fms-currency-page">
-    <doc-alert title="【设置】币别、科目、辅助核算、初始余额" url="https://doc.iocoder.cn/fms/config/accounting/" />
+    <doc-alert
+      title="【设置】币别、科目、辅助核算、初始余额"
+      url="https://doc.iocoder.cn/fms/config/accounting/"
+    />
 
-    <el-form ref="queryForm" :inline="true" label-width="78px" class="currency-toolbar">
+    <el-form
+      ref="queryForm"
+      :inline="true"
+      label-width="78px"
+      class="currency-toolbar"
+    >
       <el-form-item label="当前账套">
-        <el-select v-model="accountSetId" filterable clearable placeholder="请选择账套" style="width: 240px" @change="handleAccountSetChange">
-          <el-option v-for="item in accountSets" :key="item.id" :label="item.companyName" :value="item.id" />
+        <el-select
+          v-model="accountSetId"
+          filterable
+          clearable
+          placeholder="请选择账套"
+          style="width: 240px"
+          @change="handleAccountSetChange"
+        >
+          <el-option
+            v-for="item in accountSets"
+            :key="item.id"
+            :label="item.companyName"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="isWritable" v-hasPermi="['fms:config:currency:create']" type="primary" plain icon="el-icon-plus" @click="openForm('create')">新增</el-button>
+        <el-button
+          v-if="isWritable"
+          v-hasPermi="['fms:config:currency:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          @click="openForm('create')"
+        >新增</el-button>
       </el-form-item>
     </el-form>
 
-    <el-alert v-if="!accountSetId" class="mb12" type="info" :closable="false" show-icon title="请先选择已初始化的账套" />
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="币别编码" prop="code" min-width="160" />
-      <el-table-column label="币别名称" prop="name" min-width="220" show-overflow-tooltip />
-      <el-table-column label="汇率" align="right" min-width="180">
+    <el-alert
+      v-if="!accountSetId"
+      class="mb12"
+      type="info"
+      :closable="false"
+      show-icon
+      title="请先选择已初始化的账套"
+    />
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="币别编码"
+        prop="code"
+        min-width="160"
+      />
+      <el-table-column
+        label="币别名称"
+        prop="name"
+        min-width="220"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="汇率"
+        align="right"
+        min-width="180"
+      >
         <template slot-scope="scope">{{ formatExchangeRate(scope.row.exchangeRate) }}</template>
       </el-table-column>
-      <el-table-column label="本位币" align="center" width="130">
-        <template slot-scope="scope"><dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.standard" /></template>
+      <el-table-column
+        label="本位币"
+        align="center"
+        width="130"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+          :value="scope.row.standard"
+        /></template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
         <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="160" fixed="right">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="160"
+        fixed="right"
+      >
         <template slot-scope="scope">
-          <el-button v-if="isWritable" v-hasPermi="['fms:config:currency:update']" type="text" @click="openForm('update', scope.row)">编辑</el-button>
-          <el-button v-if="isWritable && !scope.row.standard" v-hasPermi="['fms:config:currency:delete']" type="text" class="danger-text" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button
+            v-if="isWritable"
+            v-hasPermi="['fms:config:currency:update']"
+            type="text"
+            @click="openForm('update', scope.row)"
+          >编辑</el-button>
+          <el-button
+            v-if="isWritable && !scope.row.standard"
+            v-hasPermi="['fms:config:currency:delete']"
+            type="text"
+            class="danger-text"
+            @click="handleDelete(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <fms-currency-form ref="form" @success="getList" />
+    <fms-currency-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

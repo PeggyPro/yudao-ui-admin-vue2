@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     :width="compact ? '400px' : width"
     :fullscreen="!compact"
     @closed="handleClosed"
@@ -13,17 +13,39 @@
       :rules="formRules"
       :label-width="compact ? '0px' : '100px'"
     >
-      <el-form-item :label="compact ? undefined : '分类名'" prop="name">
-        <el-input v-model="form.name" placeholder="请输入分类名" />
+      <el-form-item
+        :label="compact ? undefined : '分类名'"
+        prop="name"
+      >
+        <el-input
+          v-model="form.name"
+          placeholder="请输入分类名"
+        />
       </el-form-item>
       <template v-if="!compact">
-        <el-form-item label="分类标志" prop="code">
-          <el-input v-model="form.code" placeholder="请输入分类标志" />
+        <el-form-item
+          label="分类标志"
+          prop="code"
+        >
+          <el-input
+            v-model="form.code"
+            placeholder="请输入分类标志"
+          />
         </el-form-item>
-        <el-form-item label="分类描述" prop="description">
-          <el-input v-model="form.description" type="textarea" placeholder="请输入分类描述" />
+        <el-form-item
+          label="分类描述"
+          prop="description"
+        >
+          <el-input
+            v-model="form.description"
+            type="textarea"
+            placeholder="请输入分类描述"
+          />
         </el-form-item>
-        <el-form-item label="分类状态" prop="status">
+        <el-form-item
+          label="分类状态"
+          prop="status"
+        >
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
@@ -34,7 +56,10 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="分类排序" prop="sort">
+        <el-form-item
+          label="分类排序"
+          prop="sort"
+        >
           <el-input-number
             v-model="form.sort"
             placeholder="请输入分类排序"
@@ -44,18 +69,34 @@
         </el-form-item>
       </template>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button v-if="compact" :disabled="formLoading" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        v-if="compact"
+        :disabled="formLoading"
+        @click="dialogVisible = false"
+      >取 消</el-button>
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitForm"
+      >
         确 定
       </el-button>
-      <el-button v-if="!compact" :disabled="formLoading" @click="dialogVisible = false">取 消</el-button>
+      <el-button
+        v-if="!compact"
+        :disabled="formLoading"
+        @click="dialogVisible = false"
+      >取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import {
   createCategory,
   getCategory,
@@ -77,7 +118,7 @@ function createDefaultForm() {
 /** 可复用的 BPM 流程分类表单。 */
 export default {
   name: 'CategoryForm',
-  components: { Dialog },
+  components: { AppDialog },
   props: {
     width: {
       type: String,

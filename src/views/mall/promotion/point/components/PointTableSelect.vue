@@ -57,7 +57,7 @@
             @change="handleCheckAll"
           />
         </template>
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-checkbox
             v-model="checkedStatus[scope.row.id]"
             @change="handleCheckOne($event, scope.row, true)"
@@ -69,7 +69,7 @@
         label="#"
         width="55"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-radio
             v-model="selectedActivityId"
             :label="scope.row.id"
@@ -89,7 +89,7 @@
         prop="spuName"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             :src="scope.row.picUrl"
             :preview-src-list="[scope.row.picUrl]"
@@ -108,7 +108,7 @@
         prop="marketPrice"
         min-width="100"
       >
-        <template v-slot="scope">￥{{ fenToYuan(scope.row.marketPrice) }}</template>
+        <template slot-scope="scope">￥{{ fenToYuan(scope.row.marketPrice) }}</template>
       </el-table-column>
       <el-table-column
         label="活动状态"
@@ -116,7 +116,7 @@
         align="center"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -141,7 +141,7 @@
         align="center"
         min-width="100"
       >
-        <template v-slot="scope">{{ getRedeemedQuantity(scope.row) }}</template>
+        <template slot-scope="scope">{{ getRedeemedQuantity(scope.row) }}</template>
       </el-table-column>
       <el-table-column
         label="创建时间"
@@ -149,7 +149,7 @@
         align="center"
         width="180"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
     </el-table>
     <pagination

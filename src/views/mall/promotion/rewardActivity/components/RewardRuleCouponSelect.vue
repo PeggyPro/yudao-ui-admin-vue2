@@ -124,7 +124,7 @@
           prop="productScope"
           min-width="90"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <dict-tag
               :type="DICT_TYPE.PROMOTION_PRODUCT_SCOPE"
               :value="scope.row.productScope"
@@ -135,7 +135,7 @@
           label="优惠"
           min-width="120"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <dict-tag
               :type="DICT_TYPE.PROMOTION_DISCOUNT_TYPE"
               :value="scope.row.discountType"
@@ -148,7 +148,7 @@
           prop="takeType"
           min-width="100"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <dict-tag
               :type="DICT_TYPE.PROMOTION_COUPON_TAKE_TYPE"
               :value="scope.row.takeType"
@@ -188,7 +188,7 @@
           align="center"
           width="90"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <dict-tag
               :type="DICT_TYPE.COMMON_STATUS"
               :value="scope.row.status"

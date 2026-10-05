@@ -6,7 +6,12 @@
     :disabled="uploadLoading"
     class="oa-file-upload"
   >
-    <el-button type="primary" size="small" :loading="uploadLoading" icon="el-icon-upload2">
+    <el-button
+      type="primary"
+      size="small"
+      :loading="uploadLoading"
+      icon="el-icon-upload2"
+    >
       上传文件
     </el-button>
   </el-upload>

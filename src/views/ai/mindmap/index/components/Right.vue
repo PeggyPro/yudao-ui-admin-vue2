@@ -1,13 +1,25 @@
 <template>
   <el-card class="mindmap-card">
-    <div slot="header" class="card-header">
+    <div
+      slot="header"
+      class="card-header"
+    >
       <h3>思维导图预览</h3>
-      <el-button v-show="isEnd" size="mini" type="primary" icon="el-icon-download" @click="downloadImage">
+      <el-button
+        v-show="isEnd"
+        size="mini"
+        type="primary"
+        icon="el-icon-download"
+        @click="downloadImage"
+      >
         下载图片
       </el-button>
     </div>
 
-    <div ref="content" class="content-area">
+    <div
+      ref="content"
+      class="content-area"
+    >
       <div
         v-if="isGenerating"
         ref="markdownContainer"
@@ -15,9 +27,20 @@
         v-html="html"
       />
 
-      <div v-show="!isGenerating" ref="mindMap" class="mindmap-stage">
-        <svg ref="svg" class="mindmap-svg" :style="{ height: contentAreaHeight + 'px' }" />
-        <div ref="toolbar" class="toolbar" />
+      <div
+        v-show="!isGenerating"
+        ref="mindMap"
+        class="mindmap-stage"
+      >
+        <svg
+          ref="svg"
+          class="mindmap-svg"
+          :style="{ height: contentAreaHeight + 'px' }"
+        />
+        <div
+          ref="toolbar"
+          class="toolbar"
+        />
       </div>
     </div>
   </el-card>

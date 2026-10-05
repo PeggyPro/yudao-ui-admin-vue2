@@ -32,5 +32,5 @@ export function deleteSupplyItem(id) {
 
 // 办公用品入库
 export function stockInSupplyItem(id, quantity) {
-  return request({ url: '/oa/supply-item/stock-in', method: 'put', data: { id, quantity } })
+  return request({ url: '/oa/supply-item/stock-in', method: 'put', data: { id, quantity }})
 }

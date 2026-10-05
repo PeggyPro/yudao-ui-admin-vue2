@@ -1,8 +1,16 @@
 <template>
   <div>
-    <el-dialog title="选择结转模板" :visible.sync="dialogVisible" width="760px" append-to-body>
+    <el-dialog
+      title="选择结转模板"
+      :visible.sync="dialogVisible"
+      width="760px"
+      append-to-body
+    >
       <div class="template-toolbar">
-        <el-tabs v-model="category" class="category-tabs">
+        <el-tabs
+          v-model="category"
+          class="category-tabs"
+        >
           <el-tab-pane
             v-for="item in categoryOptions"
             :key="item.value"
@@ -16,7 +24,10 @@
           trigger="click"
           @command="handleCreate"
         >
-          <el-button type="primary" plain>
+          <el-button
+            type="primary"
+            plain
+          >
             <i class="el-icon-plus" />新增<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -34,13 +45,28 @@
         highlight-current-row
         @row-dblclick="selectTemplate"
       >
-        <el-table-column label="模板名称" prop="name" min-width="260" />
-        <el-table-column label="分录数" align="center" width="90">
+        <el-table-column
+          label="模板名称"
+          prop="name"
+          min-width="260"
+        />
+        <el-table-column
+          label="分录数"
+          align="center"
+          width="90"
+        >
           <template slot-scope="scope">{{ (scope.row.subjects || []).length }}</template>
         </el-table-column>
-        <el-table-column label="操作" align="center" width="210">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="210"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="selectTemplate(scope.row)">使用</el-button>
+            <el-button
+              type="text"
+              @click="selectTemplate(scope.row)"
+            >使用</el-button>
             <template v-if="isWritable">
               <el-button
                 v-hasPermi="['fms:closing:update']"

@@ -8,7 +8,12 @@
     placeholder="请选择标签"
     @input="$emit('input', $event)"
   >
-    <el-option v-for="label in labelList" :key="label.id" :label="label.name" :value="label.id" />
+    <el-option
+      v-for="label in labelList"
+      :key="label.id"
+      :label="label.name"
+      :value="label.id"
+    />
   </el-select>
 </template>
 

@@ -1,8 +1,15 @@
 <template>
   <div class="app-container fms-finance-parameter-page">
-    <doc-alert title="【设置】账套管理、财务参数、财务指标" url="https://doc.iocoder.cn/fms/config/account-set/" />
+    <doc-alert
+      title="【设置】账套管理、财务参数、财务指标"
+      url="https://doc.iocoder.cn/fms/config/account-set/"
+    />
 
-    <el-form :inline="true" class="parameter-toolbar" label-width="78px">
+    <el-form
+      :inline="true"
+      class="parameter-toolbar"
+      label-width="78px"
+    >
       <el-form-item label="当前账套">
         <el-select
           v-model="accountSetId"
@@ -22,7 +29,11 @@
       </el-form-item>
     </el-form>
 
-    <el-card v-loading="loading" class="parameter-card" shadow="never">
+    <el-card
+      v-loading="loading"
+      class="parameter-card"
+      shadow="never"
+    >
       <el-form
         v-if="accountSet"
         ref="form"
@@ -35,10 +46,18 @@
         <section class="parameter-section">
           <el-divider content-position="left">基础参数</el-divider>
           <el-form-item label="公司名称">
-            <el-input :value="accountSet.companyName" class="field-width" disabled />
+            <el-input
+              :value="accountSet.companyName"
+              class="field-width"
+              disabled
+            />
           </el-form-item>
           <el-form-item label="本位币">
-            <el-input :value="currencyLabel" class="field-width" disabled />
+            <el-input
+              :value="currencyLabel"
+              class="field-width"
+              disabled
+            />
           </el-form-item>
           <el-form-item label="启用期间">
             <el-date-picker
@@ -50,8 +69,14 @@
               value-format="timestamp"
             />
           </el-form-item>
-          <el-form-item label="会计制度" prop="standard">
-            <el-select v-model="formData.standard" class="field-width">
+          <el-form-item
+            label="会计制度"
+            prop="standard"
+          >
+            <el-select
+              v-model="formData.standard"
+              class="field-width"
+            >
               <el-option
                 v-for="item in FMS_ACCOUNTING_STANDARD_OPTIONS"
                 :key="item.value"
@@ -65,9 +90,16 @@
         <template v-if="financeParameter">
           <section class="parameter-section">
             <el-divider content-position="left">科目参数</el-divider>
-            <el-form-item label="科目级次" prop="level">
+            <el-form-item
+              label="科目级次"
+              prop="level"
+            >
               <div class="level-row">
-                <el-select v-model="formData.level" class="level-select" @change="handleLevelChange">
+                <el-select
+                  v-model="formData.level"
+                  class="level-select"
+                  @change="handleLevelChange"
+                >
                   <el-option
                     v-for="level in levelOptions"
                     :key="level"
@@ -78,7 +110,10 @@
                 <span class="parameter-warning">科目级次和编码长度调大后不能再调小，请谨慎操作</span>
               </div>
             </el-form-item>
-            <el-form-item label="编码长度" prop="subjectCodeRules">
+            <el-form-item
+              label="编码长度"
+              prop="subjectCodeRules"
+            >
               <div class="code-rule-row">
                 <span
                   v-for="(rule, index) in formData.subjectCodeRules"
@@ -92,7 +127,10 @@
                     class="rule-input"
                     controls-position="right"
                   />
-                  <span v-if="index < formData.subjectCodeRules.length - 1" class="rule-separator">-</span>
+                  <span
+                    v-if="index < formData.subjectCodeRules.length - 1"
+                    class="rule-separator"
+                  >-</span>
                 </span>
               </div>
             </el-form-item>
@@ -129,7 +167,10 @@
           type="info"
         />
       </el-form>
-      <el-empty v-else description="请选择账套" />
+      <el-empty
+        v-else
+        description="请选择账套"
+      />
     </el-card>
   </div>
 </template>

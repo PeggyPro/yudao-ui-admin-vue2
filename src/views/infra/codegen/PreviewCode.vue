@@ -1,11 +1,41 @@
 <template>
-  <el-dialog title="代码预览" :visible.sync="dialogVisible" width="90%" top="5vh" append-to-body class="scrollbar">
-    <el-row v-loading="loading" :gutter="12">
-      <el-col :span="7"><el-card shadow="hover"><el-tree :data="fileTree" :expand-on-click-node="false" default-expand-all highlight-current @node-click="handleNodeClick" /></el-card></el-col>
+  <el-dialog
+    title="代码预览"
+    :visible.sync="dialogVisible"
+    width="90%"
+    top="5vh"
+    append-to-body
+    class="scrollbar"
+  >
+    <el-row
+      v-loading="loading"
+      :gutter="12"
+    >
+      <el-col :span="7"><el-card shadow="hover"><el-tree
+        :data="fileTree"
+        :expand-on-click-node="false"
+        default-expand-all
+        highlight-current
+        @node-click="handleNodeClick"
+      /></el-card></el-col>
       <el-col :span="17"><el-card shadow="hover"><el-tabs v-model="activeName">
-        <el-tab-pane v-for="item in previewCodegen" :key="item.filePath" :label="item.filePath.substring(item.filePath.lastIndexOf('/') + 1)" :name="item.filePath">
-          <el-link :underline="false" icon="el-icon-document-copy" v-clipboard:copy="item.code" v-clipboard:success="clipboardSuccess" style="float:right">复制</el-link>
-          <pre><code class="hljs" v-dompurify-html="highlightedCode(item)"></code></pre>
+        <el-tab-pane
+          v-for="item in previewCodegen"
+          :key="item.filePath"
+          :label="item.filePath.substring(item.filePath.lastIndexOf('/') + 1)"
+          :name="item.filePath"
+        >
+          <el-link
+            v-clipboard:copy="item.code"
+            v-clipboard:success="clipboardSuccess"
+            :underline="false"
+            icon="el-icon-document-copy"
+            style="float:right"
+          >复制</el-link>
+          <pre><code
+v-dompurify-html="highlightedCode(item)"
+                     class="hljs"
+          /></pre>
         </el-tab-pane>
       </el-tabs></el-card></el-col>
     </el-row>

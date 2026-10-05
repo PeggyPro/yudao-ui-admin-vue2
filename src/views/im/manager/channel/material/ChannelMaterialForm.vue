@@ -1,5 +1,5 @@
 <template>
-  <Dialog
+  <AppDialog
     v-model="dialogVisible"
     :title="dialogTitle"
     width="720px"
@@ -98,11 +98,11 @@
       >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import Editor from '@/components/Editor'
 import UploadImg from '@/components/UploadImg'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
@@ -115,7 +115,7 @@ import ChannelSelect from '../list/components/ChannelSelect.vue'
 
 export default {
   name: 'ImChannelMaterialForm',
-  components: { Dialog, ChannelSelect, Editor, UploadImg },
+  components: { AppDialog, ChannelSelect, Editor, UploadImg },
   data() {
     return {
       dialogVisible: false,

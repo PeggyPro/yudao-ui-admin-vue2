@@ -1,8 +1,19 @@
 <template>
-  <div v-if="!property.imgUrl" class="image-placeholder">
-    <svg-icon icon-class="ep:picture" :size="30" color="#606266" />
+  <div
+    v-if="!property.imgUrl"
+    class="image-placeholder"
+  >
+    <svg-icon
+      icon-class="ep:picture"
+      :size="30"
+      color="#606266"
+    />
   </div>
-  <el-image v-else class="image" :src="property.imgUrl" />
+  <el-image
+    v-else
+    class="image"
+    :src="property.imgUrl"
+  />
 </template>
 
 <script>

@@ -10,10 +10,18 @@
     width="96%"
   >
     <div class="preview-toolbar">
-      <el-button type="primary" @click="print">打印</el-button>
+      <el-button
+        type="primary"
+        @click="print"
+      >打印</el-button>
       <el-button @click="dialogVisible = false">关闭</el-button>
     </div>
-    <iframe ref="previewIframe" :srcdoc="html" class="preview-iframe" title="打印预览"></iframe>
+    <iframe
+      ref="previewIframe"
+      :srcdoc="html"
+      class="preview-iframe"
+      title="打印预览"
+    />
   </el-dialog>
 </template>
 

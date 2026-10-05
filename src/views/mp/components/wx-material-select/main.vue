@@ -20,7 +20,7 @@
             class="material-img"
             :src="item.url"
             alt=""
-          />
+          >
           <p class="item-name">{{ item.name }}</p>
           <el-row class="ope-row">
             <el-button

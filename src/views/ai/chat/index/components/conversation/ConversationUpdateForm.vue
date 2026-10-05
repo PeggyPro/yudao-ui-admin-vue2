@@ -1,5 +1,9 @@
 <template>
-  <Dialog title="设定" v-model="dialogVisible" append-to-body>
+  <AppDialog
+    v-model="dialogVisible"
+    title="设定"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,7 +11,10 @@
       :rules="formRules"
       label-width="130px"
     >
-      <el-form-item label="角色设定" prop="systemMessage">
+      <el-form-item
+        label="角色设定"
+        prop="systemMessage"
+      >
         <el-input
           v-model="formData.systemMessage"
           type="textarea"
@@ -15,12 +22,27 @@
           placeholder="请输入角色设定"
         />
       </el-form-item>
-      <el-form-item label="模型" prop="modelId">
-        <el-select v-model="formData.modelId" placeholder="请选择模型" style="width: 100%">
-          <el-option v-for="model in models" :key="model.id" :label="model.name" :value="model.id" />
+      <el-form-item
+        label="模型"
+        prop="modelId"
+      >
+        <el-select
+          v-model="formData.modelId"
+          placeholder="请选择模型"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="model in models"
+            :key="model.id"
+            :label="model.name"
+            :value="model.id"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="温度参数" prop="temperature">
+      <el-form-item
+        label="温度参数"
+        prop="temperature"
+      >
         <el-input-number
           v-model="formData.temperature"
           :min="0"
@@ -29,29 +51,49 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="回复数 Token 数" prop="maxTokens">
-        <el-input-number v-model="formData.maxTokens" :min="0" :max="8192" style="width: 100%" />
+      <el-form-item
+        label="回复数 Token 数"
+        prop="maxTokens"
+      >
+        <el-input-number
+          v-model="formData.maxTokens"
+          :min="0"
+          :max="8192"
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="上下文数量" prop="maxContexts">
-        <el-input-number v-model="formData.maxContexts" :min="0" :max="20" style="width: 100%" />
+      <el-form-item
+        label="上下文数量"
+        prop="maxContexts"
+      >
+        <el-input-number
+          v-model="formData.maxContexts"
+          :min="0"
+          :max="20"
+          style="width: 100%"
+        />
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import { ChatConversationApi } from '@/api/ai/chat/conversation'
 import { ModelApi } from '@/api/ai/model/model'
 import { AiModelTypeEnum } from '@/views/ai/utils/constants'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 export default {
   name: 'ChatConversationUpdateForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

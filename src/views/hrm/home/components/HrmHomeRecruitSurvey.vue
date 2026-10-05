@@ -1,6 +1,12 @@
 <template>
-  <el-card shadow="never" class="home-card">
-    <div slot="header" class="home-card__title">招聘动态（{{ recruitRange }}）</div>
+  <el-card
+    shadow="never"
+    class="home-card"
+  >
+    <div
+      slot="header"
+      class="home-card__title"
+    >招聘动态（{{ recruitRange }}）</div>
     <div class="survey-grid">
       <button
         v-for="(item, index) in surveyItems"

@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     @closed="handleClosed"
   >
     <el-form
@@ -11,14 +11,33 @@
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item label="组名" prop="name">
-        <el-input v-model="form.name" placeholder="请输入组名" />
+      <el-form-item
+        label="组名"
+        prop="name"
+      >
+        <el-input
+          v-model="form.name"
+          placeholder="请输入组名"
+        />
       </el-form-item>
       <el-form-item label="描述">
-        <el-input v-model="form.description" placeholder="请输入描述" type="textarea" />
+        <el-input
+          v-model="form.description"
+          placeholder="请输入描述"
+          type="textarea"
+        />
       </el-form-item>
-      <el-form-item label="成员" prop="userIds">
-        <el-select v-model="form.userIds" multiple filterable placeholder="请选择成员" style="width: 100%">
+      <el-form-item
+        label="成员"
+        prop="userIds"
+      >
+        <el-select
+          v-model="form.userIds"
+          multiple
+          filterable
+          placeholder="请选择成员"
+          style="width: 100%"
+        >
           <el-option
             v-for="user in userList"
             :key="user.id"
@@ -27,7 +46,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="form.status">
           <el-radio
             v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
@@ -39,17 +61,24 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >
         确 定
       </el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import {
   createUserGroup,
   getUserGroup,
@@ -71,7 +100,7 @@ function createDefaultForm() {
 /** 可复用的 BPM 用户组表单。 */
 export default {
   name: 'UserGroupForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

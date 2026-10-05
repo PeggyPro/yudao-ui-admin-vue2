@@ -1,22 +1,119 @@
 <template>
   <div>
-    <el-form ref="queryForm" :inline="true" :model="queryParams" size="small" label-width="68px" @submit.native.prevent>
-      <el-form-item label="创建时间" prop="createTime"><el-date-picker v-model="queryParams.createTime" type="daterange" value-format="yyyy-MM-dd HH:mm:ss" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" /></el-form-item>
-      <el-form-item><el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button><el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button></el-form-item>
+    <el-form
+      ref="queryForm"
+      :inline="true"
+      :model="queryParams"
+      size="small"
+      label-width="68px"
+      @submit.native.prevent
+    >
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      ><el-date-picker
+        v-model="queryParams.createTime"
+        type="daterange"
+        value-format="yyyy-MM-dd HH:mm:ss"
+        range-separator="-"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        :default-time="['00:00:00', '23:59:59']"
+      /></el-form-item>
+      <el-form-item><el-button
+        type="primary"
+        icon="el-icon-search"
+        @click="handleQuery"
+      >搜索</el-button><el-button
+        icon="el-icon-refresh"
+        @click="resetQuery"
+      >重置</el-button></el-form-item>
     </el-form>
-    <el-tabs v-model="activeTab" type="card" @tab-click="tabClick">
-      <el-tab-pane v-for="item in statusTabs" :key="item.value" :label="item.label" :name="item.value" />
+    <el-tabs
+      v-model="activeTab"
+      type="card"
+      @tab-click="tabClick"
+    >
+      <el-tab-pane
+        v-for="item in statusTabs"
+        :key="item.value"
+        :label="item.label"
+        :name="item.value"
+      />
     </el-tabs>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="优惠券" align="center" prop="name" min-width="160" />
-      <el-table-column label="优惠券类型" align="center" prop="discountType" width="120"><template slot-scope="scope"><dict-tag :type="DICT_TYPE.PROMOTION_DISCOUNT_TYPE" :value="scope.row.discountType" /></template></el-table-column>
-      <el-table-column label="领取方式" align="center" prop="takeType" width="120"><template slot-scope="scope"><dict-tag :type="DICT_TYPE.PROMOTION_COUPON_TAKE_TYPE" :value="scope.row.takeType" /></template></el-table-column>
-      <el-table-column label="状态" align="center" prop="status" width="110"><template slot-scope="scope"><dict-tag :type="DICT_TYPE.PROMOTION_COUPON_STATUS" :value="scope.row.status" /></template></el-table-column>
-      <el-table-column label="领取时间" align="center" prop="createTime" width="180" :formatter="dateFormatter" />
-      <el-table-column label="使用时间" align="center" prop="useTime" width="180" :formatter="dateFormatter" />
-      <el-table-column label="操作" align="center" fixed="right" width="80"><template slot-scope="scope"><el-button v-hasPermi="['promotion:coupon:delete']" type="text" size="mini" class="danger-text" @click="handleDelete(scope.row.id)">回收</el-button></template></el-table-column>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="优惠券"
+        align="center"
+        prop="name"
+        min-width="160"
+      />
+      <el-table-column
+        label="优惠券类型"
+        align="center"
+        prop="discountType"
+        width="120"
+      ><template slot-scope="scope"><dict-tag
+        :type="DICT_TYPE.PROMOTION_DISCOUNT_TYPE"
+        :value="scope.row.discountType"
+      /></template></el-table-column>
+      <el-table-column
+        label="领取方式"
+        align="center"
+        prop="takeType"
+        width="120"
+      ><template slot-scope="scope"><dict-tag
+        :type="DICT_TYPE.PROMOTION_COUPON_TAKE_TYPE"
+        :value="scope.row.takeType"
+      /></template></el-table-column>
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+        width="110"
+      ><template slot-scope="scope"><dict-tag
+        :type="DICT_TYPE.PROMOTION_COUPON_STATUS"
+        :value="scope.row.status"
+      /></template></el-table-column>
+      <el-table-column
+        label="领取时间"
+        align="center"
+        prop="createTime"
+        width="180"
+        :formatter="dateFormatter"
+      />
+      <el-table-column
+        label="使用时间"
+        align="center"
+        prop="useTime"
+        width="180"
+        :formatter="dateFormatter"
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="80"
+      ><template slot-scope="scope"><el-button
+        v-hasPermi="['promotion:coupon:delete']"
+        type="text"
+        size="mini"
+        class="danger-text"
+        @click="handleDelete(scope.row.id)"
+      >回收</el-button></template></el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 

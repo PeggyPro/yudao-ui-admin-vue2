@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     width="1100px"
     append-to-body
     @closed="resetForm"
@@ -13,11 +13,25 @@
       :rules="formRules"
       label-width="150px"
     >
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="formData.title" placeholder="请输入标题" maxlength="255" />
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          placeholder="请输入标题"
+          maxlength="255"
+        />
       </el-form-item>
-      <el-form-item label="紧急程度" prop="urgency">
-        <el-select v-model="formData.urgency" placeholder="请选择紧急程度" style="width: 100%">
+      <el-form-item
+        label="紧急程度"
+        prop="urgency"
+      >
+        <el-select
+          v-model="formData.urgency"
+          placeholder="请选择紧急程度"
+          style="width: 100%"
+        >
           <el-option
             v-for="dict in urgencyOptions"
             :key="dict.value"
@@ -26,14 +40,35 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="证明人" prop="witnessUserId">
-        <user-select v-model="formData.witnessUserId" placeholder="请选择证明人" style="width: 100%" />
+      <el-form-item
+        label="证明人"
+        prop="witnessUserId"
+      >
+        <user-select
+          v-model="formData.witnessUserId"
+          placeholder="请选择证明人"
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="相关客户" prop="customerName">
-        <el-input v-model="formData.customerName" placeholder="请输入相关客户" maxlength="255" />
+      <el-form-item
+        label="相关客户"
+        prop="customerName"
+      >
+        <el-input
+          v-model="formData.customerName"
+          placeholder="请输入相关客户"
+          maxlength="255"
+        />
       </el-form-item>
-      <el-form-item label="报销方式" prop="paymentMethod">
-        <el-select v-model="formData.paymentMethod" placeholder="请选择报销方式" style="width: 100%">
+      <el-form-item
+        label="报销方式"
+        prop="paymentMethod"
+      >
+        <el-select
+          v-model="formData.paymentMethod"
+          placeholder="请选择报销方式"
+          style="width: 100%"
+        >
           <el-option
             v-for="dict in paymentMethodOptions"
             :key="dict.value"
@@ -42,7 +77,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="申请原因" prop="reason">
+      <el-form-item
+        label="申请原因"
+        prop="reason"
+      >
         <el-input
           v-model="formData.reason"
           maxlength="5000"
@@ -51,17 +89,39 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :is-show-tip="false" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :is-show-tip="false"
+        />
       </el-form-item>
       <!-- 报销费用明细 -->
       <div class="items-header">
         <span class="items-title">报销明细</span>
-        <el-button type="primary" plain size="mini" @click="addItem">新增明细</el-button>
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          @click="addItem"
+        >新增明细</el-button>
       </div>
-      <el-table :data="formData.items" border>
-        <el-table-column type="index" label="序号" width="60" align="center" />
-        <el-table-column label="费用发生时间" min-width="210">
+      <el-table
+        :data="formData.items"
+        border
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="60"
+          align="center"
+        />
+        <el-table-column
+          label="费用发生时间"
+          min-width="210"
+        >
           <template slot-scope="scope">
             <el-date-picker
               v-model="scope.row.expenseTime"
@@ -72,9 +132,15 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="费用类型" min-width="160">
+        <el-table-column
+          label="费用类型"
+          min-width="160"
+        >
           <template slot-scope="scope">
-            <el-select v-model="scope.row.expenseType" placeholder="请选择费用类型">
+            <el-select
+              v-model="scope.row.expenseType"
+              placeholder="请选择费用类型"
+            >
               <el-option
                 v-for="dict in expenseTypeOptions"
                 :key="dict.value"
@@ -84,7 +150,10 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="费用说明" min-width="160">
+        <el-table-column
+          label="费用说明"
+          min-width="160"
+        >
           <template slot-scope="scope">
             <el-form-item
               :prop="'items.' + scope.$index + '.description'"
@@ -92,11 +161,17 @@
               :rules="[{ required: true, message: '费用说明不能为空', trigger: 'blur' }]"
               class="item-form-item"
             >
-              <el-input v-model="scope.row.description" placeholder="请输入费用说明" />
+              <el-input
+                v-model="scope.row.description"
+                placeholder="请输入费用说明"
+              />
             </el-form-item>
           </template>
         </el-table-column>
-        <el-table-column label="票据张数" min-width="160">
+        <el-table-column
+          label="票据张数"
+          min-width="160"
+        >
           <template slot-scope="scope">
             <el-input-number
               v-model="scope.row.invoiceCount"
@@ -108,7 +183,10 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="报销金额" min-width="160">
+        <el-table-column
+          label="报销金额"
+          min-width="160"
+        >
           <template slot-scope="scope">
             <el-input-number
               v-model="scope.row.price"
@@ -120,9 +198,18 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="75" align="center">
+        <el-table-column
+          label="操作"
+          width="75"
+          align="center"
+        >
           <template slot-scope="scope">
-            <el-button type="text" size="mini" class="danger-text" @click="deleteItem(scope.$index)">删除</el-button>
+            <el-button
+              type="text"
+              size="mini"
+              class="danger-text"
+              @click="deleteItem(scope.$index)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -130,15 +217,22 @@
         票据合计：{{ invoiceCount }} 张；金额合计：{{ totalPrice }} 元
       </div>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UserSelect from '@/views/system/user/components/UserSelect.vue'
 import * as ReimbursementApi from '@/api/oa/reimbursement'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
@@ -158,7 +252,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaReimbursementForm',
-  components: { Dialog, UserSelect },
+  components: { AppDialog, UserSelect },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

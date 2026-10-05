@@ -1,5 +1,10 @@
 <template>
-  <el-dialog title="修改" :visible.sync="dialogVisible" width="500px" append-to-body>
+  <el-dialog
+    title="修改"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -7,14 +12,35 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="昵称" prop="nickname">
-        <el-input v-model="formData.nickname" placeholder="请输入昵称" />
+      <el-form-item
+        label="昵称"
+        prop="nickname"
+      >
+        <el-input
+          v-model="formData.nickname"
+          placeholder="请输入昵称"
+        />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" placeholder="请输入备注" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          placeholder="请输入备注"
+        />
       </el-form-item>
-      <el-form-item label="标签" prop="tagIds">
-        <el-select v-model="formData.tagIds" clearable multiple placeholder="请选择标签" style="width: 100%">
+      <el-form-item
+        label="标签"
+        prop="tagIds"
+      >
+        <el-select
+          v-model="formData.tagIds"
+          clearable
+          multiple
+          placeholder="请选择标签"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in tagList"
             :key="item.tagId"
@@ -24,9 +50,20 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" :loading="formLoading" @click="submitForm">确 定</el-button>
-      <el-button :disabled="formLoading" @click="cancel">取 消</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        @click="cancel"
+      >取 消</el-button>
     </div>
   </el-dialog>
 </template>

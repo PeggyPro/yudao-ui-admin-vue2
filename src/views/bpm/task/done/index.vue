@@ -1,18 +1,57 @@
 <template>
   <div class="app-container">
-    <doc-alert title="审批通过、不通过、驳回" url="https://doc.iocoder.cn/bpm/task-todo-done/" />
-    <doc-alert title="审批加签、减签" url="https://doc.iocoder.cn/bpm/sign/" />
-    <doc-alert title="审批转办、委派、抄送" url="https://doc.iocoder.cn/bpm/task-delegation-and-cc/" />
+    <doc-alert
+      title="审批通过、不通过、驳回"
+      url="https://doc.iocoder.cn/bpm/task-todo-done/"
+    />
+    <doc-alert
+      title="审批加签、减签"
+      url="https://doc.iocoder.cn/bpm/sign/"
+    />
+    <doc-alert
+      title="审批转办、委派、抄送"
+      url="https://doc.iocoder.cn/bpm/task-delegation-and-cc/"
+    />
 
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" v-show="showSearch" label-width="68px" class="task-toolbar-form">
-      <el-form-item label="" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入任务名称" clearable class="w-240" @keyup.enter.native="handleQuery" />
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+      class="task-toolbar-form"
+    >
+      <el-form-item
+        label=""
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入任务名称"
+          clearable
+          class="w-240"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
       </el-form-item>
-      <el-form-item label="" prop="category" class="toolbar-right toolbar-right--category">
-        <el-select v-model="queryParams.category" placeholder="请选择流程分类" clearable class="w-155" @change="handleQuery">
+      <el-form-item
+        label=""
+        prop="category"
+        class="toolbar-right toolbar-right--category"
+      >
+        <el-select
+          v-model="queryParams.category"
+          placeholder="请选择流程分类"
+          clearable
+          class="w-155"
+          @change="handleQuery"
+        >
           <el-option
             v-for="category in categoryList"
             :key="category.code"
@@ -21,8 +60,18 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="" prop="status" class="toolbar-right toolbar-right--status">
-        <el-select v-model="queryParams.status" placeholder="请选择审批状态" clearable class="w-155" @change="handleQuery">
+      <el-form-item
+        label=""
+        prop="status"
+        class="toolbar-right toolbar-right--status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择审批状态"
+          clearable
+          class="w-155"
+          @change="handleQuery"
+        >
           <el-option
             v-for="dict in getDictDatas(DICT_TYPE.BPM_TASK_STATUS)"
             :key="dict.value"
@@ -39,7 +88,11 @@
           trigger="click"
           :visible-arrow="false"
         >
-          <el-form-item label="所属流程" prop="processDefinitionKey" class="task-advanced-form-item">
+          <el-form-item
+            label="所属流程"
+            prop="processDefinitionKey"
+            class="task-advanced-form-item"
+          >
             <el-select
               v-model="queryParams.processDefinitionKey"
               placeholder="请选择流程定义"
@@ -56,7 +109,11 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="发起时间" prop="createTime" class="task-advanced-form-item">
+          <el-form-item
+            label="发起时间"
+            prop="createTime"
+            class="task-advanced-form-item"
+          >
             <el-date-picker
               v-model="queryParams.createTime"
               value-format="yyyy-MM-dd HH:mm:ss"
@@ -71,52 +128,143 @@
           <div class="task-advanced-actions">
             <el-button @click="resetQuery">清空</el-button>
             <el-button @click="showAdvancedSearch = false">取消</el-button>
-            <el-button type="primary" @click="handleAdvancedQuery">确认</el-button>
+            <el-button
+              type="primary"
+              @click="handleAdvancedQuery"
+            >确认</el-button>
           </div>
-          <el-button slot="reference" icon="el-icon-plus">高级筛选</el-button>
+          <el-button
+            slot="reference"
+            icon="el-icon-plus"
+          >高级筛选</el-button>
         </el-popover>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="流程" align="center" prop="processInstance.name" min-width="180" />
-      <el-table-column label="摘要" prop="processInstance.summary" min-width="180">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="流程"
+        align="center"
+        prop="processInstance.name"
+        min-width="180"
+      />
+      <el-table-column
+        label="摘要"
+        prop="processInstance.summary"
+        min-width="180"
+      >
+        <template slot-scope="scope">
           <div v-if="scope.row.processInstance && scope.row.processInstance.summary && scope.row.processInstance.summary.length">
-            <div v-for="(item, index) in scope.row.processInstance.summary" :key="index" class="task-summary-item">
+            <div
+              v-for="(item, index) in scope.row.processInstance.summary"
+              :key="index"
+              class="task-summary-item"
+            >
               {{ item.key }} : {{ item.value }}
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="发起人" align="center" min-width="100">
-        <template v-slot="scope">{{ processStartUserName(scope.row.processInstance) }}</template>
+      <el-table-column
+        label="发起人"
+        align="center"
+        min-width="100"
+      >
+        <template slot-scope="scope">{{ processStartUserName(scope.row.processInstance) }}</template>
       </el-table-column>
-      <el-table-column label="发起时间" align="center" prop="createTime" width="170">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="发起时间"
+        align="center"
+        prop="createTime"
+        width="170"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="当前任务" align="center" prop="name" min-width="150" />
-      <el-table-column label="任务开始时间" align="center" prop="createTime" width="170">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="当前任务"
+        align="center"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="任务开始时间"
+        align="center"
+        prop="createTime"
+        width="170"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="任务结束时间" align="center" prop="endTime" width="170">
-        <template v-slot="scope">{{ parseTime(scope.row.endTime) }}</template>
+      <el-table-column
+        label="任务结束时间"
+        align="center"
+        prop="endTime"
+        width="170"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.endTime) }}</template>
       </el-table-column>
-      <el-table-column label="审批状态" align="center" prop="status" width="120">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.BPM_TASK_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="审批状态"
+        align="center"
+        prop="status"
+        width="120"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.BPM_TASK_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="审批建议" align="center" prop="reason" min-width="180" show-overflow-tooltip />
-      <el-table-column label="耗时" align="center" prop="durationInMillis" width="160">
-        <template v-slot="scope">{{ formatPast2(scope.row.durationInMillis) }}</template>
+      <el-table-column
+        label="审批建议"
+        align="center"
+        prop="reason"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="耗时"
+        align="center"
+        prop="durationInMillis"
+        width="160"
+      >
+        <template slot-scope="scope">{{ formatPast2(scope.row.durationInMillis) }}</template>
       </el-table-column>
-      <el-table-column label="流程编号" align="center" prop="processInstanceId" min-width="220" show-overflow-tooltip />
-      <el-table-column label="任务编号" align="center" prop="id" min-width="220" show-overflow-tooltip />
-      <el-table-column label="操作" align="center" fixed="right" width="130">
-        <template v-slot="scope">
-          <el-button type="text" size="mini" class="task-withdraw-button" @click="handleWithdraw(scope.row)">撤回</el-button>
-          <el-button type="text" size="mini" @click="handleDetail(scope.row)">历史</el-button>
+      <el-table-column
+        label="流程编号"
+        align="center"
+        prop="processInstanceId"
+        min-width="220"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="任务编号"
+        align="center"
+        prop="id"
+        min-width="220"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="130"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="mini"
+            class="task-withdraw-button"
+            @click="handleWithdraw(scope.row)"
+          >撤回</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="handleDetail(scope.row)"
+          >历史</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="1000px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="1000px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,7 +11,10 @@
       :rules="formRules"
       label-width="120px"
     >
-      <el-form-item label="会议室" prop="roomId">
+      <el-form-item
+        label="会议室"
+        prop="roomId"
+      >
         <el-input
           v-model="formData.roomName"
           placeholder="请选择会议室"
@@ -15,18 +22,35 @@
           class="cursor-pointer"
           @click="$refs.roomSelect.open(formData.roomId)"
         >
-          <i slot="suffix" class="el-input__icon el-icon-search" />
+          <i
+            slot="suffix"
+            class="el-input__icon el-icon-search"
+          />
         </el-input>
       </el-form-item>
       <el-form-item label="会议室位置">
-        <el-input v-model="formData.roomLocation" disabled placeholder="选择会议室后显示" />
+        <el-input
+          v-model="formData.roomLocation"
+          disabled
+          placeholder="选择会议室后显示"
+        />
       </el-form-item>
-      <el-form-item label="会议主题" prop="title">
-        <el-input v-model="formData.title" placeholder="请输入会议主题" maxlength="200" />
+      <el-form-item
+        label="会议主题"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          placeholder="请输入会议主题"
+          maxlength="200"
+        />
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="会议开始时间" prop="startTime">
+          <el-form-item
+            label="会议开始时间"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               type="datetime"
@@ -36,7 +60,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="会议结束时间" prop="endTime">
+          <el-form-item
+            label="会议结束时间"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               type="datetime"
@@ -46,13 +73,23 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="主持人" prop="moderatorUserId">
+          <el-form-item
+            label="主持人"
+            prop="moderatorUserId"
+          >
             <user-select-v2 v-model="formData.moderatorUserId" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="会议提醒" prop="reminderType">
-            <el-select v-model="formData.reminderType" placeholder="请选择提醒方式" style="width: 100%">
+          <el-form-item
+            label="会议提醒"
+            prop="reminderType"
+          >
+            <el-select
+              v-model="formData.reminderType"
+              placeholder="请选择提醒方式"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in reminderTypeOptions"
                 :key="dict.value"
@@ -63,10 +100,19 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="参会人员" prop="attendeeUserIds">
-        <user-select-v2 v-model="formData.attendeeUserIds" :multiple="true" />
+      <el-form-item
+        label="参会人员"
+        prop="attendeeUserIds"
+      >
+        <user-select-v2
+          v-model="formData.attendeeUserIds"
+          :multiple="true"
+        />
       </el-form-item>
-      <el-form-item label="会议说明" prop="description">
+      <el-form-item
+        label="会议说明"
+        prop="description"
+      >
         <el-input
           v-model="formData.description"
           type="textarea"
@@ -76,7 +122,10 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="申请备注" prop="remark">
+      <el-form-item
+        label="申请备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           type="textarea"
@@ -86,22 +135,38 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :limit="5" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :limit="5"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-    <oa-meeting-room-select-dialog ref="roomSelect" @select="handleRoomSelect" />
-  </Dialog>
+    <oa-meeting-room-select-dialog
+      ref="roomSelect"
+      @select="handleRoomSelect"
+    />
+  </AppDialog>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import * as MeetingRoomBookingApi from '@/api/oa/meetingroom/booking'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 import OaMeetingRoomSelectDialog from '../room/components/OaMeetingRoomSelectDialog.vue'
@@ -127,7 +192,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaMeetingRoomBookingForm',
-  components: { Dialog, UserSelectV2, OaMeetingRoomSelectDialog },
+  components: { AppDialog, UserSelectV2, OaMeetingRoomSelectDialog },
   data() {
     const validateEndTime = (rule, value, callback) => {
       if (value && this.formData.startTime && Number(value) <= Number(this.formData.startTime)) {

@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="dialogTitle" v-model="dialogVisible" width="1000px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="1000px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,11 +12,18 @@
       label-width="100px"
     >
       <el-form-item label="单据编号">
-        <el-input v-model="formData.no" placeholder="保存后自动生成" disabled />
+        <el-input
+          v-model="formData.no"
+          placeholder="保存后自动生成"
+          disabled
+        />
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="领用日期" prop="applyTime">
+          <el-form-item
+            label="领用日期"
+            prop="applyTime"
+          >
             <el-date-picker
               v-model="formData.applyTime"
               type="date"
@@ -23,8 +34,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="使用类型" prop="useType">
-            <el-select v-model="formData.useType" placeholder="请选择使用类型" style="width: 100%">
+          <el-form-item
+            label="使用类型"
+            prop="useType"
+          >
+            <el-select
+              v-model="formData.useType"
+              placeholder="请选择使用类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in useTypeOptions"
                 :key="dict.value"
@@ -35,8 +53,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="领取方式" prop="pickupMethod">
-            <el-select v-model="formData.pickupMethod" placeholder="请选择领取方式" style="width: 100%">
+          <el-form-item
+            label="领取方式"
+            prop="pickupMethod"
+          >
+            <el-select
+              v-model="formData.pickupMethod"
+              placeholder="请选择领取方式"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in pickupMethodOptions"
                 :key="dict.value"
@@ -47,7 +72,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="申请事由" prop="reason">
+      <el-form-item
+        label="申请事由"
+        prop="reason"
+      >
         <el-input
           v-model="formData.reason"
           type="textarea"
@@ -55,7 +83,10 @@
           maxlength="500"
         />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           type="textarea"
@@ -63,27 +94,72 @@
           maxlength="500"
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :limit="10" :file-size="20" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :limit="10"
+          :file-size="20"
+        />
       </el-form-item>
       <!-- 领用明细 -->
       <div class="item-header">
         <span class="item-title">领用明细</span>
-        <el-button type="primary" plain size="mini" icon="el-icon-plus" @click="$refs.itemSelect.open()">
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          icon="el-icon-plus"
+          @click="$refs.itemSelect.open()"
+        >
           添加办公用品
         </el-button>
       </div>
-      <el-table :data="formData.items" border show-overflow-tooltip>
-        <el-table-column type="index" label="序号" width="60" align="center" />
-        <el-table-column label="物品名称" prop="itemName" min-width="160" />
-        <el-table-column label="规格型号" prop="model" min-width="120" />
-        <el-table-column label="计量单位" prop="unit" width="90" align="center" />
-        <el-table-column label="管理类型" width="110" align="center">
+      <el-table
+        :data="formData.items"
+        border
+        show-overflow-tooltip
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          width="60"
+          align="center"
+        />
+        <el-table-column
+          label="物品名称"
+          prop="itemName"
+          min-width="160"
+        />
+        <el-table-column
+          label="规格型号"
+          prop="model"
+          min-width="120"
+        />
+        <el-table-column
+          label="计量单位"
+          prop="unit"
+          width="90"
+          align="center"
+        />
+        <el-table-column
+          label="管理类型"
+          width="110"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE" :value="scope.row.manageType" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE"
+              :value="scope.row.manageType"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="领用数量" width="140">
+        <el-table-column
+          label="领用数量"
+          width="140"
+        >
           <template slot-scope="scope">
             <el-input-number
               v-model="scope.row.applyQuantity"
@@ -94,20 +170,39 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="80" fixed="right">
+        <el-table-column
+          label="操作"
+          width="80"
+          fixed="right"
+        >
           <template slot-scope="scope">
-            <el-button type="text" size="mini" class="danger-text" @click="formData.items.splice(scope.$index, 1)">
+            <el-button
+              type="text"
+              size="mini"
+              class="danger-text"
+              @click="formData.items.splice(scope.$index, 1)"
+            >
               删除
             </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-    <oa-supply-item-select ref="itemSelect" @select="handleSelectItem" />
+    <oa-supply-item-select
+      ref="itemSelect"
+      @select="handleSelectItem"
+    />
   </dialog-component>
 </template>
 

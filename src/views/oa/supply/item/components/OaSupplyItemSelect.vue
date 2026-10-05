@@ -1,7 +1,15 @@
 <template>
-  <dialog-component title="选择办公用品" v-model="dialogVisible" width="850px">
+  <dialog-component
+    v-model="dialogVisible"
+    title="选择办公用品"
+    width="850px"
+  >
     <!-- 搜索工作栏 -->
-    <el-form :inline="true" :model="queryParams" @submit.native.prevent>
+    <el-form
+      :inline="true"
+      :model="queryParams"
+      @submit.native.prevent
+    >
       <el-form-item label="物品名称">
         <el-input
           v-model="queryParams.name"
@@ -11,23 +19,65 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
       </el-form-item>
     </el-form>
     <!-- 可选物品 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="物品名称" prop="name" min-width="150" />
-      <el-table-column label="规格型号" prop="model" min-width="110" />
-      <el-table-column label="计量单位" prop="unit" width="90" align="center" />
-      <el-table-column label="管理类型" width="100" align="center">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="物品名称"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="规格型号"
+        prop="model"
+        min-width="110"
+      />
+      <el-table-column
+        label="计量单位"
+        prop="unit"
+        width="90"
+        align="center"
+      />
+      <el-table-column
+        label="管理类型"
+        width="100"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE" :value="scope.row.manageType" />
+          <dict-tag
+            :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE"
+            :value="scope.row.manageType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="库存数量" prop="stockQuantity" width="95" align="center" />
-      <el-table-column label="操作" width="80" align="center">
+      <el-table-column
+        label="库存数量"
+        prop="stockQuantity"
+        width="95"
+        align="center"
+      />
+      <el-table-column
+        label="操作"
+        width="80"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="handleSelect(scope.row)">选择</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="handleSelect(scope.row)"
+          >选择</el-button>
         </template>
       </el-table-column>
     </el-table>

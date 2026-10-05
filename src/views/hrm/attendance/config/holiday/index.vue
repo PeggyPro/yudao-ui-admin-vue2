@@ -1,11 +1,25 @@
 <template>
   <div class="app-container">
-    <doc-alert title="【考勤】考勤管理" url="https://doc.iocoder.cn/hrm/attendance/" />
+    <doc-alert
+      title="【考勤】考勤管理"
+      url="https://doc.iocoder.cn/hrm/attendance/"
+    />
 
-    <el-card shadow="never" class="search-card">
+    <el-card
+      shadow="never"
+      class="search-card"
+    >
       <!-- 搜索工作栏 -->
-      <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="72px">
-        <el-form-item label="日期" prop="date">
+      <el-form
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
+        label-width="72px"
+      >
+        <el-form-item
+          label="日期"
+          prop="date"
+        >
           <el-date-picker
             v-model="queryParams.date"
             type="daterange"
@@ -15,7 +29,10 @@
             class="date-range-control"
           />
         </el-form-item>
-        <el-form-item label="日期类型" prop="type">
+        <el-form-item
+          label="日期类型"
+          prop="type"
+        >
           <el-select
             v-model="queryParams.type"
             placeholder="请选择日期类型"
@@ -47,14 +64,35 @@
 
     <!-- 列表 -->
     <el-card shadow="never">
-      <el-table v-loading="loading" :data="list">
-        <el-table-column label="编号" align="center" prop="id" width="100" />
-        <el-table-column label="日期" align="center" prop="date" min-width="180">
+      <el-table
+        v-loading="loading"
+        :data="list"
+      >
+        <el-table-column
+          label="编号"
+          align="center"
+          prop="id"
+          width="100"
+        />
+        <el-table-column
+          label="日期"
+          align="center"
+          prop="date"
+          min-width="180"
+        >
           <template slot-scope="scope">{{ formatDate(scope.row.date) }}</template>
         </el-table-column>
-        <el-table-column label="日期类型" align="center" prop="type" width="140">
+        <el-table-column
+          label="日期类型"
+          align="center"
+          prop="type"
+          width="140"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="dictType.HRM_ATTENDANCE_HOLIDAY_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="dictType.HRM_ATTENDANCE_HOLIDAY_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -64,7 +102,12 @@
           width="180"
           :formatter="dateFormatter"
         />
-        <el-table-column label="操作" align="center" width="150" fixed="right">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="150"
+          fixed="right"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['hrm:attendance:holiday:update']"
@@ -94,7 +137,10 @@
     </el-card>
 
     <!-- 表单弹窗：添加/修改 -->
-    <AttendanceHolidayForm ref="form" @success="getList" />
+    <AttendanceHolidayForm
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

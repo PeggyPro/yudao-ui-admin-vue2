@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    title="关联联系人"
+  <AppDialog
     v-model="dialogVisible"
+    title="关联联系人"
     @closed="handleClosed"
   >
     <el-form
@@ -128,18 +128,18 @@
       ref="form"
       @success="getList"
     />
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import { getContactPageByCustomer } from '@/api/crm/contact'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE } from '@/utils/dict'
 import ContactForm from '../ContactForm.vue'
 
 export default {
   name: 'ContactListModal',
-  components: { Dialog, ContactForm },
+  components: { AppDialog, ContactForm },
   props: {
     customerId: { type: [Number, String], default: undefined }
   },

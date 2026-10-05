@@ -6,11 +6,17 @@
         <div class="document-meta">
           <span v-if="document.creatorUserName">{{ document.creatorUserName }} 创建于</span>
           <span>{{ formatDate(document.createTime) }}</span>
-          <el-tag size="small" :type="getKnowledgeDocumentStatusTagType(document.status)">
+          <el-tag
+            size="small"
+            :type="getKnowledgeDocumentStatusTagType(document.status)"
+          >
             {{ getKnowledgeDocumentStatusName(document.status) }}
           </el-tag>
         </div>
-        <div v-if="labels.length" class="document-labels">
+        <div
+          v-if="labels.length"
+          class="document-labels"
+        >
           <span
             v-for="label in labels"
             :key="label.id"
@@ -36,7 +42,10 @@
           size="small"
           @click="$emit('permission')"
         ><i class="el-icon-user" />协作</el-button>
-        <el-button size="small" @click="$emit('collect')">
+        <el-button
+          size="small"
+          @click="$emit('collect')"
+        >
           <i :class="document.favoriteStatus ? 'el-icon-star-on' : 'el-icon-star-off'" />
           {{ document.favoriteStatus ? '已关注' : '关注' }}
         </el-button>
@@ -51,7 +60,10 @@
           v-if="canEditKnowledgeContent(document.currentUserLevel)"
           @command="handleMoreCommand"
         >
-          <el-button icon="el-icon-more" size="small" />
+          <el-button
+            icon="el-icon-more"
+            size="small"
+          />
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               v-if="canManage"
@@ -72,12 +84,15 @@
       v-if="document.type === PmsKnowledgeDocumentType.RICH_TEXT"
       v-dompurify-html="document.content || '<p>暂无内容</p>'"
       class="pms-knowledge-rich-text"
-    ></div>
+    />
     <div v-else>
       <template v-if="document.content">
         <div class="file-meta">
           <el-tag type="info">{{ document.fileType || '文件' }}</el-tag>
-          <span v-if="document.fileSize !== undefined" class="secondary-text">
+          <span
+            v-if="document.fileSize !== undefined"
+            class="secondary-text"
+          >
             {{ formatKnowledgeFileSize(document.fileSize) }}
           </span>
           <el-link
@@ -86,7 +101,10 @@
             target="_blank"
             type="primary"
           >下载文件</el-link>
-          <span v-else class="secondary-text">当前角色仅可在线预览</span>
+          <span
+            v-else
+            class="secondary-text"
+          >当前角色仅可在线预览</span>
         </div>
         <file-preview
           :downloadable="document.downloadStatus"
@@ -95,7 +113,10 @@
           :url="document.previewUrl || document.content"
         />
       </template>
-      <el-empty v-else description="文件未上传" />
+      <el-empty
+        v-else
+        description="文件未上传"
+      />
     </div>
     <div
       v-if="document.type === PmsKnowledgeDocumentType.RICH_TEXT"

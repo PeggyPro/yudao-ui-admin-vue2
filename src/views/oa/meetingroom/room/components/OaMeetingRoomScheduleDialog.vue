@@ -1,6 +1,13 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="1150px">
-    <div v-loading="loading" class="oa-meeting-room-schedule">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="1150px"
+  >
+    <div
+      v-loading="loading"
+      class="oa-meeting-room-schedule"
+    >
       <!-- 最近五天 -->
       <div class="date-bar">
         <button
@@ -25,26 +32,33 @@
             <!-- 预约状态说明 -->
             <div class="schedule-legend">
               <span class="legend-item">
-                <i class="legend-block legend-block--free"></i>
+                <i class="legend-block legend-block--free" />
                 可预约
               </span>
               <span class="legend-item">
-                <i class="legend-block legend-block--booked"></i>
+                <i class="legend-block legend-block--booked" />
                 已预约
               </span>
               <span class="legend-item">
-                <i class="legend-block legend-block--expired"></i>
+                <i class="legend-block legend-block--expired" />
                 已过期
               </span>
             </div>
           </div>
           <div class="schedule-grid">
-            <div v-for="period in [0, 1]" :key="period" class="period-row">
+            <div
+              v-for="period in [0, 1]"
+              :key="period"
+              class="period-row"
+            >
               <div class="period-label">{{ period === 0 ? '上午' : '下午' }}</div>
               <div class="period-content">
                 <!-- 整点时间表头 -->
                 <div class="hour-header">
-                  <span v-for="hour in 12" :key="hour">
+                  <span
+                    v-for="hour in 12"
+                    :key="hour"
+                  >
                     {{ String(period * 12 + hour - 1).padStart(2, '0') }}:00
                   </span>
                 </div>
@@ -63,7 +77,7 @@
                         booked: !slot.expired && slot.booking,
                         free: !slot.expired && !slot.booking
                       }"
-                    ></div>
+                    />
                   </el-tooltip>
                 </div>
               </div>
@@ -72,11 +86,22 @@
         </div>
 
         <!-- 当日预定信息 -->
-        <div v-if="showBookings" class="booking-panel">
+        <div
+          v-if="showBookings"
+          class="booking-panel"
+        >
           <div class="booking-panel__title">{{ formatDate(selectedDate, 'MM 月 DD 日') }}已预约</div>
-          <el-empty v-if="!dayBookings.length" description="暂无预约记录" :image-size="70" />
+          <el-empty
+            v-if="!dayBookings.length"
+            description="暂无预约记录"
+            :image-size="70"
+          />
           <div class="booking-list">
-            <div v-for="booking in dayBookings" :key="booking.id" class="booking-item">
+            <div
+              v-for="booking in dayBookings"
+              :key="booking.id"
+              class="booking-item"
+            >
               <div class="booking-item__head">
                 <div class="booking-item__title">{{ booking.title }}</div>
                 <dict-tag
@@ -90,26 +115,26 @@
                 {{ formatDate(booking.endTime, 'HH:mm') }}
               </div>
               <div class="booking-item__meta">
-                主持人：{{ booking.moderatorName }}　申请人：{{ booking.creatorName }}
+                主持人：{{ booking.moderatorName }} 申请人：{{ booking.creatorName }}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as MeetingRoomBookingApi from '@/api/oa/meetingroom/booking'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE } from '@/utils/dict'
 import { formatDate } from '@/utils/formatTime'
 import { OA_WEEKDAY_NAMES } from '@/views/oa/utils/constants'
 
 export default {
   name: 'OaMeetingRoomScheduleDialog',
-  components: { Dialog },
+  components: { AppDialog },
   props: {
     showBookings: {
       type: Boolean,

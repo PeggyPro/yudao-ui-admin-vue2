@@ -1,9 +1,26 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="760px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-position="top">
-      <el-form-item label="工作日" prop="weeks">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="760px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-position="top"
+    >
+      <el-form-item
+        label="工作日"
+        prop="weeks"
+      >
         <el-checkbox-group v-model="formData.weeks">
-          <el-checkbox v-for="item in weekOptions" :key="item.value" :label="item.value">
+          <el-checkbox
+            v-for="item in weekOptions"
+            :key="item.value"
+            :label="item.value"
+          >
             {{ item.label }}
           </el-checkbox>
         </el-checkbox-group>
@@ -17,7 +34,10 @@
       />
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="上班时间" prop="startTime">
+          <el-form-item
+            label="上班时间"
+            prop="startTime"
+          >
             <el-time-picker
               v-model="formData.startTime"
               class="form-control"
@@ -28,7 +48,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="下班时间" prop="endTime">
+          <el-form-item
+            label="下班时间"
+            prop="endTime"
+          >
             <el-time-picker
               v-model="formData.endTime"
               class="form-control"
@@ -39,7 +62,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="上班打卡时间段" prop="clockInTimeRange">
+      <el-form-item
+        label="上班打卡时间段"
+        prop="clockInTimeRange"
+      >
         <el-time-picker
           v-model="clockInTimeRange"
           is-range
@@ -51,7 +77,10 @@
           end-placeholder="结束时间"
         />
       </el-form-item>
-      <el-form-item label="下班打卡时间段" prop="clockOutTimeRange">
+      <el-form-item
+        label="下班打卡时间段"
+        prop="clockOutTimeRange"
+      >
         <el-time-picker
           v-model="clockOutTimeRange"
           is-range
@@ -63,7 +92,10 @@
           end-placeholder="结束时间"
         />
       </el-form-item>
-      <el-form-item label="休息时间" prop="restTimeRange">
+      <el-form-item
+        label="休息时间"
+        prop="restTimeRange"
+      >
         <div class="time-range-row">
           <el-time-picker
             v-model="restTimeRange"
@@ -83,7 +115,10 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

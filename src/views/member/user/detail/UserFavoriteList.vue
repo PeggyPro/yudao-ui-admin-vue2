@@ -1,15 +1,69 @@
 <template>
   <div>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="商品编号" align="center" prop="id" width="120" />
-      <el-table-column label="商品图" align="center" width="80"><template slot-scope="scope"><el-image v-if="scope.row.picUrl" :src="scope.row.picUrl" :preview-src-list="scope.row.picUrl ? [scope.row.picUrl] : []" style="width: 30px; height: 30px" /></template></el-table-column>
-      <el-table-column label="商品名称" align="center" prop="name" min-width="180" />
-      <el-table-column label="商品售价" align="center" prop="price" width="110"><template slot-scope="scope">{{ floatToFixed2(scope.row.price) }} 元</template></el-table-column>
-      <el-table-column label="销量" align="center" prop="salesCount" width="90" />
-      <el-table-column label="收藏时间" align="center" prop="createTime" width="180" :formatter="dateFormatter" />
-      <el-table-column label="状态" align="center" prop="status" width="100"><template slot-scope="scope"><dict-tag :type="DICT_TYPE.PRODUCT_SPU_STATUS" :value="scope.row.status" /></template></el-table-column>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="商品编号"
+        align="center"
+        prop="id"
+        width="120"
+      />
+      <el-table-column
+        label="商品图"
+        align="center"
+        width="80"
+      ><template slot-scope="scope"><el-image
+        v-if="scope.row.picUrl"
+        :src="scope.row.picUrl"
+        :preview-src-list="scope.row.picUrl ? [scope.row.picUrl] : []"
+        style="width: 30px; height: 30px"
+      /></template></el-table-column>
+      <el-table-column
+        label="商品名称"
+        align="center"
+        prop="name"
+        min-width="180"
+      />
+      <el-table-column
+        label="商品售价"
+        align="center"
+        prop="price"
+        width="110"
+      ><template slot-scope="scope">{{ floatToFixed2(scope.row.price) }} 元</template></el-table-column>
+      <el-table-column
+        label="销量"
+        align="center"
+        prop="salesCount"
+        width="90"
+      />
+      <el-table-column
+        label="收藏时间"
+        align="center"
+        prop="createTime"
+        width="180"
+        :formatter="dateFormatter"
+      />
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+        width="100"
+      ><template slot-scope="scope"><dict-tag
+        :type="DICT_TYPE.PRODUCT_SPU_STATUS"
+        :value="scope.row.status"
+      /></template></el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 

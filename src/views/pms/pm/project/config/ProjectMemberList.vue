@@ -14,21 +14,38 @@
     </div>
 
     <!-- 成员列表 -->
-    <el-table v-loading="loading" :data="memberList">
-      <el-table-column label="成员" min-width="200">
+    <el-table
+      v-loading="loading"
+      :data="memberList"
+    >
+      <el-table-column
+        label="成员"
+        min-width="200"
+      >
         <template slot-scope="scope">
           <div class="flex items-center">
-            <el-avatar :size="30" :src="scope.row.avatar">
+            <el-avatar
+              :size="30"
+              :src="scope.row.avatar"
+            >
               {{ scope.row.nickname && scope.row.nickname.slice(0, 1) }}
             </el-avatar>
             <span class="ml-8px">{{ scope.row.nickname || `用户 #${scope.row.userId}` }}</span>
-            <el-tag v-if="scope.row.creatorStatus" class="ml-8px" effect="plain" type="success">
+            <el-tag
+              v-if="scope.row.creatorStatus"
+              class="ml-8px"
+              effect="plain"
+              type="success"
+            >
               创建人
             </el-tag>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="项目级别" min-width="160">
+      <el-table-column
+        label="项目级别"
+        min-width="160"
+      >
         <template slot-scope="scope">
           {{ formatProjectMemberLevel(scope.row.level) }}
         </template>
@@ -43,14 +60,17 @@
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['pms:pm:project-member:update']"
-            :disabled="scope.row.creatorStatus" type="text"
+            :disabled="scope.row.creatorStatus"
+            type="text"
             @click="openForm('update', scope.row)"
           >
             修改
           </el-button>
           <el-button
             v-hasPermi="['pms:pm:project-member:update']"
-            :disabled="scope.row.creatorStatus" type="text" class="delete-button"
+            :disabled="scope.row.creatorStatus"
+            type="text"
+            class="delete-button"
             @click="handleDelete(scope.row)"
           >
             删除
@@ -60,7 +80,10 @@
     </el-table>
 
     <!-- 成员表单 -->
-    <ProjectMemberForm ref="memberFormRef" @success="getMemberList" />
+    <ProjectMemberForm
+      ref="memberFormRef"
+      @success="getMemberList"
+    />
   </div>
 </template>
 
@@ -73,7 +96,7 @@ export default {
   components: { ProjectMemberForm },
   props: { project: { type: Object, required: true }, editable: Boolean },
   data() { return { loading: false, memberList: [] } },
-  watch: { 'project.id': { immediate: true, handler() { this.getMemberList() } } },
+  watch: { 'project.id': { immediate: true, handler() { this.getMemberList() } }},
   methods: {
     formatProjectMemberLevel,
     openForm(type, member) { this.$refs.memberFormRef.open(type, this.project.id, this.project.name, this.memberList, member) },
@@ -85,8 +108,7 @@ export default {
       } finally { this.loading = false }
     },
     async handleDelete(member) {
-      try { await this.$confirm('确认将“' + member.nickname + '”移出项目吗？', '提示', { type: 'warning' }) }
-      catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
+      try { await this.$confirm('确认将“' + member.nickname + '”移出项目吗？', '提示', { type: 'warning' }) } catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
       await ProjectMemberApi.deleteProjectMember(this.project.id, member.userId)
       this.$message.success('成员已移出项目')
       await this.getMemberList()

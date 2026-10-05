@@ -16,7 +16,10 @@
       >
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="模板名称" prop="name">
+            <el-form-item
+              label="模板名称"
+              prop="name"
+            >
               <el-input
                 v-model="formData.name"
                 maxlength="100"
@@ -26,7 +29,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="模板状态" prop="status">
+            <el-form-item
+              label="模板状态"
+              prop="status"
+            >
               <el-radio-group v-model="formData.status">
                 <el-radio
                   v-for="item in statusOptions"
@@ -39,17 +45,30 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="显示顺序" prop="sort">
-              <el-input-number v-model="formData.sort" :min="0" style="width: 100%" />
+            <el-form-item
+              label="显示顺序"
+              prop="sort"
+            >
+              <el-input-number
+                v-model="formData.sort"
+                :min="0"
+                style="width: 100%"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="模板封面" prop="coverUrl">
+            <el-form-item
+              label="模板封面"
+              prop="coverUrl"
+            >
               <upload-img v-model="formData.coverUrl" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="模板简介" prop="description">
+        <el-form-item
+          label="模板简介"
+          prop="description"
+        >
           <el-input
             v-model="formData.description"
             :rows="3"
@@ -59,14 +78,37 @@
             type="textarea"
           />
         </el-form-item>
-        <el-form-item label="模板文档" prop="documents">
+        <el-form-item
+          label="模板文档"
+          prop="documents"
+        >
           <div class="document-list">
-            <el-table :data="formData.documents" border row-key="title">
-              <el-table-column align="center" label="#" type="index" width="60" />
-              <el-table-column label="文档标题" min-width="300" prop="title" />
-              <el-table-column align="center" label="操作" width="160">
+            <el-table
+              :data="formData.documents"
+              border
+              row-key="title"
+            >
+              <el-table-column
+                align="center"
+                label="#"
+                type="index"
+                width="60"
+              />
+              <el-table-column
+                label="文档标题"
+                min-width="300"
+                prop="title"
+              />
+              <el-table-column
+                align="center"
+                label="操作"
+                width="160"
+              >
                 <template slot-scope="scope">
-                  <el-button type="text" @click="openDocumentForm(scope.$index)">编辑</el-button>
+                  <el-button
+                    type="text"
+                    @click="openDocumentForm(scope.$index)"
+                  >编辑</el-button>
                   <el-button
                     type="text"
                     class="danger-text"
@@ -75,14 +117,26 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-button class="add-document-button" plain type="primary" @click="openDocumentForm()">
+            <el-button
+              class="add-document-button"
+              plain
+              type="primary"
+              @click="openDocumentForm()"
+            >
               <i class="el-icon-plus" /> 新增文档
             </el-button>
           </div>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          :disabled="formLoading"
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -100,7 +154,10 @@
         :rules="documentFormRules"
         label-width="80px"
       >
-        <el-form-item label="文档标题" prop="title">
+        <el-form-item
+          label="文档标题"
+          prop="title"
+        >
           <el-input
             v-model="documentFormData.title"
             maxlength="255"
@@ -108,12 +165,24 @@
             show-word-limit
           />
         </el-form-item>
-        <el-form-item label="文档内容" prop="content">
-          <editor v-model="documentFormData.content" :height="420" />
+        <el-form-item
+          label="文档内容"
+          prop="content"
+        >
+          <editor
+            v-model="documentFormData.content"
+            :height="420"
+          />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitDocumentForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitDocumentForm"
+        >确 定</el-button>
         <el-button @click="documentDialogVisible = false">取 消</el-button>
       </div>
     </el-dialog>

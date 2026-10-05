@@ -1,13 +1,39 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="560px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="120px">
-      <el-form-item label="特殊日期类型" prop="type">
-        <el-select v-model="formData.type" placeholder="请选择特殊日期类型" class="form-control">
-          <el-option label="上班" :value="holidayType.WORK" />
-          <el-option label="休息" :value="holidayType.REST" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="560px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="120px"
+    >
+      <el-form-item
+        label="特殊日期类型"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          placeholder="请选择特殊日期类型"
+          class="form-control"
+        >
+          <el-option
+            label="上班"
+            :value="holidayType.WORK"
+          />
+          <el-option
+            label="休息"
+            :value="holidayType.REST"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="日期" prop="date">
+      <el-form-item
+        label="日期"
+        prop="date"
+      >
         <el-date-picker
           v-model="formData.date"
           type="date"
@@ -18,7 +44,10 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

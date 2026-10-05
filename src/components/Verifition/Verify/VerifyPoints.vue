@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative" >
+  <div style="position: relative">
     <div class="verify-img-out">
       <div
         class="verify-img-panel"
@@ -8,7 +8,12 @@
                  'background-size' : setSize.imgWidth + ' '+ setSize.imgHeight,
                  'margin-bottom': vSpace + 'px'}"
       >
-        <div v-show="showRefresh" class="verify-refresh" style="z-index:3" @click="refresh">
+        <div
+          v-show="showRefresh"
+          class="verify-refresh"
+          style="z-index:3"
+          @click="refresh"
+        >
           <i class="iconfont icon-refresh" />
         </div>
         <img
@@ -45,9 +50,9 @@
     <div
       class="verify-bar-area"
       :style="{'width': setSize.imgWidth,
-               'color': this.barAreaColor,
-               'border-color': this.barAreaBorderColor,
-               'line-height':this.barSize.height}"
+               'color': barAreaColor,
+               'border-color': barAreaBorderColor,
+               'line-height':barSize.height}"
     >
       <span class="verify-msg">{{ text }}</span>
     </div>
@@ -71,7 +76,7 @@ export default {
       default: 'fixed'
     },
     captchaType: {
-      type: String,
+      type: String
     },
     // 间隔
     vSpace: {
@@ -231,7 +236,7 @@ export default {
       const data = {
         captchaType: this.captchaType,
         clientUid: localStorage.getItem('point'),
-        ts: Date.now(), // 现在的时间戳
+        ts: Date.now() // 现在的时间戳
       }
       reqGet(data).then(res => {
         if (res.repCode === '0000') {
@@ -260,6 +265,6 @@ export default {
       // console.log(newPointArr,"newPointArr");
       return newPointArr
     }
-  },
+  }
 }
 </script>

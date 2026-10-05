@@ -1,17 +1,29 @@
 <template>
-  <div v-loading="loading" class="dept-details-header">
+  <div
+    v-loading="loading"
+    class="dept-details-header"
+  >
     <div class="dept-details-header__top">
       <div class="dept-details-header__identity">
         <div class="dept-details-header__name">
           <span>{{ dept.name || '-' }}</span>
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="dept.status" />
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="dept.status"
+          />
         </div>
         <div class="dept-details-header__number">部门编号：{{ dept.id || '-' }}</div>
       </div>
       <div><slot /></div>
     </div>
-    <el-card shadow="never" class="dept-details-header__statistics">
-      <el-descriptions :column="5" direction="vertical">
+    <el-card
+      shadow="never"
+      class="dept-details-header__statistics"
+    >
+      <el-descriptions
+        :column="5"
+        direction="vertical"
+      >
         <el-descriptions-item label="上级部门">{{ parentDeptName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="部门负责人">{{ leaderUserName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="在职员工">{{ statistics.activeCount }}</el-descriptions-item>

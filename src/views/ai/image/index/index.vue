@@ -1,10 +1,16 @@
 <template>
   <div class="app-container ai-image-page">
-    <doc-alert title="AI 绘画创作" url="https://doc.iocoder.cn/ai/image/" />
+    <doc-alert
+      title="AI 绘画创作"
+      url="https://doc.iocoder.cn/ai/image/"
+    />
     <div class="ai-image-page__layout">
       <div class="ai-image-page__left">
         <div class="ai-image-page__platforms">
-          <el-radio-group v-model="selectPlatform" size="small">
+          <el-radio-group
+            v-model="selectPlatform"
+            size="small"
+          >
             <el-radio-button label="common">通用</el-radio-button>
             <el-radio-button :label="AiPlatformEnum.OPENAI">DALL3 绘画</el-radio-button>
             <el-radio-button :label="AiPlatformEnum.MIDJOURNEY">MJ 绘画</el-radio-button>
@@ -45,7 +51,10 @@
       </div>
 
       <div class="ai-image-page__right">
-        <ImageList ref="imageListRef" @onRegeneration="handleRegeneration" />
+        <ImageList
+          ref="imageListRef"
+          @onRegeneration="handleRegeneration"
+        />
       </div>
     </div>
   </div>

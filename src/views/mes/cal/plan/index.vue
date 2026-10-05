@@ -1,7 +1,10 @@
 <!-- MES 排班计划列表 -->
 <template>
   <div class="app-container">
-    <doc-alert title="【排班】排班计划、排班日历" url="https://doc.iocoder.cn/mes/cal/calendar/" />
+    <doc-alert
+      title="【排班】排班计划、排班日历"
+      url="https://doc.iocoder.cn/mes/cal/calendar/"
+    />
 
     <el-form
       ref="queryForm"
@@ -11,13 +14,32 @@
       size="small"
       @submit.native.prevent
     >
-      <el-form-item label="计划编码" prop="code">
-        <el-input v-model="queryParams.code" placeholder="请输入计划编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="计划编码"
+        prop="code"
+      >
+        <el-input
+          v-model="queryParams.code"
+          placeholder="请输入计划编码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="计划名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入计划名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item
+        label="计划名称"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入计划名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="开始日期" prop="startDate">
+      <el-form-item
+        label="开始日期"
+        prop="startDate"
+      >
         <el-date-picker
           v-model="queryParams.startDate"
           type="daterange"
@@ -27,7 +49,10 @@
           :default-time="['00:00:00', '23:59:59']"
         />
       </el-form-item>
-      <el-form-item label="结束日期" prop="endDate">
+      <el-form-item
+        label="结束日期"
+        prop="endDate"
+      >
         <el-date-picker
           v-model="queryParams.endDate"
           type="daterange"
@@ -37,19 +62,49 @@
           :default-time="['00:00:00', '23:59:59']"
         />
       </el-form-item>
-      <el-form-item label="轮班方式" prop="shiftType">
-        <el-select v-model="queryParams.shiftType" placeholder="请选择轮班方式" clearable>
-          <el-option v-for="dict in shiftTypeOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+      <el-form-item
+        label="轮班方式"
+        prop="shiftType"
+      >
+        <el-select
+          v-model="queryParams.shiftType"
+          placeholder="请选择轮班方式"
+          clearable
+        >
+          <el-option
+            v-for="dict in shiftTypeOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
-          <el-option v-for="dict in planStatusOptions" :key="dict.value" :label="dict.label" :value="dict.value" />
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
+          <el-option
+            v-for="dict in planStatusOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['mes:cal-plan:create']"
           type="primary"
@@ -68,36 +123,105 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="计划编码" align="center" prop="code" min-width="120">
-        <template v-slot="scope">
-          <el-link type="primary" @click="openForm('detail', scope.row.id)">{{ scope.row.code }}</el-link>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="计划编码"
+        align="center"
+        prop="code"
+        min-width="120"
+      >
+        <template slot-scope="scope">
+          <el-link
+            type="primary"
+            @click="openForm('detail', scope.row.id)"
+          >{{ scope.row.code }}</el-link>
         </template>
       </el-table-column>
-      <el-table-column label="计划名称" align="center" prop="name" min-width="150" />
-      <el-table-column label="班组类型" align="center" prop="calendarType" min-width="100">
-        <template v-slot="scope"><dict-tag :type="MES_CAL_CALENDAR_TYPE" :value="scope.row.calendarType" /></template>
+      <el-table-column
+        label="计划名称"
+        align="center"
+        prop="name"
+        min-width="150"
+      />
+      <el-table-column
+        label="班组类型"
+        align="center"
+        prop="calendarType"
+        min-width="100"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="MES_CAL_CALENDAR_TYPE"
+          :value="scope.row.calendarType"
+        /></template>
       </el-table-column>
-      <el-table-column label="开始日期" align="center" prop="startDate" width="180">
-        <template v-slot="scope">{{ formatDate(scope.row.startDate, 'YYYY-MM-DD') }}</template>
+      <el-table-column
+        label="开始日期"
+        align="center"
+        prop="startDate"
+        width="180"
+      >
+        <template slot-scope="scope">{{ formatDate(scope.row.startDate, 'YYYY-MM-DD') }}</template>
       </el-table-column>
-      <el-table-column label="结束日期" align="center" prop="endDate" width="180">
-        <template v-slot="scope">{{ formatDate(scope.row.endDate, 'YYYY-MM-DD') }}</template>
+      <el-table-column
+        label="结束日期"
+        align="center"
+        prop="endDate"
+        width="180"
+      >
+        <template slot-scope="scope">{{ formatDate(scope.row.endDate, 'YYYY-MM-DD') }}</template>
       </el-table-column>
-      <el-table-column label="轮班方式" align="center" prop="shiftType" min-width="100">
-        <template v-slot="scope"><dict-tag :type="MES_CAL_SHIFT_TYPE" :value="scope.row.shiftType" /></template>
+      <el-table-column
+        label="轮班方式"
+        align="center"
+        prop="shiftType"
+        min-width="100"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="MES_CAL_SHIFT_TYPE"
+          :value="scope.row.shiftType"
+        /></template>
       </el-table-column>
-      <el-table-column label="倒班方式" align="center" prop="shiftMethod" min-width="100">
-        <template v-slot="scope"><dict-tag :type="MES_CAL_SHIFT_METHOD" :value="scope.row.shiftMethod" /></template>
+      <el-table-column
+        label="倒班方式"
+        align="center"
+        prop="shiftMethod"
+        min-width="100"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="MES_CAL_SHIFT_METHOD"
+          :value="scope.row.shiftMethod"
+        /></template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status" min-width="100">
-        <template v-slot="scope"><dict-tag :type="MES_CAL_PLAN_STATUS" :value="scope.row.status" /></template>
+      <el-table-column
+        label="单据状态"
+        align="center"
+        prop="status"
+        min-width="100"
+      >
+        <template slot-scope="scope"><dict-tag
+          :type="MES_CAL_PLAN_STATUS"
+          :value="scope.row.status"
+        /></template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="120">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="120"
+      >
+        <template slot-scope="scope">
           <el-button
             v-if="scope.row.status === MesCalPlanStatusEnum.PREPARE"
             v-hasPermi="['mes:cal-plan:update']"
@@ -123,7 +247,10 @@
       @pagination="getList"
     />
 
-    <cal-plan-form ref="form" @success="getList" />
+    <cal-plan-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

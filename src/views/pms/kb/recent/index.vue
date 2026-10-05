@@ -1,24 +1,57 @@
 <template>
   <div class="app-container">
-    <doc-alert title="【PMS】文档与协作" url="https://doc.iocoder.cn/pms/kb/document/" />
+    <doc-alert
+      title="【PMS】文档与协作"
+      url="https://doc.iocoder.cn/pms/kb/document/"
+    />
     <el-tabs v-model="activeTab">
-      <el-tab-pane label="今天" name="todayItems" />
-      <el-tab-pane label="昨天" name="yesterdayItems" />
-      <el-tab-pane label="最近 30 天" name="recent30DayItems" />
+      <el-tab-pane
+        label="今天"
+        name="todayItems"
+      />
+      <el-tab-pane
+        label="昨天"
+        name="yesterdayItems"
+      />
+      <el-tab-pane
+        label="最近 30 天"
+        name="recent30DayItems"
+      />
     </el-tabs>
-    <el-table v-loading="loading" :data="activeItems" :show-overflow-tooltip="true" border>
-      <el-table-column label="名称" min-width="260">
+    <el-table
+      v-loading="loading"
+      :data="activeItems"
+      :show-overflow-tooltip="true"
+      border
+    >
+      <el-table-column
+        label="名称"
+        min-width="260"
+      >
         <template slot-scope="scope">
-          <el-link type="primary" @click="openItem(scope.row)">
-            <svg-icon class="item-icon" :icon-class="getKnowledgeObjectIcon(scope.row.type)" />
+          <el-link
+            type="primary"
+            @click="openItem(scope.row)"
+          >
+            <svg-icon
+              class="item-icon"
+              :icon-class="getKnowledgeObjectIcon(scope.row.type)"
+            />
             {{ scope.row.name }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column label="类型" width="100">
+      <el-table-column
+        label="类型"
+        width="100"
+      >
         <template slot-scope="scope">{{ getKnowledgeObjectTypeName(scope.row.type) }}</template>
       </el-table-column>
-      <el-table-column label="所属知识库" min-width="180" prop="libraryName" />
+      <el-table-column
+        label="所属知识库"
+        min-width="180"
+        prop="libraryName"
+      />
       <el-table-column
         :formatter="dateFormatter"
         align="center"

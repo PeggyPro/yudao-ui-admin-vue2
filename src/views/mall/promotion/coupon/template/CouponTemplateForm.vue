@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     append-to-body
   >
     <el-form
@@ -234,11 +234,11 @@
       >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import ProductCategorySelect from '@/views/mall/product/category/components/ProductCategorySelect.vue'
 import * as CouponTemplateApi from '@/api/mall/promotion/coupon/couponTemplate'
 import SpuShowcase from '@/views/mall/product/spu/components/SpuShowcase.vue'
@@ -252,7 +252,7 @@ import { DICT_TYPE, getDictDatas } from '@/utils/dict'
 
 export default {
   name: 'CouponTemplateForm',
-  components: { Dialog, ProductCategorySelect, SpuShowcase },
+  components: { AppDialog, ProductCategorySelect, SpuShowcase },
   data() {
     return {
       DICT_TYPE,

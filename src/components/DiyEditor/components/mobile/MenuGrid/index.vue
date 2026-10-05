@@ -13,9 +13,19 @@
       >
         {{ item.badge.text }}
       </span>
-      <el-image v-if="item.iconUrl" class="menu-grid-icon" :src="item.iconUrl" />
-      <span class="menu-grid-title" :style="{ color: item.titleColor }">{{ item.title }}</span>
-      <span class="menu-grid-subtitle" :style="{ color: item.subtitleColor }">
+      <el-image
+        v-if="item.iconUrl"
+        class="menu-grid-icon"
+        :src="item.iconUrl"
+      />
+      <span
+        class="menu-grid-title"
+        :style="{ color: item.titleColor }"
+      >{{ item.title }}</span>
+      <span
+        class="menu-grid-subtitle"
+        :style="{ color: item.subtitleColor }"
+      >
         {{ item.subtitle }}
       </span>
     </div>

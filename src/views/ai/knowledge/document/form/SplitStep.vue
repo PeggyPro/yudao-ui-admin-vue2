@@ -11,7 +11,12 @@
             <i class="el-icon-warning-outline setting-tip" />
           </el-tooltip>
         </div>
-        <el-button type="primary" plain size="small" @click="handleAutoSegment">
+        <el-button
+          type="primary"
+          plain
+          size="small"
+          @click="handleAutoSegment"
+        >
           预览分段
         </el-button>
       </div>
@@ -30,11 +35,17 @@
     <section>
       <div class="section-title preview-title">分段预览</div>
       <div class="file-selector">
-        <el-dropdown v-if="modelData.list && modelData.list.length" trigger="click">
+        <el-dropdown
+          v-if="modelData.list && modelData.list.length"
+          trigger="click"
+        >
           <span class="file-trigger">
             <i class="el-icon-document" />
             <span>{{ currentFile ? currentFile.name : '请选择文件' }}</span>
-            <span v-if="currentFile && currentFile.segments" class="segment-count">
+            <span
+              v-if="currentFile && currentFile.segments"
+              class="segment-count"
+            >
               ({{ currentFile.segments.length }}个分片)
             </span>
             <i class="el-icon-arrow-down" />
@@ -46,22 +57,35 @@
               @click.native="selectFile(index)"
             >
               {{ file.name }}
-              <span v-if="file.segments" class="segment-count">
+              <span
+                v-if="file.segments"
+                class="segment-count"
+              >
                 ({{ file.segments.length }}个分片)
               </span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span v-else class="empty-file">暂无上传文件</span>
+        <span
+          v-else
+          class="empty-file"
+        >暂无上传文件</span>
       </div>
 
       <div class="file-preview">
-        <div v-if="splitLoading" class="preview-loading">
+        <div
+          v-if="splitLoading"
+          class="preview-loading"
+        >
           <i class="el-icon-loading" />
           <span>正在加载分段内容...</span>
         </div>
         <template v-else-if="currentFile && currentFile.segments && currentFile.segments.length">
-          <div v-for="(segment, index) in currentFile.segments" :key="index" class="segment-item">
+          <div
+            v-for="(segment, index) in currentFile.segments"
+            :key="index"
+            class="segment-item"
+          >
             <div class="segment-meta">
               分片-{{ index + 1 }} · {{ segment.contentLength || 0 }} 字符数 ·
               {{ segment.tokens || 0 }} Token
@@ -69,13 +93,23 @@
             <div class="segment-content">{{ segment.content }}</div>
           </div>
         </template>
-        <el-empty v-else description="暂无预览内容" />
+        <el-empty
+          v-else
+          description="暂无预览内容"
+        />
       </div>
     </section>
 
     <div class="step-actions">
-      <el-button v-if="!modelData.id" @click="$emit('prev')">上一步</el-button>
-      <el-button type="primary" :loading="submitLoading" @click="handleSave">
+      <el-button
+        v-if="!modelData.id"
+        @click="$emit('prev')"
+      >上一步</el-button>
+      <el-button
+        type="primary"
+        :loading="submitLoading"
+        @click="handleSave"
+      >
         保存并处理
       </el-button>
     </div>

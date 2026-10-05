@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,9 +12,16 @@
       label-width="150px"
     >
       <el-form-item label="申请单号">
-        <el-input v-model="formData.no" placeholder="保存后自动生成" disabled />
+        <el-input
+          v-model="formData.no"
+          placeholder="保存后自动生成"
+          disabled
+        />
       </el-form-item>
-      <el-form-item label="用车申请" prop="applyId">
+      <el-form-item
+        label="用车申请"
+        prop="applyId"
+      >
         <oa-vehicle-apply-select
           v-model="formData.applyId"
           :status="BpmProcessInstanceStatus.APPROVE"
@@ -21,7 +32,10 @@
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="实际出车时间" prop="actualStartTime">
+          <el-form-item
+            label="实际出车时间"
+            prop="actualStartTime"
+          >
             <el-date-picker
               v-model="formData.actualStartTime"
               type="datetime"
@@ -32,7 +46,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="实际出车地点" prop="startLocation">
+          <el-form-item
+            label="实际出车地点"
+            prop="startLocation"
+          >
             <el-input
               v-model="formData.startLocation"
               placeholder="请输入实际出车地点"
@@ -41,7 +58,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="用车事由" prop="reason">
+      <el-form-item
+        label="用车事由"
+        prop="reason"
+      >
         <el-input
           v-model="formData.reason"
           type="textarea"
@@ -49,12 +69,22 @@
           maxlength="500"
         />
       </el-form-item>
-      <el-form-item label="随行人" prop="passenger">
-        <el-input v-model="formData.passenger" placeholder="请输入随行人" maxlength="500" />
+      <el-form-item
+        label="随行人"
+        prop="passenger"
+      >
+        <el-input
+          v-model="formData.passenger"
+          placeholder="请输入随行人"
+          maxlength="500"
+        />
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="实际回车时间" prop="actualReturnTime">
+          <el-form-item
+            label="实际回车时间"
+            prop="actualReturnTime"
+          >
             <el-date-picker
               v-model="formData.actualReturnTime"
               type="datetime"
@@ -65,7 +95,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="实际回车地点" prop="returnLocation">
+          <el-form-item
+            label="实际回车地点"
+            prop="returnLocation"
+          >
             <el-input
               v-model="formData.returnLocation"
               placeholder="请输入实际回车地点"
@@ -74,7 +107,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="还车说明" prop="remark">
+      <el-form-item
+        label="还车说明"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           type="textarea"
@@ -84,19 +120,32 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :limit="5" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :limit="5"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as VehicleReturnApi from '@/api/oa/vehicle/return'
 import * as VehicleApplyApi from '@/api/oa/vehicle/apply'
 import { formatDate } from '@/utils/formatTime'
@@ -122,7 +171,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaVehicleReturnForm',
-  components: { Dialog, OaVehicleApplySelect },
+  components: { AppDialog, OaVehicleApplySelect },
   data() {
     return {
       BpmProcessInstanceStatus,

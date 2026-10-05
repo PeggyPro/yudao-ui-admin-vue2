@@ -88,7 +88,7 @@
         prop="previewPicUrls"
         min-width="160"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div class="preview-list">
             <el-image
               v-for="(url, index) in scope.row.previewPicUrls"
@@ -112,7 +112,7 @@
         align="center"
         prop="used"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
             :value="scope.row.used"
@@ -131,7 +131,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) || '-' }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) || '-' }}</template>
       </el-table-column>
       <el-table-column
         label="操作"
@@ -139,7 +139,7 @@
         fixed="right"
         width="240"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:diy-template:update']"
             type="text"

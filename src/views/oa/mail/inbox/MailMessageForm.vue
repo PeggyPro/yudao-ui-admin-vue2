@@ -4,8 +4,17 @@
     <div class="mail-compose__toolbar">
       <span class="mail-compose__title">{{ formData.draftId ? '编辑草稿' : '写信' }}</span>
       <div>
-        <el-button type="primary" size="small" :loading="formLoading" @click="submitForm">发送</el-button>
-        <el-button size="small" :disabled="formLoading" @click="handleSaveDraft">存草稿</el-button>
+        <el-button
+          type="primary"
+          size="small"
+          :loading="formLoading"
+          @click="submitForm"
+        >发送</el-button>
+        <el-button
+          size="small"
+          :disabled="formLoading"
+          @click="handleSaveDraft"
+        >存草稿</el-button>
         <el-button
           v-if="formData.draftId"
           type="danger"
@@ -16,7 +25,11 @@
         >
           删除
         </el-button>
-        <el-button size="small" :disabled="formLoading" @click="handleClose">关闭</el-button>
+        <el-button
+          size="small"
+          :disabled="formLoading"
+          @click="handleClose"
+        >关闭</el-button>
       </div>
     </div>
     <!-- 写信表单 -->
@@ -27,14 +40,27 @@
       label-width="80px"
       class="mail-compose__form"
     >
-      <el-form-item label="收件人" prop="recipients">
+      <el-form-item
+        label="收件人"
+        prop="recipients"
+      >
         <mail-address-select v-model="formData.recipients" />
       </el-form-item>
-      <el-form-item label="抄送人" prop="ccs">
+      <el-form-item
+        label="抄送人"
+        prop="ccs"
+      >
         <mail-address-select v-model="formData.ccs" />
       </el-form-item>
-      <el-form-item label="主题" prop="subject">
-        <el-input v-model="formData.subject" placeholder="请输入主题" maxlength="65535" />
+      <el-form-item
+        label="主题"
+        prop="subject"
+      >
+        <el-input
+          v-model="formData.subject"
+          placeholder="请输入主题"
+          maxlength="65535"
+        />
       </el-form-item>
       <el-form-item label="附件">
         <div class="mail-compose__attachments">
@@ -62,12 +88,21 @@
             :on-change="handleFileChange"
             :on-remove="handleFileRemove"
           >
-            <el-button size="small" :disabled="formLoading">添加附件</el-button>
-            <div slot="tip" class="el-upload__tip">单个文件不超过 16 MB，总请求不超过 32 MB</div>
+            <el-button
+              size="small"
+              :disabled="formLoading"
+            >添加附件</el-button>
+            <div
+              slot="tip"
+              class="el-upload__tip"
+            >单个文件不超过 16 MB，总请求不超过 32 MB</div>
           </el-upload>
         </div>
       </el-form-item>
-      <el-form-item label="正文" prop="content">
+      <el-form-item
+        label="正文"
+        prop="content"
+      >
         <div class="mail-compose__editor">
           <div class="mail-compose__word-count">{{ wordCount }} 字</div>
           <Editor

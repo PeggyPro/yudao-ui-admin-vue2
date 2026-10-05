@@ -1,16 +1,26 @@
 <template>
-  <div v-loading="loading" class="fms-home-metric-charts">
+  <div
+    v-loading="loading"
+    class="fms-home-metric-charts"
+  >
     <section class="metric-chart-panel trend-panel">
       <div class="chart-title">
         {{ metricDetail ? metricDetail.name + '变化趋势（单位：元）' : '财务指标趋势（单位：元）' }}
       </div>
-      <div ref="trendChart" class="chart-canvas" />
+      <div
+        ref="trendChart"
+        class="chart-canvas"
+      />
     </section>
     <section class="metric-chart-panel structure-panel">
       <div class="chart-title">
         {{ metricDetail ? formatCurrentMonth() + ' ' + metricDetail.name + '结构分析（单位：元）' : '本期指标结构（单位：元）' }}
       </div>
-      <div v-show="structureChartData.length > 0" ref="structureChart" class="chart-canvas" />
+      <div
+        v-show="structureChartData.length > 0"
+        ref="structureChart"
+        class="chart-canvas"
+      />
       <el-empty
         v-if="structureChartData.length === 0"
         class="chart-empty"

@@ -1,16 +1,101 @@
 <template>
-  <el-dialog title="开始记账" :visible.sync="visible" width="620px" append-to-body>
-    <el-form ref="form" v-loading="loading" :model="formData" :rules="rules" label-width="110px">
-      <el-form-item label="公司名称"><el-input :value="accountSet && accountSet.companyName" disabled /></el-form-item>
-      <el-form-item label="本位币" prop="currencyCode"><el-select v-model="formData.currencyCode" disabled class="width-full"><el-option v-for="item in currencies" :key="item.value" :label="item.label" :value="item.value" /></el-select></el-form-item>
-      <el-form-item label="启用期间" prop="startTime"><el-date-picker v-model="formData.startTime" type="month" value-format="timestamp" class="width-full" /></el-form-item>
-      <el-form-item label="会计制度" prop="standard"><el-select v-model="formData.standard" class="width-full"><el-option v-for="item in standards" :key="item.value" :label="item.label" :value="item.value" /></el-select></el-form-item>
-      <el-form-item label="科目级次" prop="level"><el-select v-model="formData.level" class="width-full"><el-option v-for="level in 8" :key="level" :label="level + ' 级'" :value="level" /></el-select></el-form-item>
-      <el-form-item label="科目编码规则" prop="subjectCodeRule"><el-input v-model="formData.subjectCodeRule" placeholder="例如：4-2-2-2" /></el-form-item>
-      <el-form-item label="余额方向" prop="ledgerBalanceMode"><el-select v-model="formData.ledgerBalanceMode" class="width-full"><el-option v-for="item in balanceModes" :key="item.value" :label="item.label" :value="item.value" /></el-select></el-form-item>
-      <el-alert :closable="false" title="初始化后将建立本位币、财务参数和默认凭证字，启用期间不可随意变更" type="info" show-icon />
+  <el-dialog
+    title="开始记账"
+    :visible.sync="visible"
+    width="620px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="loading"
+      :model="formData"
+      :rules="rules"
+      label-width="110px"
+    >
+      <el-form-item label="公司名称"><el-input
+        :value="accountSet && accountSet.companyName"
+        disabled
+      /></el-form-item>
+      <el-form-item
+        label="本位币"
+        prop="currencyCode"
+      ><el-select
+        v-model="formData.currencyCode"
+        disabled
+        class="width-full"
+      ><el-option
+        v-for="item in currencies"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      /></el-select></el-form-item>
+      <el-form-item
+        label="启用期间"
+        prop="startTime"
+      ><el-date-picker
+        v-model="formData.startTime"
+        type="month"
+        value-format="timestamp"
+        class="width-full"
+      /></el-form-item>
+      <el-form-item
+        label="会计制度"
+        prop="standard"
+      ><el-select
+        v-model="formData.standard"
+        class="width-full"
+      ><el-option
+        v-for="item in standards"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      /></el-select></el-form-item>
+      <el-form-item
+        label="科目级次"
+        prop="level"
+      ><el-select
+        v-model="formData.level"
+        class="width-full"
+      ><el-option
+        v-for="level in 8"
+        :key="level"
+        :label="level + ' 级'"
+        :value="level"
+      /></el-select></el-form-item>
+      <el-form-item
+        label="科目编码规则"
+        prop="subjectCodeRule"
+      ><el-input
+        v-model="formData.subjectCodeRule"
+        placeholder="例如：4-2-2-2"
+      /></el-form-item>
+      <el-form-item
+        label="余额方向"
+        prop="ledgerBalanceMode"
+      ><el-select
+        v-model="formData.ledgerBalanceMode"
+        class="width-full"
+      ><el-option
+        v-for="item in balanceModes"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      /></el-select></el-form-item>
+      <el-alert
+        :closable="false"
+        title="初始化后将建立本位币、财务参数和默认凭证字，启用期间不可随意变更"
+        type="info"
+        show-icon
+      />
     </el-form>
-    <div slot="footer" class="dialog-footer"><el-button type="primary" :loading="loading" @click="submit">开始记账</el-button><el-button @click="visible = false">取 消</el-button></div>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    ><el-button
+      type="primary"
+      :loading="loading"
+      @click="submit"
+    >开始记账</el-button><el-button @click="visible = false">取 消</el-button></div>
   </el-dialog>
 </template>
 <script>

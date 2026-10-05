@@ -2,9 +2,18 @@
   <div class="app-container">
     <!-- 表单设计器 -->
     <div class="fc-designer-wrapper">
-      <fc-designer class="my-designer" ref="designer" :config="designerConfig">
+      <fc-designer
+        ref="designer"
+        class="my-designer"
+        :config="designerConfig"
+      >
         <template slot="handle">
-          <el-button size="small" type="success" plain @click="handleSave">
+          <el-button
+            size="small"
+            type="success"
+            plain
+            @click="handleSave"
+          >
             <i class="el-icon-plus" /> 保存
           </el-button>
         </template>
@@ -12,39 +21,74 @@
     </div>
 
     <!-- 表单保存的弹窗 -->
-    <Dialog title="保存表单" v-model="dialogVisible" width="600px">
-      <el-form ref="form" :model="formData" :rules="formRules" label-width="80px">
-        <el-form-item label="表单名" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入表单名" />
+    <AppDialog
+      v-model="dialogVisible"
+      title="保存表单"
+      width="600px"
+    >
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="formRules"
+        label-width="80px"
+      >
+        <el-form-item
+          label="表单名"
+          prop="name"
+        >
+          <el-input
+            v-model="formData.name"
+            placeholder="请输入表单名"
+          />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
           <el-radio-group v-model="formData.status">
-            <el-radio v-for="dict in this.getDictDatas(DICT_TYPE.COMMON_STATUS)"
-                      :key="dict.value" :label="parseInt(dict.value)">{{ dict.label }}</el-radio>
+            <el-radio
+              v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
+              :key="dict.value"
+              :label="parseInt(dict.value)"
+            >{{ dict.label }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input type="textarea" v-model="formData.remark" placeholder="请输入备注" />
+        <el-form-item
+          label="备注"
+          prop="remark"
+        >
+          <el-input
+            v-model="formData.remark"
+            type="textarea"
+            placeholder="请输入备注"
+          />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          :disabled="formLoading"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
-    </Dialog>
+    </AppDialog>
   </div>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
-import { createForm, updateForm, getForm } from "@/api/bpm/form";
-import { CommonStatusEnum } from "@/utils/constants";
-import { encodeConf, encodeFields, setConfAndFields } from "@/utils/formCreate";
-import { useFormCreateDesigner } from "@/components/FormCreate/src/useFormCreateDesigner";
+import AppDialog from '@/components/Dialog'
+import { createForm, updateForm, getForm } from '@/api/bpm/form'
+import { CommonStatusEnum } from '@/utils/constants'
+import { encodeConf, encodeFields, setConfAndFields } from '@/utils/formCreate'
+import { useFormCreateDesigner } from '@/components/FormCreate/src/useFormCreateDesigner'
 
 export default {
-  name: "BpmFormEditor",
-  components: { Dialog },
+  name: 'BpmFormEditor',
+  components: { AppDialog },
   data() {
     return {
       // 表单设计器配置
@@ -87,74 +131,74 @@ export default {
         remark: ''
       },
       formRules: {
-        name: [{ required: true, message: "表单名不能为空", trigger: "blur" }],
-        status: [{ required: true, message: "开启状态不能为空", trigger: "blur" }]
+        name: [{ required: true, message: '表单名不能为空', trigger: 'blur' }],
+        status: [{ required: true, message: '开启状态不能为空', trigger: 'blur' }]
       }
-    };
+    }
   },
   created() {
-    const formId = this.$route.query.id;
+    const formId = this.$route.query.id
     if (formId) {
       getForm(formId).then(response => {
-        const data = response.data;
+        const data = response.data
         this.formData = {
           id: data.id,
           name: data.name,
           status: data.status,
           remark: data.remark
-        };
+        }
         // 设置设计器的表单配置与字段
         this.$nextTick(() => {
-          setConfAndFields(this.$refs.designer, data.conf, data.fields);
-        });
+          setConfAndFields(this.$refs.designer, data.conf, data.fields)
+        })
         if (this.$route.query.type === 'copy') {
           // A copy must be submitted as a new form; preserve the designer
           // fields while clearing only the server identity and making the
           // duplicate distinguishable in the list.
-          this.formData.id = undefined;
-          this.formData.name = `${this.formData.name || ''}_copy`;
+          this.formData.id = undefined
+          this.formData.name = `${this.formData.name || ''}_copy`
         }
-      });
+      })
     }
   },
   mounted() {
     this.$nextTick(() => {
-      useFormCreateDesigner(this.$refs.designer);
-    });
+      useFormCreateDesigner(this.$refs.designer)
+    })
   },
   methods: {
     /** 点击保存，打开弹窗 */
     handleSave() {
-      this.dialogVisible = true;
+      this.dialogVisible = true
     },
     /** 提交表单 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (!valid) {
-          return;
+          return
         }
-        this.formLoading = true;
+        this.formLoading = true
         const data = {
           ...this.formData,
           conf: encodeConf(this.$refs.designer), // 表单配置
           fields: encodeFields(this.$refs.designer) // 表单字段
-        };
+        }
         const promise = data.id
           ? updateForm(data)
-          : createForm(data);
+          : createForm(data)
         promise.then(() => {
-          this.$modal.msgSuccess(data.id ? "修改成功" : "新增成功");
-          this.dialogVisible = false;
-          this.formLoading = false;
+          this.$modal.msgSuccess(data.id ? '修改成功' : '新增成功')
+          this.dialogVisible = false
+          this.formLoading = false
           // 关闭当前标签页并返回列表
-          this.$tab.closeOpenPage({ path: "/bpm/manager/form" });
+          this.$tab.closeOpenPage({ path: '/bpm/manager/form' })
         }).catch(() => {
-          this.formLoading = false;
-        });
-      });
+          this.formLoading = false
+        })
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

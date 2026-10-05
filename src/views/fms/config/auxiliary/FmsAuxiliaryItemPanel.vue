@@ -1,7 +1,15 @@
 <template>
   <div class="fms-auxiliary-item-panel">
-    <el-form ref="queryForm" :inline="true" :model="queryParams" class="item-toolbar">
-      <el-form-item label="关键词" prop="search">
+    <el-form
+      ref="queryForm"
+      :inline="true"
+      :model="queryParams"
+      class="item-toolbar"
+    >
+      <el-form-item
+        label="关键词"
+        prop="search"
+      >
         <el-input
           v-model="queryParams.search"
           clearable
@@ -11,8 +19,14 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-if="isWritable"
           v-hasPermi="['fms:config:auxiliary:create']"
@@ -59,13 +73,42 @@
       stripe
       @selection-change="handleRowCheckboxChange"
     >
-      <el-table-column v-if="isWritable && canDelete" type="selection" width="55" />
-      <el-table-column label="编码" min-width="130" prop="code" />
-      <el-table-column label="名称" min-width="180" prop="name" />
-      <el-table-column label="备注" min-width="180" prop="remark" />
-      <el-table-column v-if="isInventory" label="规格" min-width="130" prop="specification" />
-      <el-table-column v-if="isInventory" label="单位" min-width="100" prop="unit" />
-      <el-table-column label="状态" width="90">
+      <el-table-column
+        v-if="isWritable && canDelete"
+        type="selection"
+        width="55"
+      />
+      <el-table-column
+        label="编码"
+        min-width="130"
+        prop="code"
+      />
+      <el-table-column
+        label="名称"
+        min-width="180"
+        prop="name"
+      />
+      <el-table-column
+        label="备注"
+        min-width="180"
+        prop="remark"
+      />
+      <el-table-column
+        v-if="isInventory"
+        label="规格"
+        min-width="130"
+        prop="specification"
+      />
+      <el-table-column
+        v-if="isInventory"
+        label="单位"
+        min-width="100"
+        prop="unit"
+      />
+      <el-table-column
+        label="状态"
+        width="90"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -109,8 +152,14 @@
       @pagination="getList"
     />
 
-    <fms-auxiliary-item-form ref="form" @success="getList" />
-    <fms-auxiliary-item-import-form ref="importForm" @success="getList" />
+    <fms-auxiliary-item-form
+      ref="form"
+      @success="getList"
+    />
+    <fms-auxiliary-item-import-form
+      ref="importForm"
+      @success="getList"
+    />
   </div>
 </template>
 

@@ -14,7 +14,7 @@
         autoplay
         muted
         playsinline
-      ></video>
+      />
       <div
         class="flex relative z-[1] flex-col gap-4 items-center"
         :class="{ 'self-start mt-16': isVideo }"
@@ -58,7 +58,11 @@
         <span
           class="flex justify-center items-center w-12 h-12 text-white rounded-full bg-[#f04a4a]"
         >
-          <Icon icon="ant-design:phone-outlined" :size="22" class="rotate-[135deg]" />
+          <Icon
+            icon="ant-design:phone-outlined"
+            :size="22"
+            class="rotate-[135deg]"
+          />
         </span>
         <span class="text-xs text-white/70 whitespace-nowrap">取消</span>
       </div>
@@ -103,11 +107,11 @@
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import UserAvatar from '../user/UserAvatar.vue';
-import { useMediaStreamElement } from '../../composables/useMediaStreamElement';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import UserAvatar from '../user/UserAvatar.vue'
+import { useMediaStreamElement } from '../../composables/useMediaStreamElement'
+export default /* #__PURE__*/_defineComponent({
   components: {
     Icon,
     UserAvatar
@@ -150,20 +154,20 @@ export default /*#__PURE__*/_defineComponent({
   setup(__props, {
     expose
   }) {
-    expose();
-    const props = __props;
-    const localVideoRef = useMediaStreamElement(() => props.localStream);
+    expose()
+    const props = __props
+    const localVideoRef = useMediaStreamElement(() => props.localStream)
     const __returned__ = {
       props,
       localVideoRef,
       Icon,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>

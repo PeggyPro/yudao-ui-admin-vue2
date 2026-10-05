@@ -1,5 +1,8 @@
 <template>
-  <div v-if="detail" class="mail-detail">
+  <div
+    v-if="detail"
+    class="mail-detail"
+  >
     <div class="mail-detail__header">
       <h2 class="mail-detail__subject">{{ detail.subject || '（无主题）' }}</h2>
       <div class="mail-detail__meta">
@@ -17,16 +20,32 @@
         >
           回复
         </el-button>
-        <el-button size="small" :disabled="operating" @click="$emit('compose', OA_MAIL_COMPOSE_MODE.REPLY_ALL)">
+        <el-button
+          size="small"
+          :disabled="operating"
+          @click="$emit('compose', OA_MAIL_COMPOSE_MODE.REPLY_ALL)"
+        >
           回复全部
         </el-button>
-        <el-button size="small" :disabled="operating" @click="$emit('compose', OA_MAIL_COMPOSE_MODE.FORWARD)">
+        <el-button
+          size="small"
+          :disabled="operating"
+          @click="$emit('compose', OA_MAIL_COMPOSE_MODE.FORWARD)"
+        >
           转发
         </el-button>
-        <el-button size="small" :loading="operating" @click="$emit('read')">
+        <el-button
+          size="small"
+          :loading="operating"
+          @click="$emit('read')"
+        >
           {{ detail.readStatus ? '标记未读' : '标记已读' }}
         </el-button>
-        <el-button v-if="!showExternalImages" size="small" @click="showExternalImages = true">
+        <el-button
+          v-if="!showExternalImages"
+          size="small"
+          @click="showExternalImages = true"
+        >
           显示外部图片
         </el-button>
         <el-button
@@ -37,11 +56,20 @@
         >
           恢复到收件箱
         </el-button>
-        <el-button type="danger" plain size="small" :disabled="operating" @click="$emit('delete')">
+        <el-button
+          type="danger"
+          plain
+          size="small"
+          :disabled="operating"
+          @click="$emit('delete')"
+        >
           {{ folderKey === OA_MAIL_FOLDER_KEY.TRASH ? '彻底删除' : '删除' }}
         </el-button>
       </div>
-      <div v-if="detail.attachments && detail.attachments.length" class="mail-detail__attachments">
+      <div
+        v-if="detail.attachments && detail.attachments.length"
+        class="mail-detail__attachments"
+      >
         <span>附件：</span>
         <el-button
           v-for="attachment in detail.attachments"
@@ -64,7 +92,10 @@
       class="mail-detail__frame"
     />
   </div>
-  <el-empty v-else :description="detailError || '请选择邮件'" />
+  <el-empty
+    v-else
+    :description="detailError || '请选择邮件'"
+  />
 </template>
 
 <script>

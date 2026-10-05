@@ -12,7 +12,10 @@
       size="small"
       label-width="68px"
     >
-      <el-form-item label="标题" prop="title">
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入标题"
@@ -21,14 +24,20 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="审批状态" prop="status">
+      <el-form-item
+        label="审批状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择审批状态"
           clearable
           style="width: 240px"
         >
-          <el-option label="未提交" :value="BpmProcessInstanceStatus.NOT_START" />
+          <el-option
+            label="未提交"
+            :value="BpmProcessInstanceStatus.NOT_START"
+          />
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -38,8 +47,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:overtime-apply:create']"
           type="primary"
@@ -51,18 +67,39 @@
     </el-form>
 
     <!-- 本人申请列表 -->
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="标题" min-width="240">
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="标题"
+        min-width="240"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="openDetail(scope.row.id)">{{ scope.row.title }}</el-button>
+          <el-button
+            type="text"
+            @click="openDetail(scope.row.id)"
+          >{{ scope.row.title }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="紧急程度" width="110" align="center">
+      <el-table-column
+        label="紧急程度"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_APPLY_URGENCY" :value="scope.row.urgency" />
+          <dict-tag
+            :type="DICT_TYPE.OA_APPLY_URGENCY"
+            :value="scope.row.urgency"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="申请人" prop="creatorName" width="120" align="center" />
+      <el-table-column
+        label="申请人"
+        prop="creatorName"
+        width="120"
+        align="center"
+      />
       <el-table-column
         label="申请时间"
         prop="createTime"
@@ -70,15 +107,31 @@
         width="180"
         align="center"
       />
-      <el-table-column label="审批状态" width="110" align="center">
+      <el-table-column
+        label="审批状态"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START" type="info">
+          <el-tag
+            v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
+            type="info"
+          >
             未提交
           </el-tag>
-          <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            v-else
+            :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200" fixed="right" align="center">
+      <el-table-column
+        label="操作"
+        width="200"
+        fixed="right"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
@@ -113,7 +166,10 @@
     />
 
     <!-- 添加或修改加班申请弹窗 -->
-    <oa-overtime-apply-form ref="formRef" @success="getList" />
+    <oa-overtime-apply-form
+      ref="formRef"
+      @success="getList"
+    />
     <!-- 加班申请详情弹窗 -->
     <oa-overtime-apply-detail ref="detailRef" />
   </div>

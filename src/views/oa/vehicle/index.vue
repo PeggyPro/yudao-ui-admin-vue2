@@ -9,10 +9,19 @@
       label-width="120px"
       @submit.native.prevent
     >
-      <el-form-item label="所属部门" prop="deptId">
-        <dept-select v-model="queryParams.deptId" style="width: 240px" />
+      <el-form-item
+        label="所属部门"
+        prop="deptId"
+      >
+        <dept-select
+          v-model="queryParams.deptId"
+          style="width: 240px"
+        />
       </el-form-item>
-      <el-form-item label="车牌号" prop="no">
+      <el-form-item
+        label="车牌号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入车牌号"
@@ -21,7 +30,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车辆名称" prop="name">
+      <el-form-item
+        label="车辆名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           placeholder="请输入车辆名称"
@@ -30,8 +42,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="分类" prop="category">
-        <el-select v-model="queryParams.category" placeholder="请选择分类" clearable style="width: 240px">
+      <el-form-item
+        label="分类"
+        prop="category"
+      >
+        <el-select
+          v-model="queryParams.category"
+          placeholder="请选择分类"
+          clearable
+          style="width: 240px"
+        >
           <el-option
             v-for="dict in categoryOptions"
             :key="dict.value"
@@ -40,8 +60,16 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable style="width: 240px">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+          style="width: 240px"
+        >
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -50,7 +78,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="车型" prop="type">
+      <el-form-item
+        label="车型"
+        prop="type"
+      >
         <el-input
           v-model="queryParams.type"
           placeholder="请输入车型"
@@ -59,7 +90,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="品牌型号" prop="brandModel">
+      <el-form-item
+        label="品牌型号"
+        prop="brandModel"
+      >
         <el-input
           v-model="queryParams.brandModel"
           placeholder="请输入品牌型号"
@@ -68,7 +102,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="交强险到期时间" prop="compulsoryInsuranceExpireTime">
+      <el-form-item
+        label="交强险到期时间"
+        prop="compulsoryInsuranceExpireTime"
+      >
         <el-date-picker
           v-model="queryParams.compulsoryInsuranceExpireTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -78,7 +115,10 @@
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="商业险到期时间" prop="commercialInsuranceExpireTime">
+      <el-form-item
+        label="商业险到期时间"
+        prop="commercialInsuranceExpireTime"
+      >
         <el-date-picker
           v-model="queryParams.commercialInsuranceExpireTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -88,7 +128,10 @@
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="年检到期时间" prop="inspectionExpireTime">
+      <el-form-item
+        label="年检到期时间"
+        prop="inspectionExpireTime"
+      >
         <el-date-picker
           v-model="queryParams.inspectionExpireTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -99,8 +142,15 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:vehicle:create']"
           type="primary"
@@ -112,16 +162,46 @@
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="所属部门" prop="deptName" min-width="140" show-overflow-tooltip />
-      <el-table-column label="车牌号" prop="no" min-width="140" />
-      <el-table-column label="车辆名称" prop="name" min-width="160" show-overflow-tooltip />
-      <el-table-column label="状态" width="100" align="center">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="所属部门"
+        prop="deptName"
+        min-width="140"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="车牌号"
+        prop="no"
+        min-width="140"
+      />
+      <el-table-column
+        label="车辆名称"
+        prop="name"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="状态"
+        width="100"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_VEHICLE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_VEHICLE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="车辆照片" width="100" align="center">
+      <el-table-column
+        label="车辆照片"
+        width="100"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-image
             v-if="scope.row.picUrl"
@@ -132,15 +212,42 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="车型" prop="type" min-width="100" show-overflow-tooltip />
-      <el-table-column label="分类" min-width="120" align="center">
+      <el-table-column
+        label="车型"
+        prop="type"
+        min-width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="分类"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_VEHICLE_CATEGORY" :value="scope.row.category" />
+          <dict-tag
+            :type="DICT_TYPE.OA_VEHICLE_CATEGORY"
+            :value="scope.row.category"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="品牌型号" prop="brandModel" min-width="130" show-overflow-tooltip />
-      <el-table-column label="座位数" prop="seatCount" width="90" align="center" />
-      <el-table-column label="裸车价格（元）" prop="barePrice" width="140" align="center" />
+      <el-table-column
+        label="品牌型号"
+        prop="brandModel"
+        min-width="130"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="座位数"
+        prop="seatCount"
+        width="90"
+        align="center"
+      />
+      <el-table-column
+        label="裸车价格（元）"
+        prop="barePrice"
+        width="140"
+        align="center"
+      />
       <el-table-column
         label="交强险到期时间"
         prop="compulsoryInsuranceExpireTime"
@@ -162,8 +269,18 @@
         width="180"
         align="center"
       />
-      <el-table-column label="显示顺序" prop="sort" width="100" align="center" />
-      <el-table-column label="备注" prop="remark" min-width="180" show-overflow-tooltip />
+      <el-table-column
+        label="显示顺序"
+        prop="sort"
+        width="100"
+        align="center"
+      />
+      <el-table-column
+        label="备注"
+        prop="remark"
+        min-width="180"
+        show-overflow-tooltip
+      />
       <el-table-column
         label="创建时间"
         prop="createTime"
@@ -171,7 +288,12 @@
         width="180"
         align="center"
       />
-      <el-table-column label="操作" align="center" fixed="right" width="160">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="160"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:vehicle:update']"
@@ -198,7 +320,10 @@
     />
 
     <!-- 新增和修改表单 -->
-    <oa-vehicle-form ref="form" @success="getList" />
+    <oa-vehicle-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

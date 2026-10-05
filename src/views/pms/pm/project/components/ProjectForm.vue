@@ -1,5 +1,10 @@
 <template>
-  <Dialog v-model="dialogVisible" append-to-body :title="dialogTitle" width="760px">
+  <AppDialog
+    v-model="dialogVisible"
+    append-to-body
+    :title="dialogTitle"
+    width="760px"
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -8,7 +13,11 @@
       label-width="96px"
     >
       <!-- 项目基本信息 -->
-      <el-form-item v-if="formType === 'create'" label="项目类型" prop="type">
+      <el-form-item
+        v-if="formType === 'create'"
+        label="项目类型"
+        prop="type"
+      >
         <div style="width: 100%">
           <el-radio-group v-model="formData.type">
             <el-radio-button :label="PmsProjectType.GENERAL">通用项目</el-radio-button>
@@ -21,7 +30,10 @@
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="项目名称" prop="name">
+          <el-form-item
+            label="项目名称"
+            prop="name"
+          >
             <el-input
               v-model="formData.name"
               clearable
@@ -32,15 +44,25 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="项目封面" prop="icon">
-            <IconSelect v-model="formData.icon" style="width: 100%" clearable />
+          <el-form-item
+            label="项目封面"
+            prop="icon"
+          >
+            <IconSelect
+              v-model="formData.icon"
+              style="width: 100%"
+              clearable
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <!-- 项目周期 -->
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="开始时间" prop="startTime">
+          <el-form-item
+            label="开始时间"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               style="width: 100%"
@@ -51,7 +73,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="截止时间" prop="endTime">
+          <el-form-item
+            label="截止时间"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               style="width: 100%"
@@ -62,7 +87,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="项目描述" prop="description">
+      <el-form-item
+        label="项目描述"
+        prop="description"
+      >
         <el-input
           v-model="formData.description"
           :rows="3"
@@ -73,7 +101,10 @@
         />
       </el-form-item>
       <!-- 项目权限 -->
-      <el-form-item label="可见范围" prop="openStatus">
+      <el-form-item
+        label="可见范围"
+        prop="openStatus"
+      >
         <el-radio-group v-model="formData.openStatus">
           <el-radio :label="false">私有：只有项目成员可以查看</el-radio>
           <el-radio :label="true">公开：所有人可查看，只有项目成员可以编辑</el-radio>
@@ -92,10 +123,14 @@
       </el-form-item>
     </el-form>
     <template slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -103,7 +138,7 @@ import * as ProjectApi from '@/api/pms/pm/project'
 import { PmsProjectLevel, PmsProjectType } from '@/views/pms/pm/utils/constants'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 import { IconSelect } from '@/components/Icon'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 function defaultFormData() {
   return {
@@ -115,7 +150,7 @@ function defaultFormData() {
 
 export default {
   name: 'PmsProjectForm',
-  components: { UserSelectV2, IconSelect, Dialog },
+  components: { UserSelectV2, IconSelect, AppDialog },
   data() {
     return {
       PmsProjectType, dialogVisible: false, dialogTitle: '', formLoading: false,

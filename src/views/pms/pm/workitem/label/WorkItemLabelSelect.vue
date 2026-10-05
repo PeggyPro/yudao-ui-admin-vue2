@@ -1,7 +1,20 @@
 <template>
-  <el-select :value="modelValue" clearable collapse-tags filterable :loading="loading" multiple
-    :placeholder="placeholder" @input="$emit('update:modelValue', $event)">
-    <el-option v-for="label in labelList" :key="label.id" :label="label.name" :value="label.id" />
+  <el-select
+    :value="modelValue"
+    clearable
+    collapse-tags
+    filterable
+    :loading="loading"
+    multiple
+    :placeholder="placeholder"
+    @input="$emit('update:modelValue', $event)"
+  >
+    <el-option
+      v-for="label in labelList"
+      :key="label.id"
+      :label="label.name"
+      :value="label.id"
+    />
   </el-select>
 </template>
 

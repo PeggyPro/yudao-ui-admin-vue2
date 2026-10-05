@@ -106,7 +106,7 @@
         align="center"
         width="90"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             v-if="scope.row.picUrl"
             :src="scope.row.picUrl"
@@ -123,7 +123,7 @@
         width="90"
         prop="status"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -136,7 +136,7 @@
         width="120"
         prop="position"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_BANNER_POSITION"
             :value="scope.row.position"
@@ -156,7 +156,7 @@
         width="180"
         prop="createTime"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -179,7 +179,7 @@
         width="150"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:banner:update']"
             type="text"

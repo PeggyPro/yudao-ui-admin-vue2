@@ -1,26 +1,53 @@
 <template>
   <div :class="['component-container-wrap', { active }]">
     <div :style="componentStyle">
-      <component :is="component.id" :property="component.property" />
+      <component
+        :is="component.id"
+        :property="component.property"
+      />
     </div>
     <div class="component-overlay">
-      <div v-if="component.name" class="component-name">{{ component.name }}</div>
-      <div v-if="showToolbar && component.name && active" class="component-toolbar">
+      <div
+        v-if="component.name"
+        class="component-name"
+      >{{ component.name }}</div>
+      <div
+        v-if="showToolbar && component.name && active"
+        class="component-toolbar"
+      >
         <VerticalButtonGroup type="primary">
-          <el-tooltip content="上移" placement="right">
-            <el-button :disabled="!canMoveUp" @click.stop="$emit('move', -1)">
+          <el-tooltip
+            content="上移"
+            placement="right"
+          >
+            <el-button
+              :disabled="!canMoveUp"
+              @click.stop="$emit('move', -1)"
+            >
               <i class="el-icon-arrow-up" />
             </el-button>
           </el-tooltip>
-          <el-tooltip content="下移" placement="right">
-            <el-button :disabled="!canMoveDown" @click.stop="$emit('move', 1)">
+          <el-tooltip
+            content="下移"
+            placement="right"
+          >
+            <el-button
+              :disabled="!canMoveDown"
+              @click.stop="$emit('move', 1)"
+            >
               <i class="el-icon-arrow-down" />
             </el-button>
           </el-tooltip>
-          <el-tooltip content="复制" placement="right">
+          <el-tooltip
+            content="复制"
+            placement="right"
+          >
             <el-button @click.stop="$emit('copy')"><i class="el-icon-copy-document" /></el-button>
           </el-tooltip>
-          <el-tooltip content="删除" placement="right">
+          <el-tooltip
+            content="删除"
+            placement="right"
+          >
             <el-button @click.stop="$emit('delete')"><i class="el-icon-delete" /></el-button>
           </el-tooltip>
         </VerticalButtonGroup>

@@ -60,7 +60,7 @@
                   align="center"
                   prop="status"
                 >
-                  <template v-slot="scope">
+                  <template slot-scope="scope">
                     <dict-tag
                       :type="DICT_TYPE.COMMON_STATUS"
                       :value="scope.row.status"
@@ -71,7 +71,7 @@
                   label="操作"
                   align="center"
                 >
-                  <template v-slot="scope">
+                  <template slot-scope="scope">
                     <el-button
                       v-hasPermi="['trade:delivery:pick-up-store:delete']"
                       type="text"

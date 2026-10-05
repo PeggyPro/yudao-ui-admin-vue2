@@ -1,8 +1,16 @@
 <template>
-  <el-form ref="form" :model="value" :rules="rules" label-width="120px">
+  <el-form
+    ref="form"
+    :model="value"
+    :rules="rules"
+    label-width="120px"
+  >
     <el-row>
       <el-col :span="24">
-        <el-form-item label="流程标识" prop="code">
+        <el-form-item
+          label="流程标识"
+          prop="code"
+        >
           <el-input
             :value="value.code"
             placeholder="请输入流程标识"
@@ -11,7 +19,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="流程名称" prop="name">
+        <el-form-item
+          label="流程名称"
+          prop="name"
+        >
           <el-input
             :value="value.name"
             placeholder="请输入流程名称"
@@ -20,7 +31,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="状态" prop="status">
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
           <el-select
             :value="value.status"
             placeholder="请选择状态"
@@ -37,7 +51,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="备注" prop="remark">
+        <el-form-item
+          label="备注"
+          prop="remark"
+        >
           <el-input
             :value="value.remark"
             :rows="2"

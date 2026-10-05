@@ -1,27 +1,45 @@
 <template>
   <div class="app-container">
-    <doc-alert title="支付宝、微信退款接入" url="https://doc.iocoder.cn/pay/refund-demo/" />
+    <doc-alert
+      title="支付宝、微信退款接入"
+      url="https://doc.iocoder.cn/pay/refund-demo/"
+    />
 
     <el-form
+      v-show="showSearch"
       ref="queryForm"
       :model="queryParams"
       :inline="true"
       size="small"
       label-width="120px"
-      v-show="showSearch"
     >
-      <el-form-item label="应用编号" prop="appId">
+      <el-form-item
+        label="应用编号"
+        prop="appId"
+      >
         <el-select
           v-model="queryParams.appId"
           clearable
           filterable
           placeholder="请选择应用信息"
         >
-          <el-option v-for="item in appList" :key="item.id" :label="item.name" :value="item.id" />
+          <el-option
+            v-for="item in appList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="退款渠道" prop="channelCode">
-        <el-select v-model="queryParams.channelCode" placeholder="请选择退款渠道" clearable>
+      <el-form-item
+        label="退款渠道"
+        prop="channelCode"
+      >
+        <el-select
+          v-model="queryParams.channelCode"
+          placeholder="请选择退款渠道"
+          clearable
+        >
           <el-option
             v-for="dict in getDictDatas(DICT_TYPE.PAY_CHANNEL_CODE)"
             :key="dict.value"
@@ -30,7 +48,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="商户支付单号" prop="merchantOrderId">
+      <el-form-item
+        label="商户支付单号"
+        prop="merchantOrderId"
+      >
         <el-input
           v-model="queryParams.merchantOrderId"
           placeholder="请输入商户支付单号"
@@ -38,7 +59,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商户退款单号" prop="merchantRefundId">
+      <el-form-item
+        label="商户退款单号"
+        prop="merchantRefundId"
+      >
         <el-input
           v-model="queryParams.merchantRefundId"
           placeholder="请输入商户退款单号"
@@ -46,7 +70,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="渠道支付单号" prop="channelOrderNo">
+      <el-form-item
+        label="渠道支付单号"
+        prop="channelOrderNo"
+      >
         <el-input
           v-model="queryParams.channelOrderNo"
           placeholder="请输入渠道支付单号"
@@ -54,7 +81,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="渠道退款单号" prop="channelRefundNo">
+      <el-form-item
+        label="渠道退款单号"
+        prop="channelRefundNo"
+      >
         <el-input
           v-model="queryParams.channelRefundNo"
           placeholder="请输入渠道退款单号"
@@ -62,8 +92,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="退款状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择退款状态" clearable>
+      <el-form-item
+        label="退款状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择退款状态"
+          clearable
+        >
           <el-option
             v-for="dict in getDictDatas(DICT_TYPE.PAY_REFUND_STATUS)"
             :key="dict.value"
@@ -72,7 +109,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           style="width: 240px"
@@ -85,61 +125,131 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
         <el-button
+          v-hasPermi="['pay:refund:export']"
           type="warning"
           plain
           icon="el-icon-download"
           size="mini"
           :loading="exportLoading"
           @click="handleExport"
-          v-hasPermi="['pay:refund:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" stripe>
-      <el-table-column label="编号" align="center" prop="id" width="90" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      stripe
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+        width="90"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="支付金额" align="center" prop="payPrice" width="110">
-        <template v-slot="scope">{{ formatAmount(scope.row.payPrice) }}</template>
+      <el-table-column
+        label="支付金额"
+        align="center"
+        prop="payPrice"
+        width="110"
+      >
+        <template slot-scope="scope">{{ formatAmount(scope.row.payPrice) }}</template>
       </el-table-column>
-      <el-table-column label="退款金额" align="center" prop="refundPrice" width="110">
-        <template v-slot="scope">{{ formatAmount(scope.row.refundPrice) }}</template>
+      <el-table-column
+        label="退款金额"
+        align="center"
+        prop="refundPrice"
+        width="110"
+      >
+        <template slot-scope="scope">{{ formatAmount(scope.row.refundPrice) }}</template>
       </el-table-column>
-      <el-table-column label="退款订单号" align="left" width="300">
-        <template v-slot="scope">
+      <el-table-column
+        label="退款订单号"
+        align="left"
+        width="300"
+      >
+        <template slot-scope="scope">
           <p class="order-font"><el-tag size="mini">商户</el-tag> {{ scope.row.merchantRefundId }}</p>
-          <p class="order-font"><el-tag size="mini" type="warning">退款</el-tag> {{ scope.row.no }}</p>
-          <p v-if="scope.row.channelRefundNo" class="order-font">
-            <el-tag size="mini" type="success">渠道</el-tag> {{ scope.row.channelRefundNo }}
+          <p class="order-font"><el-tag
+            size="mini"
+            type="warning"
+          >退款</el-tag> {{ scope.row.no }}</p>
+          <p
+            v-if="scope.row.channelRefundNo"
+            class="order-font"
+          >
+            <el-tag
+              size="mini"
+              type="success"
+            >渠道</el-tag> {{ scope.row.channelRefundNo }}
           </p>
         </template>
       </el-table-column>
-      <el-table-column label="支付订单号" align="left" width="300">
-        <template v-slot="scope">
+      <el-table-column
+        label="支付订单号"
+        align="left"
+        width="300"
+      >
+        <template slot-scope="scope">
           <p class="order-font"><el-tag size="mini">商户</el-tag> {{ scope.row.merchantOrderId }}</p>
-          <p class="order-font"><el-tag size="mini" type="success">渠道</el-tag> {{ scope.row.channelOrderNo }}</p>
+          <p class="order-font"><el-tag
+            size="mini"
+            type="success"
+          >渠道</el-tag> {{ scope.row.channelOrderNo }}</p>
         </template>
       </el-table-column>
-      <el-table-column label="退款状态" align="center" prop="status" width="100">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.PAY_REFUND_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="退款状态"
+        align="center"
+        prop="status"
+        width="100"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.PAY_REFUND_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="退款渠道" align="center" width="140">
-        <template v-slot="scope">
+      <el-table-column
+        label="退款渠道"
+        align="center"
+        width="140"
+      >
+        <template slot-scope="scope">
           <dict-tag
             v-if="scope.row.channelCode"
             :type="DICT_TYPE.PAY_CHANNEL_CODE"
@@ -147,20 +257,35 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="成功时间" align="center" prop="successTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="成功时间"
+        align="center"
+        prop="successTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.successTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="支付应用" align="center" prop="appName" width="120" />
-      <el-table-column label="操作" align="center" fixed="right" width="100">
-        <template v-slot="scope">
+      <el-table-column
+        label="支付应用"
+        align="center"
+        prop="appName"
+        width="120"
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="100"
+      >
+        <template slot-scope="scope">
           <el-button
+            v-hasPermi="['pay:refund:query']"
             size="mini"
             type="text"
             icon="el-icon-search"
             @click="openDetail(scope.row.id)"
-            v-hasPermi="['pay:refund:query']"
           >详情</el-button>
         </template>
       </el-table-column>

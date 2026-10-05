@@ -287,7 +287,7 @@ export class CronUtils {
     }
 
     const now = fromDate || new Date()
-    let nextTime = new Date(now.getTime() + 1000) // 从下一秒开始
+    const nextTime = new Date(now.getTime() + 1000) // 从下一秒开始
 
     // 简化版本：处理常见的 CRON 表达式模式
     // 对于复杂的 CRON 表达式，建议使用专门的库如 node-cron 或 cron-parser

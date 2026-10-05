@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Dialog
-      title="添加跟进记录"
+    <AppDialog
       v-model="dialogVisible"
+      title="添加跟进记录"
       width="50%"
       @closed="handleClosed"
     >
@@ -156,16 +156,24 @@
           @click="submitForm"
         >确 定</el-button>
       </div>
-    </Dialog>
+    </AppDialog>
 
-    <contact-list-modal ref="contactTableSelect" :customer-id="formData.bizId" @success="handleAddContact" />
-    <business-list-modal ref="businessTableSelect" :customer-id="formData.bizId" @success="handleAddBusiness" />
+    <contact-list-modal
+      ref="contactTableSelect"
+      :customer-id="formData.bizId"
+      @success="handleAddContact"
+    />
+    <business-list-modal
+      ref="businessTableSelect"
+      :customer-id="formData.bizId"
+      @success="handleAddBusiness"
+    />
   </div>
 </template>
 
 <script>
 import { FollowUpRecordApi } from '@/api/crm/followup'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import ContactListModal from '@/views/crm/contact/components/ContactListModal.vue'
 import BusinessListModal from '@/views/crm/business/components/BusinessListModal.vue'
 import { BizTypeEnum } from '@/api/crm/permission'
@@ -193,7 +201,7 @@ const createFormData = () => ({
 
 export default {
   name: 'FollowUpRecordForm',
-  components: { Dialog, FollowUpRecordBusinessForm, FollowUpRecordContactForm, ContactListModal, BusinessListModal },
+  components: { AppDialog, FollowUpRecordBusinessForm, FollowUpRecordContactForm, ContactListModal, BusinessListModal },
   data() {
     return {
       BizTypeEnum,

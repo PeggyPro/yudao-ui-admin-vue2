@@ -1,7 +1,18 @@
 <template>
-  <div class="app-container fms-voucher-list" data-testid="fms-voucher-list-page">
-    <el-card shadow="never" class="filter-card">
-      <el-form ref="queryForm" :inline="true" :model="queryParams" label-width="68px">
+  <div
+    class="app-container fms-voucher-list"
+    data-testid="fms-voucher-list-page"
+  >
+    <el-card
+      shadow="never"
+      class="filter-card"
+    >
+      <el-form
+        ref="queryForm"
+        :inline="true"
+        :model="queryParams"
+        label-width="68px"
+      >
         <el-form-item label="会计期间">
           <el-date-picker
             v-model="monthRange"
@@ -12,36 +23,107 @@
             style="width: 240px"
           />
         </el-form-item>
-        <el-form-item label="凭证字" prop="voucherWordId">
-          <fms-voucher-word-select v-model="queryParams.voucherWordId" :options="voucherWords" clearable style="width: 240px" />
+        <el-form-item
+          label="凭证字"
+          prop="voucherWordId"
+        >
+          <fms-voucher-word-select
+            v-model="queryParams.voucherWordId"
+            :options="voucherWords"
+            clearable
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="凭证号" prop="voucherNumber">
-          <el-input-number v-model="queryParams.voucherNumber" :controls="false" :min="1" placeholder="请输入凭证号" style="width: 240px" />
+        <el-form-item
+          label="凭证号"
+          prop="voucherNumber"
+        >
+          <el-input-number
+            v-model="queryParams.voucherNumber"
+            :controls="false"
+            :min="1"
+            placeholder="请输入凭证号"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="摘要" prop="digest">
-          <el-input v-model="queryParams.digest" clearable placeholder="请输入摘要" style="width: 240px" @keyup.enter.native="handleQuery" />
+        <el-form-item
+          label="摘要"
+          prop="digest"
+        >
+          <el-input
+            v-model="queryParams.digest"
+            clearable
+            placeholder="请输入摘要"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
-        <el-form-item label="科目" prop="subjectId">
-          <fms-subject-select v-model="queryParams.subjectId" :options="subjects" clearable style="width: 240px" />
+        <el-form-item
+          label="科目"
+          prop="subjectId"
+        >
+          <fms-subject-select
+            v-model="queryParams.subjectId"
+            :options="subjects"
+            clearable
+            style="width: 240px"
+          />
         </el-form-item>
         <el-form-item label="金额">
           <div class="range-inputs">
-            <el-input-number v-model="queryParams.minAmount" :controls="false" :min="0" :precision="2" placeholder="最小金额" />
+            <el-input-number
+              v-model="queryParams.minAmount"
+              :controls="false"
+              :min="0"
+              :precision="2"
+              placeholder="最小金额"
+            />
             <span>至</span>
-            <el-input-number v-model="queryParams.maxAmount" :controls="false" :min="0" :precision="2" placeholder="最大金额" />
+            <el-input-number
+              v-model="queryParams.maxAmount"
+              :controls="false"
+              :min="0"
+              :precision="2"
+              placeholder="最大金额"
+            />
           </div>
         </el-form-item>
-        <el-form-item label="制单人" prop="creatorUserId">
-          <user-select v-model="queryParams.creatorUserId" style="width: 240px" />
+        <el-form-item
+          label="制单人"
+          prop="creatorUserId"
+        >
+          <user-select
+            v-model="queryParams.creatorUserId"
+            style="width: 240px"
+          />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="queryParams.status" clearable placeholder="请选择状态" style="width: 240px">
-            <el-option v-for="item in voucherStatusOptions" :key="item.value" :label="item.label" :value="item.value" />
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
+          <el-select
+            v-model="queryParams.status"
+            clearable
+            placeholder="请选择状态"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="item in voucherStatusOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <el-button
             v-if="accountSetWritable"
             v-hasPermi="['fms:voucher:create']"
@@ -58,12 +140,31 @@
           >
             <el-button>更多<i class="el-icon-arrow-down el-icon--right" /></el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="checkPermi(['fms:voucher:print'])" command="print">打印凭证</el-dropdown-item>
-              <el-dropdown-item v-if="checkPermi(['fms:voucher:print'])" command="printList">打印列表</el-dropdown-item>
-              <el-dropdown-item v-if="checkPermi(['fms:voucher:export'])" command="export">导出</el-dropdown-item>
-              <el-dropdown-item v-if="accountSetWritable && checkPermi(['fms:voucher:import'])" command="import">导入凭证</el-dropdown-item>
-              <el-dropdown-item v-if="accountSetWritable && checkPermi(['fms:voucher:move'])" command="move" divided>移动凭证</el-dropdown-item>
-              <el-dropdown-item v-if="accountSetWritable && checkPermi(['fms:voucher:tidy'])" command="tidy">整理凭证</el-dropdown-item>
+              <el-dropdown-item
+                v-if="checkPermi(['fms:voucher:print'])"
+                command="print"
+              >打印凭证</el-dropdown-item>
+              <el-dropdown-item
+                v-if="checkPermi(['fms:voucher:print'])"
+                command="printList"
+              >打印列表</el-dropdown-item>
+              <el-dropdown-item
+                v-if="checkPermi(['fms:voucher:export'])"
+                command="export"
+              >导出</el-dropdown-item>
+              <el-dropdown-item
+                v-if="accountSetWritable && checkPermi(['fms:voucher:import'])"
+                command="import"
+              >导入凭证</el-dropdown-item>
+              <el-dropdown-item
+                v-if="accountSetWritable && checkPermi(['fms:voucher:move'])"
+                command="move"
+                divided
+              >移动凭证</el-dropdown-item>
+              <el-dropdown-item
+                v-if="accountSetWritable && checkPermi(['fms:voucher:tidy'])"
+                command="tidy"
+              >整理凭证</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -71,11 +172,27 @@
     </el-card>
 
     <el-card shadow="never">
-      <div v-if="selectedRows.length && accountSetWritable" class="batch-bar">
+      <div
+        v-if="selectedRows.length && accountSetWritable"
+        class="batch-bar"
+      >
         <span>已选择 {{ selectedRows.length }} 张凭证</span>
-        <el-button v-hasPermi="['fms:voucher:review']" size="mini" @click="handleBatchReview(FMS_VOUCHER_STATUS.APPROVED)">批量审核</el-button>
-        <el-button v-hasPermi="['fms:voucher:review']" size="mini" @click="handleBatchReview(FMS_VOUCHER_STATUS.PENDING_REVIEW)">批量反审核</el-button>
-        <el-button v-hasPermi="['fms:voucher:delete']" size="mini" type="danger" @click="handleBatchDelete">批量删除</el-button>
+        <el-button
+          v-hasPermi="['fms:voucher:review']"
+          size="mini"
+          @click="handleBatchReview(FMS_VOUCHER_STATUS.APPROVED)"
+        >批量审核</el-button>
+        <el-button
+          v-hasPermi="['fms:voucher:review']"
+          size="mini"
+          @click="handleBatchReview(FMS_VOUCHER_STATUS.PENDING_REVIEW)"
+        >批量反审核</el-button>
+        <el-button
+          v-hasPermi="['fms:voucher:delete']"
+          size="mini"
+          type="danger"
+          @click="handleBatchDelete"
+        >批量删除</el-button>
       </div>
       <el-table
         ref="table"
@@ -86,67 +203,151 @@
         data-testid="fms-voucher-table"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column v-if="accountSetWritable" type="selection" width="46" :selectable="rowSelectable" />
-        <el-table-column align="center" label="日期" prop="voucherTime" width="110">
+        <el-table-column
+          v-if="accountSetWritable"
+          type="selection"
+          width="46"
+          :selectable="rowSelectable"
+        />
+        <el-table-column
+          align="center"
+          label="日期"
+          prop="voucherTime"
+          width="110"
+        >
           <template slot-scope="scope">{{ formatDateOnly(scope.row.voucherTime) }}</template>
         </el-table-column>
-        <el-table-column align="center" label="凭证字号" width="110">
+        <el-table-column
+          align="center"
+          label="凭证字号"
+          width="110"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openVoucher(scope.row)">{{ scope.row.voucherWordName }}-{{ scope.row.voucherNumber }}</el-button>
+            <el-button
+              type="text"
+              @click="openVoucher(scope.row)"
+            >{{ scope.row.voucherWordName }}-{{ scope.row.voucherNumber }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="附件" width="72">
+        <el-table-column
+          align="center"
+          label="附件"
+          width="72"
+        >
           <template slot-scope="scope">
-            <el-button v-if="(scope.row.attachmentUrls || []).length || canEditVoucherAttachments(scope.row)" type="text" @click="openAttachmentDialog(scope.row)">
+            <el-button
+              v-if="(scope.row.attachmentUrls || []).length || canEditVoucherAttachments(scope.row)"
+              type="text"
+              @click="openAttachmentDialog(scope.row)"
+            >
               <i class="el-icon-paperclip" /> {{ (scope.row.attachmentUrls || []).length }}
             </el-button>
             <span v-else><i class="el-icon-paperclip" /> 0</span>
           </template>
         </el-table-column>
-        <el-table-column label="摘要" min-width="190">
+        <el-table-column
+          label="摘要"
+          min-width="190"
+        >
           <template slot-scope="scope">
             <div class="entry-lines">
-              <div v-for="(entry, index) in scope.row.entries || []" :key="entry.id || index" :title="entry.digest">{{ entry.digest }}</div>
+              <div
+                v-for="(entry, index) in scope.row.entries || []"
+                :key="entry.id || index"
+                :title="entry.digest"
+              >{{ entry.digest }}</div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="会计科目" min-width="230">
+        <el-table-column
+          label="会计科目"
+          min-width="230"
+        >
           <template slot-scope="scope">
             <div class="entry-lines">
-              <div v-for="(entry, index) in scope.row.entries || []" :key="entry.id || index" :title="entry.subjectName">
+              <div
+                v-for="(entry, index) in scope.row.entries || []"
+                :key="entry.id || index"
+                :title="entry.subjectName"
+              >
                 {{ entry.subjectCode }} {{ entry.subjectName }}
-                <span v-if="entry.auxiliaries && entry.auxiliaries.length" class="muted">/ {{ entry.auxiliaries.map(item => item.name).join('、') }}</span>
+                <span
+                  v-if="entry.auxiliaries && entry.auxiliaries.length"
+                  class="muted"
+                >/ {{ entry.auxiliaries.map(item => item.name).join('、') }}</span>
               </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="right" label="借方金额" width="135">
+        <el-table-column
+          align="right"
+          label="借方金额"
+          width="135"
+        >
           <template slot-scope="scope">
             <div class="entry-lines amount-lines">
-              <div v-for="(entry, index) in scope.row.entries || []" :key="entry.id || index">{{ Number(entry.debitAmount) ? formatMoney(entry.debitAmount) : '' }}</div>
+              <div
+                v-for="(entry, index) in scope.row.entries || []"
+                :key="entry.id || index"
+              >{{ Number(entry.debitAmount) ? formatMoney(entry.debitAmount) : '' }}</div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="right" label="贷方金额" width="135">
+        <el-table-column
+          align="right"
+          label="贷方金额"
+          width="135"
+        >
           <template slot-scope="scope">
             <div class="entry-lines amount-lines">
-              <div v-for="(entry, index) in scope.row.entries || []" :key="entry.id || index">{{ Number(entry.creditAmount) ? formatMoney(entry.creditAmount) : '' }}</div>
+              <div
+                v-for="(entry, index) in scope.row.entries || []"
+                :key="entry.id || index"
+              >{{ Number(entry.creditAmount) ? formatMoney(entry.creditAmount) : '' }}</div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="制单人" prop="creatorUserName" width="100" />
-        <el-table-column align="center" label="审核人" prop="reviewerUserName" width="100" />
-        <el-table-column align="center" label="状态" width="90">
+        <el-table-column
+          align="center"
+          label="制单人"
+          prop="creatorUserName"
+          width="100"
+        />
+        <el-table-column
+          align="center"
+          label="审核人"
+          prop="reviewerUserName"
+          width="100"
+        />
+        <el-table-column
+          align="center"
+          label="状态"
+          width="90"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.closingGenerated" type="info">结账生成</el-tag>
-            <el-tag v-else :type="Number(scope.row.status) === FMS_VOUCHER_STATUS.APPROVED ? 'success' : 'warning'">
+            <el-tag
+              v-if="scope.row.closingGenerated"
+              type="info"
+            >结账生成</el-tag>
+            <el-tag
+              v-else
+              :type="Number(scope.row.status) === FMS_VOUCHER_STATUS.APPROVED ? 'success' : 'warning'"
+            >
               {{ Number(scope.row.status) === FMS_VOUCHER_STATUS.APPROVED ? '已审核' : '待审核' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="center" fixed="right" label="操作" width="250">
+        <el-table-column
+          align="center"
+          fixed="right"
+          label="操作"
+          width="250"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openVoucher(scope.row)">{{ scope.row.closingGenerated || !accountSetWritable ? '查看' : '编辑' }}</el-button>
+            <el-button
+              type="text"
+              @click="openVoucher(scope.row)"
+            >{{ scope.row.closingGenerated || !accountSetWritable ? '查看' : '编辑' }}</el-button>
             <el-button
               v-if="accountSetWritable && !scope.row.closingGenerated && Number(scope.row.status) === FMS_VOUCHER_STATUS.PENDING_REVIEW"
               v-hasPermi="['fms:voucher:review']"
@@ -159,7 +360,11 @@
               type="text"
               @click="handleReview(scope.row, FMS_VOUCHER_STATUS.PENDING_REVIEW)"
             >反审核</el-button>
-            <el-button v-hasPermi="['fms:voucher:print']" type="text" @click="handlePrintVoucher(scope.row)">打印</el-button>
+            <el-button
+              v-hasPermi="['fms:voucher:print']"
+              type="text"
+              @click="handlePrintVoucher(scope.row)"
+            >打印</el-button>
             <el-button
               v-if="accountSetWritable && !scope.row.closingGenerated && Number(scope.row.status) !== FMS_VOUCHER_STATUS.APPROVED"
               v-hasPermi="['fms:voucher:delete']"
@@ -179,11 +384,23 @@
       />
     </el-card>
 
-    <fms-voucher-move-form ref="moveForm" @success="getList" />
-    <fms-voucher-import-form ref="importForm" @success="getList" />
+    <fms-voucher-move-form
+      ref="moveForm"
+      @success="getList"
+    />
+    <fms-voucher-import-form
+      ref="importForm"
+      @success="getList"
+    />
     <fms-voucher-print-form ref="printForm" />
-    <fms-voucher-tidy-form ref="tidyForm" @success="getList" />
-    <fms-voucher-attachment-form ref="attachmentForm" @success="getList" />
+    <fms-voucher-tidy-form
+      ref="tidyForm"
+      @success="getList"
+    />
+    <fms-voucher-attachment-form
+      ref="attachmentForm"
+      @success="getList"
+    />
   </div>
 </template>
 

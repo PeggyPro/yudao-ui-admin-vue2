@@ -1,8 +1,18 @@
 <template>
   <div class="app-container pms-knowledge-library-detail">
-    <doc-alert title="【PMS】文档与协作" url="https://doc.iocoder.cn/pms/kb/document/" />
-    <div v-loading="loading" class="knowledge-library-workspace">
-      <el-card :body-style="{ padding: '0' }" class="sidebar-card" shadow="never">
+    <doc-alert
+      title="【PMS】文档与协作"
+      url="https://doc.iocoder.cn/pms/kb/document/"
+    />
+    <div
+      v-loading="loading"
+      class="knowledge-library-workspace"
+    >
+      <el-card
+        :body-style="{ padding: '0' }"
+        class="sidebar-card"
+        shadow="never"
+      >
         <knowledge-library-sidebar
           :active-view="activeView"
           :can-create-document="canCreateDocument"
@@ -17,7 +27,11 @@
           @recycle="handleRecycle"
         />
       </el-card>
-      <el-card :body-style="{ padding: '24px 32px' }" class="knowledge-library-main" shadow="never">
+      <el-card
+        :body-style="{ padding: '24px 32px' }"
+        class="knowledge-library-main"
+        shadow="never"
+      >
         <knowledge-recycle-panel
           v-if="activeView === 'recycle'"
           :library-id="libraryId"
@@ -64,14 +78,35 @@
       </el-card>
     </div>
 
-    <knowledge-folder-form ref="folderForm" @success="handleContentChanged" />
-    <knowledge-document-create-form ref="documentCreateForm" @success="handleContentChanged" />
-    <knowledge-file-upload-form ref="fileUploadForm" @success="handleContentChanged" />
-    <knowledge-document-update-form ref="documentUpdateForm" @success="handleContentChanged" />
-    <knowledge-member-form ref="memberForm" @success="getPageData" />
+    <knowledge-folder-form
+      ref="folderForm"
+      @success="handleContentChanged"
+    />
+    <knowledge-document-create-form
+      ref="documentCreateForm"
+      @success="handleContentChanged"
+    />
+    <knowledge-file-upload-form
+      ref="fileUploadForm"
+      @success="handleContentChanged"
+    />
+    <knowledge-document-update-form
+      ref="documentUpdateForm"
+      @success="handleContentChanged"
+    />
+    <knowledge-member-form
+      ref="memberForm"
+      @success="getPageData"
+    />
     <knowledge-document-share-dialog ref="shareDialog" />
-    <knowledge-content-permission-form ref="permissionForm" @success="handleContentChanged" />
-    <knowledge-content-move-dialog ref="moveDialog" @success="handleMoveChanged" />
+    <knowledge-content-permission-form
+      ref="permissionForm"
+      @success="handleContentChanged"
+    />
+    <knowledge-content-move-dialog
+      ref="moveDialog"
+      @success="handleMoveChanged"
+    />
   </div>
 </template>
 

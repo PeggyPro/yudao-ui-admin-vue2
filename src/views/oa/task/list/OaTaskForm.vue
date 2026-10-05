@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="760px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="760px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,7 +13,10 @@
       label-width="80px"
     >
       <!-- 基础信息 -->
-      <el-form-item label="任务标题" prop="title">
+      <el-form-item
+        label="任务标题"
+        prop="title"
+      >
         <el-input
           v-model="formData.title"
           placeholder="请输入任务标题"
@@ -18,8 +26,15 @@
       </el-form-item>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="任务类型" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择任务类型" style="width: 100%">
+          <el-form-item
+            label="任务类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择任务类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -30,7 +45,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="接收人" prop="receiverUserIds">
+          <el-form-item
+            label="接收人"
+            prop="receiverUserIds"
+          >
             <user-select-v2
               v-model="formData.receiverUserIds"
               multiple
@@ -42,8 +60,15 @@
       <!-- 任务状态与设置 -->
       <el-row>
         <el-col :span="8">
-          <el-form-item label="任务状态" prop="status">
-            <el-select v-model="formData.status" placeholder="请选择任务状态" style="width: 100%">
+          <el-form-item
+            label="任务状态"
+            prop="status"
+          >
+            <el-select
+              v-model="formData.status"
+              placeholder="请选择任务状态"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in statusOptions"
                 :key="item.value"
@@ -54,12 +79,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="置顶" prop="top">
+          <el-form-item
+            label="置顶"
+            prop="top"
+          >
             <el-switch v-model="formData.top" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="取消" prop="canceled">
+          <el-form-item
+            label="取消"
+            prop="canceled"
+          >
             <el-switch v-model="formData.canceled" />
           </el-form-item>
         </el-col>
@@ -67,7 +98,10 @@
       <!-- 任务周期 -->
       <el-row>
         <el-col :span="12">
-          <el-form-item label="开始时间" prop="startTime">
+          <el-form-item
+            label="开始时间"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               placeholder="请选择开始时间"
@@ -78,7 +112,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="结束时间" prop="endTime">
+          <el-form-item
+            label="结束时间"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               placeholder="请选择结束时间"
@@ -90,7 +127,10 @@
         </el-col>
       </el-row>
       <!-- 任务内容 -->
-      <el-form-item label="任务描述" prop="description">
+      <el-form-item
+        label="任务描述"
+        prop="description"
+      >
         <el-input
           v-model="formData.description"
           placeholder="请输入任务描述"
@@ -100,7 +140,10 @@
           type="textarea"
         />
       </el-form-item>
-      <el-form-item label="任务评价" prop="comment">
+      <el-form-item
+        label="任务评价"
+        prop="comment"
+      >
         <el-input
           v-model="formData.comment"
           placeholder="请输入任务评价"
@@ -111,17 +154,24 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import * as TaskApi from '@/api/oa/task'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 import { OA_TASK_STATUS, OA_TASK_TYPE } from '@/views/oa/utils/constants-collab'
@@ -145,7 +195,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaTaskForm',
-  components: { Dialog, UserSelectV2 },
+  components: { AppDialog, UserSelectV2 },
   data() {
     return {
       dialogVisible: false,

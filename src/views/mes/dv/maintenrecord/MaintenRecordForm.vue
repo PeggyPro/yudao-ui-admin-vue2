@@ -1,19 +1,75 @@
 <!-- MES 设备保养记录表单 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="900px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px" :disabled="isDetail">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="900px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+      :disabled="isDetail"
+    >
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="设备" prop="machineryId"><dv-machinery-select v-model="formData.machineryId" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="保养计划" prop="planId"><dv-check-plan-select v-model="formData.planId" :type="MesDvSubjectTypeEnum.MAINTENANCE" :status="MesDvCheckPlanStatusEnum.ENABLED" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="保养人" prop="userId"><user-select-v2 v-model="formData.userId" placeholder="请选择保养人" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="设备"
+          prop="machineryId"
+        ><dv-machinery-select v-model="formData.machineryId" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="保养计划"
+          prop="planId"
+        ><dv-check-plan-select
+          v-model="formData.planId"
+          :type="MesDvSubjectTypeEnum.MAINTENANCE"
+          :status="MesDvCheckPlanStatusEnum.ENABLED"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="保养人"
+          prop="userId"
+        ><user-select-v2
+          v-model="formData.userId"
+          placeholder="请选择保养人"
+        /></el-form-item></el-col>
       </el-row>
-      <el-row><el-col :span="8"><el-form-item label="保养时间" prop="maintenTime"><el-date-picker v-model="formData.maintenTime" type="datetime" value-format="timestamp" placeholder="选择保养时间" /></el-form-item></el-col></el-row>
-      <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+      <el-row><el-col :span="8"><el-form-item
+        label="保养时间"
+        prop="maintenTime"
+      ><el-date-picker
+        v-model="formData.maintenTime"
+        type="datetime"
+        value-format="timestamp"
+        placeholder="选择保养时间"
+      /></el-form-item></el-col></el-row>
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
+        v-model="formData.remark"
+        type="textarea"
+        placeholder="请输入备注"
+      /></el-form-item>
     </el-form>
-    <template v-if="formData.id"><el-divider content-position="center">保养项目</el-divider><mainten-record-line-list :record-id="formData.id" :disabled="isDetail" /></template>
+    <template v-if="formData.id"><el-divider content-position="center">保养项目</el-divider><mainten-record-line-list
+      :record-id="formData.id"
+      :disabled="isDetail"
+    /></template>
     <span slot="footer">
-      <el-button v-if="isEditable" type="primary" :disabled="formLoading" @click="submitForm">保 存</el-button>
-      <el-button v-if="isEditable && formData.status === MesDvMaintenRecordStatusEnum.PREPARE" type="warning" :disabled="formLoading" @click="handleSubmit">提 交</el-button>
+      <el-button
+        v-if="isEditable"
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
+      <el-button
+        v-if="isEditable && formData.status === MesDvMaintenRecordStatusEnum.PREPARE"
+        type="warning"
+        :disabled="formLoading"
+        @click="handleSubmit"
+      >提 交</el-button>
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </span>
   </el-dialog>

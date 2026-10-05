@@ -1,5 +1,9 @@
 <template>
-  <div ref="container" :class="['tinyflow', className]" :style="customStyle" />
+  <div
+    ref="container"
+    :class="['tinyflow', className]"
+    :style="customStyle"
+  />
 </template>
 
 <script>

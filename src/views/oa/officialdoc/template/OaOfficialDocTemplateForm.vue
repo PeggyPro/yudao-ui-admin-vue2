@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,33 +13,69 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="模板名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入模板名称" />
+          <el-form-item
+            label="模板名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入模板名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="机关/公司名称" prop="authorityName">
-            <el-input v-model="formData.authorityName" placeholder="请输入机关/公司名称" />
+          <el-form-item
+            label="机关/公司名称"
+            prop="authorityName"
+          >
+            <el-input
+              v-model="formData.authorityName"
+              placeholder="请输入机关/公司名称"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="名称字号" prop="fontSize">
-            <el-input-number v-model="formData.fontSize" :min="18" :max="72" style="width: 100%" />
+          <el-form-item
+            label="名称字号"
+            prop="fontSize"
+          >
+            <el-input-number
+              v-model="formData.fontSize"
+              :min="18"
+              :max="72"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="字号前缀" prop="noPrefix">
-            <el-input v-model="formData.noPrefix" placeholder="请输入字号前缀" />
+          <el-form-item
+            label="字号前缀"
+            prop="noPrefix"
+          >
+            <el-input
+              v-model="formData.noPrefix"
+              placeholder="请输入字号前缀"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="印章图片" prop="sealPicUrl">
+          <el-form-item
+            label="印章图片"
+            prop="sealPicUrl"
+          >
             <upload-img v-model="formData.sealPicUrl" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="分隔线样式" prop="separatorType">
-            <el-select v-model="formData.separatorType" placeholder="请选择分隔线样式" style="width: 100%">
+          <el-form-item
+            label="分隔线样式"
+            prop="separatorType"
+          >
+            <el-select
+              v-model="formData.separatorType"
+              placeholder="请选择分隔线样式"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in separatorTypeOptions"
                 :key="dict.value"
@@ -46,8 +86,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="状态" prop="status">
-            <el-select v-model="formData.status" placeholder="请选择状态" style="width: 100%">
+          <el-form-item
+            label="状态"
+            prop="status"
+          >
+            <el-select
+              v-model="formData.status"
+              placeholder="请选择状态"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in statusOptions"
                 :key="dict.value"
@@ -58,12 +105,22 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="排序" prop="sort">
-            <el-input-number v-model="formData.sort" :min="0" style="width: 100%" />
+          <el-form-item
+            label="排序"
+            prop="sort"
+          >
+            <el-input-number
+              v-model="formData.sort"
+              :min="0"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               placeholder="请输入备注"
@@ -74,16 +131,23 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as TemplateApi from '@/api/oa/officialdoc/template'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { CommonStatusEnum } from '@/utils/constants'
 import { OaOfficialDocSeparatorType } from '@/views/oa/utils/constants'
@@ -105,7 +169,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaOfficialDocTemplateForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

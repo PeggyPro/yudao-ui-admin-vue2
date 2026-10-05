@@ -1,6 +1,9 @@
 <template>
   <div class="app-container ai-music-manager">
-    <doc-alert title="AI 音乐创作" url="https://doc.iocoder.cn/ai/music/" />
+    <doc-alert
+      title="AI 音乐创作"
+      url="https://doc.iocoder.cn/ai/music/"
+    />
 
     <el-form
       ref="queryForm"
@@ -10,8 +13,15 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="用户编号" prop="userId">
-        <el-select v-model="queryParams.userId" clearable placeholder="请输入用户编号">
+      <el-form-item
+        label="用户编号"
+        prop="userId"
+      >
+        <el-select
+          v-model="queryParams.userId"
+          clearable
+          placeholder="请输入用户编号"
+        >
           <el-option
             v-for="item in userList"
             :key="item.id"
@@ -20,7 +30,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="音乐名称" prop="title">
+      <el-form-item
+        label="音乐名称"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           clearable
@@ -28,8 +41,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="音乐状态" prop="status">
-        <el-select v-model="queryParams.status" clearable placeholder="请选择音乐状态">
+      <el-form-item
+        label="音乐状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          clearable
+          placeholder="请选择音乐状态"
+        >
           <el-option
             v-for="item in statusDictDatas"
             :key="item.value"
@@ -38,8 +58,15 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="生成模式" prop="generateMode">
-        <el-select v-model="queryParams.generateMode" clearable placeholder="请选择生成模式">
+      <el-form-item
+        label="生成模式"
+        prop="generateMode"
+      >
+        <el-select
+          v-model="queryParams.generateMode"
+          clearable
+          placeholder="请选择生成模式"
+        >
           <el-option
             v-for="item in generateModeDictDatas"
             :key="item.value"
@@ -48,7 +75,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           type="daterange"
@@ -60,8 +90,15 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="是否发布" prop="publicStatus">
-        <el-select v-model="queryParams.publicStatus" clearable placeholder="请选择是否发布">
+      <el-form-item
+        label="是否发布"
+        prop="publicStatus"
+      >
+        <el-select
+          v-model="queryParams.publicStatus"
+          clearable
+          placeholder="请选择是否发布"
+        >
           <el-option
             v-for="item in boolDictDatas"
             :key="item.value"
@@ -71,25 +108,75 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe>
-      <el-table-column label="编号" prop="id" align="center" width="180" fixed="left" show-overflow-tooltip />
-      <el-table-column label="音乐名称" prop="title" align="center" width="180" fixed="left" show-overflow-tooltip />
-      <el-table-column label="用户" prop="userId" align="center" width="180" show-overflow-tooltip>
-        <template v-slot="scope">{{ userNames[scope.row.userId] }}</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+    >
+      <el-table-column
+        label="编号"
+        prop="id"
+        align="center"
+        width="180"
+        fixed="left"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="音乐名称"
+        prop="title"
+        align="center"
+        width="180"
+        fixed="left"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="用户"
+        prop="userId"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">{{ userNames[scope.row.userId] }}</template>
       </el-table-column>
-      <el-table-column label="音乐状态" prop="status" align="center" width="100" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_MUSIC_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="音乐状态"
+        prop="status"
+        align="center"
+        width="100"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_MUSIC_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="模型" prop="model" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="内容" align="center" width="180" show-overflow-tooltip>
-        <template v-slot="scope">
+      <el-table-column
+        label="模型"
+        prop="model"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="内容"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
           <el-link
             v-if="scope.row.audioUrl && scope.row.audioUrl.length > 0"
             type="primary"
@@ -112,17 +199,56 @@
           >封面</el-link>
         </template>
       </el-table-column>
-      <el-table-column label="时长（秒）" prop="duration" align="center" width="100" show-overflow-tooltip />
-      <el-table-column label="提示词" prop="prompt" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="歌词" prop="lyric" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="描述" prop="gptDescriptionPrompt" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="生成模式" prop="generateMode" align="center" width="100" show-overflow-tooltip>
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.AI_GENERATE_MODE" :value="scope.row.generateMode" />
+      <el-table-column
+        label="时长（秒）"
+        prop="duration"
+        align="center"
+        width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="提示词"
+        prop="prompt"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="歌词"
+        prop="lyric"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="描述"
+        prop="gptDescriptionPrompt"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="生成模式"
+        prop="generateMode"
+        align="center"
+        width="100"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.AI_GENERATE_MODE"
+            :value="scope.row.generateMode"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="风格标签" prop="tags" align="center" width="180" show-overflow-tooltip>
-        <template v-slot="scope">
+      <el-table-column
+        label="风格标签"
+        prop="tags"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
           <el-tag
             v-for="tag in scope.row.tags"
             :key="tag"
@@ -131,8 +257,13 @@
           >{{ tag }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="是否发布" prop="publicStatus" align="center" show-overflow-tooltip>
-        <template v-slot="scope">
+      <el-table-column
+        label="是否发布"
+        prop="publicStatus"
+        align="center"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
           <el-switch
             v-model="scope.row.publicStatus"
             :active-value="true"
@@ -142,17 +273,39 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="任务编号" prop="taskId" align="center" width="180" show-overflow-tooltip />
-      <el-table-column label="错误信息" prop="errorMessage" align="center" show-overflow-tooltip />
-      <el-table-column label="创建时间" prop="createTime" align="center" width="180" show-overflow-tooltip>
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="任务编号"
+        prop="taskId"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="错误信息"
+        prop="errorMessage"
+        align="center"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="创建时间"
+        prop="createTime"
+        align="center"
+        width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="100" fixed="right">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="100"
+        fixed="right"
+      >
+        <template slot-scope="scope">
           <el-button
+            v-hasPermi="['ai:music:delete']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:music:delete']"
             class="ai-music-manager__delete"
             @click="handleDelete(scope.row.id)"
           >删除</el-button>

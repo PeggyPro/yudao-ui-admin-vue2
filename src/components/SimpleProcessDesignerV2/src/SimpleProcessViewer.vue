@@ -1,12 +1,14 @@
 <template>
-  <SimpleProcessModel :flow-node="simpleModel" :readonly="true" />
+  <SimpleProcessModel
+    :flow-node="simpleModel"
+    :readonly="true"
+  />
 </template>
 
 <script setup>
 import { ref, watch, provide } from 'vue'
 import SimpleProcessModel from './SimpleProcessModel.vue'
 import { useWatchNode } from './node'
-
 
 const props = defineProps({
   flowNode: {

@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="680px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="680px"
+  >
     <!-- 邮箱服务配置 -->
     <el-form
       ref="form"
@@ -8,19 +12,49 @@
       :rules="formRules"
       label-width="110px"
     >
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入邮箱服务名称" />
+      <el-form-item
+        label="名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入邮箱服务名称"
+        />
       </el-form-item>
       <template v-for="protocol in protocols">
-        <el-divider :key="protocol.key + '-divider'" content-position="left">{{ protocol.label }}</el-divider>
-        <el-form-item :key="protocol.key + '-host'" label="服务器域名" :prop="protocol.key + '.host'" :rules="hostRules">
-          <el-input v-model="formData[protocol.key].host" placeholder="请输入服务器域名" />
+        <el-divider
+          :key="protocol.key + '-divider'"
+          content-position="left"
+        >{{ protocol.label }}</el-divider>
+        <el-form-item
+          :key="protocol.key + '-host'"
+          label="服务器域名"
+          :prop="protocol.key + '.host'"
+          :rules="hostRules"
+        >
+          <el-input
+            v-model="formData[protocol.key].host"
+            placeholder="请输入服务器域名"
+          />
         </el-form-item>
-        <el-form-item :key="protocol.key + '-port'" label="端口">
-          <el-input-number v-model="formData[protocol.key].port" :min="1" :max="65535" />
+        <el-form-item
+          :key="protocol.key + '-port'"
+          label="端口"
+        >
+          <el-input-number
+            v-model="formData[protocol.key].port"
+            :min="1"
+            :max="65535"
+          />
         </el-form-item>
-        <el-form-item :key="protocol.key + '-security'" label="连接加密">
-          <el-radio-group :value="formData[protocol.key].sslEnable" @input="value => handleSecurityChange(protocol.key, value)">
+        <el-form-item
+          :key="protocol.key + '-security'"
+          label="连接加密"
+        >
+          <el-radio-group
+            :value="formData[protocol.key].sslEnable"
+            @input="value => handleSecurityChange(protocol.key, value)"
+          >
             <el-radio :label="true">SSL</el-radio>
             <el-radio :label="false">STARTTLS</el-radio>
           </el-radio-group>
@@ -39,15 +73,22 @@
       </el-form-item>
     </el-form>
     <!-- 表单操作 -->
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { CommonStatusEnum } from '@/utils/constants'
 import * as ProviderApi from '@/api/oa/mail/provider'
@@ -88,7 +129,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaMailProviderForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

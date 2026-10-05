@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Tinymce v-model="defaultValue" :height="300" placeholder="在这里输入文字" />
+    <Tinymce
+      v-model="defaultValue"
+      :height="300"
+      placeholder="在这里输入文字"
+    />
   </div>
 </template>
 

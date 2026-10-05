@@ -1,30 +1,137 @@
 <!-- MES 产品 BOM 列表 -->
 <template>
   <div>
-    <el-button v-if="!isReadOnly" type="primary" plain size="small" icon="el-icon-plus" class="add-button" @click="handleAdd">添加 BOM 物料</el-button>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true" border>
-      <el-table-column label="物料编码" align="center" prop="bomItemCode" />
-      <el-table-column label="物料名称" align="center" prop="bomItemName" />
-      <el-table-column label="规格型号" align="center" prop="bomItemSpecification" />
-      <el-table-column label="单位" align="center" prop="unitMeasureName" width="80" />
-      <el-table-column label="物料/产品" align="center" prop="itemOrProduct" width="100"><template v-slot="scope"><dict-tag :type="MES_ITEM_OR_PRODUCT" :value="scope.row.itemOrProduct" /></template></el-table-column>
-      <el-table-column label="用量比例" align="center" prop="quantity" width="100" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column v-if="!isReadOnly" label="操作" align="center" width="120"><template v-slot="scope"><el-button type="text" @click="openForm('update', scope.row)">编辑</el-button><el-button type="text" class="danger" @click="handleDelete(scope.row.id)">删除</el-button></template></el-table-column>
+    <el-button
+      v-if="!isReadOnly"
+      type="primary"
+      plain
+      size="small"
+      icon="el-icon-plus"
+      class="add-button"
+      @click="handleAdd"
+    >添加 BOM 物料</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+      border
+    >
+      <el-table-column
+        label="物料编码"
+        align="center"
+        prop="bomItemCode"
+      />
+      <el-table-column
+        label="物料名称"
+        align="center"
+        prop="bomItemName"
+      />
+      <el-table-column
+        label="规格型号"
+        align="center"
+        prop="bomItemSpecification"
+      />
+      <el-table-column
+        label="单位"
+        align="center"
+        prop="unitMeasureName"
+        width="80"
+      />
+      <el-table-column
+        label="物料/产品"
+        align="center"
+        prop="itemOrProduct"
+        width="100"
+      ><template slot-scope="scope"><dict-tag
+        :type="MES_ITEM_OR_PRODUCT"
+        :value="scope.row.itemOrProduct"
+      /></template></el-table-column>
+      <el-table-column
+        label="用量比例"
+        align="center"
+        prop="quantity"
+        width="100"
+      />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+      />
+      <el-table-column
+        v-if="!isReadOnly"
+        label="操作"
+        align="center"
+        width="120"
+      ><template slot-scope="scope"><el-button
+        type="text"
+        @click="openForm('update', scope.row)"
+      >编辑</el-button><el-button
+        type="text"
+        class="danger"
+        @click="handleDelete(scope.row.id)"
+      >删除</el-button></template></el-table-column>
     </el-table>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="600px" append-to-body>
-      <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="120px">
-        <el-form-item label="BOM 物料编码"><el-input v-model="formData.bomItemCode" readonly /></el-form-item>
-        <el-form-item label="BOM 物料名称"><el-input v-model="formData.bomItemName" readonly /></el-form-item>
-        <el-form-item label="规格型号"><el-input v-model="formData.bomItemSpecification" readonly /></el-form-item>
-        <el-form-item label="单位"><el-input v-model="formData.unitMeasureName" readonly /></el-form-item>
-        <el-form-item label="用量比例" prop="quantity"><el-input-number v-model="formData.quantity" :min="0" :precision="4" :step="0.1" controls-position="right" class="full-width" /></el-form-item>
-        <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="600px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        v-loading="formLoading"
+        :model="formData"
+        :rules="formRules"
+        label-width="120px"
+      >
+        <el-form-item label="BOM 物料编码"><el-input
+          v-model="formData.bomItemCode"
+          readonly
+        /></el-form-item>
+        <el-form-item label="BOM 物料名称"><el-input
+          v-model="formData.bomItemName"
+          readonly
+        /></el-form-item>
+        <el-form-item label="规格型号"><el-input
+          v-model="formData.bomItemSpecification"
+          readonly
+        /></el-form-item>
+        <el-form-item label="单位"><el-input
+          v-model="formData.unitMeasureName"
+          readonly
+        /></el-form-item>
+        <el-form-item
+          label="用量比例"
+          prop="quantity"
+        ><el-input-number
+          v-model="formData.quantity"
+          :min="0"
+          :precision="4"
+          :step="0.1"
+          controls-position="right"
+          class="full-width"
+        /></el-form-item>
+        <el-form-item
+          label="备注"
+          prop="remark"
+        ><el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        /></el-form-item>
       </el-form>
-      <span slot="footer"><el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
+      <span slot="footer"><el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
     </el-dialog>
-    <md-item-select-dialog ref="itemSelect" @selected="handleItemSelected" />
+    <md-item-select-dialog
+      ref="itemSelect"
+      @selected="handleItemSelected"
+    />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<!--
+  <!--
     名片消息气泡 / 名片预览卡（240px）：用户名片 + 群名片通用
     - 头像 + 名字 + 群成员数副标题（仅群名片）+ 底部分隔条「群名片 / 个人名片」
     - 用户名片把 :id 传给 UserAvatar 让点击 avatar 弹 UserInfoCard；群名片不传 id
@@ -37,12 +37,12 @@
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed } from 'vue';
-import UserAvatar from '../user/UserAvatar.vue';
-import { isPrivateConversation } from '@/views/im/utils/constants';
-import { getCardLabelInfo } from '@/views/im/utils/message';
-const __sfc__ = /*@__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed } from 'vue'
+import UserAvatar from '../user/UserAvatar.vue'
+import { isPrivateConversation } from '@/views/im/utils/constants'
+import { getCardLabelInfo } from '@/views/im/utils/message'
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImCardBubble'
   },
@@ -64,25 +64,25 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
-    const props = __props;
+    __expose()
+    const props = __props
 
     /** 是否用户名片：决定 UserAvatar 是否带 id 触发 UserInfoCard */
-    const isUser = computed(() => isPrivateConversation(props.card.targetType));
+    const isUser = computed(() => isPrivateConversation(props.card.targetType))
     /** 名片标签信息 */
-    const labelInfo = computed(() => getCardLabelInfo(props.card));
+    const labelInfo = computed(() => getCardLabelInfo(props.card))
     const __returned__ = {
       props,
       isUser,
       labelInfo,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>

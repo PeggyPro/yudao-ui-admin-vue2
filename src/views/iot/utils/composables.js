@@ -14,7 +14,7 @@ export function useClipboard(options = {}) {
   const copied = ref(false)
   // 对齐 vueuse useClipboard 契约：copy() 无参时复制 source；legacy 模式恒可用，复制成功后 copied 置真
   const isSupported = !!(navigator.clipboard && window.isSecureContext) || !!options.legacy
-  const copy = async (value = options.source) => {
+  const copy = async(value = options.source) => {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(value)
     } else if (options.legacy) {

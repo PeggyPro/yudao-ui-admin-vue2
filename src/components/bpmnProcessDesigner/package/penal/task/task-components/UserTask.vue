@@ -1,6 +1,9 @@
 <template>
   <div class="user-task-config">
-    <el-form-item label="规则类型" prop="candidateStrategy">
+    <el-form-item
+      label="规则类型"
+      prop="candidateStrategy"
+    >
       <el-select
         v-model="form.candidateStrategy"
         clearable
@@ -16,13 +19,32 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.ROLE)" label="指定角色" prop="candidateParam">
-      <el-select v-model="candidateArray" clearable multiple style="width: 100%" @change="updateElementTask">
-        <el-option v-for="item in roleOptions" :key="item.id" :label="item.name" :value="item.id" />
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.ROLE)"
+      label="指定角色"
+      prop="candidateParam"
+    >
+      <el-select
+        v-model="candidateArray"
+        clearable
+        multiple
+        style="width: 100%"
+        @change="updateElementTask"
+      >
+        <el-option
+          v-for="item in roleOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="isDepartmentStrategy" label="指定部门" prop="candidateParam">
+    <el-form-item
+      v-if="isDepartmentStrategy"
+      label="指定部门"
+      prop="candidateParam"
+    >
       <treeselect
         v-model="candidateArray"
         :options="deptTreeOptions"
@@ -36,26 +58,81 @@
       />
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.POST)" label="指定岗位" prop="candidateParam">
-      <el-select v-model="candidateArray" clearable multiple style="width: 100%" @change="updateElementTask">
-        <el-option v-for="item in postOptions" :key="item.id" :label="item.name" :value="item.id" />
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.POST)"
+      label="指定岗位"
+      prop="candidateParam"
+    >
+      <el-select
+        v-model="candidateArray"
+        clearable
+        multiple
+        style="width: 100%"
+        @change="updateElementTask"
+      >
+        <el-option
+          v-for="item in postOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.USER)" label="指定用户" prop="candidateParam">
-      <el-select v-model="candidateArray" clearable filterable multiple style="width: 100%" @change="updateElementTask">
-        <el-option v-for="item in userOptions" :key="item.id" :label="item.nickname || item.name" :value="item.id" />
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.USER)"
+      label="指定用户"
+      prop="candidateParam"
+    >
+      <el-select
+        v-model="candidateArray"
+        clearable
+        filterable
+        multiple
+        style="width: 100%"
+        @change="updateElementTask"
+      >
+        <el-option
+          v-for="item in userOptions"
+          :key="item.id"
+          :label="item.nickname || item.name"
+          :value="item.id"
+        />
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.USER_GROUP)" label="指定用户组" prop="candidateParam">
-      <el-select v-model="candidateArray" clearable multiple style="width: 100%" @change="updateElementTask">
-        <el-option v-for="item in userGroupOptions" :key="item.id" :label="item.name" :value="item.id" />
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.USER_GROUP)"
+      label="指定用户组"
+      prop="candidateParam"
+    >
+      <el-select
+        v-model="candidateArray"
+        clearable
+        multiple
+        style="width: 100%"
+        @change="updateElementTask"
+      >
+        <el-option
+          v-for="item in userGroupOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.FORM_USER)" label="表单内用户字段" prop="candidateParam">
-      <el-select v-model="candidateText" clearable style="width: 100%" @change="handleFormUserChange">
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.FORM_USER)"
+      label="表单内用户字段"
+      prop="candidateParam"
+    >
+      <el-select
+        v-model="candidateText"
+        clearable
+        style="width: 100%"
+        @change="handleFormUserChange"
+      >
         <el-option
           v-for="item in userFieldOnFormOptions"
           :key="item.field"
@@ -66,8 +143,17 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.FORM_DEPT_LEADER)" label="表单内部门字段" prop="candidateParam">
-      <el-select v-model="candidateText" clearable style="width: 100%" @change="updateElementTask">
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.FORM_DEPT_LEADER)"
+      label="表单内部门字段"
+      prop="candidateParam"
+    >
+      <el-select
+        v-model="candidateText"
+        clearable
+        style="width: 100%"
+        @change="updateElementTask"
+      >
         <el-option
           v-for="item in deptFieldOnFormOptions"
           :key="item.field"
@@ -78,22 +164,61 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="requiresDeptLevel" :label="deptLevelLabel" prop="deptLevel">
-      <el-select v-model="deptLevel" clearable style="width: 100%" @change="updateElementTask">
-        <el-option v-for="item in multiLevelDept" :key="item.value" :label="item.label" :value="item.value" />
+    <el-form-item
+      v-if="requiresDeptLevel"
+      :label="deptLevelLabel"
+      prop="deptLevel"
+    >
+      <el-select
+        v-model="deptLevel"
+        clearable
+        style="width: 100%"
+        @change="updateElementTask"
+      >
+        <el-option
+          v-for="item in multiLevelDept"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
       </el-select>
     </el-form-item>
 
-    <el-form-item v-if="strategyIs(CandidateStrategy.EXPRESSION)" label="流程表达式" prop="candidateParam">
-      <el-input v-model="candidateText" type="textarea" clearable @change="updateElementTask" />
-      <el-button class="expression-select" type="success" size="mini" @click="openProcessExpressionDialog">
+    <el-form-item
+      v-if="strategyIs(CandidateStrategy.EXPRESSION)"
+      label="流程表达式"
+      prop="candidateParam"
+    >
+      <el-input
+        v-model="candidateText"
+        type="textarea"
+        clearable
+        @change="updateElementTask"
+      />
+      <el-button
+        class="expression-select"
+        type="success"
+        size="mini"
+        @click="openProcessExpressionDialog"
+      >
         选择表达式
       </el-button>
-      <ProcessExpressionDialog ref="processExpressionDialog" @select="selectProcessExpression" />
+      <ProcessExpressionDialog
+        ref="processExpressionDialog"
+        @select="selectProcessExpression"
+      />
     </el-form-item>
 
-    <el-form-item label="跳过表达式" prop="skipExpression">
-      <el-input v-model="form.skipExpression" type="textarea" clearable @change="updateSkipExpression" />
+    <el-form-item
+      label="跳过表达式"
+      prop="skipExpression"
+    >
+      <el-input
+        v-model="form.skipExpression"
+        type="textarea"
+        clearable
+        @change="updateSkipExpression"
+      />
     </el-form-item>
   </div>
 </template>
@@ -128,13 +253,13 @@ function idList(value) {
 export default {
   name: 'UserTask',
   components: { ProcessExpressionDialog, Treeselect },
-  props: {
-    id: String,
-    type: String
-  },
   inject: {
     prefixRef: { from: 'prefix', default: 'flowable' },
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) }
+  },
+  props: {
+    id: String,
+    type: String
   },
   data() {
     return {
@@ -215,6 +340,9 @@ export default {
   },
   async mounted() {
     await this.loadOptions()
+  },
+  beforeDestroy() {
+    this.bpmnElement = null
   },
   methods: {
     strategyIs(strategy) {
@@ -364,9 +492,6 @@ export default {
       }
       this.updateElementTask()
     }
-  },
-  beforeDestroy() {
-    this.bpmnElement = null
   }
 }
 </script>

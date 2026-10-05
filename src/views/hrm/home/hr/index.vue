@@ -1,7 +1,14 @@
 <template>
-  <div v-loading="loading" class="app-container hrm-home">
+  <div
+    v-loading="loading"
+    class="app-container hrm-home"
+  >
     <div class="home-title">HR 工作台</div>
-    <el-row :gutter="16" type="flex" align="top">
+    <el-row
+      :gutter="16"
+      type="flex"
+      align="top"
+    >
       <el-col :span="16">
         <hrm-home-employee-survey :survey="summary && summary.employeeSurvey" />
         <hrm-home-recruit-survey :survey="summary && summary.recruitSurvey" />

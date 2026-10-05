@@ -1,7 +1,11 @@
 <template>
   <div class="app-container oa-vehicle-return-detail">
     <!-- 还车信息 -->
-    <el-descriptions v-loading="detailLoading" :column="2" border>
+    <el-descriptions
+      v-loading="detailLoading"
+      :column="2"
+      border
+    >
       <el-descriptions-item label="还车申请单号">{{ detailData.no }}</el-descriptions-item>
       <el-descriptions-item label="用车申请单号">{{ detailData.applyNo }}</el-descriptions-item>
       <el-descriptions-item label="车牌号">{{ detailData.vehicleNo }}</el-descriptions-item>
@@ -20,7 +24,11 @@
         {{ detailData.returnLocation }}
       </el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detailData.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+        <el-tag
+          v-if="detailData.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+          size="small"
+        >
           未提交
         </el-tag>
         <dict-tag
@@ -29,11 +37,21 @@
           :value="detailData.status"
         />
       </el-descriptions-item>
-      <el-descriptions-item label="还车说明" :span="2">
+      <el-descriptions-item
+        label="还车说明"
+        :span="2"
+      >
         {{ detailData.remark }}
       </el-descriptions-item>
-      <el-descriptions-item label="附件" :span="2">
-        <upload-file :model-value="detailData.fileUrls || []" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="附件"
+        :span="2"
+      >
+        <upload-file
+          :model-value="detailData.fileUrls || []"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
     </el-descriptions>
   </div>

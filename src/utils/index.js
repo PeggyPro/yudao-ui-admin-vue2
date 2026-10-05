@@ -1,10 +1,10 @@
-import {parseTime} from './ruoyi'
+import { parseTime } from './ruoyi'
 
 /**
  * 表格时间格式化
  */
 export function formatDate(cellValue) {
-  if (cellValue == null || cellValue === "") return "";
+  if (cellValue == null || cellValue === '') return ''
   const date = new Date(cellValue)
   const year = date.getFullYear()
   const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
@@ -268,7 +268,7 @@ export function getTime(type) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function () {
+  const later = function() {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -285,7 +285,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function (...innerArgs) {
+  return function(...innerArgs) {
     context = this
     // 把当前调用参数存到外层 args，later 触发时才能拿到正确入参；不能用 ...args 形参，会遮蔽外层闭包变量
     // 对应 https://gitee.com/yudaocode/yudao-ui-admin-vue2/issues/IDKUIB 反馈
@@ -411,7 +411,6 @@ export function generateUUID() {
   })
 }
 
-
 /**
  * Check if an element has a class
  * @param ele
@@ -513,15 +512,15 @@ export function isNumberStr(str) {
 
 // -转驼峰
 export function toCamelCase(str, upperCaseFirst) {
-  str = (str || '').toLowerCase().replace(/-(.)/g, function (match, group1) {
-    return group1.toUpperCase();
-  });
+  str = (str || '').toLowerCase().replace(/-(.)/g, function(match, group1) {
+    return group1.toUpperCase()
+  })
 
   if (upperCaseFirst && str) {
-    str = str.charAt(0).toUpperCase() + str.slice(1);
+    str = str.charAt(0).toUpperCase() + str.slice(1)
   }
 
-  return str;
+  return str
 }
 
 export const is = (val, type) => {

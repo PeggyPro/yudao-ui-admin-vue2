@@ -96,7 +96,7 @@
         align="center"
         prop="padded"
         width="100"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
         :value="scope.row.padded"
       /></template></el-table-column>
@@ -105,7 +105,7 @@
         align="center"
         prop="status"
         width="100"
-      ><template v-slot="scope"><dict-tag
+      ><template slot-scope="scope"><dict-tag
         :type="DICT_TYPE.COMMON_STATUS"
         :value="scope.row.status"
       /></template></el-table-column>
@@ -119,13 +119,13 @@
         align="center"
         prop="createTime"
         width="180"
-      ><template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
+      ><template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template></el-table-column>
       <el-table-column
         label="操作"
         align="center"
         width="150"
         fixed="right"
-      ><template v-slot="scope"><el-button
+      ><template slot-scope="scope"><el-button
         v-hasPermi="['mes:auto-code-rule:update']"
         type="text"
         @click="openForm('update', scope.row.id)"

@@ -82,7 +82,7 @@
         min-width="100"
         align="center"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.EXPRESS_CHARGE_MODE"
             :value="scope.row.chargeMode"
@@ -100,7 +100,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -109,7 +109,7 @@
         align="center"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['trade:delivery:express-template:update']"
             type="text"

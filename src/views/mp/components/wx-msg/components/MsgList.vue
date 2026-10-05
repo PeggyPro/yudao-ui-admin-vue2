@@ -14,7 +14,7 @@
             :src="getAvatar(item.sendFrom)"
             class="avue-comment__avatar"
             alt=""
-          />
+          >
           <div class="avue-comment__author">{{ getNickname(item.sendFrom) }}</div>
         </div>
         <div class="avue-comment__main">

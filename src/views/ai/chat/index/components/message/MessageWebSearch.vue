@@ -1,10 +1,20 @@
 <template>
-  <div v-if="webSearchPages && webSearchPages.length" class="message-web-search">
-    <button type="button" class="message-web-search__header" @click="isExpanded = !isExpanded">
+  <div
+    v-if="webSearchPages && webSearchPages.length"
+    class="message-web-search"
+  >
+    <button
+      type="button"
+      class="message-web-search__header"
+      @click="isExpanded = !isExpanded"
+    >
       <span><i class="el-icon-search" /> 联网搜索结果（{{ webSearchPages.length }} 条）</span>
       <i :class="isExpanded ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
     </button>
-    <div v-show="isExpanded" class="message-web-search__list">
+    <div
+      v-show="isExpanded"
+      class="message-web-search__list"
+    >
       <button
         v-for="(result, index) in webSearchPages"
         :key="result.url || index"
@@ -12,8 +22,16 @@
         class="web-search-result"
         @click="openDetail(result)"
       >
-        <img v-if="result.icon" :src="result.icon" :alt="result.name" @error="hideImage">
-        <i v-else class="el-icon-link" />
+        <img
+          v-if="result.icon"
+          :src="result.icon"
+          :alt="result.name"
+          @error="hideImage"
+        >
+        <i
+          v-else
+          class="el-icon-link"
+        />
         <span class="web-search-result__body">
           <small>{{ result.name }}</small>
           <strong>{{ result.title }}</strong>
@@ -29,7 +47,10 @@
       width="600px"
       append-to-body
     >
-      <div v-if="selectedResult" class="web-search-detail">
+      <div
+        v-if="selectedResult"
+        class="web-search-detail"
+      >
         <h3>{{ selectedResult.title }}</h3>
         <div class="web-search-detail__source">{{ selectedResult.name }}</div>
         <div class="web-search-detail__url">{{ selectedResult.url }}</div>
@@ -42,7 +63,10 @@
       </div>
       <span slot="footer">
         <el-button @click="dialogVisible = false">关闭</el-button>
-        <el-button type="primary" @click="openUrl(selectedResult && selectedResult.url)">访问原文</el-button>
+        <el-button
+          type="primary"
+          @click="openUrl(selectedResult && selectedResult.url)"
+        >访问原文</el-button>
       </span>
     </el-dialog>
   </div>

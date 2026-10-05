@@ -1,16 +1,45 @@
 <template>
   <div class="app-container fms-ledger-page">
-    <doc-alert title="【账簿】账簿管理" url="https://doc.iocoder.cn/fms/ledger/" />
-    <el-card class="ledger-toolbar" shadow="never">
-      <el-form :inline="true" label-width="78px" class="ledger-form">
+    <doc-alert
+      title="【账簿】账簿管理"
+      url="https://doc.iocoder.cn/fms/ledger/"
+    />
+    <el-card
+      class="ledger-toolbar"
+      shadow="never"
+    >
+      <el-form
+        :inline="true"
+        label-width="78px"
+        class="ledger-form"
+      >
         <el-form-item label="会计期间"><FmsLedgerMonthRangePicker v-model="monthRange" /></el-form-item>
         <el-form-item label="辅助类">
-          <FmsAuxiliaryTypeSelect v-model="queryParams.auxiliaryTypeId" :account-set-id="accountSetId" :clearable="false" style="width: 220px" @change="handleTypeChange" @loaded="handleTypeLoaded" />
+          <FmsAuxiliaryTypeSelect
+            v-model="queryParams.auxiliaryTypeId"
+            :account-set-id="accountSetId"
+            :clearable="false"
+            style="width: 220px"
+            @change="handleTypeChange"
+            @loaded="handleTypeLoaded"
+          />
         </el-form-item>
-        <el-form-item label="科目"><FmsSubjectSelect v-model="queryParams.subjectId" :options="subjects" clearable placeholder="全部科目" style="width: 220px" /></el-form-item>
+        <el-form-item label="科目"><FmsSubjectSelect
+          v-model="queryParams.subjectId"
+          :options="subjects"
+          clearable
+          placeholder="全部科目"
+          style="width: 220px"
+        /></el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <FmsLedgerPrintButton
             :center-text="selectedItemPrintText"
             :end-month="monthRange[1] || ''"
@@ -19,31 +48,121 @@
             target="fms-auxiliary-detail-ledger-table"
             title="核算项目明细账"
           />
-          <el-button v-hasPermi="['fms:ledger:detail:export']" :loading="exportLoading" type="success" plain icon="el-icon-download" @click="handleExport">导出</el-button>
+          <el-button
+            v-hasPermi="['fms:ledger:detail:export']"
+            :loading="exportLoading"
+            type="success"
+            plain
+            icon="el-icon-download"
+            @click="handleExport"
+          >导出</el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <el-card shadow="never">
-      <div v-if="selectedItem" class="selected-item">{{ selectedType && selectedType.name }}：{{ selectedItem.code }}_{{ selectedItem.name }}</div>
+      <div
+        v-if="selectedItem"
+        class="selected-item"
+      >{{ selectedType && selectedType.name }}：{{ selectedItem.code }}_{{ selectedItem.name }}</div>
       <div class="auxiliary-layout">
-        <el-table id="fms-auxiliary-detail-ledger-table" v-loading="loading || accountSetLoading" :data="list" :row-class-name="getRowClassName" border stripe height="calc(100vh - 345px)">
-          <el-table-column align="center" label="日期" prop="accountDate" width="110" />
-          <el-table-column align="center" label="凭证字号" width="110"><template slot-scope="scope"><el-button v-if="scope.row.voucherId" v-hasPermi="['fms:voucher:query']" type="text" @click="openVoucher(scope.row)">{{ scope.row.voucherNumber }}</el-button></template></el-table-column>
-          <el-table-column label="摘要" min-width="180" prop="digest" />
-          <el-table-column align="right" label="借方" width="140"><template slot-scope="scope">{{ formatMoney(scope.row.debitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" width="140"><template slot-scope="scope">{{ formatMoney(scope.row.creditAmount) }}</template></el-table-column>
-          <el-table-column align="center" label="方向" prop="balanceDirection" width="80" />
-          <el-table-column align="right" label="余额" width="150"><template slot-scope="scope">{{ formatMoney(scope.row.balance) }}</template></el-table-column>
+        <el-table
+          id="fms-auxiliary-detail-ledger-table"
+          v-loading="loading || accountSetLoading"
+          :data="list"
+          :row-class-name="getRowClassName"
+          border
+          stripe
+          height="calc(100vh - 345px)"
+        >
+          <el-table-column
+            align="center"
+            label="日期"
+            prop="accountDate"
+            width="110"
+          />
+          <el-table-column
+            align="center"
+            label="凭证字号"
+            width="110"
+          ><template slot-scope="scope"><el-button
+            v-if="scope.row.voucherId"
+            v-hasPermi="['fms:voucher:query']"
+            type="text"
+            @click="openVoucher(scope.row)"
+          >{{ scope.row.voucherNumber }}</el-button></template></el-table-column>
+          <el-table-column
+            label="摘要"
+            min-width="180"
+            prop="digest"
+          />
+          <el-table-column
+            align="right"
+            label="借方"
+            width="140"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.debitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            width="140"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.creditAmount) }}</template></el-table-column>
+          <el-table-column
+            align="center"
+            label="方向"
+            prop="balanceDirection"
+            width="80"
+          />
+          <el-table-column
+            align="right"
+            label="余额"
+            width="150"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.balance) }}</template></el-table-column>
         </el-table>
-        <aside v-if="!quickPanelCollapsed" class="quick-panel">
-          <div class="quick-title"><strong>快捷项目</strong><el-tooltip content="收起快捷项目" placement="top"><el-button circle plain icon="el-icon-arrow-right" @click="quickPanelCollapsed = true" /></el-tooltip></div>
-          <el-input v-model="itemKeyword" clearable placeholder="搜索辅助项目" prefix-icon="el-icon-search" />
+        <aside
+          v-if="!quickPanelCollapsed"
+          class="quick-panel"
+        >
+          <div class="quick-title"><strong>快捷项目</strong><el-tooltip
+            content="收起快捷项目"
+            placement="top"
+          ><el-button
+            circle
+            plain
+            icon="el-icon-arrow-right"
+            @click="quickPanelCollapsed = true"
+          /></el-tooltip></div>
+          <el-input
+            v-model="itemKeyword"
+            clearable
+            placeholder="搜索辅助项目"
+            prefix-icon="el-icon-search"
+          />
           <div class="quick-list">
-            <button v-for="item in filteredItems" :key="item.id" type="button" :class="{ active: Number(item.id) === Number(queryParams.auxiliaryItemId) }" @click="handleItemClick(item.id)"><span>{{ item.code }}</span><span>{{ item.name }}</span></button>
-            <el-empty v-if="!filteredItems.length" description="暂无辅助项目" :image-size="64" />
+            <button
+              v-for="item in filteredItems"
+              :key="item.id"
+              type="button"
+              :class="{ active: Number(item.id) === Number(queryParams.auxiliaryItemId) }"
+              @click="handleItemClick(item.id)"
+            ><span>{{ item.code }}</span><span>{{ item.name }}</span></button>
+            <el-empty
+              v-if="!filteredItems.length"
+              description="暂无辅助项目"
+              :image-size="64"
+            />
           </div>
         </aside>
-        <aside v-else class="quick-panel-collapsed"><el-tooltip content="展开快捷项目" placement="top"><el-button circle plain icon="el-icon-arrow-left" @click="quickPanelCollapsed = false" /></el-tooltip></aside>
+        <aside
+          v-else
+          class="quick-panel-collapsed"
+        ><el-tooltip
+          content="展开快捷项目"
+          placement="top"
+        ><el-button
+          circle
+          plain
+          icon="el-icon-arrow-left"
+          @click="quickPanelCollapsed = false"
+        /></el-tooltip></aside>
       </div>
     </el-card>
   </div>

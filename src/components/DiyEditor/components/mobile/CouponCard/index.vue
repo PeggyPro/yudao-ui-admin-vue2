@@ -23,7 +23,10 @@
           color: property.textColor
         }"
       >
-        <div v-if="property.columns === 1" class="coupon-one-column">
+        <div
+          v-if="property.columns === 1"
+          class="coupon-one-column"
+        >
           <div class="coupon-main">
             <CouponDiscount :coupon="coupon" />
             <CouponDiscountDesc :coupon="coupon" />
@@ -41,7 +44,10 @@
             </div>
           </div>
         </div>
-        <div v-else-if="property.columns === 2" class="coupon-two-column">
+        <div
+          v-else-if="property.columns === 2"
+          class="coupon-two-column"
+        >
           <div class="coupon-main">
             <CouponDiscount :coupon="coupon" />
             <CouponDiscountDesc :coupon="coupon" />
@@ -62,7 +68,10 @@
             </div>
           </div>
         </div>
-        <div v-else class="coupon-three-column">
+        <div
+          v-else
+          class="coupon-three-column"
+        >
           <CouponDiscount :coupon="coupon" />
           <CouponDiscountDesc :coupon="coupon" />
           <div

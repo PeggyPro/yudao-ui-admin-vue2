@@ -1,6 +1,9 @@
 <template>
   <div class="app-container process-create-page">
-    <doc-alert title="流程发起、取消、重新发起" url="https://doc.iocoder.cn/bpm/process-instance/" />
+    <doc-alert
+      title="流程发起、取消、重新发起"
+      url="https://doc.iocoder.cn/bpm/process-instance/"
+    />
 
     <template v-if="!selectProcessDefinition">
       <el-input
@@ -14,7 +17,10 @@
       />
       <el-row :gutter="16">
         <el-col :span="5">
-          <el-card shadow="never" class="category-card">
+          <el-card
+            shadow="never"
+            class="category-card"
+          >
             <div
               v-for="category in availableCategories"
               :key="category.code"
@@ -27,8 +33,15 @@
           </el-card>
         </el-col>
         <el-col :span="19">
-          <el-card shadow="never" v-loading="loading" class="definition-card">
-            <el-empty v-if="filteredDefinitions.length === 0" description="没有找到可发起的流程" />
+          <el-card
+            v-loading="loading"
+            shadow="never"
+            class="definition-card"
+          >
+            <el-empty
+              v-if="filteredDefinitions.length === 0"
+              description="没有找到可发起的流程"
+            />
             <div
               v-else
               ref="definitionScroll"
@@ -51,7 +64,11 @@
                     @click.native="handleSelect(definition)"
                   >
                     <div class="definition-item__icon">
-                      <img v-if="definition.icon" :src="definition.icon" alt="" />
+                      <img
+                        v-if="definition.icon"
+                        :src="definition.icon"
+                        alt=""
+                      >
                       <span v-else>{{ (definition.name || '').slice(0, 2) }}</span>
                     </div>
                     <div class="definition-item__main">

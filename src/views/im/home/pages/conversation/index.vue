@@ -1,29 +1,49 @@
 <template>
-<!-- 消息 Tab：左侧会话列表 + 右侧聊天面板 -->
+  <!-- 消息 Tab：左侧会话列表 + 右侧聊天面板 -->
   <div class="flex flex-1 min-w-0 h-full">
     <!-- 左侧会话列表（可拖拽宽度） -->
-    <ResizableAside :default-width="260" :storage-key="StorageKeys.localStorage.asideWidth">
+    <ResizableAside
+      :default-width="260"
+      :storage-key="StorageKeys.localStorage.asideWidth"
+    >
       <!-- 顶部：搜索框 + "+" 号下拉（对齐微信 PC：发起群聊 / 添加朋友）；h-14 与右侧 MessagePanel 头部对齐 -->
       <div
         class="flex flex-shrink-0 gap-2 items-center h-14 px-4 border-b border-b-solid border-[var(--el-border-color-lighter)]"
       >
-        <el-input v-model="keyword" placeholder="搜索" clearable class="flex-1">
+        <el-input
+          v-model="keyword"
+          placeholder="搜索"
+          clearable
+          class="flex-1"
+        >
           <template #prefix>
             <Icon icon="ant-design:search-outlined" />
           </template>
         </el-input>
-        <el-dropdown trigger="click" placement="bottom">
-          <el-button size="small" circle>
+        <el-dropdown
+          trigger="click"
+          placement="bottom"
+        >
+          <el-button
+            size="small"
+            circle
+          >
             <Icon icon="ant-design:plus-outlined" />
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="handleOpenCreateGroup">
-                <Icon icon="ant-design:message-outlined" :size="16" />
+                <Icon
+                  icon="ant-design:message-outlined"
+                  :size="16"
+                />
                 <span>发起群聊</span>
               </el-dropdown-item>
               <el-dropdown-item @click="friendAddDialogRef?.open()">
-                <Icon icon="ant-design:user-add-outlined" :size="16" />
+                <Icon
+                  icon="ant-design:user-add-outlined"
+                  :size="16"
+                />
                 <span>添加朋友</span>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -41,7 +61,10 @@
             :conversation="conversation"
           />
         </template>
-        <div v-else class="bg-[var(--el-fill-color-light)]">
+        <div
+          v-else
+          class="bg-[var(--el-fill-color-light)]"
+        >
           <ConversationItem
             v-for="conversation in renderedPinnedConversations"
             :key="getConversationKey(conversation)"
@@ -55,7 +78,10 @@
             @click="togglePinnedExpanded"
           >
             <span class="flex items-center gap-1.5">
-              <Icon icon="ant-design:menu-outlined" :size="14" />
+              <Icon
+                icon="ant-design:menu-outlined"
+                :size="14"
+              />
               {{ pinnedExpanded ? '折叠置顶聊天' : `${pinnedGroups.foldable.length} 个置顶聊天` }}
             </span>
             <Icon
@@ -87,30 +113,33 @@
 
     <!-- 添加朋友 / 发起群聊弹窗 -->
     <FriendAddDialog ref="friendAddDialogRef" />
-    <GroupCreateDialog ref="createGroupDialogRef" @created="handleGroupCreated" />
+    <GroupCreateDialog
+      ref="createGroupDialogRef"
+      @created="handleGroupCreated"
+    />
   </div>
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed, nextTick, ref, watch } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import { useConversationStore } from '../../store/conversationStore';
-import { useGroupStore } from '../../store/groupStore';
-import { useImUiStore } from '../../store/uiStore';
-import { ImConversationType } from '../../../utils/constants';
-import { StorageKeys } from '../../../utils/db';
-import { filterConversationsByKeyword, getConversationKey } from '../../../utils/conversation';
-import { getGroupDisplayName } from '../../../utils/user';
-import ResizableAside from '../../components/ResizableAside.vue';
-import ConversationItem from './components/conversation/ConversationItem.vue';
-import MessagePanel from './components/message/MessagePanel.vue';
-import FriendAddDialog from '../../components/friend/FriendAddDialog.vue';
-import GroupCreateDialog from '../../components/group/GroupCreateDialog.vue';
-const PINNED_FOLD_THRESHOLD = 3;
+import { defineComponent as _defineComponent } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import { useConversationStore } from '../../store/conversationStore'
+import { useGroupStore } from '../../store/groupStore'
+import { useImUiStore } from '../../store/uiStore'
+import { ImConversationType } from '../../../utils/constants'
+import { StorageKeys } from '../../../utils/db'
+import { filterConversationsByKeyword, getConversationKey } from '../../../utils/conversation'
+import { getGroupDisplayName } from '../../../utils/user'
+import ResizableAside from '../../components/ResizableAside.vue'
+import ConversationItem from './components/conversation/ConversationItem.vue'
+import MessagePanel from './components/message/MessagePanel.vue'
+import FriendAddDialog from '../../components/friend/FriendAddDialog.vue'
+import GroupCreateDialog from '../../components/group/GroupCreateDialog.vue'
+const PINNED_FOLD_THRESHOLD = 3
 
 /** 置顶折叠展开态：localStorage 持久化，刷新后保留用户上次的选择，对齐微信 */
 
-const __sfc__ = /*@__PURE__*/_defineComponent({
+const __sfc__ = /* @__PURE__*/_defineComponent({
   ...{
     name: 'ImMessagePage'
   },
@@ -126,35 +155,35 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
   setup(__props, {
     expose: __expose
   }) {
-    __expose();
-    const conversationStore = useConversationStore();
-    const groupStore = useGroupStore();
-    const uiStore = useImUiStore();
+    __expose()
+    const conversationStore = useConversationStore()
+    const groupStore = useGroupStore()
+    const uiStore = useImUiStore()
 
     // ==================== 会话列表 ====================
 
-    const keyword = ref('');
-    const sortedConversations = computed(() => conversationStore.getSortedConversationList);
+    const keyword = ref('')
+    const sortedConversations = computed(() => conversationStore.getSortedConversationList)
 
     /** 顶部搜索框过滤会话：只按 name 模糊匹配，避免命中 lastContent 等次要字段干扰 */
-    const filteredConversations = computed(() => filterConversationsByKeyword(sortedConversations.value, keyword.value));
+    const filteredConversations = computed(() => filterConversationsByKeyword(sortedConversations.value, keyword.value))
 
     // ==================== 置顶相关 ====================
 
     /** 置顶超过该数量时显示折叠入口；以下数量直接铺开（避免单条置顶就出折叠头视觉太重） */
-    const pinnedExpanded = ref(localStorage.getItem(StorageKeys.localStorage.conversationPinnedExpanded) === 'true');
+    const pinnedExpanded = ref(localStorage.getItem(StorageKeys.localStorage.conversationPinnedExpanded) === 'true')
 
     /** toggle + 写盘 */
     function togglePinnedExpanded() {
-      pinnedExpanded.value = !pinnedExpanded.value;
-      localStorage.setItem(StorageKeys.localStorage.conversationPinnedExpanded, String(pinnedExpanded.value));
+      pinnedExpanded.value = !pinnedExpanded.value
+      localStorage.setItem(StorageKeys.localStorage.conversationPinnedExpanded, String(pinnedExpanded.value))
     }
 
     /** 置顶会话：单独切片，给折叠头计数 + 折叠区渲染用 */
-    const pinnedConversations = computed(() => filteredConversations.value.filter(c => c.top));
+    const pinnedConversations = computed(() => filteredConversations.value.filter(c => c.top))
 
     /** 非置顶会话：折叠态下始终铺开在折叠头之下 */
-    const normalConversations = computed(() => filteredConversations.value.filter(c => !c.top));
+    const normalConversations = computed(() => filteredConversations.value.filter(c => !c.top))
 
     /**
      * 置顶分两堆：visible（折叠头之上 = 未读 + 当前激活）/ foldable（折叠头之下）；一次 partition 完成
@@ -162,66 +191,66 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
      * 当前激活会话也"钉"在 visible：避免点开未读置顶 → 立刻被读 → 列表一闪重排回折叠的体验
      */
     const pinnedGroups = computed(() => {
-      const visible = [];
-      const foldable = [];
+      const visible = []
+      const foldable = []
       for (const conversation of pinnedConversations.value) {
         if (isActiveConversation(conversation) || hasUnreadBadge(conversation)) {
-          visible.push(conversation);
+          visible.push(conversation)
         } else {
-          foldable.push(conversation);
+          foldable.push(conversation)
         }
       }
       return {
         visible,
         foldable
-      };
-    });
+      }
+    })
 
     /** 折叠时只渲 visible（未读 / 激活穿透）；展开时渲全部 —— 展开后不分组，避免点击折叠区跨组上跳 */
-    const renderedPinnedConversations = computed(() => pinnedExpanded.value ? pinnedConversations.value : pinnedGroups.value.visible);
+    const renderedPinnedConversations = computed(() => pinnedExpanded.value ? pinnedConversations.value : pinnedGroups.value.visible)
 
     /** 置顶折叠时是否上浮到折叠头之上：仅以数字徽标为准；免打扰即便有未读也只展示小红点，不参与上浮 */
     function hasUnreadBadge(conversation) {
-      return !conversation.silent && (conversation.unreadCount || 0) > 0;
+      return !conversation.silent && (conversation.unreadCount || 0) > 0
     }
 
     /** 是否为当前激活会话 */
     function isActiveConversation(conversation) {
-      const active = conversationStore.activeConversation;
-      return !!active && getConversationKey(active) === getConversationKey(conversation);
+      const active = conversationStore.activeConversation
+      return !!active && getConversationKey(active) === getConversationKey(conversation)
     }
 
     /**
      * 是否进入"分组模式"（独立浅底 + 可能有折叠头）：搜索时不分组（用户在找人，别再让折叠挡住）；
      * 置顶数 < 阈值也不分组，避免单条置顶就出折叠头视觉太重
      */
-    const showPinnedSection = computed(() => !keyword.value.trim() && pinnedConversations.value.length >= PINNED_FOLD_THRESHOLD);
+    const showPinnedSection = computed(() => !keyword.value.trim() && pinnedConversations.value.length >= PINNED_FOLD_THRESHOLD)
 
     // ==================== 添加朋友 ====================
 
     /** 添加朋友弹窗 ref：右上角 +-下拉「添加朋友」入口调 open() 触发 */
-    const friendAddDialogRef = ref();
+    const friendAddDialogRef = ref()
 
     // ==================== 建群相关 ====================
 
     /** 发起群聊弹窗 ref：handleOpenCreateGroup 调 open() 打开 */
-    const createGroupDialogRef = ref();
+    const createGroupDialogRef = ref()
 
     /** 打开发起群聊弹窗：无锁定项的全局入口 */
     function handleOpenCreateGroup() {
-      createGroupDialogRef.value?.open();
+      createGroupDialogRef.value?.open()
     }
 
     /** 处理建群成功 */
     function handleGroupCreated(groupId) {
       // GroupCreateDialog 已经 upsertGroup 把新群写进 store，这里只 get + 打开会话
-      const group = groupStore.getGroup(groupId);
+      const group = groupStore.getGroup(groupId)
       if (!group) {
-        return;
+        return
       }
       conversationStore.openConversation(groupId, ImConversationType.GROUP, getGroupDisplayName(group), group.avatar || '', {
         silent: !!group.silent
-      });
+      })
     }
 
     // ==================== 滚动到下一个未读 ====================
@@ -229,44 +258,44 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
     // 含免打扰会话（小红点也算未读）；通过维护 lastJumpedConversationKey 让连续点击顺序穿过整个未读列表
 
     /** 上次命中的未读会话 key；为空时从未读列表头开始 */
-    let lastJumpedConversationKey = null;
+    let lastJumpedConversationKey = null
 
     /** 滚动到下一个未读会话（含免打扰）；目标被搜索框过滤或藏在置顶折叠区时先解除拦截再滚 */
     async function jumpToNextUnread() {
       // 含免打扰的全量未读会话；空则直接返回
-      const unreadList = sortedConversations.value.filter(c => (c.unreadCount || 0) > 0);
+      const unreadList = sortedConversations.value.filter(c => (c.unreadCount || 0) > 0)
       if (unreadList.length === 0) {
-        return;
+        return
       }
       // 从上次命中那条往后推一位；首次或上次目标已读完不在列表里时，refIndex=-1，从头开始
-      const refIndex = lastJumpedConversationKey ? unreadList.findIndex(c => getConversationKey(c) === lastJumpedConversationKey) : -1;
-      const target = unreadList[(refIndex + 1) % unreadList.length];
-      const key = getConversationKey(target);
-      lastJumpedConversationKey = key;
+      const refIndex = lastJumpedConversationKey ? unreadList.findIndex(c => getConversationKey(c) === lastJumpedConversationKey) : -1
+      const target = unreadList[(refIndex + 1) % unreadList.length]
+      const key = getConversationKey(target)
+      lastJumpedConversationKey = key
 
       // 目标被搜索关键字过滤掉：清空 keyword 让它重新进入可见列表
       if (keyword.value && !filteredConversations.value.some(c => getConversationKey(c) === key)) {
-        keyword.value = '';
+        keyword.value = ''
       }
       // 目标藏在置顶折叠区：临时展开；不写 localStorage，刷新后还原折叠态
-      const inFoldable = pinnedGroups.value.foldable.some(c => getConversationKey(c) === key);
+      const inFoldable = pinnedGroups.value.foldable.some(c => getConversationKey(c) === key)
       if (inFoldable && !pinnedExpanded.value) {
-        pinnedExpanded.value = true;
+        pinnedExpanded.value = true
       }
 
       // 等 keyword / pinnedExpanded 变化反应到 DOM 后再去取目标元素
-      await nextTick();
-      const el = document.querySelector(`[data-conversation-key="${key}"]`);
+      await nextTick()
+      const el = document.querySelector(`[data-conversation-key="${key}"]`)
       if (!el) {
-        return;
+        return
       }
       // block: 'start' 把目标会话顶到列表可视区第一行；对齐微信"切到下一个未读=列表的第一条"
       el.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
-      });
+      })
     }
-    watch(() => uiStore.nextUnreadJumpNonce, jumpToNextUnread);
+    watch(() => uiStore.nextUnreadJumpNonce, jumpToNextUnread)
     const __returned__ = {
       conversationStore,
       groupStore,
@@ -289,31 +318,31 @@ const __sfc__ = /*@__PURE__*/_defineComponent({
       handleOpenCreateGroup,
       handleGroupCreated,
       get lastJumpedConversationKey() {
-        return lastJumpedConversationKey;
+        return lastJumpedConversationKey
       },
       set lastJumpedConversationKey(v) {
-        lastJumpedConversationKey = v;
+        lastJumpedConversationKey = v
       },
       jumpToNextUnread,
       Icon,
       get StorageKeys() {
-        return StorageKeys;
+        return StorageKeys
       },
       get getConversationKey() {
-        return getConversationKey;
+        return getConversationKey
       },
       ResizableAside,
       ConversationItem,
       MessagePanel,
       FriendAddDialog,
       GroupCreateDialog
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
-export default __sfc__;
+})
+export default __sfc__
 </script>

@@ -104,16 +104,16 @@ export default {
   components: {
     SimpleProcessDesigner
   },
-  props: {
-    value: {
-      type: Object,
-      required: true
-    }
-  },
   provide() {
     return {
       formFields: this.formFieldsRef,
       formType: this.formTypeRef
+    }
+  },
+  props: {
+    value: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -173,6 +173,10 @@ export default {
       this.formTypeRef.value = value
       this.loadFormFields()
     }
+  },
+  beforeDestroy() {
+    this.modelerInitToken += 1
+    this.modeler = null
   },
   methods: {
     async loadFormFields() {
@@ -235,10 +239,6 @@ export default {
         throw new Error('请设计 BPMN 流程')
       }
     }
-  },
-  beforeDestroy() {
-    this.modelerInitToken += 1
-    this.modeler = null
   }
 }
 </script>

@@ -1,24 +1,64 @@
 <template>
   <div class="icon-selector">
-    <el-input :value="value" :clearable="clearable" @input="$emit('input', $event)" @clear="clearIcon">
-      <el-popover slot="append" v-model="visible" width="355" placement="auto" trigger="click">
-        <button slot="reference" type="button" class="icon-selector-trigger" aria-label="选择图标">
+    <el-input
+      :value="value"
+      :clearable="clearable"
+      @input="$emit('input', $event)"
+      @clear="clearIcon"
+    >
+      <el-popover
+        slot="append"
+        v-model="visible"
+        width="355"
+        placement="auto"
+        trigger="click"
+      >
+        <button
+          slot="reference"
+          type="button"
+          class="icon-selector-trigger"
+          aria-label="选择图标"
+        >
           <Icon :icon="value || currentActiveType + icon" />
         </button>
-        <el-input v-model="filterValue" clearable placeholder="搜索图标" />
-        <el-tabs v-model="currentActiveType" @tab-click="handleClick">
-          <el-tab-pane v-for="pane in tabsList" :key="pane.name" :label="pane.label" :name="pane.name">
+        <el-input
+          v-model="filterValue"
+          clearable
+          placeholder="搜索图标"
+        />
+        <el-tabs
+          v-model="currentActiveType"
+          @tab-click="handleClick"
+        >
+          <el-tab-pane
+            v-for="pane in tabsList"
+            :key="pane.name"
+            :label="pane.label"
+            :name="pane.name"
+          >
             <div class="icon-selector-grid">
-              <button v-for="item in pageList" :key="item" type="button" :title="item"
+              <button
+                v-for="item in pageList"
+                :key="item"
+                type="button"
+                :title="item"
                 :class="['icon-selector-item', { selected: value === currentActiveType + item }]"
-                @click="onChangeIcon(item)">
+                @click="onChangeIcon(item)"
+              >
                 <Icon :icon="currentActiveType + item" />
               </button>
             </div>
           </el-tab-pane>
         </el-tabs>
-        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="iconCount" background small
-          layout="prev, pager, next" @current-change="currentPage = $event" />
+        <el-pagination
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="iconCount"
+          background
+          small
+          layout="prev, pager, next"
+          @current-change="currentPage = $event"
+        />
       </el-popover>
     </el-input>
   </div>
@@ -31,7 +71,7 @@ import { IconJson } from './data'
 export default {
   name: 'YudaoIconSelect',
   components: { Icon },
-  props: { value: { type: String, default: '' }, clearable: { type: Boolean, default: false } },
+  props: { value: { type: String, default: '' }, clearable: { type: Boolean, default: false }},
   data() {
     return {
       visible: false, icon: 'add-location', currentActiveType: 'ep:',

@@ -1,80 +1,209 @@
 <template>
   <div class="app-container">
-    <doc-alert title="系统日志" url="https://doc.iocoder.cn/system-log/" />
+    <doc-alert
+      title="系统日志"
+      url="https://doc.iocoder.cn/system-log/"
+    />
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="登录地址" prop="userIp">
-        <el-input v-model="queryParams.userIp" placeholder="请输入登录地址" clearable style="width: 240px;"
-                  @keyup.enter.native="handleQuery"/>
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="登录地址"
+        prop="userIp"
+      >
+        <el-input
+          v-model="queryParams.userIp"
+          placeholder="请输入登录地址"
+          clearable
+          style="width: 240px;"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="用户名称" prop="username">
-        <el-input v-model="queryParams.username" placeholder="请输入用户名称" clearable style="width: 240px;"
-                  @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="用户名称"
+        prop="username"
+      >
+        <el-input
+          v-model="queryParams.username"
+          placeholder="请输入用户名称"
+          clearable
+          style="width: 240px;"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="结果" clearable style="width: 240px">
-          <el-option :key="true" label="成功" :value="true"/>
-          <el-option :key="false" label="失败" :value="false"/>
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="结果"
+          clearable
+          style="width: 240px"
+        >
+          <el-option
+            :key="true"
+            label="成功"
+            :value="true"
+          />
+          <el-option
+            :key="false"
+            label="失败"
+            :value="false"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="登录时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
+      <el-form-item
+        label="登录时间"
+        prop="createTime"
+      >
+        <el-date-picker
+          v-model="queryParams.createTime"
+          style="width: 240px"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="['00:00:00', '23:59:59']"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
-                   v-hasPermi="['system:login-log:export']">导出</el-button>
+        <el-button
+          v-hasPermi="['system:login-log:export']"
+          type="warning"
+          icon="el-icon-download"
+          size="mini"
+          :loading="exportLoading"
+          @click="handleExport"
+        >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="访问编号" align="center" prop="id" />
-      <el-table-column label="日志类型" align="center" prop="logType" width="120">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.SYSTEM_LOGIN_TYPE" :value="scope.row.logType" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="访问编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="日志类型"
+        align="center"
+        prop="logType"
+        width="120"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.SYSTEM_LOGIN_TYPE"
+            :value="scope.row.logType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="用户名称" align="center" prop="username" />
-      <el-table-column label="登录地址" align="center" prop="userIp" width="130" :show-overflow-tooltip="true" />
-      <el-table-column label="userAgent" align="center" prop="userAgent" width="400" :show-overflow-tooltip="true" />
-      <el-table-column label="结果" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.SYSTEM_LOGIN_RESULT" :value="scope.row.result" />
+      <el-table-column
+        label="用户名称"
+        align="center"
+        prop="username"
+      />
+      <el-table-column
+        label="登录地址"
+        align="center"
+        prop="userIp"
+        width="130"
+        :show-overflow-tooltip="true"
+      />
+      <el-table-column
+        label="userAgent"
+        align="center"
+        prop="userAgent"
+        width="400"
+        :show-overflow-tooltip="true"
+      />
+      <el-table-column
+        label="结果"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.SYSTEM_LOGIN_RESULT"
+            :value="scope.row.result"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="登录日期" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="登录日期"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="80">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-view" @click="openDetail(scope.row)"
-                     v-hasPermi="['system:login-log:query']">详情</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        width="80"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['system:login-log:query']"
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="openDetail(scope.row)"
+          >详情</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
     <LoginLogDetail ref="detailRef" />
   </div>
 </template>
 
 <script>
-import { getLoginLogPage, exportLoginLog } from "@/api/system/loginlog";
-import LoginLogDetail from './LoginLogDetail.vue';
+import { getLoginLogPage, exportLoginLog } from '@/api/system/loginlog'
+import LoginLogDetail from './LoginLogDetail.vue'
 
 export default {
-  name: "SystemLoginLog",
+  name: 'SystemLoginLog',
   components: { LoginLogDetail },
   data() {
     return {
@@ -97,52 +226,52 @@ export default {
         status: undefined,
         createTime: []
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询登录日志列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       return getLoginLogPage(this.queryParams).then(response => {
-          const data = response.data;
-          this.list = data.list;
-          this.total = data.total;
-        }).finally(() => {
-          this.loading = false;
-        });
+        const data = response.data
+        this.list = data.list
+        this.total = data.total
+      }).finally(() => {
+        this.loading = false
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
-      this.getList();
+      this.queryParams.pageNo = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 详情按钮操作 */
     openDetail(row) {
-      this.$refs.detailRef.open(row);
+      this.$refs.detailRef.open(row)
     },
     /** 导出按钮操作 */
     handleExport() {
       this.$modal.confirm('是否确认导出所有操作日志数据项?').then(() => {
         // 处理查询参数
-        let params = {...this.queryParams};
-        params.pageNo = undefined;
-        params.pageSize = undefined;
-        this.exportLoading = true;
-        return exportLoginLog(params);
+        const params = { ...this.queryParams }
+        params.pageNo = undefined
+        params.pageSize = undefined
+        this.exportLoading = true
+        return exportLoginLog(params)
       }).then(response => {
-        this.$download.excel(response, '登录日志.xls');
+        this.$download.excel(response, '登录日志.xls')
       }).finally(() => {
-        this.exportLoading = false;
-      });
+        this.exportLoading = false
+      })
     }
   }
-};
+}
 </script>

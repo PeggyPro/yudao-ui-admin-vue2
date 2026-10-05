@@ -143,7 +143,7 @@
         align="left"
         min-width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div>编号：{{ scope.row.userId }}</div>
           <div>昵称：{{ scope.row.userNickname }}</div>
         </template>
@@ -154,7 +154,7 @@
         prop="price"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div>金额：￥{{ fenToYuan(scope.row.price) }}</div>
           <div>手续费：￥{{ fenToYuan(scope.row.feePrice) }}</div>
         </template>
@@ -165,7 +165,7 @@
         prop="type"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.BROKERAGE_WITHDRAW_TYPE"
             :value="scope.row.type"
@@ -177,7 +177,7 @@
         align="left"
         min-width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div v-if="scope.row.type === BrokerageWithdrawTypeEnum.WALLET.type">-</div>
           <div v-else>
             <div v-if="scope.row.userAccount">账号：{{ scope.row.userAccount }}</div>
@@ -224,7 +224,7 @@
         prop="status"
         min-width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.BROKERAGE_WITHDRAW_STATUS"
             :value="scope.row.status"
@@ -255,7 +255,7 @@
         width="110"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <template
             v-if="
               scope.row.status === BrokerageWithdrawStatusEnum.AUDITING.status &&

@@ -1,5 +1,8 @@
 <template>
-  <div v-loading="loading" class="knowledge-share-page">
+  <div
+    v-loading="loading"
+    class="knowledge-share-page"
+  >
     <el-card
       v-if="document"
       :body-style="{ padding: '40px 48px' }"
@@ -10,8 +13,11 @@
         v-if="document.type === PmsKnowledgeDocumentType.RICH_TEXT"
         v-dompurify-html="document.content || '<p>暂无内容</p>'"
         class="knowledge-share-content"
-      ></div>
-      <div v-else class="file-share-content">
+      />
+      <div
+        v-else
+        class="file-share-content"
+      >
         <div class="file-share-title">{{ document.title }}</div>
         <file-preview
           v-if="document.previewUrl"
@@ -20,7 +26,10 @@
           :file-type="document.fileType"
           :url="document.previewUrl"
         />
-        <el-empty v-else description="文件未上传" />
+        <el-empty
+          v-else
+          description="文件未上传"
+        />
       </div>
     </el-card>
   </div>

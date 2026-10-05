@@ -1,8 +1,28 @@
 <!-- MES 物料分类选择器：树形下拉，只允许选择叶节点 -->
 <template>
-  <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-    <div v-if="selectedItem" slot="content" class="tooltip"><div>编码：{{ selectedItem.code || '-' }}</div><div>名称：{{ selectedItem.name || '-' }}</div><div>备注：{{ selectedItem.remark || '-' }}</div></div>
-    <el-cascader v-bind="$attrs" :value="currentValue" :options="treeData" :props="cascaderProps" :placeholder="placeholder" :disabled="disabled" clearable filterable class="full-width" @input="handleInput" @change="handleChange" />
+  <el-tooltip
+    :disabled="!selectedItem"
+    placement="top"
+    :open-delay="500"
+  >
+    <div
+      v-if="selectedItem"
+      slot="content"
+      class="tooltip"
+    ><div>编码：{{ selectedItem.code || '-' }}</div><div>名称：{{ selectedItem.name || '-' }}</div><div>备注：{{ selectedItem.remark || '-' }}</div></div>
+    <el-cascader
+      v-bind="$attrs"
+      :value="currentValue"
+      :options="treeData"
+      :props="cascaderProps"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      clearable
+      filterable
+      class="full-width"
+      @input="handleInput"
+      @change="handleChange"
+    />
   </el-tooltip>
 </template>
 

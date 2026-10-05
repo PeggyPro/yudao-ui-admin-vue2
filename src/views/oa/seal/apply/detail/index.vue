@@ -1,7 +1,13 @@
 <template>
-  <div v-loading="detailLoading" class="oa-seal-apply-detail">
+  <div
+    v-loading="detailLoading"
+    class="oa-seal-apply-detail"
+  >
     <!-- 用印申请信息 -->
-    <el-descriptions :column="2" border>
+    <el-descriptions
+      :column="2"
+      border
+    >
       <el-descriptions-item label="申请单号">{{ detailData.no }}</el-descriptions-item>
       <el-descriptions-item label="印章编号">{{ detailData.sealNo }}</el-descriptions-item>
       <el-descriptions-item label="印章名称">{{ detailData.sealName }}</el-descriptions-item>
@@ -22,10 +28,16 @@
       <el-descriptions-item label="文件标题">{{ detailData.documentTitle }}</el-descriptions-item>
       <el-descriptions-item label="文件类型">{{ detailData.documentType }}</el-descriptions-item>
       <el-descriptions-item label="文件份数">{{ detailData.documentCount }}</el-descriptions-item>
-      <el-descriptions-item v-if="detailData.type === OaSealApplyType.CONTRACT" label="合同金额">
+      <el-descriptions-item
+        v-if="detailData.type === OaSealApplyType.CONTRACT"
+        label="合同金额"
+      >
         {{ detailData.contractPrice }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detailData.type === OaSealApplyType.CONTRACT" label="合同对方">
+      <el-descriptions-item
+        v-if="detailData.type === OaSealApplyType.CONTRACT"
+        label="合同对方"
+      >
         {{ detailData.contractParty }}
       </el-descriptions-item>
       <el-descriptions-item label="预计用印时间">
@@ -34,15 +46,24 @@
       <el-descriptions-item label="实际用印时间">
         {{ detailData.actualUseTime ? formatDate(detailData.actualUseTime) : '' }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detailData.mode === OaSealUseMode.BORROW" label="预计归还时间">
+      <el-descriptions-item
+        v-if="detailData.mode === OaSealUseMode.BORROW"
+        label="预计归还时间"
+      >
         {{ detailData.expectedReturnTime ? formatDate(detailData.expectedReturnTime) : '' }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detailData.mode === OaSealUseMode.BORROW" label="实际归还时间">
+      <el-descriptions-item
+        v-if="detailData.mode === OaSealUseMode.BORROW"
+        label="实际归还时间"
+      >
         {{ detailData.actualReturnTime ? formatDate(detailData.actualReturnTime) : '' }}
       </el-descriptions-item>
       <el-descriptions-item label="备注">{{ detailData.remark }}</el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detailData.status === BpmProcessInstanceStatus.NOT_START" type="info">未提交</el-tag>
+        <el-tag
+          v-if="detailData.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+        >未提交</el-tag>
         <dict-tag
           v-else
           :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
@@ -50,19 +71,38 @@
         />
       </el-descriptions-item>
       <el-descriptions-item label="用印状态">
-        <dict-tag :type="DICT_TYPE.OA_SEAL_USE_STATUS" :value="detailData.useStatus === undefined || detailData.useStatus === null ? '' : detailData.useStatus" />
+        <dict-tag
+          :type="DICT_TYPE.OA_SEAL_USE_STATUS"
+          :value="detailData.useStatus === undefined || detailData.useStatus === null ? '' : detailData.useStatus"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="用印类型">
-        <dict-tag :type="DICT_TYPE.OA_SEAL_APPLY_TYPE" :value="detailData.type === undefined || detailData.type === null ? '' : detailData.type" />
+        <dict-tag
+          :type="DICT_TYPE.OA_SEAL_APPLY_TYPE"
+          :value="detailData.type === undefined || detailData.type === null ? '' : detailData.type"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="用印方式">
-        <dict-tag :type="DICT_TYPE.OA_SEAL_USE_MODE" :value="detailData.mode === undefined || detailData.mode === null ? '' : detailData.mode" />
+        <dict-tag
+          :type="DICT_TYPE.OA_SEAL_USE_MODE"
+          :value="detailData.mode === undefined || detailData.mode === null ? '' : detailData.mode"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="紧急">
-        <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="detailData.urgent === undefined || detailData.urgent === null ? '' : detailData.urgent" />
+        <dict-tag
+          :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+          :value="detailData.urgent === undefined || detailData.urgent === null ? '' : detailData.urgent"
+        />
       </el-descriptions-item>
-      <el-descriptions-item label="附件" :span="2">
-        <upload-file :value="detailData.fileUrls || []" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="附件"
+        :span="2"
+      >
+        <upload-file
+          :value="detailData.fileUrls || []"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
     </el-descriptions>
   </div>

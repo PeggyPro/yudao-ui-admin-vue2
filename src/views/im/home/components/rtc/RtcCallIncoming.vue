@@ -22,7 +22,10 @@
     <!-- 中：群聊单行（邀请人 + 文案）+ 通话成员；私聊两行（名 / 文案） -->
     <div class="flex flex-col flex-1 gap-1 self-start min-w-0">
       <!-- 名 + 文案：群单行内联，私聊上下两行 -->
-      <div v-if="isGroup" class="text-sm truncate">
+      <div
+        v-if="isGroup"
+        class="text-sm truncate"
+      >
         <span class="font-medium">{{ payload?.inviterNickname || '对方' }}</span>
         <span class="ml-1 text-white/60">{{ tipText }}</span>
       </div>
@@ -58,7 +61,11 @@
         :disabled="rejectDisabled"
         @click="$emit('reject')"
       >
-        <Icon icon="ant-design:phone-outlined" :size="18" class="rotate-[135deg]" />
+        <Icon
+          icon="ant-design:phone-outlined"
+          :size="18"
+          class="rotate-[135deg]"
+        />
       </button>
       <button
         class="flex flex-shrink-0 justify-center items-center w-10 h-10 text-white rounded-full transition-opacity bg-[#2ec27e] hover:opacity-90"
@@ -66,20 +73,23 @@
         :disabled="acceptDisabled"
         @click="$emit('accept')"
       >
-        <Icon icon="ant-design:phone-outlined" :size="18" />
+        <Icon
+          icon="ant-design:phone-outlined"
+          :size="18"
+        />
       </button>
     </div>
   </div>
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { computed } from 'vue';
-import Icon from '@/views/im/home/components/user/ImIcon.vue';
-import UserAvatar from '../user/UserAvatar.vue';
-import { useGroupCallMembers } from '../../composables/useGroupCallMembers';
-import { DICT_TYPE, getDictLabel } from '@/utils/dict';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { computed } from 'vue'
+import Icon from '@/views/im/home/components/user/ImIcon.vue'
+import UserAvatar from '../user/UserAvatar.vue'
+import { useGroupCallMembers } from '../../composables/useGroupCallMembers'
+import { DICT_TYPE, getDictLabel } from '@/utils/dict'
+export default /* #__PURE__*/_defineComponent({
   components: {
     Icon,
     UserAvatar
@@ -106,23 +116,23 @@ export default /*#__PURE__*/_defineComponent({
   setup(__props, {
     expose
   }) {
-    expose();
-    const props = __props;
+    expose()
+    const props = __props
 
     /** 来电提示文案；区分语音 / 视频 */
     const tipText = computed(() => {
-      if (!props.payload) return '';
-      return `邀请你${getDictLabel(DICT_TYPE.IM_RTC_CALL_MEDIA_TYPE, props.payload.mediaType)}通话`;
-    });
+      if (!props.payload) return ''
+      return `邀请你${getDictLabel(DICT_TYPE.IM_RTC_CALL_MEDIA_TYPE, props.payload.mediaType)}通话`
+    })
 
     /** 接听按钮禁用态 */
-    const acceptDisabled = computed(() => !!props.accepting || !!props.rejecting);
+    const acceptDisabled = computed(() => !!props.accepting || !!props.rejecting)
 
     /** 拒绝按钮禁用态 */
-    const rejectDisabled = computed(() => !!props.rejecting || !!props.accepting);
+    const rejectDisabled = computed(() => !!props.rejecting || !!props.accepting)
 
     /** 群通话成员；缓存为空时用 INVITE 载荷里的主叫兜底，避免空白 */
-    const callMembers = useGroupCallMembers(computed(() => props.isGroup ? props.payload?.groupId : undefined), computed(() => props.payload?.inviterUserId));
+    const callMembers = useGroupCallMembers(computed(() => props.isGroup ? props.payload?.groupId : undefined), computed(() => props.payload?.inviterUserId))
     const __returned__ = {
       props,
       tipText,
@@ -131,12 +141,12 @@ export default /*#__PURE__*/_defineComponent({
       callMembers,
       Icon,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>

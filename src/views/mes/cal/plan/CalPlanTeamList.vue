@@ -22,24 +22,65 @@
           highlight-current-row
           @current-change="handleTeamSelect"
         >
-          <el-table-column label="班组编号" align="center" prop="teamId" width="100" />
-          <el-table-column label="班组编码" align="center" prop="teamCode" min-width="100" />
-          <el-table-column label="班组名称" align="center" prop="teamName" min-width="100" />
-          <el-table-column label="备注" align="center" prop="remark" min-width="120" />
-          <el-table-column v-if="!isDetail" label="操作" align="center" width="80">
-            <template v-slot="scope">
-              <el-button type="text" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-table-column
+            label="班组编号"
+            align="center"
+            prop="teamId"
+            width="100"
+          />
+          <el-table-column
+            label="班组编码"
+            align="center"
+            prop="teamCode"
+            min-width="100"
+          />
+          <el-table-column
+            label="班组名称"
+            align="center"
+            prop="teamName"
+            min-width="100"
+          />
+          <el-table-column
+            label="备注"
+            align="center"
+            prop="remark"
+            min-width="120"
+          />
+          <el-table-column
+            v-if="!isDetail"
+            label="操作"
+            align="center"
+            width="80"
+          >
+            <template slot-scope="scope">
+              <el-button
+                type="text"
+                size="mini"
+                @click="handleDelete(scope.row.id)"
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="10">
-        <el-card shadow="never" class="member-card">
-          <div slot="header" class="member-card-header">
+        <el-card
+          shadow="never"
+          class="member-card"
+        >
+          <div
+            slot="header"
+            class="member-card-header"
+          >
             <span>{{ selectedTeamName ? `「${selectedTeamName}」班组成员` : '班组成员' }}</span>
           </div>
-          <div v-if="!selectedTeamId" class="member-empty-tip">
-            <el-empty description="请点击左侧班组查看成员" :image-size="60" />
+          <div
+            v-if="!selectedTeamId"
+            class="member-empty-tip"
+          >
+            <el-empty
+              description="请点击左侧班组查看成员"
+              :image-size="60"
+            />
           </div>
           <el-table
             v-else
@@ -50,18 +91,43 @@
             border
             size="small"
           >
-            <el-table-column label="用户昵称" align="center" prop="nickname" min-width="100" />
-            <el-table-column label="手机号" align="center" prop="telephone" min-width="120" />
-            <el-table-column label="备注" align="center" prop="remark" min-width="100" />
+            <el-table-column
+              label="用户昵称"
+              align="center"
+              prop="nickname"
+              min-width="100"
+            />
+            <el-table-column
+              label="手机号"
+              align="center"
+              prop="telephone"
+              min-width="120"
+            />
+            <el-table-column
+              label="备注"
+              align="center"
+              prop="remark"
+              min-width="100"
+            />
           </el-table>
-          <div v-if="selectedTeamId && !memberLoading && memberList.length === 0" class="member-empty-tip">
-            <el-empty description="暂无成员" :image-size="60" />
+          <div
+            v-if="selectedTeamId && !memberLoading && memberList.length === 0"
+            class="member-empty-tip"
+          >
+            <el-empty
+              description="暂无成员"
+              :image-size="60"
+            />
           </div>
         </el-card>
       </el-col>
     </el-row>
 
-    <cal-team-select-dialog ref="teamDialog" :multiple="true" @selected="handleTeamsSelected" />
+    <cal-team-select-dialog
+      ref="teamDialog"
+      :multiple="true"
+      @selected="handleTeamsSelected"
+    />
   </div>
 </template>
 

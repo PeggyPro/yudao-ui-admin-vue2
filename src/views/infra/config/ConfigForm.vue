@@ -1,30 +1,82 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="90px">
-      <el-form-item label="参数分类" prop="category">
-        <el-input v-model="formData.category" placeholder="请输入参数分类" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="90px"
+    >
+      <el-form-item
+        label="参数分类"
+        prop="category"
+      >
+        <el-input
+          v-model="formData.category"
+          placeholder="请输入参数分类"
+        />
       </el-form-item>
-      <el-form-item label="参数名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入参数名称" />
+      <el-form-item
+        label="参数名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入参数名称"
+        />
       </el-form-item>
-      <el-form-item label="参数键名" prop="key">
-        <el-input v-model="formData.key" placeholder="请输入参数键名" />
+      <el-form-item
+        label="参数键名"
+        prop="key"
+      >
+        <el-input
+          v-model="formData.key"
+          placeholder="请输入参数键名"
+        />
       </el-form-item>
-      <el-form-item label="参数键值" prop="value">
-        <el-input v-model="formData.value" placeholder="请输入参数键值" />
+      <el-form-item
+        label="参数键值"
+        prop="value"
+      >
+        <el-input
+          v-model="formData.value"
+          placeholder="请输入参数键值"
+        />
       </el-form-item>
-      <el-form-item label="是否可见" prop="visible">
+      <el-form-item
+        label="是否可见"
+        prop="visible"
+      >
         <el-radio-group v-model="formData.visible">
           <el-radio :label="true">是</el-radio>
           <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" placeholder="请输入内容" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入内容"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

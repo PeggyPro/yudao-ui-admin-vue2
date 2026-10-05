@@ -60,7 +60,7 @@
       label="车间编码"
       align="center"
       prop="code"
-    ><template v-slot="scope"><el-link
+    ><template slot-scope="scope"><el-link
       type="primary"
       @click="openForm('detail', scope.row.id)"
     >{{ scope.row.code }}</el-link></template></el-table-column><el-table-column
@@ -80,7 +80,7 @@
       label="状态"
       align="center"
       prop="status"
-    ><template v-slot="scope"><dict-tag
+    ><template slot-scope="scope"><dict-tag
       :type="DICT_TYPE.COMMON_STATUS"
       :value="scope.row.status"
     /></template></el-table-column><el-table-column
@@ -91,7 +91,7 @@
       label="操作"
       align="center"
       width="150"
-    ><template v-slot="scope"><el-button
+    ><template slot-scope="scope"><el-button
       v-hasPermi="['mes:md-workshop:update']"
       type="text"
       @click="openForm('update', scope.row.id)"

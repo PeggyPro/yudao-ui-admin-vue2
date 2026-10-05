@@ -1,8 +1,22 @@
 <template>
-  <dialog-component title="选择出差申请单" v-model="dialogVisible" width="1100px" append-to-body>
+  <dialog-component
+    v-model="dialogVisible"
+    title="选择出差申请单"
+    width="1100px"
+    append-to-body
+  >
     <!-- 搜索 -->
-    <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px" @submit.native.prevent>
-      <el-form-item label="单据编号" prop="no">
+    <el-form
+      ref="queryForm"
+      :model="queryParams"
+      :inline="true"
+      label-width="68px"
+      @submit.native.prevent
+    >
+      <el-form-item
+        label="单据编号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入单据编号"
@@ -11,7 +25,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="出差事由" prop="reason">
+      <el-form-item
+        label="出差事由"
+        prop="reason"
+      >
         <el-input
           v-model="queryParams.reason"
           placeholder="请输入出差事由"
@@ -20,7 +37,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="报销状态" prop="reimburseStatus">
+      <el-form-item
+        label="报销状态"
+        prop="reimburseStatus"
+      >
         <el-select
           v-model="queryParams.reimburseStatus"
           placeholder="请选择报销状态"
@@ -37,8 +57,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
     <!-- 列表：仅从本人已审批通过的申请中选择 -->
@@ -51,7 +78,10 @@
       @row-click="handleSelect"
       @row-dblclick="handleConfirmRow"
     >
-      <el-table-column width="55" align="center">
+      <el-table-column
+        width="55"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-radio
             v-model="selectedId"
@@ -61,18 +91,45 @@
           ><span>&nbsp;</span></el-radio>
         </template>
       </el-table-column>
-      <el-table-column label="单据编号" prop="no" width="180" />
-      <el-table-column label="出差事由" prop="reason" min-width="220" show-overflow-tooltip />
-      <el-table-column label="开始日期" width="180">
+      <el-table-column
+        label="单据编号"
+        prop="no"
+        width="180"
+      />
+      <el-table-column
+        label="出差事由"
+        prop="reason"
+        min-width="220"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="开始日期"
+        width="180"
+      >
         <template slot-scope="scope">{{ formatDate(scope.row.startTime) }}</template>
       </el-table-column>
-      <el-table-column label="结束日期" width="180">
+      <el-table-column
+        label="结束日期"
+        width="180"
+      >
         <template slot-scope="scope">{{ formatDate(scope.row.endTime) }}</template>
       </el-table-column>
-      <el-table-column label="天数" prop="days" width="80" align="center" />
-      <el-table-column label="报销状态" width="110" align="center">
+      <el-table-column
+        label="天数"
+        prop="days"
+        width="80"
+        align="center"
+      />
+      <el-table-column
+        label="报销状态"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_REIMBURSE_STATUS" :value="scope.row.reimburseStatus" />
+          <dict-tag
+            :type="DICT_TYPE.OA_REIMBURSE_STATUS"
+            :value="scope.row.reimburseStatus"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -84,8 +141,15 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="loading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="loading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </dialog-component>

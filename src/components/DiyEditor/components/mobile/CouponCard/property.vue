@@ -1,8 +1,15 @@
 <template>
   <div>
     <ComponentContainerProperty v-model="formData.style">
-      <el-form label-width="80px" :model="formData">
-        <el-card header="优惠券列表" class="property-group" shadow="never">
+      <el-form
+        label-width="80px"
+        :model="formData"
+      >
+        <el-card
+          header="优惠券列表"
+          class="property-group"
+          shadow="never"
+        >
           <div
             v-for="(coupon, index) in couponList"
             :key="index"
@@ -18,44 +25,88 @@
             </span>
           </div>
           <el-form-item label-width="0">
-            <el-button class="add-button" type="primary" plain @click="handleAddCoupon">
+            <el-button
+              class="add-button"
+              type="primary"
+              plain
+              @click="handleAddCoupon"
+            >
               <i class="el-icon-plus" /> 添加
             </el-button>
           </el-form-item>
         </el-card>
-        <el-card header="优惠券样式" class="property-group" shadow="never">
-          <el-form-item label="列数" prop="type">
+        <el-card
+          header="优惠券样式"
+          class="property-group"
+          shadow="never"
+        >
+          <el-form-item
+            label="列数"
+            prop="type"
+          >
             <el-radio-group v-model="formData.columns">
-              <el-tooltip class="item" content="一列" placement="bottom">
+              <el-tooltip
+                class="item"
+                content="一列"
+                placement="bottom"
+              >
                 <el-radio-button :label="1">
                   <svg-icon icon-class="fluent:text-column-one-24-filled" />
                 </el-radio-button>
               </el-tooltip>
-              <el-tooltip class="item" content="二列" placement="bottom">
+              <el-tooltip
+                class="item"
+                content="二列"
+                placement="bottom"
+              >
                 <el-radio-button :label="2">
                   <svg-icon icon-class="fluent:text-column-two-24-filled" />
                 </el-radio-button>
               </el-tooltip>
-              <el-tooltip class="item" content="三列" placement="bottom">
+              <el-tooltip
+                class="item"
+                content="三列"
+                placement="bottom"
+              >
                 <el-radio-button :label="3">
                   <svg-icon icon-class="fluent:text-column-three-24-filled" />
                 </el-radio-button>
               </el-tooltip>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="背景图片" prop="bgImg">
-            <UploadImg v-model="formData.bgImg" height="80px" width="100%" class="background-upload" />
+          <el-form-item
+            label="背景图片"
+            prop="bgImg"
+          >
+            <UploadImg
+              v-model="formData.bgImg"
+              height="80px"
+              width="100%"
+              class="background-upload"
+            />
           </el-form-item>
-          <el-form-item label="文字颜色" prop="textColor">
+          <el-form-item
+            label="文字颜色"
+            prop="textColor"
+          >
             <ColorInput v-model="formData.textColor" />
           </el-form-item>
-          <el-form-item label="按钮背景" prop="button.bgColor">
+          <el-form-item
+            label="按钮背景"
+            prop="button.bgColor"
+          >
             <ColorInput v-model="formData.button.bgColor" />
           </el-form-item>
-          <el-form-item label="按钮文字" prop="button.color">
+          <el-form-item
+            label="按钮文字"
+            prop="button.color"
+          >
             <ColorInput v-model="formData.button.color" />
           </el-form-item>
-          <el-form-item label="间隔" prop="space">
+          <el-form-item
+            label="间隔"
+            prop="space"
+          >
             <el-slider
               v-model="formData.space"
               :max="100"

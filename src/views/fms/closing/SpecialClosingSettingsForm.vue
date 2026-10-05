@@ -1,45 +1,114 @@
 <template>
-  <el-dialog :title="'编辑' + schemeName" :visible.sync="dialogVisible" width="880px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="90px">
-      <el-form-item label="凭证字" prop="voucherWordId">
-        <FmsVoucherWordSelect v-model="formData.voucherWordId" :options="voucherWords" class="word-select" />
+  <el-dialog
+    :title="'编辑' + schemeName"
+    :visible.sync="dialogVisible"
+    width="880px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="90px"
+    >
+      <el-form-item
+        label="凭证字"
+        prop="voucherWordId"
+      >
+        <FmsVoucherWordSelect
+          v-model="formData.voucherWordId"
+          :options="voucherWords"
+          class="word-select"
+        />
       </el-form-item>
     </el-form>
 
     <div class="rules-header">
       <span>凭证分录规则</span>
-      <el-button type="text" icon="el-icon-plus" @click="addSubjectRule()">添加分录</el-button>
+      <el-button
+        type="text"
+        icon="el-icon-plus"
+        @click="addSubjectRule()"
+      >添加分录</el-button>
     </div>
-    <el-table :data="formData.subjects" border max-height="420px">
-      <el-table-column label="摘要" min-width="180">
-        <template slot-scope="scope"><el-input v-model="scope.row.digest" placeholder="请输入摘要" /></template>
+    <el-table
+      :data="formData.subjects"
+      border
+      max-height="420px"
+    >
+      <el-table-column
+        label="摘要"
+        min-width="180"
+      >
+        <template slot-scope="scope"><el-input
+          v-model="scope.row.digest"
+          placeholder="请输入摘要"
+        /></template>
       </el-table-column>
-      <el-table-column label="借/贷" width="105">
+      <el-table-column
+        label="借/贷"
+        width="105"
+      >
         <template slot-scope="scope">
           <el-select v-model="scope.row.direction">
-            <el-option label="借" :value="FMS_DEBIT_CREDIT_DIRECTION.DEBIT" />
-            <el-option label="贷" :value="FMS_DEBIT_CREDIT_DIRECTION.CREDIT" />
+            <el-option
+              label="借"
+              :value="FMS_DEBIT_CREDIT_DIRECTION.DEBIT"
+            />
+            <el-option
+              label="贷"
+              :value="FMS_DEBIT_CREDIT_DIRECTION.CREDIT"
+            />
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="科目" min-width="280">
-        <template slot-scope="scope"><FmsSubjectSelect v-model="scope.row.subjectId" :options="subjects" class="full-width" /></template>
+      <el-table-column
+        label="科目"
+        min-width="280"
+      >
+        <template slot-scope="scope"><FmsSubjectSelect
+          v-model="scope.row.subjectId"
+          :options="subjects"
+          class="full-width"
+        /></template>
       </el-table-column>
-      <el-table-column label="金额比例%" width="130">
+      <el-table-column
+        label="金额比例%"
+        width="130"
+      >
         <template slot-scope="scope">
-          <el-input-number v-model="scope.row.amountRatio" :min="0.01" :max="100" :controls="false" :precision="2" class="full-width" />
+          <el-input-number
+            v-model="scope.row.amountRatio"
+            :min="0.01"
+            :max="100"
+            :controls="false"
+            :precision="2"
+            class="full-width"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="70" align="center">
+      <el-table-column
+        label="操作"
+        width="70"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="danger-text" @click="formData.subjects.splice(scope.$index, 1)">删除</el-button>
+          <el-button
+            type="text"
+            class="danger-text"
+            @click="formData.subjects.splice(scope.$index, 1)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="form-tip">{{ ratioTip }}</div>
 
     <div slot="footer">
-      <el-button type="primary" :loading="submitting" @click="submitForm">确定</el-button>
+      <el-button
+        type="primary"
+        :loading="submitting"
+        @click="submitForm"
+      >确定</el-button>
       <el-button @click="dialogVisible = false">取消</el-button>
     </div>
   </el-dialog>

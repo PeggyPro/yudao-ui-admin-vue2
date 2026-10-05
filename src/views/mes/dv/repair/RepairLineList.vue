@@ -1,22 +1,133 @@
 <!-- MES 维修工单行列表 -->
 <template>
   <div>
-    <el-button v-if="!disabled" type="primary" plain icon="el-icon-plus" class="operation-button" @click="openForm('create')">添加明细</el-button>
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="项目名称" align="center" prop="subjectName" /><el-table-column label="故障描述" align="center" prop="malfunction" /><el-table-column label="故障图片" align="center" prop="malfunctionUrl" />
-      <el-table-column label="维修描述" align="center" prop="description" /><el-table-column label="项目内容" align="center" prop="subjectContent" /><el-table-column label="标准" align="center" prop="subjectStandard" />
-      <el-table-column v-if="!disabled" label="操作" align="center" width="130"><template v-slot="scope"><el-button type="text" size="mini" @click="openForm('update', scope.row)">编辑</el-button><el-button type="text" size="mini" @click="handleDelete(scope.row.id)">删除</el-button></template></el-table-column>
+    <el-button
+      v-if="!disabled"
+      type="primary"
+      plain
+      icon="el-icon-plus"
+      class="operation-button"
+      @click="openForm('create')"
+    >添加明细</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="项目名称"
+        align="center"
+        prop="subjectName"
+      /><el-table-column
+        label="故障描述"
+        align="center"
+        prop="malfunction"
+      /><el-table-column
+        label="故障图片"
+        align="center"
+        prop="malfunctionUrl"
+      />
+      <el-table-column
+        label="维修描述"
+        align="center"
+        prop="description"
+      /><el-table-column
+        label="项目内容"
+        align="center"
+        prop="subjectContent"
+      /><el-table-column
+        label="标准"
+        align="center"
+        prop="subjectStandard"
+      />
+      <el-table-column
+        v-if="!disabled"
+        label="操作"
+        align="center"
+        width="130"
+      ><template slot-scope="scope"><el-button
+        type="text"
+        size="mini"
+        @click="openForm('update', scope.row)"
+      >编辑</el-button><el-button
+        type="text"
+        size="mini"
+        @click="handleDelete(scope.row.id)"
+      >删除</el-button></template></el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
-      <el-form ref="form" :model="formData" :rules="formRules" label-width="80px">
-        <el-form-item label="项目" prop="subjectId"><el-select v-model="formData.subjectId" filterable remote reserve-keyword placeholder="请输入项目名称搜索" :remote-method="getSubjectOptions"><el-option v-for="item in subjectOptions" :key="item.id" :label="item.name" :value="item.id" /></el-select></el-form-item>
-        <el-form-item label="故障描述" prop="malfunction"><el-input v-model="formData.malfunction" type="textarea" placeholder="请输入故障描述" /></el-form-item>
-        <el-form-item label="故障图片" prop="malfunctionUrl"><el-input v-model="formData.malfunctionUrl" placeholder="请输入故障图片 URL" /></el-form-item>
-        <el-form-item label="维修描述" prop="description"><el-input v-model="formData.description" type="textarea" placeholder="请输入维修描述" /></el-form-item>
-        <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        :model="formData"
+        :rules="formRules"
+        label-width="80px"
+      >
+        <el-form-item
+          label="项目"
+          prop="subjectId"
+        ><el-select
+          v-model="formData.subjectId"
+          filterable
+          remote
+          reserve-keyword
+          placeholder="请输入项目名称搜索"
+          :remote-method="getSubjectOptions"
+        ><el-option
+          v-for="item in subjectOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        /></el-select></el-form-item>
+        <el-form-item
+          label="故障描述"
+          prop="malfunction"
+        ><el-input
+          v-model="formData.malfunction"
+          type="textarea"
+          placeholder="请输入故障描述"
+        /></el-form-item>
+        <el-form-item
+          label="故障图片"
+          prop="malfunctionUrl"
+        ><el-input
+          v-model="formData.malfunctionUrl"
+          placeholder="请输入故障图片 URL"
+        /></el-form-item>
+        <el-form-item
+          label="维修描述"
+          prop="description"
+        ><el-input
+          v-model="formData.description"
+          type="textarea"
+          placeholder="请输入维修描述"
+        /></el-form-item>
+        <el-form-item
+          label="备注"
+          prop="remark"
+        ><el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        /></el-form-item>
       </el-form>
-      <span slot="footer"><el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
+      <span slot="footer"><el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
     </el-dialog>
   </div>
 </template>

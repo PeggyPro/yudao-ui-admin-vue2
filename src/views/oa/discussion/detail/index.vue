@@ -1,5 +1,8 @@
 <template>
-  <div v-loading="loading" class="app-container oa-discussion-detail">
+  <div
+    v-loading="loading"
+    class="app-container oa-discussion-detail"
+  >
     <template v-if="detail">
       <!-- 主题正文 -->
       <div class="detail-wrap">
@@ -15,7 +18,10 @@
           class="oa-discussion-content"
         />
         <!-- 附件 -->
-        <div v-if="detail.fileUrls && detail.fileUrls.length" class="detail-files">
+        <div
+          v-if="detail.fileUrls && detail.fileUrls.length"
+          class="detail-files"
+        >
           <h3 class="detail-files-title">附件</h3>
           <el-link
             v-for="(url, index) in detail.fileUrls"
@@ -33,24 +39,46 @@
         />
         <!-- 点赞统计，名单按需展开 -->
         <div class="detail-actions">
-          <el-button type="text" @click="$refs.replyRef.focusReply()">回复</el-button>
+          <el-button
+            type="text"
+            @click="$refs.replyRef.focusReply()"
+          >回复</el-button>
           <span class="action-stat">浏览（{{ detail.visitCount || 0 }}）</span>
           <span class="action-stat">回复（{{ detail.replyCount || 0 }}）</span>
-          <el-button type="text" :loading="likeLoading" @click="handleDiscussionLike">
+          <el-button
+            type="text"
+            :loading="likeLoading"
+            @click="handleDiscussionLike"
+          >
             {{ detail.liked ? '取消点赞' : '点赞' }}（{{ detail.likeCount || 0 }}）
           </el-button>
         </div>
         <!-- 点赞人摘要 -->
-        <div v-if="detail.likeUserNames && detail.likeUserNames.length" class="like-summary">
+        <div
+          v-if="detail.likeUserNames && detail.likeUserNames.length"
+          class="like-summary"
+        >
           {{ detail.likeUserNames.slice(0, 3).join('、') }}，
-          <el-popover trigger="click" title="点赞人" width="260">
-            <el-button slot="reference" type="text">共 {{ detail.likeCount || 0 }} 人觉得很赞</el-button>
+          <el-popover
+            trigger="click"
+            title="点赞人"
+            width="260"
+          >
+            <el-button
+              slot="reference"
+              type="text"
+            >共 {{ detail.likeCount || 0 }} 人觉得很赞</el-button>
             <div class="like-names">{{ detail.likeUserNames.join('、') }}</div>
           </el-popover>
         </div>
       </div>
       <!-- 讨论楼层 -->
-      <oa-discussion-reply ref="replyRef" :key="detail.id" :detail="detail" @success="getDetail()" />
+      <oa-discussion-reply
+        ref="replyRef"
+        :key="detail.id"
+        :detail="detail"
+        @success="getDetail()"
+      />
     </template>
   </div>
 </template>

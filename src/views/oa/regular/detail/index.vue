@@ -1,10 +1,22 @@
 <template>
-  <div v-loading="detailLoading" class="oa-regular-apply-detail">
+  <div
+    v-loading="detailLoading"
+    class="oa-regular-apply-detail"
+  >
     <!-- 转正申请信息 -->
-    <el-descriptions :column="2" border>
-      <el-descriptions-item label="标题" :span="2"> {{ detailData.title }} </el-descriptions-item>
+    <el-descriptions
+      :column="2"
+      border
+    >
+      <el-descriptions-item
+        label="标题"
+        :span="2"
+      > {{ detailData.title }} </el-descriptions-item>
       <el-descriptions-item label="紧急程度">
-        <dict-tag :type="DICT_TYPE.OA_APPLY_URGENCY" :value="detailData.urgency" />
+        <dict-tag
+          :type="DICT_TYPE.OA_APPLY_URGENCY"
+          :value="detailData.urgency"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="开始时间">
         {{ formatDate(detailData.startTime) }}
@@ -12,22 +24,40 @@
       <el-descriptions-item label="结束时间">
         {{ formatDate(detailData.endTime) }}
       </el-descriptions-item>
-      <el-descriptions-item label="试用期心得" :span="2">
+      <el-descriptions-item
+        label="试用期心得"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.experience }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="岗位职责理解" :span="2">
+      <el-descriptions-item
+        label="岗位职责理解"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.understanding }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="试用期成长" :span="2">
+      <el-descriptions-item
+        label="试用期成长"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.growth }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="目前不足" :span="2">
+      <el-descriptions-item
+        label="目前不足"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.deficiency }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="工作改进" :span="2">
+      <el-descriptions-item
+        label="工作改进"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.improvement }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="产品意见建议" :span="2">
+      <el-descriptions-item
+        label="产品意见建议"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.suggestion }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="天数"> {{ detailData.days }} </el-descriptions-item>
@@ -36,10 +66,17 @@
         {{ formatDate(detailData.createTime) }}
       </el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detailData.status === BpmProcessInstanceStatus.NOT_START" type="info">
+        <el-tag
+          v-if="detailData.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+        >
           未提交
         </el-tag>
-        <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="detailData.status" />
+        <dict-tag
+          v-else
+          :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+          :value="detailData.status"
+        />
       </el-descriptions-item>
     </el-descriptions>
   </div>

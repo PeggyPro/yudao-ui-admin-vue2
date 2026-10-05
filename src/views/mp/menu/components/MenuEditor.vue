@@ -2,7 +2,12 @@
   <div class="mp-menu-editor">
     <div class="configure_page">
       <div class="delete_btn">
-        <el-button type="danger" size="small" icon="el-icon-delete" @click="$emit('delete')">
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          @click="$emit('delete')"
+        >
           删除当前菜单
         </el-button>
       </div>
@@ -19,11 +24,21 @@
       <div v-if="isLeaf">
         <div class="menu_content">
           <span>菜单标识：</span>
-          <el-input v-model="menu.menuKey" class="input_width" placeholder="请输入菜单 KEY" clearable />
+          <el-input
+            v-model="menu.menuKey"
+            class="input_width"
+            placeholder="请输入菜单 KEY"
+            clearable
+          />
         </div>
         <div class="menu_content">
           <span>菜单内容：</span>
-          <el-select v-model="menu.type" clearable placeholder="请选择" class="menu_option">
+          <el-select
+            v-model="menu.type"
+            clearable
+            placeholder="请选择"
+            class="menu_option"
+          >
             <el-option
               v-for="item in menuOptions"
               :key="item.value"
@@ -32,11 +47,22 @@
             />
           </el-select>
         </div>
-        <div v-if="menu.type === 'view'" class="configur_content">
+        <div
+          v-if="menu.type === 'view'"
+          class="configur_content"
+        >
           <span>跳转链接：</span>
-          <el-input v-model="menu.url" class="input_width" placeholder="请输入链接" clearable />
+          <el-input
+            v-model="menu.url"
+            class="input_width"
+            placeholder="请输入链接"
+            clearable
+          />
         </div>
-        <div v-if="menu.type === 'miniprogram'" class="configur_content">
+        <div
+          v-if="menu.type === 'miniprogram'"
+          class="configur_content"
+        >
           <div class="applet">
             <span>小程序的 appid ：</span>
             <el-input
@@ -66,17 +92,34 @@
           </div>
           <p class="blue">tips:需要和公众号进行关联才可以把小程序绑定带微信菜单上哟！</p>
         </div>
-        <div v-if="menu.type === 'article_view_limited'" class="configur_content">
+        <div
+          v-if="menu.type === 'article_view_limited'"
+          class="configur_content"
+        >
           <el-row>
-            <div v-if="menu.replyArticles" class="select-item">
+            <div
+              v-if="menu.replyArticles"
+              class="select-item"
+            >
               <wx-news :articles="menu.replyArticles" />
               <el-row class="ope-row">
-                <el-button type="danger" icon="el-icon-delete" circle @click="deleteMaterial" />
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  @click="deleteMaterial"
+                />
               </el-row>
             </div>
             <el-row v-else>
-              <el-col :span="24" class="material-select-trigger">
-                <el-button type="success" @click="showNewsDialog = true">
+              <el-col
+                :span="24"
+                class="material-select-trigger"
+              >
+                <el-button
+                  type="success"
+                  @click="showNewsDialog = true"
+                >
                   素材库选择<i class="el-icon-circle-check el-icon--right" />
                 </el-button>
               </el-col>
@@ -100,7 +143,10 @@
           v-if="menu.type === 'click' || menu.type === 'scancode_waitmsg'"
           class="configur_content"
         >
-          <wx-reply-select v-if="hackResetWxReplySelect" v-model="menu.reply" />
+          <wx-reply-select
+            v-if="hackResetWxReplySelect"
+            v-model="menu.reply"
+          />
         </div>
       </div>
     </div>

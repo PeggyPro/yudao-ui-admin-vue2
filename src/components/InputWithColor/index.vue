@@ -1,6 +1,13 @@
 <template>
-  <el-input v-model="inputValue" v-bind="$attrs">
-    <el-color-picker slot="append" v-model="colorValue" :predefine="PREDEFINE_COLORS" />
+  <el-input
+    v-model="inputValue"
+    v-bind="$attrs"
+  >
+    <el-color-picker
+      slot="append"
+      v-model="colorValue"
+      :predefine="PREDEFINE_COLORS"
+    />
   </el-input>
 </template>
 

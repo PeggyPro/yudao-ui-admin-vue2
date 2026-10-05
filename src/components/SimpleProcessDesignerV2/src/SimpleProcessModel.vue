@@ -2,29 +2,63 @@
   <div>
     <div class="simple-process-model-container position-relative">
       <div class="position-absolute top-0px right-0px bg-#fff z-index-button-group">
-        <el-row type="flex" justify="end">
-          <el-button-group key="scale-control" size="default">
-            <el-button v-if="!readonly" size="default" @click="exportJson">
+        <el-row
+          type="flex"
+          justify="end"
+        >
+          <el-button-group
+            key="scale-control"
+            size="default"
+          >
+            <el-button
+              v-if="!readonly"
+              size="default"
+              @click="exportJson"
+            >
               <svg-icon icon-class="ep:download" /> 导出
             </el-button>
-            <el-button v-if="!readonly" size="default" @click="importJson">
+            <el-button
+              v-if="!readonly"
+              size="default"
+              @click="importJson"
+            >
               <svg-icon icon-class="ep:upload" />导入
             </el-button>
             <!-- 用于打开本地文件-->
             <input
               v-if="!readonly"
-              type="file"
               id="files"
               ref="refFile"
+              type="file"
               style="display: none"
               accept=".json"
               @change="importLocalFile"
+            >
+            <el-button
+              size="default"
+              icon="el-icon-c-scale-to-original"
+              @click="processReZoom()"
             />
-            <el-button size="default" icon="el-icon-c-scale-to-original" @click="processReZoom()" />
-            <el-button size="default" :plain="true" icon="el-icon-zoom-out" @click="zoomOut()" />
-            <el-button size="default" class="w-80px"> {{ scaleValue }}% </el-button>
-            <el-button size="default" :plain="true" icon="el-icon-zoom-in" @click="zoomIn()" />
-            <el-button size="default" @click="resetPosition">重置</el-button>
+            <el-button
+              size="default"
+              :plain="true"
+              icon="el-icon-zoom-out"
+              @click="zoomOut()"
+            />
+            <el-button
+              size="default"
+              class="w-80px"
+            > {{ scaleValue }}% </el-button>
+            <el-button
+              size="default"
+              :plain="true"
+              icon="el-icon-zoom-in"
+              @click="zoomIn()"
+            />
+            <el-button
+              size="default"
+              @click="resetPosition"
+            >重置</el-button>
           </el-button-group>
         </el-row>
       </div>
@@ -37,20 +71,32 @@
         @mouseleave="stopDrag"
         @mouseenter="setGrabCursor"
       >
-        <ProcessNodeTree v-if="processNodeTree" :key="importKey" :flow-node.sync="processNodeTree" />
+        <ProcessNodeTree
+          v-if="processNodeTree"
+          :key="importKey"
+          :flow-node.sync="processNodeTree"
+        />
       </div>
     </div>
-    <el-dialog :visible.sync="errorDialogVisible" title="保存失败" width="400px" append-to-body>
+    <el-dialog
+      :visible.sync="errorDialogVisible"
+      title="保存失败"
+      width="400px"
+      append-to-body
+    >
       <div class="mb-2">以下节点内容不完善，请修改后保存</div>
       <div
-        class="mb-3 b-rounded-1 bg-gray-100 p-2 line-height-normal"
         v-for="(item, index) in errorNodes"
         :key="index"
+        class="mb-3 b-rounded-1 bg-gray-100 p-2 line-height-normal"
       >
         {{ item.name }} : {{ NODE_DEFAULT_TEXT.get(item.type) }}
       </div>
       <template slot="footer">
-        <el-button type="primary" @click="errorDialogVisible = false">知道了</el-button>
+        <el-button
+          type="primary"
+          @click="errorDialogVisible = false"
+        >知道了</el-button>
       </template>
     </el-dialog>
   </div>

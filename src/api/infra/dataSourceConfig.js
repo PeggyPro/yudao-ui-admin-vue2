@@ -47,6 +47,6 @@ export function getDataSourceConfig(id) {
 export function getDataSourceConfigList() {
   return request({
     url: '/infra/data-source-config/list',
-    method: 'get',
+    method: 'get'
   })
 }

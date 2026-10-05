@@ -127,11 +127,11 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'index',
     children: [{
-        path: 'index',
-        component: (resolve) => require(['@/views/index'], resolve),
-        name: '首页',
-        meta: {title: '首页', icon: 'dashboard', affix: true}
-      }
+      path: 'index',
+      component: (resolve) => require(['@/views/index'], resolve),
+      name: '首页',
+      meta: { title: '首页', icon: 'dashboard', affix: true }
+    }
     ]
   },
   {
@@ -140,15 +140,15 @@ export const constantRoutes = [
     hidden: true,
     redirect: 'noredirect',
     children: [{
-        path: 'profile',
-        component: (resolve) => require(['@/views/Profile/Index'], resolve),
-        name: 'Profile',
-        meta: {title: '个人中心', icon: 'user'}
-      }, {
-        path: 'notify-message',
-        component: (resolve) => require(['@/views/system/notify/my/index'], resolve),
-        name: 'MyNotifyMessage',
-        meta: { title: '我的站内信', icon: 'message' },
+      path: 'profile',
+      component: (resolve) => require(['@/views/Profile/Index'], resolve),
+      name: 'Profile',
+      meta: { title: '个人中心', icon: 'user' }
+    }, {
+      path: 'notify-message',
+      component: (resolve) => require(['@/views/system/notify/my/index'], resolve),
+      name: 'MyNotifyMessage',
+      meta: { title: '我的站内信', icon: 'message' }
     }]
   },
   {
@@ -331,11 +331,11 @@ export const constantRoutes = [
     component: Layout,
     hidden: true,
     children: [{
-        path: 'type/data/:dictType',
-        component: (resolve) => require(['@/views/system/dict/data'], resolve),
-        name: 'SystemDictData',
-        meta: {title: '字典数据', icon: '', activeMenu: '/system/dict'}
-      }
+      path: 'type/data/:dictType',
+      component: (resolve) => require(['@/views/system/dict/data'], resolve),
+      name: 'SystemDictData',
+      meta: { title: '字典数据', icon: '', activeMenu: '/system/dict' }
+    }
     ]
   },
   {
@@ -366,29 +366,29 @@ export const constantRoutes = [
     name: 'JobL',
     hidden: true,
     children: [{
-        path: 'job-log',
-        component: (resolve) => require(['@/views/infra/job/logger/index'], resolve),
-        name: 'InfraJobLog',
-        meta: {title: '调度日志', activeMenu: '/infra/job'}
-      }
+      path: 'job-log',
+      component: (resolve) => require(['@/views/infra/job/logger/index'], resolve),
+      name: 'InfraJobLog',
+      meta: { title: '调度日志', activeMenu: '/infra/job' }
+    }
     ]
   }, {
     path: '/codegen',
     component: Layout,
     hidden: true,
     children: [{
-        // Canonical route: the table id is passed as query.id.
-        path: 'edit',
-        component: (resolve) => require(['@/views/infra/codegen/editTable'], resolve),
-        name: 'InfraCodegenEditTable',
-        meta: {title: '修改生成配置', activeMenu: '/infra/codegen'}
-      }, {
-        // Keep old deep links working while callers migrate to query.id.
-        path: 'edit/:tableId(\\d+)',
-        component: (resolve) => require(['@/views/infra/codegen/editTable'], resolve),
-        name: 'InfraCodegenEditTableLegacy',
-        meta: {title: '修改生成配置', activeMenu: '/infra/codegen'}
-      }
+      // Canonical route: the table id is passed as query.id.
+      path: 'edit',
+      component: (resolve) => require(['@/views/infra/codegen/editTable'], resolve),
+      name: 'InfraCodegenEditTable',
+      meta: { title: '修改生成配置', activeMenu: '/infra/codegen' }
+    }, {
+      // Keep old deep links working while callers migrate to query.id.
+      path: 'edit/:tableId(\\d+)',
+      component: (resolve) => require(['@/views/infra/codegen/editTable'], resolve),
+      name: 'InfraCodegenEditTableLegacy',
+      meta: { title: '修改生成配置', activeMenu: '/infra/codegen' }
+    }
     ]
   },
   {
@@ -768,28 +768,28 @@ export const constantRoutes = [
     hidden: true,
     meta: { hidden: true },
     children: [{
-        path: 'oa/leave/create',
-        component: (resolve) => require(['@/views/bpm/oa/leave/create'], resolve),
-        name: 'OALeaveCreate',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '发起 OA 请假',
-          activeMenu: '/bpm/oa/leave'
-        }
-      }, {
-        path: 'oa/leave/detail',
-        component: (resolve) => require(['@/views/bpm/oa/leave/detail'], resolve),
-        name: 'OALeaveDetail',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '查看 OA 请假',
-          activeMenu: '/bpm/oa/leave'
-        }
+      path: 'oa/leave/create',
+      component: (resolve) => require(['@/views/bpm/oa/leave/create'], resolve),
+      name: 'OALeaveCreate',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '发起 OA 请假',
+        activeMenu: '/bpm/oa/leave'
       }
+    }, {
+      path: 'oa/leave/detail',
+      component: (resolve) => require(['@/views/bpm/oa/leave/detail'], resolve),
+      name: 'OALeaveDetail',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '查看 OA 请假',
+        activeMenu: '/bpm/oa/leave'
+      }
+    }
     ]
   },
   {
@@ -808,66 +808,66 @@ export const constantRoutes = [
         activeMenu: '/bpm/manager/form'
       }
     }, {
-        path: 'manager/definition',
-        component: (resolve) => require(['@/views/bpm/model/definition/index'], resolve),
-        name: 'BpmProcessDefinition',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '流程定义',
-          activeMenu: '/bpm/manager/model'
-        }
-      }, {
-        path: 'manager/model/create',
-        component: (resolve) => require(['@/views/bpm/model/form/index'], resolve),
-        name: 'BpmModelCreate',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '创建流程',
-          activeMenu: '/bpm/manager/model'
-        }
-      }, {
-        path: 'manager/model/:type/:id',
-        component: (resolve) => require(['@/views/bpm/model/form/index'], resolve),
-        name: 'BpmModelUpdate',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '修改流程',
-          activeMenu: '/bpm/manager/model'
-        }
-      }, {
-        path: 'process-instance/detail',
-        component: (resolve) => require(['@/views/bpm/processInstance/detail/index'], resolve),
-        name: 'BpmProcessInstanceDetail',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '流程详情',
-          activeMenu: '/bpm/task/my'
-        },
-        props: (route) => ({
-          id: route.query.id,
-          taskId: route.query.taskId,
-          activityId: route.query.activityId
-        })
-      }, {
-        path: 'process-instance/report',
-        component: (resolve) => require(['@/views/bpm/processInstance/report/index'], resolve),
-        name: 'BpmProcessInstanceReport',
-        meta: {
-          noCache: true,
-          hidden: true,
-          canTo: true,
-          title: '数据报表',
-          activeMenu: '/bpm/manager/model'
-        }
+      path: 'manager/definition',
+      component: (resolve) => require(['@/views/bpm/model/definition/index'], resolve),
+      name: 'BpmProcessDefinition',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '流程定义',
+        activeMenu: '/bpm/manager/model'
       }
+    }, {
+      path: 'manager/model/create',
+      component: (resolve) => require(['@/views/bpm/model/form/index'], resolve),
+      name: 'BpmModelCreate',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '创建流程',
+        activeMenu: '/bpm/manager/model'
+      }
+    }, {
+      path: 'manager/model/:type/:id',
+      component: (resolve) => require(['@/views/bpm/model/form/index'], resolve),
+      name: 'BpmModelUpdate',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '修改流程',
+        activeMenu: '/bpm/manager/model'
+      }
+    }, {
+      path: 'process-instance/detail',
+      component: (resolve) => require(['@/views/bpm/processInstance/detail/index'], resolve),
+      name: 'BpmProcessInstanceDetail',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '流程详情',
+        activeMenu: '/bpm/task/my'
+      },
+      props: (route) => ({
+        id: route.query.id,
+        taskId: route.query.taskId,
+        activityId: route.query.activityId
+      })
+    }, {
+      path: 'process-instance/report',
+      component: (resolve) => require(['@/views/bpm/processInstance/report/index'], resolve),
+      name: 'BpmProcessInstanceReport',
+      meta: {
+        noCache: true,
+        hidden: true,
+        canTo: true,
+        title: '数据报表',
+        activeMenu: '/bpm/manager/model'
+      }
+    }
     ]
   },
   {
@@ -1384,14 +1384,14 @@ export const constantRoutes = [
 ]
 
 // 防止连续点击多次路由报错
-let routerPush = Router.prototype.push;
+const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {
   return routerPush.call(this, location).catch(err => err)
 }
 
 export default new Router({
-  base: process.env.VUE_APP_APP_NAME ? process.env.VUE_APP_APP_NAME : "/",
+  base: process.env.VUE_APP_APP_NAME ? process.env.VUE_APP_APP_NAME : '/',
   mode: 'history', // 去掉url中的#
-  scrollBehavior: () => ({y: 0}),
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

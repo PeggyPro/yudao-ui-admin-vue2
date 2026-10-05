@@ -4,7 +4,7 @@ import request from '@/utils/request'
 export function getMenuList(accountId) {
   return request({
     url: '/mp/menu/list?accountId=' + accountId,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -24,6 +24,6 @@ export function saveMenu(accountId, menus) {
 export function deleteMenu(accountId) {
   return request({
     url: '/mp/menu/delete?accountId=' + accountId,
-    method: 'delete',
+    method: 'delete'
   })
 }

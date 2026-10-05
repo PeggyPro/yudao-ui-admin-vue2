@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     width="800px"
     append-to-body
     @closed="resetForm"
@@ -13,11 +13,25 @@
       :rules="formRules"
       label-width="150px"
     >
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="formData.title" placeholder="请输入标题" maxlength="255" />
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          placeholder="请输入标题"
+          maxlength="255"
+        />
       </el-form-item>
-      <el-form-item label="紧急程度" prop="urgency">
-        <el-select v-model="formData.urgency" placeholder="请选择紧急程度" style="width: 100%">
+      <el-form-item
+        label="紧急程度"
+        prop="urgency"
+      >
+        <el-select
+          v-model="formData.urgency"
+          placeholder="请选择紧急程度"
+          style="width: 100%"
+        >
           <el-option
             v-for="dict in urgencyOptions"
             :key="dict.value"
@@ -26,8 +40,15 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="请假类型" prop="type">
-        <el-select v-model="formData.type" placeholder="请选择请假类型" style="width: 100%">
+      <el-form-item
+        label="请假类型"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          placeholder="请选择请假类型"
+          style="width: 100%"
+        >
           <el-option
             v-for="dict in leaveTypeOptions"
             :key="dict.value"
@@ -36,7 +57,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="开始时间" prop="startTime">
+      <el-form-item
+        label="开始时间"
+        prop="startTime"
+      >
         <el-date-picker
           v-model="formData.startTime"
           type="datetime"
@@ -45,7 +69,10 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="结束时间" prop="endTime">
+      <el-form-item
+        label="结束时间"
+        prop="endTime"
+      >
         <el-date-picker
           v-model="formData.endTime"
           type="datetime"
@@ -54,7 +81,10 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="申请原因" prop="reason">
+      <el-form-item
+        label="申请原因"
+        prop="reason"
+      >
         <el-input
           v-model="formData.reason"
           maxlength="5000"
@@ -63,25 +93,41 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
-        <upload-file v-model="formData.fileUrls" :is-show-tip="false" />
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
+        <upload-file
+          v-model="formData.fileUrls"
+          :is-show-tip="false"
+        />
       </el-form-item>
       <el-form-item label="天数">
-        <el-input :value="days" disabled>
+        <el-input
+          :value="days"
+          disabled
+        >
           <template slot="append">天</template>
         </el-input>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UploadFile from '@/components/UploadFile'
 import * as LeaveApplyApi from '@/api/oa/leave'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
@@ -100,7 +146,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaLeaveApplyForm',
-  components: { Dialog, UploadFile },
+  components: { AppDialog, UploadFile },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

@@ -1,10 +1,21 @@
 <template>
-  <span class="yudao-icon" :style="{ fontSize: `${size}px`, color }" aria-hidden="true">
-    <svg v-if="isLocal" :class="['iconify', svgClass]">
+  <span
+    class="yudao-icon"
+    :style="{ fontSize: `${size}px`, color }"
+    aria-hidden="true"
+  >
+    <svg
+      v-if="isLocal"
+      :class="['iconify', svgClass]"
+    >
       <use :xlink:href="`#icon-${icon.slice(9)}`" />
     </svg>
-    <svg v-else-if="resolved" :class="['iconify', svgClass]"
-      :viewBox="`0 0 ${resolved.width} ${resolved.height}`" v-html="resolved.body" />
+    <svg
+      v-else-if="resolved"
+      :class="['iconify', svgClass]"
+      :viewBox="`0 0 ${resolved.width} ${resolved.height}`"
+      v-html="resolved.body"
+    />
   </span>
 </template>
 

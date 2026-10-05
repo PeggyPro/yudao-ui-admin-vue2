@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="700px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="700px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,7 +13,10 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="共享类型" prop="subjectType">
+          <el-form-item
+            label="共享类型"
+            prop="subjectType"
+          >
             <el-select
               v-model="formData.subjectType"
               placeholder="请选择共享类型"
@@ -26,7 +33,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="共享对象" prop="subjectId">
+          <el-form-item
+            label="共享对象"
+            prop="subjectId"
+          >
             <UserSelect
               v-if="formData.subjectType === OA_FILE_SUBJECT_TYPE.USER"
               v-model="formData.subjectId"
@@ -41,7 +51,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="权限" prop="level">
+          <el-form-item
+            label="权限"
+            prop="level"
+          >
             <template slot="label">
               权限
               <el-tooltip
@@ -51,7 +64,10 @@
                 <i class="el-icon-question" />
               </el-tooltip>
             </template>
-            <el-select v-model="formData.level" placeholder="请选择权限">
+            <el-select
+              v-model="formData.level"
+              placeholder="请选择权限"
+            >
               <el-option
                 v-for="item in levelOptions"
                 :key="item.value"
@@ -62,10 +78,16 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="继承权限" prop="inherit">
+          <el-form-item
+            label="继承权限"
+            prop="inherit"
+          >
             <template slot="label">
               继承权限
-              <el-tooltip content="开启后对子项生效，关闭后子项需单独授权。" placement="top">
+              <el-tooltip
+                content="开启后对子项生效，关闭后子项需单独授权。"
+                placement="top"
+              >
                 <i class="el-icon-question" />
               </el-tooltip>
             </template>
@@ -73,7 +95,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="到期时间" prop="expireTime">
+          <el-form-item
+            label="到期时间"
+            prop="expireTime"
+          >
             <el-date-picker
               v-model="formData.expireTime"
               type="datetime"
@@ -87,15 +112,22 @@
       </el-row>
     </el-form>
 
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UserSelect from '@/views/system/user/components/UserSelect.vue'
 import DeptSelect from '@/views/system/dept/components/DeptSelect.vue'
 import * as PermissionApi from '@/api/oa/file/permission'
@@ -116,7 +148,7 @@ function createDefaultFormData(nodeId) {
 
 export default {
   name: 'OaFilePermissionForm',
-  components: { Dialog, UserSelect, DeptSelect },
+  components: { AppDialog, UserSelect, DeptSelect },
   data() {
     return {
       dialogVisible: false, // 弹窗的是否展示

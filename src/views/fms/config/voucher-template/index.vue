@@ -1,8 +1,15 @@
 <template>
   <div class="app-container fms-voucher-template-page">
-    <doc-alert title="【设置】凭证字、常用摘要、凭证模板" url="https://doc.iocoder.cn/fms/config/voucher/" />
+    <doc-alert
+      title="【设置】凭证字、常用摘要、凭证模板"
+      url="https://doc.iocoder.cn/fms/config/voucher/"
+    />
 
-    <el-form :inline="true" class="account-set-toolbar" label-width="78px">
+    <el-form
+      :inline="true"
+      class="account-set-toolbar"
+      label-width="78px"
+    >
       <el-form-item label="当前账套">
         <el-select
           v-model="accountSetId"
@@ -32,7 +39,10 @@
     />
 
     <div class="template-grid">
-      <el-card class="category-card" shadow="never">
+      <el-card
+        class="category-card"
+        shadow="never"
+      >
         <div class="card-header">
           <span class="card-title">凭证模板分类</span>
           <el-button
@@ -59,12 +69,18 @@
               <div class="category-row">
                 <div class="category-name">
                   <span class="truncate">{{ scope.row.name }}</span>
-                  <el-tag class="template-count" size="mini">
+                  <el-tag
+                    class="template-count"
+                    size="mini"
+                  >
                     {{ getCategoryTemplateCount(scope.row.id) }}
                   </el-tag>
                 </div>
                 <div class="category-actions">
-                  <el-tooltip content="编辑" placement="top">
+                  <el-tooltip
+                    content="编辑"
+                    placement="top"
+                  >
                     <el-button
                       v-if="isWritable"
                       v-hasPermi="['fms:config:voucher-template-category:update']"
@@ -73,7 +89,10 @@
                       @click.stop="openCategoryForm('update', scope.row)"
                     />
                   </el-tooltip>
-                  <el-tooltip content="删除" placement="top">
+                  <el-tooltip
+                    content="删除"
+                    placement="top"
+                  >
                     <el-button
                       v-if="isWritable"
                       v-hasPermi="['fms:config:voucher-template-category:delete']"
@@ -90,7 +109,10 @@
         </el-table>
       </el-card>
 
-      <el-card class="template-card" shadow="never">
+      <el-card
+        class="template-card"
+        shadow="never"
+      >
         <div class="card-title template-title">凭证模板</div>
         <el-table
           v-loading="loading"
@@ -98,11 +120,24 @@
           :empty-text="currentCategory ? '暂无凭证模板' : '请选择凭证模板分类'"
           stripe
         >
-          <el-table-column label="模板名称" min-width="260" prop="name" show-overflow-tooltip />
-          <el-table-column align="center" label="分录数" width="100">
+          <el-table-column
+            label="模板名称"
+            min-width="260"
+            prop="name"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            align="center"
+            label="分录数"
+            width="100"
+          >
             <template slot-scope="scope">{{ (scope.row.entries || []).length }}</template>
           </el-table-column>
-          <el-table-column align="center" label="操作" width="120">
+          <el-table-column
+            align="center"
+            label="操作"
+            width="120"
+          >
             <template slot-scope="scope">
               <el-button
                 v-if="isWritable"
@@ -117,7 +152,10 @@
       </el-card>
     </div>
 
-    <fms-voucher-template-category-form ref="categoryForm" @success="getList" />
+    <fms-voucher-template-category-form
+      ref="categoryForm"
+      @success="getList"
+    />
   </div>
 </template>
 

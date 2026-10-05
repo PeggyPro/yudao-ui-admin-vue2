@@ -30,12 +30,12 @@
         <span>{{ duration }}</span>
       </div>
       <audio
+        v-show="false"
         ref="audioRef"
         :src="currentAudioUrl"
         :autoplay="autoplay"
         :muted="muted"
         controls
-        v-show="false"
         @timeupdate="audioTimeUpdate"
         @loadedmetadata="audioLoadedMetadata"
       />
@@ -47,7 +47,10 @@
         :class="muted ? 'el-icon-turn-off-microphone' : 'el-icon-microphone'"
         @click="toggleStatus('muted')"
       />
-      <el-slider v-model="volume" class="music-audio-bar__volume-slider" />
+      <el-slider
+        v-model="volume"
+        class="music-audio-bar__volume-slider"
+      />
     </div>
   </div>
 </template>

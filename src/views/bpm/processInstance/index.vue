@@ -1,21 +1,69 @@
 <template>
   <div class="app-container">
-    <doc-alert title="流程发起、取消、重新发起" url="https://doc.iocoder.cn/bpm/process-instance/" />
+    <doc-alert
+      title="流程发起、取消、重新发起"
+      url="https://doc.iocoder.cn/bpm/process-instance/"
+    />
 
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" v-show="showSearch" label-width="68px" class="bpm-toolbar-form">
-      <el-form-item label="" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入流程名称" clearable @keyup.enter.native="handleQuery" class="w-240" />
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+      class="bpm-toolbar-form"
+    >
+      <el-form-item
+        label=""
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入流程名称"
+          clearable
+          class="w-240"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
       </el-form-item>
-      <el-form-item label="" prop="category" class="toolbar-right toolbar-right--category">
-        <el-select v-model="queryParams.category" clearable placeholder="请选择流程分类" class="w-155" @change="handleQuery">
-          <el-option v-for="item in categoryList" :key="item.code" :label="item.name" :value="item.code" />
+      <el-form-item
+        label=""
+        prop="category"
+        class="toolbar-right toolbar-right--category"
+      >
+        <el-select
+          v-model="queryParams.category"
+          clearable
+          placeholder="请选择流程分类"
+          class="w-155"
+          @change="handleQuery"
+        >
+          <el-option
+            v-for="item in categoryList"
+            :key="item.code"
+            :label="item.name"
+            :value="item.code"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="" prop="status" class="toolbar-right toolbar-right--status">
-        <el-select v-model="queryParams.status" clearable placeholder="请选择流程状态" class="w-155" @change="handleQuery">
+      <el-form-item
+        label=""
+        prop="status"
+        class="toolbar-right toolbar-right--status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          clearable
+          placeholder="请选择流程状态"
+          class="w-155"
+          @change="handleQuery"
+        >
           <el-option
             v-for="dict in getDictDatas(DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS)"
             :key="dict.value"
@@ -32,7 +80,11 @@
           trigger="click"
           :visible-arrow="false"
         >
-          <el-form-item label="所属流程" prop="processDefinitionKey" class="advanced-form-item">
+          <el-form-item
+            label="所属流程"
+            prop="processDefinitionKey"
+            class="advanced-form-item"
+          >
             <el-select
               v-model="queryParams.processDefinitionKey"
               placeholder="请选择流程定义"
@@ -49,7 +101,11 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="发起时间" prop="createTime" class="advanced-form-item">
+          <el-form-item
+            label="发起时间"
+            prop="createTime"
+            class="advanced-form-item"
+          >
             <el-date-picker
               v-model="queryParams.createTime"
               value-format="yyyy-MM-dd HH:mm:ss"
@@ -64,52 +120,111 @@
           <div class="advanced-actions">
             <el-button @click="resetQuery">清空</el-button>
             <el-button @click="showPopover = false">取消</el-button>
-            <el-button type="primary" @click="handleQuery">确认</el-button>
+            <el-button
+              type="primary"
+              @click="handleQuery"
+            >确认</el-button>
           </div>
-          <el-button slot="reference" icon="el-icon-plus">高级筛选</el-button>
+          <el-button
+            slot="reference"
+            icon="el-icon-plus"
+          >高级筛选</el-button>
         </el-popover>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="流程名称" align="center" prop="name" min-width="200" fixed="left" />
-      <el-table-column label="摘要" prop="summary" width="180" fixed="left">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="流程名称"
+        align="center"
+        prop="name"
+        min-width="200"
+        fixed="left"
+      />
+      <el-table-column
+        label="摘要"
+        prop="summary"
+        width="180"
+        fixed="left"
+      >
+        <template slot-scope="scope">
           <div v-if="scope.row.summary && scope.row.summary.length">
-            <div v-for="(item, index) in scope.row.summary" :key="index" class="summary-item">
+            <div
+              v-for="(item, index) in scope.row.summary"
+              :key="index"
+              class="summary-item"
+            >
               {{ item.key }} : {{ item.value }}
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="流程分类" align="center" prop="categoryName" min-width="100" fixed="left" />
-      <el-table-column label="流程状态" prop="status" min-width="200">
-        <template v-slot="scope">
+      <el-table-column
+        label="流程分类"
+        align="center"
+        prop="categoryName"
+        min-width="100"
+        fixed="left"
+      />
+      <el-table-column
+        label="流程状态"
+        prop="status"
+        min-width="200"
+      >
+        <template slot-scope="scope">
           <template v-if="scope.row.status === 1 && scope.row.tasks && scope.row.tasks.length > 0">
             <span v-if="scope.row.tasks.length === 1">
-              <el-button type="text" @click="handleDetail(scope.row)">
+              <el-button
+                type="text"
+                @click="handleDetail(scope.row)"
+              >
                 {{ taskAssigneeName(scope.row.tasks[0]) }}
               </el-button>
               ({{ scope.row.tasks[0].name }}) 审批中
             </span>
             <span v-else>
-              <el-button type="text" @click="handleDetail(scope.row)">
+              <el-button
+                type="text"
+                @click="handleDetail(scope.row)"
+              >
                 {{ taskAssigneeName(scope.row.tasks[0]) }}
               </el-button>
               等 {{ scope.row.tasks.length }} 人 ({{ scope.row.tasks[0].name }})审批中
             </span>
           </template>
-          <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            v-else
+            :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="发起时间" align="center" prop="startTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.startTime) }}</template>
+      <el-table-column
+        label="发起时间"
+        align="center"
+        prop="startTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.startTime) }}</template>
       </el-table-column>
-      <el-table-column label="结束时间" align="center" prop="endTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.endTime) }}</template>
+      <el-table-column
+        label="结束时间"
+        align="center"
+        prop="endTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.endTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="180"
+      >
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['bpm:process-instance:query']"
             type="text"
@@ -125,7 +240,12 @@
           >
             取消
           </el-button>
-          <el-button v-else type="text" size="mini" @click="handleReCreate(scope.row)">
+          <el-button
+            v-else
+            type="text"
+            size="mini"
+            @click="handleReCreate(scope.row)"
+          >
             重新发起
           </el-button>
         </template>

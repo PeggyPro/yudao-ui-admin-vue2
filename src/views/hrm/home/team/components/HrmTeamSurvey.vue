@@ -1,11 +1,29 @@
 <template>
-  <el-card shadow="never" class="home-card">
-    <div slot="header" class="home-card__title">团队概况</div>
+  <el-card
+    shadow="never"
+    class="home-card"
+  >
+    <div
+      slot="header"
+      class="home-card__title"
+    >团队概况</div>
     <div class="team-charts">
-      <div v-for="(chartItem, index) in charts" :key="chartItem.title" class="team-chart-wrap">
+      <div
+        v-for="(chartItem, index) in charts"
+        :key="chartItem.title"
+        class="team-chart-wrap"
+      >
         <div class="team-chart__title">{{ chartItem.title }}</div>
-        <div v-if="hasData(chartItem.data)" :ref="`chart${index}`" class="team-chart" />
-        <el-empty v-else :image-size="64" description="暂无数据" />
+        <div
+          v-if="hasData(chartItem.data)"
+          :ref="`chart${index}`"
+          class="team-chart"
+        />
+        <el-empty
+          v-else
+          :image-size="64"
+          description="暂无数据"
+        />
       </div>
     </div>
   </el-card>

@@ -9,7 +9,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="标题" prop="title">
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入讨论标题"
@@ -18,7 +21,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="讨论类型" prop="type">
+      <el-form-item
+        label="讨论类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择讨论类型"
@@ -33,34 +39,97 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="发布人" prop="userId">
-        <user-select-v2 v-model="queryParams.userId" placeholder="请选择发布人" style="width: 240px" />
+      <el-form-item
+        label="发布人"
+        prop="userId"
+      >
+        <user-select-v2
+          v-model="queryParams.userId"
+          placeholder="请选择发布人"
+          style="width: 240px"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 讨论列表 -->
-    <el-table v-loading="loading" :data="list" border stripe @sort-change="handleSortChange">
-      <el-table-column label="标题" prop="title" min-width="220" show-overflow-tooltip>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+      @sort-change="handleSortChange"
+    >
+      <el-table-column
+        label="标题"
+        prop="title"
+        min-width="220"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="link-button" @click="openDetail(scope.row.id)">
+          <el-button
+            type="text"
+            class="link-button"
+            @click="openDetail(scope.row.id)"
+          >
             {{ scope.row.title }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="类型" prop="type" align="center" width="90" sortable="custom">
+      <el-table-column
+        label="类型"
+        prop="type"
+        align="center"
+        width="90"
+        sortable="custom"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_DISCUSSION_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_DISCUSSION_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="发布人" prop="userName" align="center" width="120" />
-      <el-table-column label="浏览" prop="visitCount" align="center" width="80" sortable="custom" />
-      <el-table-column label="回复" prop="replyCount" align="center" width="80" />
-      <el-table-column label="点赞" prop="likeCount" align="center" width="80" />
-      <el-table-column label="附件" align="center" width="80">
+      <el-table-column
+        label="发布人"
+        prop="userName"
+        align="center"
+        width="120"
+      />
+      <el-table-column
+        label="浏览"
+        prop="visitCount"
+        align="center"
+        width="80"
+        sortable="custom"
+      />
+      <el-table-column
+        label="回复"
+        prop="replyCount"
+        align="center"
+        width="80"
+      />
+      <el-table-column
+        label="点赞"
+        prop="likeCount"
+        align="center"
+        width="80"
+      />
+      <el-table-column
+        label="附件"
+        align="center"
+        width="80"
+      >
         <template slot-scope="scope">{{ (scope.row.fileUrls && scope.row.fileUrls.length) || 0 }}</template>
       </el-table-column>
       <el-table-column
@@ -147,7 +216,7 @@ export default {
     },
     /** 打开讨论详情 */
     openDetail(id) {
-      this.$router.push({ name: 'OaDiscussionDetail', params: { id } })
+      this.$router.push({ name: 'OaDiscussionDetail', params: { id }})
     }
   }
 }

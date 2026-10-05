@@ -8,58 +8,68 @@
       show-icon
     />
     <template v-else>
-    <el-divider content-position="left">审批人超时未处理时</el-divider>
-    <el-form-item label="启用开关">
-      <el-switch
-        v-model="timeoutHandlerEnable"
-        active-text="开启"
-        inactive-text="关闭"
-        @change="timeoutHandlerChange"
-      />
-    </el-form-item>
+      <el-divider content-position="left">审批人超时未处理时</el-divider>
+      <el-form-item label="启用开关">
+        <el-switch
+          v-model="timeoutHandlerEnable"
+          active-text="开启"
+          inactive-text="关闭"
+          @change="timeoutHandlerChange"
+        />
+      </el-form-item>
 
-    <template v-if="timeoutHandlerEnable">
-      <el-form-item label="执行动作">
-        <el-radio-group v-model="timeoutHandlerType" @change="onTimeoutHandlerTypeChanged">
-          <el-radio-button
-            v-for="item in timeoutHandlerTypes"
-            :key="item.value"
-            :label="item.value"
+      <template v-if="timeoutHandlerEnable">
+        <el-form-item label="执行动作">
+          <el-radio-group
+            v-model="timeoutHandlerType"
+            @change="onTimeoutHandlerTypeChanged"
           >
-            {{ item.label }}
-          </el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="超时时间设置">
-        <span class="time-prefix">当超过</span>
-        <el-input-number
-          v-model="timeDuration"
-          :min="1"
-          :max="999999"
-          controls-position="right"
-          class="time-number"
-          @change="onTimeDurationChange"
-        />
-        <el-select v-model="timeUnit" class="time-unit" @change="onTimeUnitChange">
-          <el-option
-            v-for="item in timeUnitTypes"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            <el-radio-button
+              v-for="item in timeoutHandlerTypes"
+              :key="item.value"
+              :label="item.value"
+            >
+              {{ item.label }}
+            </el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="超时时间设置">
+          <span class="time-prefix">当超过</span>
+          <el-input-number
+            v-model="timeDuration"
+            :min="1"
+            :max="999999"
+            controls-position="right"
+            class="time-number"
+            @change="onTimeDurationChange"
           />
-        </el-select>
-        <span>未处理</span>
-      </el-form-item>
-      <el-form-item v-if="Number(timeoutHandlerType) === timeoutReminderValue" label="最大提醒次数">
-        <el-input-number
-          v-model="maxRemindCount"
-          :min="1"
-          :max="10"
-          controls-position="right"
-          @change="updateTimer"
-        />
-      </el-form-item>
-    </template>
+          <el-select
+            v-model="timeUnit"
+            class="time-unit"
+            @change="onTimeUnitChange"
+          >
+            <el-option
+              v-for="item in timeUnitTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <span>未处理</span>
+        </el-form-item>
+        <el-form-item
+          v-if="Number(timeoutHandlerType) === timeoutReminderValue"
+          label="最大提醒次数"
+        >
+          <el-input-number
+            v-model="maxRemindCount"
+            :min="1"
+            :max="10"
+            controls-position="right"
+            @change="updateTimer"
+          />
+        </el-form-item>
+      </template>
     </template>
   </div>
 </template>
@@ -112,12 +122,12 @@ function parseDuration(body) {
 
 export default {
   name: 'ElementCustomConfig4BoundaryEventTimer',
+  inject: {
+    prefix: { default: 'flowable' }
+  },
   props: {
     id: String,
     type: String
-  },
-  inject: {
-    prefix: { default: 'flowable' }
   },
   data() {
     return {

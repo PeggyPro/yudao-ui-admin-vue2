@@ -1,93 +1,178 @@
 <template>
   <div>
-    <el-form ref="form" :model="modelData" :rules="rules" label-width="120px" class="model-step-form">
-    <el-form-item label="流程标识" prop="key">
-      <el-input
-        v-model="modelData.key"
-        :disabled="!!modelData.id && !isCopy"
-        placeholder="请输入流程标识，以字母或下划线开头"
-      />
-    </el-form-item>
-    <el-form-item label="流程名称" prop="name">
-      <el-input v-model="modelData.name" placeholder="请输入流程名称" />
-    </el-form-item>
-    <el-form-item label="流程分类" prop="category">
-      <el-select v-model="modelData.category" placeholder="请选择流程分类" clearable style="width: 100%">
-        <el-option v-for="item in categoryList" :key="item.code" :label="item.name" :value="item.code" />
-      </el-select>
-    </el-form-item>
-    <el-form-item label="流程图标" prop="icon">
-      <el-input v-model="modelData.icon" placeholder="请输入流程图标地址，可为空" />
-    </el-form-item>
-    <el-form-item label="流程描述" prop="description">
-      <el-input v-model="modelData.description" type="textarea" :rows="3" placeholder="请输入流程描述" />
-    </el-form-item>
-    <el-form-item label="流程类型" prop="type">
-      <el-radio-group v-model="modelData.type">
-        <el-radio :label="BpmModelType.BPMN">BPMN 设计器</el-radio>
-        <el-radio :label="BpmModelType.SIMPLE">SIMPLE 设计器</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="是否可见" prop="visible">
-      <el-radio-group v-model="modelData.visible">
-        <el-radio :label="true">是</el-radio>
-        <el-radio :label="false">否</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="谁可以发起" prop="startUserType">
-      <el-select
-        v-model="modelData.startUserType"
-        placeholder="请选择谁可以发起"
-        style="width: 100%"
-        @change="handleStartUserTypeChange"
+    <el-form
+      ref="form"
+      :model="modelData"
+      :rules="rules"
+      label-width="120px"
+      class="model-step-form"
+    >
+      <el-form-item
+        label="流程标识"
+        prop="key"
       >
-        <el-option label="全员" :value="0" />
-        <el-option label="指定人员" :value="1" />
-        <el-option label="指定部门" :value="2" />
-      </el-select>
-      <div v-if="modelData.startUserType === 1" class="selector-row">
-        <el-tag
-          v-for="user in selectedStartUsers"
-          :key="user.id"
-          closable
-          class="selector-tag"
-          @close="handleRemoveStartUser(user)"
-        >
-          {{ userName(user) }}
-        </el-tag>
-        <el-button type="text" icon="el-icon-plus" @click="openStartUserSelect">选择人员</el-button>
-      </div>
-      <div v-if="modelData.startUserType === 2" class="selector-row">
+        <el-input
+          v-model="modelData.key"
+          :disabled="!!modelData.id && !isCopy"
+          placeholder="请输入流程标识，以字母或下划线开头"
+        />
+      </el-form-item>
+      <el-form-item
+        label="流程名称"
+        prop="name"
+      >
+        <el-input
+          v-model="modelData.name"
+          placeholder="请输入流程名称"
+        />
+      </el-form-item>
+      <el-form-item
+        label="流程分类"
+        prop="category"
+      >
         <el-select
-          v-model="modelData.startDeptIds"
-          multiple
-          filterable
+          v-model="modelData.category"
+          placeholder="请选择流程分类"
           clearable
-          placeholder="请选择部门"
           style="width: 100%"
-          @change="syncSelectedStartDepts"
         >
-          <el-option v-for="item in deptList" :key="item.id" :label="item.name" :value="item.id" />
+          <el-option
+            v-for="item in categoryList"
+            :key="item.code"
+            :label="item.name"
+            :value="item.code"
+          />
         </el-select>
-      </div>
-    </el-form-item>
-    <el-form-item label="流程管理员" prop="managerUserIds">
-      <div class="selector-row selector-row--top">
-        <el-tag
-          v-for="user in selectedManagerUsers"
-          :key="user.id"
-          closable
-          class="selector-tag"
-          @close="handleRemoveManagerUser(user)"
+      </el-form-item>
+      <el-form-item
+        label="流程图标"
+        prop="icon"
+      >
+        <el-input
+          v-model="modelData.icon"
+          placeholder="请输入流程图标地址，可为空"
+        />
+      </el-form-item>
+      <el-form-item
+        label="流程描述"
+        prop="description"
+      >
+        <el-input
+          v-model="modelData.description"
+          type="textarea"
+          :rows="3"
+          placeholder="请输入流程描述"
+        />
+      </el-form-item>
+      <el-form-item
+        label="流程类型"
+        prop="type"
+      >
+        <el-radio-group v-model="modelData.type">
+          <el-radio :label="BpmModelType.BPMN">BPMN 设计器</el-radio>
+          <el-radio :label="BpmModelType.SIMPLE">SIMPLE 设计器</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        label="是否可见"
+        prop="visible"
+      >
+        <el-radio-group v-model="modelData.visible">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        label="谁可以发起"
+        prop="startUserType"
+      >
+        <el-select
+          v-model="modelData.startUserType"
+          placeholder="请选择谁可以发起"
+          style="width: 100%"
+          @change="handleStartUserTypeChange"
         >
-          {{ userName(user) }}
-        </el-tag>
-        <el-button type="text" icon="el-icon-plus" @click="openManagerUserSelect">选择人员</el-button>
-      </div>
-    </el-form-item>
+          <el-option
+            label="全员"
+            :value="0"
+          />
+          <el-option
+            label="指定人员"
+            :value="1"
+          />
+          <el-option
+            label="指定部门"
+            :value="2"
+          />
+        </el-select>
+        <div
+          v-if="modelData.startUserType === 1"
+          class="selector-row"
+        >
+          <el-tag
+            v-for="user in selectedStartUsers"
+            :key="user.id"
+            closable
+            class="selector-tag"
+            @close="handleRemoveStartUser(user)"
+          >
+            {{ userName(user) }}
+          </el-tag>
+          <el-button
+            type="text"
+            icon="el-icon-plus"
+            @click="openStartUserSelect"
+          >选择人员</el-button>
+        </div>
+        <div
+          v-if="modelData.startUserType === 2"
+          class="selector-row"
+        >
+          <el-select
+            v-model="modelData.startDeptIds"
+            multiple
+            filterable
+            clearable
+            placeholder="请选择部门"
+            style="width: 100%"
+            @change="syncSelectedStartDepts"
+          >
+            <el-option
+              v-for="item in deptList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </div>
+      </el-form-item>
+      <el-form-item
+        label="流程管理员"
+        prop="managerUserIds"
+      >
+        <div class="selector-row selector-row--top">
+          <el-tag
+            v-for="user in selectedManagerUsers"
+            :key="user.id"
+            closable
+            class="selector-tag"
+            @close="handleRemoveManagerUser(user)"
+          >
+            {{ userName(user) }}
+          </el-tag>
+          <el-button
+            type="text"
+            icon="el-icon-plus"
+            @click="openManagerUserSelect"
+          >选择人员</el-button>
+        </div>
+      </el-form-item>
     </el-form>
 
-    <UserSelectForm ref="userSelectForm" @confirm="handleUserSelectConfirm" />
+    <UserSelectForm
+      ref="userSelectForm"
+      @confirm="handleUserSelectConfirm"
+    />
   </div>
 </template>
 

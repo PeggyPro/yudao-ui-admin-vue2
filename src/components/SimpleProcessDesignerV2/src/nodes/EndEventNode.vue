@@ -6,10 +6,18 @@
         :class="`${useTaskStatusClass(currentNode && currentNode.activityStatus)}`"
         @click="nodeClick"
       >
-        <span class="node-fixed-name" title="结束">结束</span>
+        <span
+          class="node-fixed-name"
+          title="结束"
+        >结束</span>
       </div>
     </div>
-    <el-dialog title="审批信息" :visible.sync="dialogVisible" width="1000px" append-to-body>
+    <el-dialog
+      title="审批信息"
+      :visible.sync="dialogVisible"
+      width="1000px"
+      append-to-body
+    >
       <el-row>
         <el-table
           :data="processInstanceInfos"
@@ -30,8 +38,12 @@
             min-width="100"
             align="center"
           />
-          <el-table-column label="部门" min-width="100" align="center">
-            <template v-slot="scope">
+          <el-table-column
+            label="部门"
+            min-width="100"
+            align="center"
+          >
+            <template slot-scope="scope">
               {{ (scope.row.assigneeUser && scope.row.assigneeUser.deptName) || (scope.row.ownerUser && scope.row.ownerUser.deptName) }}
             </template>
           </el-table-column>
@@ -49,13 +61,26 @@
             prop="endTime"
             min-width="140"
           />
-          <el-table-column align="center" label="审批状态" prop="status" min-width="90">
-            <template v-slot="scope">
-              <dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+          <el-table-column
+            align="center"
+            label="审批状态"
+            prop="status"
+            min-width="90"
+          >
+            <template slot-scope="scope">
+              <dict-tag
+                :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+                :value="scope.row.status"
+              />
             </template>
           </el-table-column>
-          <el-table-column align="center" label="耗时" prop="durationInMillis" width="100">
-            <template v-slot="scope">
+          <el-table-column
+            align="center"
+            label="耗时"
+            prop="durationInMillis"
+            width="100"
+          >
+            <template slot-scope="scope">
               {{ formatPast2(scope.row.durationInMillis) }}
             </template>
           </el-table-column>

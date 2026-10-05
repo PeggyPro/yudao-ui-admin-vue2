@@ -1,5 +1,8 @@
 <template>
-  <Dialog v-model="dialogVisible" title="上传文件">
+  <AppDialog
+    v-model="dialogVisible"
+    title="上传文件"
+  >
     <el-upload
       ref="upload"
       :file-list="fileList"
@@ -19,22 +22,34 @@
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">将文件拖到此处，或 <em>点击上传</em></div>
-      <div slot="tip" class="el-upload__tip" style="color: red">提示：仅允许导入 jpg、png、gif 格式文件！</div>
+      <div
+        slot="tip"
+        class="el-upload__tip"
+        style="color: red"
+      >提示：仅允许导入 jpg、png、gif 格式文件！</div>
     </el-upload>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitFileForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitFileForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog/index.vue'
+import AppDialog from '@/components/Dialog/index.vue'
 import { useUpload } from '@/components/UploadFile/src/useUpload'
 
 export default {
   name: 'InfraFileForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

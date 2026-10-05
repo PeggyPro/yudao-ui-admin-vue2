@@ -10,7 +10,11 @@
           @click="openForm('create')"
         >新增计税规则</el-button>
       </div>
-      <el-table v-loading="loading" :data="list" stripe>
+      <el-table
+        v-loading="loading"
+        :data="list"
+        stripe
+      >
         <el-table-column
           label="方案名称"
           align="center"
@@ -18,38 +22,78 @@
           min-width="180"
           show-overflow-tooltip
         />
-        <el-table-column label="个税类型" align="center" prop="type" width="140">
+        <el-table-column
+          label="个税类型"
+          align="center"
+          prop="type"
+          width="140"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.HRM_SALARY_TAX_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.HRM_SALARY_TAX_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="计税周期" align="center" prop="cycleType" min-width="360">
+        <el-table-column
+          label="计税周期"
+          align="center"
+          prop="cycleType"
+          min-width="360"
+        >
           <template slot-scope="scope">{{ getTaxCycleLabel(scope.row.cycleType) }}</template>
         </el-table-column>
-        <el-table-column label="是否计税" align="center" prop="taxEnabled" width="100">
+        <el-table-column
+          label="是否计税"
+          align="center"
+          prop="taxEnabled"
+          width="100"
+        >
           <template slot-scope="scope">
             <template v-if="scope.row.taxEnabled == null">-</template>
-            <el-tag v-else :type="scope.row.taxEnabled ? 'success' : 'info'">
+            <el-tag
+              v-else
+              :type="scope.row.taxEnabled ? 'success' : 'info'"
+            >
               {{ scope.row.taxEnabled ? '是' : '否' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="起征点" align="center" prop="threshold" width="120">
+        <el-table-column
+          label="起征点"
+          align="center"
+          prop="threshold"
+          width="120"
+        >
           <template slot-scope="scope">
             {{ scope.row.threshold == null ? '-' : scope.row.threshold + '元/月' }}
           </template>
         </el-table-column>
-        <el-table-column label="个税结果保留小数位" align="center" prop="decimalScale" width="170">
+        <el-table-column
+          label="个税结果保留小数位"
+          align="center"
+          prop="decimalScale"
+          width="170"
+        >
           <template slot-scope="scope">
             {{ scope.row.decimalScale == null ? '-' : '保留' + scope.row.decimalScale + '位小数' }}
           </template>
         </el-table-column>
-        <el-table-column label="适用薪资组" align="center" min-width="170">
+        <el-table-column
+          label="适用薪资组"
+          align="center"
+          min-width="170"
+        >
           <template slot-scope="scope">
             {{ (scope.row.usedGroupCount == null ? 0 : scope.row.usedGroupCount) + '个薪资组正在使用' }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" width="140" fixed="right">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="140"
+          fixed="right"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['hrm:salary:tax-rule:update']"
@@ -66,7 +110,10 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <salary-tax-rule-form ref="form" @success="getList" />
+    <salary-tax-rule-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 
@@ -109,7 +156,9 @@ export default {
         await deleteSalaryTaxRule(id)
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     }
   }
 }

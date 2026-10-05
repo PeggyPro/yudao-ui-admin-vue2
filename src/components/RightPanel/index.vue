@@ -1,5 +1,9 @@
 <template>
-  <div ref="rightPanel" :class="{show:show}" class="rightPanel-container">
+  <div
+    ref="rightPanel"
+    :class="{show:show}"
+    class="rightPanel-container"
+  >
     <div class="rightPanel-background" />
     <div class="rightPanel">
       <div class="rightPanel-items">
@@ -38,7 +42,7 @@ export default {
     },
     theme() {
       return this.$store.state.settings.theme
-    },
+    }
   },
   watch: {
     show(value) {

@@ -1,11 +1,25 @@
 <template>
-  <el-card class="image-list-card" shadow="never" :body-style="bodyStyle">
-    <div slot="header" class="image-list-card__header">
+  <el-card
+    class="image-list-card"
+    shadow="never"
+    :body-style="bodyStyle"
+  >
+    <div
+      slot="header"
+      class="image-list-card__header"
+    >
       <span>绘画任务</span>
-      <el-button size="mini" @click="handleViewPublic">绘画作品</el-button>
+      <el-button
+        size="mini"
+        @click="handleViewPublic"
+      >绘画作品</el-button>
     </div>
 
-    <div ref="imageListRef" v-loading="loading" class="image-list-card__body">
+    <div
+      ref="imageListRef"
+      v-loading="loading"
+      class="image-list-card__body"
+    >
       <ImageCard
         v-for="image in imageList"
         :key="image.id"
@@ -26,8 +40,8 @@
     </div>
 
     <ImageDetail
-      :show="isShowImageDetail"
       :id="showImageDetailId"
+      :show="isShowImageDetail"
       @handleDrawerClose="handleDetailClose"
     />
   </el-card>

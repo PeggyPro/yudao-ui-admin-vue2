@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="title"
+  <AppDialog
     v-model="visible"
+    :title="title"
     append-to-body
   >
     <el-form
@@ -24,18 +24,18 @@
       :loading="loading"
       @click="submitForm"
     >确 定</el-button><el-button @click="visible = false">取 消</el-button></div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as TagApi from '@/api/member/tag'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 const blank = () => ({ id: undefined, name: undefined })
 
 export default {
   name: 'MemberTagForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() { return { visible: false, loading: false, title: '', formType: 'create', formData: blank(), rules: { name: [{ required: true, message: '标签名称不能为空', trigger: 'blur' }] }} },
   methods: {
     async open(type, id) {

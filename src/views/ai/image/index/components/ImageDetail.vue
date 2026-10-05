@@ -15,7 +15,13 @@
       />
     </div>
 
-    <el-descriptions title="基础信息" :column="1" :label-width="100" border size="small">
+    <el-descriptions
+      title="基础信息"
+      :column="1"
+      :label-width="100"
+      border
+      size="small"
+    >
       <el-descriptions-item label="提交时间">
         {{ formatTime(detail.createTime, 'yyyy-MM-dd HH:mm:ss') }}
       </el-descriptions-item>
@@ -42,7 +48,10 @@
       size="small"
       class="mt-5"
     >
-      <el-descriptions-item v-if="detail.options && detail.options.sampler" label="采样方法">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.sampler"
+        label="采样方法"
+      >
         {{ findLabel(StableDiffusionSamplers, detail.options.sampler) }}
       </el-descriptions-item>
       <el-descriptions-item
@@ -53,16 +62,28 @@
           findLabel(StableDiffusionClipGuidancePresets, detail.options.clipGuidancePreset)
         }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detail.options && detail.options.stylePreset" label="风格">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.stylePreset"
+        label="风格"
+      >
         {{ findLabel(StableDiffusionStylePresets, detail.options.stylePreset) }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detail.options && detail.options.steps" label="迭代步数">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.steps"
+        label="迭代步数"
+      >
         {{ detail.options.steps }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detail.options && detail.options.scale" label="引导系数">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.scale"
+        label="引导系数"
+      >
         {{ detail.options.scale }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detail.options && detail.options.seed" label="随机因子">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.seed"
+        label="随机因子"
+      >
         {{ detail.options.seed }}
       </el-descriptions-item>
     </el-descriptions>
@@ -90,10 +111,16 @@
       size="small"
       class="mt-5"
     >
-      <el-descriptions-item v-if="detail.options && detail.options.version" label="模型版本">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.version"
+        label="模型版本"
+      >
         {{ detail.options.version }}
       </el-descriptions-item>
-      <el-descriptions-item v-if="detail.options && detail.options.referImageUrl" label="参考图">
+      <el-descriptions-item
+        v-if="detail.options && detail.options.referImageUrl"
+        label="参考图"
+      >
         <el-image
           :src="detail.options.referImageUrl"
           class="max-w-[200px] rounded-2"

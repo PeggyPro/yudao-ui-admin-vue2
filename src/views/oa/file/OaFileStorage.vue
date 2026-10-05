@@ -1,6 +1,9 @@
 <template>
   <!-- 云盘概览，独立于列表筛选 -->
-  <div v-if="storage" class="oa-file-storage">
+  <div
+    v-if="storage"
+    class="oa-file-storage"
+  >
     <div class="oa-file-storage__title">云盘概览</div>
     <div class="oa-file-storage__grid">
       <div>

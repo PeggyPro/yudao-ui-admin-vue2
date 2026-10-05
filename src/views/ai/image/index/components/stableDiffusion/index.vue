@@ -30,7 +30,11 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>采样方法</strong></div>
-      <el-select v-model="sampler" placeholder="请选择采样方法" class="ai-image-form__select">
+      <el-select
+        v-model="sampler"
+        placeholder="请选择采样方法"
+        class="ai-image-form__select"
+      >
         <el-option
           v-for="item in StableDiffusionSamplers"
           :key="item.key"
@@ -42,7 +46,11 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>CLIP</strong></div>
-      <el-select v-model="clipGuidancePreset" placeholder="请选择 CLIP" class="ai-image-form__select">
+      <el-select
+        v-model="clipGuidancePreset"
+        placeholder="请选择 CLIP"
+        class="ai-image-form__select"
+      >
         <el-option
           v-for="item in StableDiffusionClipGuidancePresets"
           :key="item.key"
@@ -54,7 +62,11 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>风格</strong></div>
-      <el-select v-model="stylePreset" placeholder="请选择风格" class="ai-image-form__select">
+      <el-select
+        v-model="stylePreset"
+        placeholder="请选择风格"
+        class="ai-image-form__select"
+      >
         <el-option
           v-for="item in StableDiffusionStylePresets"
           :key="item.key"
@@ -67,28 +79,54 @@
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>图片尺寸</strong></div>
       <div class="ai-image-form__size-row">
-        <el-input v-model="width" type="number" placeholder="图片宽度" />
-        <el-input v-model="height" type="number" placeholder="图片高度" />
+        <el-input
+          v-model="width"
+          type="number"
+          placeholder="图片宽度"
+        />
+        <el-input
+          v-model="height"
+          type="number"
+          placeholder="图片高度"
+        />
       </div>
     </div>
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>迭代步数</strong></div>
-      <el-input v-model="steps" type="number" placeholder="Please input" />
+      <el-input
+        v-model="steps"
+        type="number"
+        placeholder="Please input"
+      />
     </div>
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>引导系数</strong></div>
-      <el-input v-model="scale" type="number" placeholder="Please input" />
+      <el-input
+        v-model="scale"
+        type="number"
+        placeholder="Please input"
+      />
     </div>
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>随机因子</strong></div>
-      <el-input v-model="seed" type="number" placeholder="Please input" />
+      <el-input
+        v-model="seed"
+        type="number"
+        placeholder="Please input"
+      />
     </div>
 
     <div class="ai-image-form__submit">
-      <el-button type="primary" round :loading="drawIn" :disabled="!prompt" @click="handleGenerateImage">
+      <el-button
+        type="primary"
+        round
+        :loading="drawIn"
+        :disabled="!prompt"
+        @click="handleGenerateImage"
+      >
         {{ drawIn ? '生成中' : '生成内容' }}
       </el-button>
     </div>

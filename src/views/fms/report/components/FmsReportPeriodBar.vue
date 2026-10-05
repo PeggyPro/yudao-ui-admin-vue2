@@ -1,7 +1,14 @@
 <template>
-  <el-form class="fms-report-period-bar" :inline="true" label-width="68px">
+  <el-form
+    class="fms-report-period-bar"
+    :inline="true"
+    label-width="68px"
+  >
     <el-form-item label="报表周期">
-      <el-radio-group v-model="periodType" @change="emitQuery">
+      <el-radio-group
+        v-model="periodType"
+        @change="emitQuery"
+      >
         <el-radio-button label="month">月报</el-radio-button>
         <el-radio-button label="quarter">季报</el-radio-button>
       </el-radio-group>
@@ -18,7 +25,10 @@
       />
     </el-form-item>
     <el-form-item>
-      <el-button icon="el-icon-refresh" @click="emitQuery">刷新</el-button>
+      <el-button
+        icon="el-icon-refresh"
+        @click="emitQuery"
+      >刷新</el-button>
       <slot />
     </el-form-item>
   </el-form>

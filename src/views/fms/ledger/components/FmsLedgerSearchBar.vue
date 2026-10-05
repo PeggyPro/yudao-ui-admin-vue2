@@ -1,12 +1,19 @@
 <template>
-  <el-form :inline="true" label-width="68px" class="fms-ledger-search-bar">
+  <el-form
+    :inline="true"
+    label-width="68px"
+    class="fms-ledger-search-bar"
+  >
     <el-form-item label="会计期间">
       <FmsLedgerMonthRangePicker
         v-model="monthRange"
         @change="handleAutoQuery"
       />
     </el-form-item>
-    <el-form-item v-if="showSubject" label="科目">
+    <el-form-item
+      v-if="showSubject"
+      label="科目"
+    >
       <FmsSubjectSelect
         v-model="query.subjectId"
         :options="subjectOptions"
@@ -16,30 +23,68 @@
       />
     </el-form-item>
     <el-form-item>
-      <el-popover v-if="!showSubject" ref="advancedPopover" placement="bottom-start" trigger="click" width="360">
+      <el-popover
+        v-if="!showSubject"
+        ref="advancedPopover"
+        placement="bottom-start"
+        trigger="click"
+        width="360"
+      >
         <el-form label-position="top">
           <el-form-item label="起始科目">
-            <FmsSubjectSelect v-model="query.startSubjectId" :options="subjectOptions" clearable style="width: 100%" />
+            <FmsSubjectSelect
+              v-model="query.startSubjectId"
+              :options="subjectOptions"
+              clearable
+              style="width: 100%"
+            />
           </el-form-item>
           <el-form-item label="结束科目">
-            <FmsSubjectSelect v-model="query.endSubjectId" :options="subjectOptions" clearable style="width: 100%" />
+            <FmsSubjectSelect
+              v-model="query.endSubjectId"
+              :options="subjectOptions"
+              clearable
+              style="width: 100%"
+            />
           </el-form-item>
           <el-form-item label="科目级次">
             <div class="level-range">
-              <el-input-number v-model="query.minLevel" :controls="false" :min="1" :max="8" />
+              <el-input-number
+                v-model="query.minLevel"
+                :controls="false"
+                :min="1"
+                :max="8"
+              />
               <span>至</span>
-              <el-input-number v-model="query.maxLevel" :controls="false" :min="1" :max="8" />
+              <el-input-number
+                v-model="query.maxLevel"
+                :controls="false"
+                :min="1"
+                :max="8"
+              />
             </div>
           </el-form-item>
           <div class="advanced-actions">
             <el-button @click="resetAdvanced">重置</el-button>
-            <el-button type="primary" @click="handleAdvancedQuery">查询</el-button>
+            <el-button
+              type="primary"
+              @click="handleAdvancedQuery"
+            >查询</el-button>
           </div>
         </el-form>
-        <el-button slot="reference" icon="el-icon-s-operation">更多条件</el-button>
+        <el-button
+          slot="reference"
+          icon="el-icon-s-operation"
+        >更多条件</el-button>
       </el-popover>
-      <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-      <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+      <el-button
+        icon="el-icon-search"
+        @click="handleQuery"
+      >搜索</el-button>
+      <el-button
+        icon="el-icon-refresh"
+        @click="resetQuery"
+      >重置</el-button>
       <FmsLedgerPrintButton
         v-if="showPrint && printTarget"
         :before-print="beforePrint"

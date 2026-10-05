@@ -1,31 +1,172 @@
 <!-- MES 维修工单表单 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="960px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="110px" :disabled="isDetail">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="960px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="110px"
+      :disabled="isDetail"
+    >
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="维修单编码" prop="code"><el-input v-model="formData.code" placeholder="请输入维修单编码" :disabled="isHeaderReadonly"><el-button slot="append" :disabled="isHeaderReadonly" @click="generateCode">生成</el-button></el-input></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="维修单名称" prop="name"><el-input v-model="formData.name" placeholder="请输入维修单名称" :disabled="isHeaderReadonly" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="设备" prop="machineryId"><dv-machinery-select v-model="formData.machineryId" :disabled="isHeaderReadonly" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="维修单编码"
+          prop="code"
+        ><el-input
+          v-model="formData.code"
+          placeholder="请输入维修单编码"
+          :disabled="isHeaderReadonly"
+        ><el-button
+          slot="append"
+          :disabled="isHeaderReadonly"
+          @click="generateCode"
+        >生成</el-button></el-input></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="维修单名称"
+          prop="name"
+        ><el-input
+          v-model="formData.name"
+          placeholder="请输入维修单名称"
+          :disabled="isHeaderReadonly"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="设备"
+          prop="machineryId"
+        ><dv-machinery-select
+          v-model="formData.machineryId"
+          :disabled="isHeaderReadonly"
+        /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="报修日期" prop="requireDate"><el-date-picker v-model="formData.requireDate" type="datetime" value-format="timestamp" placeholder="选择报修日期" :disabled="isHeaderReadonly" /></el-form-item></el-col>
-        <el-col v-if="showFinishFields" :span="8"><el-form-item label="维修完成日期" prop="finishDate"><el-date-picker v-model="formData.finishDate" type="datetime" value-format="timestamp" placeholder="选择完成日期" :disabled="!isConfirm" /></el-form-item></el-col>
-        <el-col v-if="showConfirmFields" :span="8"><el-form-item label="维修人" prop="acceptedUserId"><user-select-v2 v-model="formData.acceptedUserId" placeholder="请选择维修人" disabled /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="报修日期"
+          prop="requireDate"
+        ><el-date-picker
+          v-model="formData.requireDate"
+          type="datetime"
+          value-format="timestamp"
+          placeholder="选择报修日期"
+          :disabled="isHeaderReadonly"
+        /></el-form-item></el-col>
+        <el-col
+          v-if="showFinishFields"
+          :span="8"
+        ><el-form-item
+          label="维修完成日期"
+          prop="finishDate"
+        ><el-date-picker
+          v-model="formData.finishDate"
+          type="datetime"
+          value-format="timestamp"
+          placeholder="选择完成日期"
+          :disabled="!isConfirm"
+        /></el-form-item></el-col>
+        <el-col
+          v-if="showConfirmFields"
+          :span="8"
+        ><el-form-item
+          label="维修人"
+          prop="acceptedUserId"
+        ><user-select-v2
+          v-model="formData.acceptedUserId"
+          placeholder="请选择维修人"
+          disabled
+        /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col v-if="showDetailFields" :span="8"><el-form-item label="维修结果" prop="result"><el-select v-model="formData.result" placeholder="请选择维修结果" clearable disabled><el-option v-for="dict in resultOptions" :key="dict.value" :label="dict.label" :value="dict.value" /></el-select></el-form-item></el-col>
-        <el-col v-if="showDetailFields" :span="8"><el-form-item label="验收日期" prop="confirmDate"><el-date-picker v-model="formData.confirmDate" type="datetime" value-format="timestamp" placeholder="选择验收日期" disabled /></el-form-item></el-col>
-        <el-col v-if="showDetailFields" :span="8"><el-form-item label="验收人" prop="confirmUserId"><user-select-v2 v-model="formData.confirmUserId" placeholder="请选择验收人" disabled /></el-form-item></el-col>
+        <el-col
+          v-if="showDetailFields"
+          :span="8"
+        ><el-form-item
+          label="维修结果"
+          prop="result"
+        ><el-select
+          v-model="formData.result"
+          placeholder="请选择维修结果"
+          clearable
+          disabled
+        ><el-option
+          v-for="dict in resultOptions"
+          :key="dict.value"
+          :label="dict.label"
+          :value="dict.value"
+        /></el-select></el-form-item></el-col>
+        <el-col
+          v-if="showDetailFields"
+          :span="8"
+        ><el-form-item
+          label="验收日期"
+          prop="confirmDate"
+        ><el-date-picker
+          v-model="formData.confirmDate"
+          type="datetime"
+          value-format="timestamp"
+          placeholder="选择验收日期"
+          disabled
+        /></el-form-item></el-col>
+        <el-col
+          v-if="showDetailFields"
+          :span="8"
+        ><el-form-item
+          label="验收人"
+          prop="confirmUserId"
+        ><user-select-v2
+          v-model="formData.confirmUserId"
+          placeholder="请选择验收人"
+          disabled
+        /></el-form-item></el-col>
       </el-row>
-      <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" :disabled="isHeaderReadonly" /></el-form-item>
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
+        v-model="formData.remark"
+        type="textarea"
+        placeholder="请输入备注"
+        :disabled="isHeaderReadonly"
+      /></el-form-item>
     </el-form>
-    <template v-if="formData.id"><el-divider content-position="center">维修项目明细</el-divider><repair-line-list :repair-id="formData.id" :disabled="isHeaderReadonly" /></template>
+    <template v-if="formData.id"><el-divider content-position="center">维修项目明细</el-divider><repair-line-list
+      :repair-id="formData.id"
+      :disabled="isHeaderReadonly"
+    /></template>
     <span slot="footer">
-      <el-button v-if="isEditable" type="primary" :disabled="formLoading" @click="submitForm">保 存</el-button>
-      <el-button v-if="isEditable && formData.status === MesDvRepairStatusEnum.PREPARE" type="warning" :disabled="formLoading" @click="handleSubmit">提 交</el-button>
-      <el-button v-if="isConfirm" type="primary" :disabled="formLoading" @click="handleConfirm">完成维修</el-button>
-      <el-button v-if="isFinish" type="success" :disabled="formLoading" @click="handleFinish(MesDvRepairResultEnum.PASS)">验 收 通 过</el-button>
-      <el-button v-if="isFinish" type="warning" :disabled="formLoading" @click="handleFinish(MesDvRepairResultEnum.FAIL)">不 通 过</el-button>
+      <el-button
+        v-if="isEditable"
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
+      <el-button
+        v-if="isEditable && formData.status === MesDvRepairStatusEnum.PREPARE"
+        type="warning"
+        :disabled="formLoading"
+        @click="handleSubmit"
+      >提 交</el-button>
+      <el-button
+        v-if="isConfirm"
+        type="primary"
+        :disabled="formLoading"
+        @click="handleConfirm"
+      >完成维修</el-button>
+      <el-button
+        v-if="isFinish"
+        type="success"
+        :disabled="formLoading"
+        @click="handleFinish(MesDvRepairResultEnum.PASS)"
+      >验 收 通 过</el-button>
+      <el-button
+        v-if="isFinish"
+        type="warning"
+        :disabled="formLoading"
+        @click="handleFinish(MesDvRepairResultEnum.FAIL)"
+      >不 通 过</el-button>
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </span>
   </el-dialog>

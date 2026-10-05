@@ -1,7 +1,14 @@
 <template>
   <div class="test-form">
-    <parser :form-conf="formConf" @submit="sumbitForm1" />
-    <parser :key="key2" :form-conf="formConf" @submit="sumbitForm2" />
+    <parser
+      :form-conf="formConf"
+      @submit="sumbitForm1"
+    />
+    <parser
+      :key="key2"
+      :form-conf="formConf"
+      @submit="sumbitForm2"
+    />
     <el-button @click="change">
       change
     </el-button>

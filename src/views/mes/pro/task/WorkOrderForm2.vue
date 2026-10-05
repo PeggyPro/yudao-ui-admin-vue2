@@ -12,17 +12,26 @@
       label-width="120px"
     >
       <el-row :gutter="20">
-        <el-col :span="12"><el-form-item label="工单编码" prop="code"><el-input
+        <el-col :span="12"><el-form-item
+          label="工单编码"
+          prop="code"
+        ><el-input
           v-model="formData.code"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="12"><el-form-item label="工单名称" prop="name"><el-input
+        <el-col :span="12"><el-form-item
+          label="工单名称"
+          prop="name"
+        ><el-input
           v-model="formData.name"
           disabled
         /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="工单来源" prop="orderSourceType"><el-select
+        <el-col :span="8"><el-form-item
+          label="工单来源"
+          prop="orderSourceType"
+        ><el-select
           v-model="formData.orderSourceType"
           class="full-width"
           disabled
@@ -35,11 +44,17 @@
         <el-col
           v-if="formData.orderSourceType === MesProWorkOrderSourceTypeEnum.ORDER"
           :span="8"
-        ><el-form-item label="来源单据编号" prop="orderSourceCode"><el-input
+        ><el-form-item
+          label="来源单据编号"
+          prop="orderSourceCode"
+        ><el-input
           v-model="formData.orderSourceCode"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="工单类型" prop="type"><el-select
+        <el-col :span="8"><el-form-item
+          label="工单类型"
+          prop="type"
+        ><el-select
           v-model="formData.type"
           class="full-width"
           disabled
@@ -51,57 +66,87 @@
         /></el-select></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="产品" prop="productId"><md-item-select
+        <el-col :span="8"><el-form-item
+          label="产品"
+          prop="productId"
+        ><md-item-select
           v-model="formData.productId"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="规格型号" prop="productSpecification"><el-input
+        <el-col :span="8"><el-form-item
+          label="规格型号"
+          prop="productSpecification"
+        ><el-input
           v-model="formData.productSpecification"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="单位" prop="unitMeasureName"><el-input
+        <el-col :span="8"><el-form-item
+          label="单位"
+          prop="unitMeasureName"
+        ><el-input
           v-model="formData.unitMeasureName"
           disabled
         /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="工单数量" prop="quantity"><el-input-number
+        <el-col :span="8"><el-form-item
+          label="工单数量"
+          prop="quantity"
+        ><el-input-number
           v-model="formData.quantity"
           :min="0"
           :precision="2"
           class="full-width"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="客户" prop="clientId"><md-client-select
+        <el-col :span="8"><el-form-item
+          label="客户"
+          prop="clientId"
+        ><md-client-select
           v-model="formData.clientId"
           disabled
         /></el-form-item></el-col>
         <el-col
           v-if="formData.type === MesProWorkOrderTypeEnum.OUTSOURCE || formData.type === MesProWorkOrderTypeEnum.PURCHASE"
           :span="8"
-        ><el-form-item label="供应商" prop="vendorId"><md-vendor-select
+        ><el-form-item
+          label="供应商"
+          prop="vendorId"
+        ><md-vendor-select
           v-model="formData.vendorId"
           disabled
         /></el-form-item></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="批次号" prop="batchCode"><el-input
+        <el-col :span="8"><el-form-item
+          label="批次号"
+          prop="batchCode"
+        ><el-input
           v-model="formData.batchCode"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="需求日期" prop="requestDate"><el-date-picker
+        <el-col :span="8"><el-form-item
+          label="需求日期"
+          prop="requestDate"
+        ><el-date-picker
           v-model="formData.requestDate"
           type="date"
           value-format="timestamp"
           class="full-width"
           disabled
         /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="工单状态" prop="status"><dict-tag
+        <el-col :span="8"><el-form-item
+          label="工单状态"
+          prop="status"
+        ><dict-tag
           :type="DICT_TYPE.MES_PRO_WORK_ORDER_STATUS"
           :value="formData.status == null ? '' : formData.status"
         /></el-form-item></el-col>
       </el-row>
-      <el-form-item label="备注" prop="remark"><el-input
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
         v-model="formData.remark"
         type="textarea"
         disabled

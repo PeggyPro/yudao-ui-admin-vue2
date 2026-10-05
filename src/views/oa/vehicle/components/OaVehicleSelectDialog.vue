@@ -1,5 +1,10 @@
 <template>
-  <Dialog title="选择车辆" v-model="dialogVisible" width="1200px" append-to-body>
+  <AppDialog
+    v-model="dialogVisible"
+    title="选择车辆"
+    width="1200px"
+    append-to-body
+  >
     <!-- 搜索 -->
     <el-form
       ref="queryForm"
@@ -9,7 +14,10 @@
       label-width="85px"
       @submit.native.prevent
     >
-      <el-form-item label="车牌号" prop="no">
+      <el-form-item
+        label="车牌号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入车牌号"
@@ -18,7 +26,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="品牌型号" prop="brandModel">
+      <el-form-item
+        label="品牌型号"
+        prop="brandModel"
+      >
         <el-input
           v-model="queryParams.brandModel"
           placeholder="请输入品牌型号"
@@ -27,7 +38,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车型" prop="type">
+      <el-form-item
+        label="车型"
+        prop="type"
+      >
         <el-input
           v-model="queryParams.type"
           placeholder="请输入车型"
@@ -36,8 +50,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="车辆分类" prop="category">
-        <el-select v-model="queryParams.category" placeholder="请选择车辆分类" clearable style="width: 240px">
+      <el-form-item
+        label="车辆分类"
+        prop="category"
+      >
+        <el-select
+          v-model="queryParams.category"
+          placeholder="请选择车辆分类"
+          clearable
+          style="width: 240px"
+        >
           <el-option
             v-for="dict in categoryOptions"
             :key="dict.value"
@@ -47,8 +69,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
     <!-- 列表 -->
@@ -59,25 +88,60 @@
       row-key="id"
       @row-click="handleSelect"
     >
-      <el-table-column label="选择" width="60" align="center">
+      <el-table-column
+        label="选择"
+        width="60"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-radio
             v-model="selectedId"
             :label="scope.row.id"
             @change="handleSelect(scope.row)"
-          ><span> </span></el-radio>
+          ><span /></el-radio>
         </template>
       </el-table-column>
-      <el-table-column label="车牌号" prop="no" min-width="130" />
-      <el-table-column label="车辆名称" prop="name" min-width="160" show-overflow-tooltip />
-      <el-table-column label="品牌型号" prop="brandModel" min-width="150" show-overflow-tooltip />
-      <el-table-column label="车型" prop="type" min-width="100" show-overflow-tooltip />
-      <el-table-column label="车辆分类" min-width="120" align="center">
+      <el-table-column
+        label="车牌号"
+        prop="no"
+        min-width="130"
+      />
+      <el-table-column
+        label="车辆名称"
+        prop="name"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="品牌型号"
+        prop="brandModel"
+        min-width="150"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="车型"
+        prop="type"
+        min-width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="车辆分类"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_VEHICLE_CATEGORY" :value="scope.row.category" />
+          <dict-tag
+            :type="DICT_TYPE.OA_VEHICLE_CATEGORY"
+            :value="scope.row.category"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="座位数" prop="seatCount" width="90" align="center" />
+      <el-table-column
+        label="座位数"
+        prop="seatCount"
+        width="90"
+        align="center"
+      />
     </el-table>
     <pagination
       v-show="total > 0"
@@ -86,23 +150,30 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="loading || !selectedItem" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="loading || !selectedItem"
+        @click="submitForm"
+      >
         确 定
       </el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as VehicleApplyApi from '@/api/oa/vehicle/apply'
 import { DICT_TYPE, getStrDictOptions } from '@/utils/dict'
 
 export default {
   name: 'OaVehicleSelectDialog',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       DICT_TYPE,

@@ -6,12 +6,35 @@
     width="720px"
     @open="getList"
   >
-    <el-table v-loading="loading" :data="list" size="mini" stripe>
-      <el-table-column prop="name" label="名字" min-width="160" show-overflow-tooltip />
-      <el-table-column prop="expression" label="表达式" min-width="280" show-overflow-tooltip />
-      <el-table-column label="操作" width="90" align="center">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      size="mini"
+      stripe
+    >
+      <el-table-column
+        prop="name"
+        label="名字"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="expression"
+        label="表达式"
+        min-width="280"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="操作"
+        width="90"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="select(scope.row)">选择</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="select(scope.row)"
+          >选择</el-button>
         </template>
       </el-table-column>
     </el-table>

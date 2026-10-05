@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -7,13 +12,30 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="标签名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入标签名称" />
+      <el-form-item
+        label="标签名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入标签名称"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" :loading="formLoading" @click="submitForm">确 定</el-button>
-      <el-button :disabled="formLoading" @click="cancel">取 消</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        @click="cancel"
+      >取 消</el-button>
     </div>
   </el-dialog>
 </template>

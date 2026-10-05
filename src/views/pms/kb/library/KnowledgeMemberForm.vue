@@ -1,12 +1,27 @@
 <template>
-  <el-dialog title="知识库成员" :visible.sync="dialogVisible" width="680px" append-to-body>
+  <el-dialog
+    title="知识库成员"
+    :visible.sync="dialogVisible"
+    width="680px"
+    append-to-body
+  >
     <div v-loading="formLoading">
-      <el-alert class="member-alert" :closable="false" type="info">
+      <el-alert
+        class="member-alert"
+        :closable="false"
+        type="info"
+      >
         创建人固定保留；管理员可维护知识库信息和成员，普通成员可新增内容，具体操作受内容协作权限控制。
       </el-alert>
       <!-- 成员列表 -->
-      <el-table :data="memberList" border>
-        <el-table-column label="类型" width="100">
+      <el-table
+        :data="memberList"
+        border
+      >
+        <el-table-column
+          label="类型"
+          width="100"
+        >
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.level === PmsKnowledgeLibraryMemberLevel.CREATOR"
@@ -17,18 +32,30 @@
               v-model="scope.row.identityType"
               @change="handleIdentityTypeChange(scope.row)"
             >
-              <el-option label="成员" value="user" />
-              <el-option label="部门" value="dept" />
+              <el-option
+                label="成员"
+                value="user"
+              />
+              <el-option
+                label="部门"
+                value="dept"
+              />
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="成员" min-width="260">
+        <el-table-column
+          label="成员"
+          min-width="260"
+        >
           <template slot-scope="scope">
             <div
               v-if="scope.row.level === PmsKnowledgeLibraryMemberLevel.CREATOR"
               class="creator-member"
             >
-              <el-avatar :size="28" :src="scope.row.avatar">
+              <el-avatar
+                :size="28"
+                :src="scope.row.avatar"
+              >
                 {{ (scope.row.nickname || '用户 ' + scope.row.userId).slice(0, 1) }}
               </el-avatar>
               <span>{{ scope.row.nickname || '用户 ' + scope.row.userId }}</span>
@@ -45,7 +72,10 @@
                 placeholder="请选择部门"
                 style="width: 100%"
               />
-              <div v-if="scope.row.deptName" class="dept-path">
+              <div
+                v-if="scope.row.deptName"
+                class="dept-path"
+              >
                 {{ scope.row.parentDeptName ? scope.row.parentDeptName + ' / ' : '' }}{{
                   scope.row.deptName
                 }}
@@ -53,19 +83,35 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="角色" width="160">
+        <el-table-column
+          label="角色"
+          width="160"
+        >
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.level === PmsKnowledgeLibraryMemberLevel.CREATOR"
               type="success"
             >创建人</el-tag>
-            <el-select v-else v-model="scope.row.level">
-              <el-option label="管理员" :value="PmsKnowledgeLibraryMemberLevel.ADMIN" />
-              <el-option label="普通成员" :value="PmsKnowledgeLibraryMemberLevel.MEMBER" />
+            <el-select
+              v-else
+              v-model="scope.row.level"
+            >
+              <el-option
+                label="管理员"
+                :value="PmsKnowledgeLibraryMemberLevel.ADMIN"
+              />
+              <el-option
+                label="普通成员"
+                :value="PmsKnowledgeLibraryMemberLevel.MEMBER"
+              />
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="80">
+        <el-table-column
+          align="center"
+          label="操作"
+          width="80"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.level !== PmsKnowledgeLibraryMemberLevel.CREATOR"
@@ -76,10 +122,20 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button class="add-member-button" @click="addMember">添加成员</el-button>
+      <el-button
+        class="add-member-button"
+        @click="addMember"
+      >添加成员</el-button>
     </div>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

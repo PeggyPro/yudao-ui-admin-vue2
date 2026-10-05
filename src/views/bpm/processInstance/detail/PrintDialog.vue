@@ -1,8 +1,20 @@
 <template>
-  <el-dialog title="打印预览" :visible.sync="visible" width="900px" append-to-body>
-    <div id="processInstancePrintContent" v-loading="loading" class="print-content">
+  <el-dialog
+    title="打印预览"
+    :visible.sync="visible"
+    width="900px"
+    append-to-body
+  >
+    <div
+      id="processInstancePrintContent"
+      v-loading="loading"
+      class="print-content"
+    >
       <div v-if="printData.processInstance">
-        <div v-if="printData.printTemplateEnable" v-html="printTemplateHtml" />
+        <div
+          v-if="printData.printTemplateEnable"
+          v-html="printTemplateHtml"
+        />
         <div v-else>
           <h2 class="print-title">{{ printData.processInstance.name }}</h2>
           <div class="print-right">打印人员: {{ userName }}</div>
@@ -10,7 +22,10 @@
             <span>流程编号: {{ printData.processInstance.id }}</span>
             <span>打印时间: {{ printTime }}</span>
           </div>
-          <table class="print-table" border="1">
+          <table
+            class="print-table"
+            border="1"
+          >
             <tbody>
               <tr>
                 <td class="print-label">发起人</td>
@@ -25,11 +40,17 @@
                 <td>{{ processStatusLabel }}</td>
               </tr>
               <tr>
-                <td class="print-section" colspan="4">
+                <td
+                  class="print-section"
+                  colspan="4"
+                >
                   <h4>表单内容</h4>
                 </td>
               </tr>
-              <tr v-for="item in formFields" :key="item.id">
+              <tr
+                v-for="item in formFields"
+                :key="item.id"
+              >
                 <td class="print-label">{{ item.name }}</td>
                 <td colspan="3">
                   <div v-html="item.html" />
@@ -38,7 +59,10 @@
             </tbody>
           </table>
 
-          <div v-if="BusinessFormComponent && formFields.length === 0" class="business-form-print">
+          <div
+            v-if="BusinessFormComponent && formFields.length === 0"
+            class="business-form-print"
+          >
             <component
               :is="BusinessFormComponent"
               :id="printData.processInstance.businessKey"
@@ -47,19 +71,32 @@
             />
           </div>
 
-          <table class="print-table" border="1">
+          <table
+            class="print-table"
+            border="1"
+          >
             <tbody>
               <tr>
-                <td class="print-section" colspan="4">
+                <td
+                  class="print-section"
+                  colspan="4"
+                >
                   <h4>流程节点</h4>
                 </td>
               </tr>
-              <tr v-for="item in printData.tasks || []" :key="item.id">
+              <tr
+                v-for="item in printData.tasks || []"
+                :key="item.id"
+              >
                 <td class="print-label">{{ item.name }}</td>
                 <td colspan="3">
                   {{ item.description }}
                   <div v-if="item.signPicUrl">
-                    <img class="sign-pic" :src="item.signPicUrl" alt="" />
+                    <img
+                      class="sign-pic"
+                      :src="item.signPicUrl"
+                      alt=""
+                    >
                   </div>
                 </td>
               </tr>
@@ -70,7 +107,11 @@
     </div>
     <div slot="footer">
       <el-button @click="visible = false">取 消</el-button>
-      <el-button type="primary" icon="el-icon-printer" @click="handlePrint">打 印</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-printer"
+        @click="handlePrint"
+      >打 印</el-button>
     </div>
   </el-dialog>
 </template>
@@ -321,7 +362,7 @@ export default {
         .join(', ')
     },
     flattenAreaTree(list, map = new Map()) {
-      ;(list || []).forEach((item) => {
+      (list || []).forEach((item) => {
         if (item.id !== undefined) {
           map.set(String(item.id), item.name)
         }

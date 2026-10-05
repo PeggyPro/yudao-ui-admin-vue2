@@ -1,45 +1,171 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="560px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="130px">
-      <el-form-item label="配置名" prop="name"><el-input v-model="formData.name" placeholder="请输入配置名" /></el-form-item>
-      <el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" placeholder="请输入备注" /></el-form-item>
-      <el-form-item label="存储器" prop="storage">
-        <el-select v-model="formData.storage" :disabled="formData.id !== undefined" placeholder="请选择存储器">
-          <el-option v-for="dict in getDictDatas(DICT_TYPE.INFRA_FILE_STORAGE)" :key="dict.value" :label="dict.label" :value="parseInt(dict.value)" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="560px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="130px"
+    >
+      <el-form-item
+        label="配置名"
+        prop="name"
+      ><el-input
+        v-model="formData.name"
+        placeholder="请输入配置名"
+      /></el-form-item>
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
+        v-model="formData.remark"
+        placeholder="请输入备注"
+      /></el-form-item>
+      <el-form-item
+        label="存储器"
+        prop="storage"
+      >
+        <el-select
+          v-model="formData.storage"
+          :disabled="formData.id !== undefined"
+          placeholder="请选择存储器"
+        >
+          <el-option
+            v-for="dict in getDictDatas(DICT_TYPE.INFRA_FILE_STORAGE)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="parseInt(dict.value)"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="formData.storage >= 10 && formData.storage <= 12" label="基础路径" prop="config.basePath">
-        <el-input v-model="formData.config.basePath" placeholder="请输入基础路径" />
+      <el-form-item
+        v-if="formData.storage >= 10 && formData.storage <= 12"
+        label="基础路径"
+        prop="config.basePath"
+      >
+        <el-input
+          v-model="formData.config.basePath"
+          placeholder="请输入基础路径"
+        />
       </el-form-item>
       <template v-if="formData.storage >= 11 && formData.storage <= 12">
-        <el-form-item label="主机地址" prop="config.host"><el-input v-model="formData.config.host" placeholder="请输入主机地址" /></el-form-item>
-        <el-form-item label="主机端口" prop="config.port"><el-input-number v-model="formData.config.port" :min="0" placeholder="请输入主机端口" /></el-form-item>
-        <el-form-item label="用户名" prop="config.username"><el-input v-model="formData.config.username" placeholder="请输入用户名" /></el-form-item>
-        <el-form-item label="密码" prop="config.password"><el-input v-model="formData.config.password" type="password" show-password placeholder="请输入密码" /></el-form-item>
+        <el-form-item
+          label="主机地址"
+          prop="config.host"
+        ><el-input
+          v-model="formData.config.host"
+          placeholder="请输入主机地址"
+        /></el-form-item>
+        <el-form-item
+          label="主机端口"
+          prop="config.port"
+        ><el-input-number
+          v-model="formData.config.port"
+          :min="0"
+          placeholder="请输入主机端口"
+        /></el-form-item>
+        <el-form-item
+          label="用户名"
+          prop="config.username"
+        ><el-input
+          v-model="formData.config.username"
+          placeholder="请输入用户名"
+        /></el-form-item>
+        <el-form-item
+          label="密码"
+          prop="config.password"
+        ><el-input
+          v-model="formData.config.password"
+          type="password"
+          show-password
+          placeholder="请输入密码"
+        /></el-form-item>
       </template>
-      <el-form-item v-if="formData.storage === 11" label="连接模式" prop="config.mode">
+      <el-form-item
+        v-if="formData.storage === 11"
+        label="连接模式"
+        prop="config.mode"
+      >
         <el-radio-group v-model="formData.config.mode"><el-radio label="Active">主动模式</el-radio><el-radio label="Passive">被动模式</el-radio></el-radio-group>
       </el-form-item>
       <template v-if="formData.storage === 20">
-        <el-form-item label="节点地址" prop="config.endpoint"><el-input v-model="formData.config.endpoint" placeholder="请输入节点地址" /></el-form-item>
-        <el-form-item label="存储 bucket" prop="config.bucket"><el-input v-model="formData.config.bucket" placeholder="请输入 bucket" /></el-form-item>
-        <el-form-item label="accessKey" prop="config.accessKey"><el-input v-model="formData.config.accessKey" placeholder="请输入 accessKey" /></el-form-item>
-        <el-form-item label="accessSecret" prop="config.accessSecret"><el-input v-model="formData.config.accessSecret" type="password" show-password placeholder="请输入 accessSecret" /></el-form-item>
-        <el-form-item label="是否 Path Style" prop="config.enablePathStyleAccess">
+        <el-form-item
+          label="节点地址"
+          prop="config.endpoint"
+        ><el-input
+          v-model="formData.config.endpoint"
+          placeholder="请输入节点地址"
+        /></el-form-item>
+        <el-form-item
+          label="存储 bucket"
+          prop="config.bucket"
+        ><el-input
+          v-model="formData.config.bucket"
+          placeholder="请输入 bucket"
+        /></el-form-item>
+        <el-form-item
+          label="accessKey"
+          prop="config.accessKey"
+        ><el-input
+          v-model="formData.config.accessKey"
+          placeholder="请输入 accessKey"
+        /></el-form-item>
+        <el-form-item
+          label="accessSecret"
+          prop="config.accessSecret"
+        ><el-input
+          v-model="formData.config.accessSecret"
+          type="password"
+          show-password
+          placeholder="请输入 accessSecret"
+        /></el-form-item>
+        <el-form-item
+          label="是否 Path Style"
+          prop="config.enablePathStyleAccess"
+        >
           <el-radio-group v-model="formData.config.enablePathStyleAccess"><el-radio :label="true">启用</el-radio><el-radio :label="false">禁用</el-radio></el-radio-group>
         </el-form-item>
-        <el-form-item label="公开访问" prop="config.enablePublicAccess">
+        <el-form-item
+          label="公开访问"
+          prop="config.enablePublicAccess"
+        >
           <el-radio-group v-model="formData.config.enablePublicAccess"><el-radio :label="true">公开</el-radio><el-radio :label="false">私有</el-radio></el-radio-group>
         </el-form-item>
-        <el-form-item label="区域"><el-input v-model="formData.config.region" placeholder="请填写区域，一般仅 AWS 需要填写" /></el-form-item>
-        <el-form-item label="自定义域名"><el-input v-model="formData.config.domain" placeholder="请输入自定义域名" /></el-form-item>
+        <el-form-item label="区域"><el-input
+          v-model="formData.config.region"
+          placeholder="请填写区域，一般仅 AWS 需要填写"
+        /></el-form-item>
+        <el-form-item label="自定义域名"><el-input
+          v-model="formData.config.domain"
+          placeholder="请输入自定义域名"
+        /></el-form-item>
       </template>
-      <el-form-item v-else-if="formData.storage" label="自定义域名" prop="config.domain">
-        <el-input v-model="formData.config.domain" placeholder="请输入自定义域名" />
+      <el-form-item
+        v-else-if="formData.storage"
+        label="自定义域名"
+        prop="config.domain"
+      >
+        <el-input
+          v-model="formData.config.domain"
+          placeholder="请输入自定义域名"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

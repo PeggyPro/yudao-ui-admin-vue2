@@ -1,5 +1,8 @@
 <template>
-  <basic-info-form ref="inner" :info="table" />
+  <basic-info-form
+    ref="inner"
+    :info="table"
+  />
 </template>
 
 <script>
@@ -8,7 +11,7 @@ import BasicInfoForm from '../basicInfoForm.vue'
 export default {
   name: 'InfraCodegenBasicInfoForm',
   components: { BasicInfoForm },
-  props: { table: { type: Object, default: null } },
+  props: { table: { type: Object, default: null }},
   methods: {
     validate(callback) {
       const form = this.$refs.inner && this.$refs.inner.$refs.basicInfoForm

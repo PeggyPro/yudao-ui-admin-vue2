@@ -1,19 +1,30 @@
 <template>
-  <Dialog title="还车申请详情" v-model="dialogVisible" width="900px">
-    <vehicle-return-detail v-if="dialogVisible && detailId" :key="detailId" :id="detailId" />
-    <div slot="footer" class="dialog-footer">
+  <AppDialog
+    v-model="dialogVisible"
+    title="还车申请详情"
+    width="900px"
+  >
+    <vehicle-return-detail
+      v-if="dialogVisible && detailId"
+      :id="detailId"
+      :key="detailId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import VehicleReturnDetail from './detail/index.vue'
 
 export default {
   name: 'OaVehicleReturnDetail',
-  components: { Dialog, VehicleReturnDetail },
+  components: { AppDialog, VehicleReturnDetail },
   data() {
     return {
       dialogVisible: false,

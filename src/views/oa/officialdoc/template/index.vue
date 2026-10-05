@@ -9,7 +9,10 @@
       label-width="80px"
       @submit.native.prevent
     >
-      <el-form-item label="模板名称" prop="name">
+      <el-form-item
+        label="模板名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           placeholder="请输入模板名称"
@@ -18,8 +21,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable style="width: 240px">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+          style="width: 240px"
+        >
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -29,8 +40,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:officialdoc-template:create']"
           type="primary"
@@ -42,22 +60,66 @@
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="ID" prop="id" width="80" align="center" />
-      <el-table-column label="模板名称" prop="name" min-width="120" show-overflow-tooltip />
-      <el-table-column label="机关/公司名称" prop="authorityName" min-width="160" show-overflow-tooltip />
-      <el-table-column label="字号前缀" prop="noPrefix" min-width="120" show-overflow-tooltip />
-      <el-table-column label="分隔线样式" min-width="120" align="center">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="ID"
+        prop="id"
+        width="80"
+        align="center"
+      />
+      <el-table-column
+        label="模板名称"
+        prop="name"
+        min-width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="机关/公司名称"
+        prop="authorityName"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="字号前缀"
+        prop="noPrefix"
+        min-width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="分隔线样式"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_SEPARATOR_TYPE" :value="scope.row.separatorType" />
+          <dict-tag
+            :type="DICT_TYPE.OA_OFFICIAL_DOC_SEPARATOR_TYPE"
+            :value="scope.row.separatorType"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="状态" min-width="120" align="center">
+      <el-table-column
+        label="状态"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="排序" prop="sort" min-width="80" align="center" />
+      <el-table-column
+        label="排序"
+        prop="sort"
+        min-width="80"
+        align="center"
+      />
       <el-table-column
         label="创建时间"
         prop="createTime"
@@ -65,7 +127,12 @@
         :formatter="dateFormatter"
         align="center"
       />
-      <el-table-column label="操作" align="center" fixed="right" width="140">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="140"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:officialdoc-template:update']"
@@ -92,7 +159,10 @@
     />
 
     <!-- 表单弹窗 -->
-    <oa-official-doc-template-form ref="form" @success="getList" />
+    <oa-official-doc-template-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

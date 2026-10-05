@@ -1,6 +1,12 @@
 <template>
-  <el-card shadow="never" class="home-card">
-    <div slot="header" class="home-card__title">待办提醒</div>
+  <el-card
+    shadow="never"
+    class="home-card"
+  >
+    <div
+      slot="header"
+      class="home-card__title"
+    >待办提醒</div>
     <div class="todo-grid">
       <button
         v-for="todo in todoItems"

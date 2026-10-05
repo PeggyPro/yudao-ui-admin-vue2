@@ -1,9 +1,15 @@
 <template>
   <div v-loading="loading">
     <!-- 公文信息 -->
-    <el-descriptions :column="2" border>
+    <el-descriptions
+      :column="2"
+      border
+    >
       <el-descriptions-item label="收文类型">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_RECEIVE_TYPE" :value="detail.receiveType" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_RECEIVE_TYPE"
+          :value="detail.receiveType"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="收文时间">
         {{ detail.receiveTime ? formatDate(detail.receiveTime) : '' }}
@@ -16,7 +22,10 @@
         </el-descriptions-item>
         <el-descriptions-item label="签发人">{{ detail.signerName }}</el-descriptions-item>
         <el-descriptions-item label="公开类别">
-          <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_PUBLIC_CATEGORY" :value="detail.disclosureType" />
+          <dict-tag
+            :type="DICT_TYPE.OA_OFFICIAL_DOC_PUBLIC_CATEGORY"
+            :value="detail.disclosureType"
+          />
         </el-descriptions-item>
       </template>
       <el-descriptions-item label="领导批示">{{ detail.instruction }}</el-descriptions-item>
@@ -30,33 +39,72 @@
       <el-descriptions-item label="公文标题">{{ detail.title }}</el-descriptions-item>
       <el-descriptions-item label="来文字号">{{ detail.documentNo }}</el-descriptions-item>
       <el-descriptions-item label="密级">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_SECRET_LEVEL" :value="detail.secrecyLevel" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_SECRET_LEVEL"
+          :value="detail.secrecyLevel"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="紧急程度">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_URGENCY_LEVEL" :value="detail.urgencyLevel" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_URGENCY_LEVEL"
+          :value="detail.urgencyLevel"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="收文部门">{{ detail.receiveDeptName }}</el-descriptions-item>
       <el-descriptions-item label="主办人">{{ detail.handlerName }}</el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detail.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+        <el-tag
+          v-if="detail.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+          size="small"
+        >
           未提交
         </el-tag>
-        <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="detail.status" />
+        <dict-tag
+          v-else
+          :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+          :value="detail.status"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="办理状态">
-        <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_HANDLE_STATUS" :value="detail.handleStatus" />
+        <dict-tag
+          :type="DICT_TYPE.OA_OFFICIAL_DOC_HANDLE_STATUS"
+          :value="detail.handleStatus"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="创建时间">
         {{ detail.createTime ? formatDate(detail.createTime) : '' }}
       </el-descriptions-item>
-      <el-descriptions-item label="附件" :span="2">
-        <upload-file :model-value="detail.fileUrls || []" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="附件"
+        :span="2"
+      >
+        <upload-file
+          :model-value="detail.fileUrls || []"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
-      <el-descriptions-item label="正式公文" :span="2">
-        <upload-file :model-value="detail.formalFileUrl || ''" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="正式公文"
+        :span="2"
+      >
+        <upload-file
+          :model-value="detail.formalFileUrl || ''"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
-      <el-descriptions-item v-if="detail.sendId" label="关联发文" :span="2">
-        <el-button type="text" size="mini" @click="openSendDetail">查看关联发文</el-button>
+      <el-descriptions-item
+        v-if="detail.sendId"
+        label="关联发文"
+        :span="2"
+      >
+        <el-button
+          type="text"
+          size="mini"
+          @click="openSendDetail"
+        >查看关联发文</el-button>
       </el-descriptions-item>
     </el-descriptions>
 

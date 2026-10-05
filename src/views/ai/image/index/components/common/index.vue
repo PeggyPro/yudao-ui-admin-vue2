@@ -30,7 +30,12 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>平台</strong></div>
-      <el-select v-model="otherPlatform" placeholder="请选择平台" class="ai-image-form__select" @change="handlerPlatformChange">
+      <el-select
+        v-model="otherPlatform"
+        placeholder="请选择平台"
+        class="ai-image-form__select"
+        @change="handlerPlatformChange"
+      >
         <el-option
           v-for="item in OtherPlatformEnum"
           :key="item.key"
@@ -42,7 +47,11 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>模型</strong></div>
-      <el-select v-model="modelId" placeholder="请选择模型" class="ai-image-form__select">
+      <el-select
+        v-model="modelId"
+        placeholder="请选择模型"
+        class="ai-image-form__select"
+      >
         <el-option
           v-for="item in platformModels"
           :key="item.id"
@@ -55,13 +64,27 @@
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>图片尺寸</strong></div>
       <div class="ai-image-form__size-row">
-        <el-input v-model="width" type="number" placeholder="图片宽度" />
-        <el-input v-model="height" type="number" placeholder="图片高度" />
+        <el-input
+          v-model="width"
+          type="number"
+          placeholder="图片宽度"
+        />
+        <el-input
+          v-model="height"
+          type="number"
+          placeholder="图片高度"
+        />
       </div>
     </div>
 
     <div class="ai-image-form__submit">
-      <el-button type="primary" round :loading="drawIn" :disabled="!prompt" @click="handleGenerateImage">
+      <el-button
+        type="primary"
+        round
+        :loading="drawIn"
+        :disabled="!prompt"
+        @click="handleGenerateImage"
+      >
         {{ drawIn ? '生成中' : '生成内容' }}
       </el-button>
     </div>

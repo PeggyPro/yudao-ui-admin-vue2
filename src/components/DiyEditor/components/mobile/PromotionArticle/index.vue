@@ -1,5 +1,8 @@
 <template>
-  <div class="article-content" v-html="article && article.content"></div>
+  <div
+    class="article-content"
+    v-html="article && article.content"
+  />
 </template>
 
 <script>

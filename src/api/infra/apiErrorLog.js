@@ -4,7 +4,7 @@ import request from '@/utils/request'
 export function updateApiErrorLogPage(id, processStatus) {
   return request({
     url: '/infra/api-error-log/update-status?id=' + id + '&processStatus=' + processStatus,
-    method: 'put',
+    method: 'put'
   })
 }
 

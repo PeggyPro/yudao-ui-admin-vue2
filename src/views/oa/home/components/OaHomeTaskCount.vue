@@ -7,12 +7,25 @@
     <!-- 数据区与图标区分开，窄屏时优先保留数据 -->
     <div class="home-card__main">
       <div class="home-card__title">新任务</div>
-      <div v-if="loadError" class="home-card__error" @click.stop="getList">
+      <div
+        v-if="loadError"
+        class="home-card__error"
+        @click.stop="getList"
+      >
         加载失败，点击重试
       </div>
-      <div v-else class="home-card__value">{{ count }}</div>
-      <div v-if="checkPermi(['oa:announcement:query'])" class="home-card__desc">
-        <span v-if="unreadError" @click.stop="getUnreadCount">未读公告加载失败，点击重试</span>
+      <div
+        v-else
+        class="home-card__value"
+      >{{ count }}</div>
+      <div
+        v-if="checkPermi(['oa:announcement:query'])"
+        class="home-card__desc"
+      >
+        <span
+          v-if="unreadError"
+          @click.stop="getUnreadCount"
+        >未读公告加载失败，点击重试</span>
         <span v-else>
           {{ unreadLoading ? '未读公告加载中' : '另有 ' + unreadCount + ' 条未读公告' }}
         </span>

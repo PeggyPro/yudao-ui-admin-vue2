@@ -1,7 +1,18 @@
 <template>
-  <dialog-component title="用印申请详情" v-model="dialogVisible" width="1000px">
-    <seal-apply-detail v-if="dialogVisible && detailId" :id="detailId" :key="detailId" />
-    <div slot="footer" class="dialog-footer">
+  <dialog-component
+    v-model="dialogVisible"
+    title="用印申请详情"
+    width="1000px"
+  >
+    <seal-apply-detail
+      v-if="dialogVisible && detailId"
+      :id="detailId"
+      :key="detailId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
   </dialog-component>

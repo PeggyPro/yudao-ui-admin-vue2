@@ -13,7 +13,10 @@
         label-width="80px"
         @submit.native.prevent
       >
-        <el-form-item label="物品名称" prop="name">
+        <el-form-item
+          label="物品名称"
+          prop="name"
+        >
           <el-input
             v-model="queryParams.name"
             placeholder="请输入物品名称"
@@ -22,7 +25,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="物品编码" prop="no">
+        <el-form-item
+          label="物品编码"
+          prop="no"
+        >
           <el-input
             v-model="queryParams.no"
             placeholder="请输入物品编码"
@@ -31,7 +37,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="类别" prop="category">
+        <el-form-item
+          label="类别"
+          prop="category"
+        >
           <el-select
             v-model="queryParams.category"
             placeholder="请选择类别"
@@ -46,7 +55,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="管理类型" prop="manageType">
+        <el-form-item
+          label="管理类型"
+          prop="manageType"
+        >
           <el-select
             v-model="queryParams.manageType"
             placeholder="请选择管理类型"
@@ -61,15 +73,36 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="queryParams.status" placeholder="请选择状态" clearable style="width: 240px">
-            <el-option label="正常" :value="0" />
-            <el-option label="停用" :value="1" />
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
+          <el-select
+            v-model="queryParams.status"
+            placeholder="请选择状态"
+            clearable
+            style="width: 240px"
+          >
+            <el-option
+              label="正常"
+              :value="0"
+            />
+            <el-option
+              label="停用"
+              :value="1"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
           <el-button
             v-hasPermi="['oa:supply-item:create']"
             type="primary"
@@ -82,21 +115,57 @@
     </content-wrap>
     <!-- 列表 -->
     <content-wrap>
-      <el-table v-loading="loading" :data="list" border stripe>
-        <el-table-column label="物品名称" prop="name" min-width="140" />
-        <el-table-column label="物品编码" prop="no" min-width="120" />
-        <el-table-column label="类别" min-width="100" align="center">
+      <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        stripe
+      >
+        <el-table-column
+          label="物品名称"
+          prop="name"
+          min-width="140"
+        />
+        <el-table-column
+          label="物品编码"
+          prop="no"
+          min-width="120"
+        />
+        <el-table-column
+          label="类别"
+          min-width="100"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_CATEGORY" :value="scope.row.category" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_CATEGORY"
+              :value="scope.row.category"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="管理类型" min-width="100" align="center">
+        <el-table-column
+          label="管理类型"
+          min-width="100"
+          align="center"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE" :value="scope.row.manageType" />
+            <dict-tag
+              :type="DICT_TYPE.OA_SUPPLY_MANAGE_TYPE"
+              :value="scope.row.manageType"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="规格型号" prop="model" min-width="100" />
-        <el-table-column label="计量单位" prop="unit" width="80" align="center" />
+        <el-table-column
+          label="规格型号"
+          prop="model"
+          min-width="100"
+        />
+        <el-table-column
+          label="计量单位"
+          prop="unit"
+          width="80"
+          align="center"
+        />
         <el-table-column
           label="参考单价"
           prop="referencePrice"
@@ -105,7 +174,11 @@
           align="right"
           :formatter="erpPriceTableColumnFormatter"
         />
-        <el-table-column label="库存数量" width="100" align="center">
+        <el-table-column
+          label="库存数量"
+          width="100"
+          align="center"
+        >
           <template slot-scope="scope">
             <span
               :class="scope.row.minStockQuantity > 0 && scope.row.stockQuantity < scope.row.minStockQuantity ? 'stock-warning' : ''"
@@ -114,8 +187,17 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="最低库存" prop="minStockQuantity" width="80" align="center" />
-        <el-table-column label="图片" width="80" align="center">
+        <el-table-column
+          label="最低库存"
+          prop="minStockQuantity"
+          width="80"
+          align="center"
+        />
+        <el-table-column
+          label="图片"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-image
               v-if="scope.row.picUrl"
@@ -126,16 +208,34 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="80" align="center">
+        <el-table-column
+          label="状态"
+          width="80"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">
               {{ scope.row.status === 0 ? '正常' : '停用' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="所属部门" prop="deptName" min-width="120" />
-        <el-table-column label="创建时间" prop="createTime" :formatter="dateFormatter" width="180" />
-        <el-table-column label="操作" fixed="right" width="165" align="center">
+        <el-table-column
+          label="所属部门"
+          prop="deptName"
+          min-width="120"
+        />
+        <el-table-column
+          label="创建时间"
+          prop="createTime"
+          :formatter="dateFormatter"
+          width="180"
+        />
+        <el-table-column
+          label="操作"
+          fixed="right"
+          width="165"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['oa:supply-item:update']"
@@ -169,8 +269,14 @@
       />
     </content-wrap>
     <!-- 表单弹窗 -->
-    <oa-supply-item-form ref="form" @success="getList" />
-    <oa-supply-stock-form ref="stockForm" @success="getList" />
+    <oa-supply-item-form
+      ref="form"
+      @success="getList"
+    />
+    <oa-supply-stock-form
+      ref="stockForm"
+      @success="getList"
+    />
   </div>
 </template>
 

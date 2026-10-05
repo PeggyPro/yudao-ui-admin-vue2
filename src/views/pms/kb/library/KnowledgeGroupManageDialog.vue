@@ -16,16 +16,36 @@
         >新增分组</el-button>
       </div>
       <!-- 分组列表 -->
-      <el-table ref="table" v-loading="loading" :data="groupList" row-key="id" border>
-        <el-table-column align="center" width="60">
+      <el-table
+        ref="table"
+        v-loading="loading"
+        :data="groupList"
+        row-key="id"
+        border
+      >
+        <el-table-column
+          align="center"
+          width="60"
+        >
           <template>
-            <el-tooltip content="拖动排序" placement="top">
+            <el-tooltip
+              content="拖动排序"
+              placement="top"
+            >
               <i class="el-icon-rank drag-handle" />
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="分组名称" min-width="220" prop="name" />
-        <el-table-column align="center" label="操作" width="140">
+        <el-table-column
+          label="分组名称"
+          min-width="220"
+          prop="name"
+        />
+        <el-table-column
+          align="center"
+          label="操作"
+          width="140"
+        >
           <template slot-scope="scope">
             <template v-if="scope.row.type === PmsKnowledgeGroupType.CUSTOM">
               <el-button
@@ -40,13 +60,20 @@
                 :title="'确认删除分组“' + scope.row.name + '”吗？知识库会回到未分组。'"
                 @confirm="handleDelete(scope.row)"
               >
-                <el-button slot="reference" type="text" class="danger-text">删除</el-button>
+                <el-button
+                  slot="reference"
+                  type="text"
+                  class="danger-text"
+                >删除</el-button>
               </el-popconfirm>
             </template>
           </template>
         </el-table-column>
       </el-table>
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button
           v-hasPermi="['pms:kb:library:update']"
           :disabled="loading"
@@ -58,7 +85,10 @@
     </el-dialog>
 
     <!-- 新增或修改知识库分组 -->
-    <knowledge-group-form ref="groupForm" @success="handleGroupChanged" />
+    <knowledge-group-form
+      ref="groupForm"
+      @success="handleGroupChanged"
+    />
   </div>
 </template>
 

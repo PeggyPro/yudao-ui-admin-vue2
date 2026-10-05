@@ -1,5 +1,8 @@
 <template>
-  <div v-loading="loading" style="height: calc(100vh - 94.5px)">
+  <div
+    v-loading="loading"
+    style="height: calc(100vh - 94.5px)"
+  >
     <iframe
       ref="frameRef"
       :src="src"
@@ -18,38 +21,38 @@ export default {
     src: {
       type: String,
       required: true
-    },
+    }
   },
   data() {
     return {
       loading: true
-    };
+    }
   },
   watch: {
     src() {
-      this.init();
+      this.init()
     }
   },
   mounted() {
-    this.init();
+    this.init()
   },
   beforeDestroy() {
-    const frame = this.$refs.frameRef;
-    if (!frame) return;
-    frame.onload = null;
-    frame.src = 'about:blank';
+    const frame = this.$refs.frameRef
+    if (!frame) return
+    frame.onload = null
+    frame.src = 'about:blank'
   },
   methods: {
     init() {
       this.$nextTick(() => {
-        this.loading = true;
-        const frame = this.$refs.frameRef;
-        if (!frame) return;
+        this.loading = true
+        const frame = this.$refs.frameRef
+        if (!frame) return
         frame.onload = () => {
-          this.loading = false;
-        };
-      });
+          this.loading = false
+        }
+      })
     }
   }
-};
+}
 </script>

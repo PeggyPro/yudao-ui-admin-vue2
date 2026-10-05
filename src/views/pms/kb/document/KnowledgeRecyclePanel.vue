@@ -12,7 +12,10 @@
         <span>最近删除</span>
         <span>内容最多保留 30 天，之后将被永久删除</span>
       </div>
-      <el-tabs v-model="activeTypeName" class="recycle-tabs">
+      <el-tabs
+        v-model="activeTypeName"
+        class="recycle-tabs"
+      >
         <el-tab-pane
           :label="'文档 (' + countByType(PmsKnowledgeObjectType.DOCUMENT) + ')'"
           :name="String(PmsKnowledgeObjectType.DOCUMENT)"
@@ -26,18 +29,40 @@
           :name="String(PmsKnowledgeObjectType.FILE)"
         />
       </el-tabs>
-      <el-table v-loading="loading" :data="filteredList" :show-overflow-tooltip="true" border>
-        <el-table-column label="名称" min-width="240">
+      <el-table
+        v-loading="loading"
+        :data="filteredList"
+        :show-overflow-tooltip="true"
+        border
+      >
+        <el-table-column
+          label="名称"
+          min-width="240"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDetail(scope.row)">{{ scope.row.name }}</el-button>
+            <el-button
+              type="text"
+              @click="handleDetail(scope.row)"
+            >{{ scope.row.name }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="类型" width="100">
+        <el-table-column
+          align="center"
+          label="类型"
+          width="100"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.PMS_KNOWLEDGE_OBJECT_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.PMS_KNOWLEDGE_OBJECT_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="删除人" prop="deleteUserName" width="130" />
+        <el-table-column
+          label="删除人"
+          prop="deleteUserName"
+          width="130"
+        />
         <el-table-column
           v-if="activeType === PmsKnowledgeObjectType.FILE"
           label="大小"
@@ -54,10 +79,22 @@
           prop="deleteTime"
           width="180"
         />
-        <el-table-column align="center" fixed="right" label="操作" width="150">
+        <el-table-column
+          align="center"
+          fixed="right"
+          label="操作"
+          width="150"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="handleRestore(scope.row)">恢复</el-button>
-            <el-button class="danger-text" type="text" @click="handlePermanentDelete(scope.row)">
+            <el-button
+              type="text"
+              @click="handleRestore(scope.row)"
+            >恢复</el-button>
+            <el-button
+              class="danger-text"
+              type="text"
+              @click="handlePermanentDelete(scope.row)"
+            >
               彻底删除
             </el-button>
           </template>

@@ -1,7 +1,14 @@
 <template>
-  <div class="music-song-card" :class="{ 'is-active': active }" @click="playSong">
+  <div
+    class="music-song-card"
+    :class="{ 'is-active': active }"
+    @click="playSong"
+  >
     <div class="music-song-card__cover">
-      <el-image :src="songInfo.imageUrl" class="music-song-card__image" />
+      <el-image
+        :src="songInfo.imageUrl"
+        class="music-song-card__image"
+      />
       <div class="music-song-card__overlay">
         <i :class="active ? 'el-icon-video-pause' : 'el-icon-video-play'" />
       </div>

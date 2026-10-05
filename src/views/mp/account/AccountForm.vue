@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
     <el-form
       ref="formRef"
       v-loading="formLoading"
@@ -7,10 +12,19 @@
       :rules="formRules"
       label-width="120px"
     >
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入名称" />
+      <el-form-item
+        label="名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入名称"
+        />
       </el-form-item>
-      <el-form-item label="微信号" prop="account">
+      <el-form-item
+        label="微信号"
+        prop="account"
+      >
         <span slot="label">
           <el-tooltip
             content="在微信公众平台（mp.weixin.qq.com）的菜单 [设置与开发 - 公众号设置 - 账号详情] 中能找到「微信号」"
@@ -20,9 +34,15 @@
           </el-tooltip>
           微信号
         </span>
-        <el-input v-model="formData.account" placeholder="请输入微信号" />
+        <el-input
+          v-model="formData.account"
+          placeholder="请输入微信号"
+        />
       </el-form-item>
-      <el-form-item label="appId" prop="appId">
+      <el-form-item
+        label="appId"
+        prop="appId"
+      >
         <span slot="label">
           <el-tooltip
             content="在微信公众平台（mp.weixin.qq.com）的菜单 [设置与开发 - 公众号设置 - 基本设置] 中能找到「开发者ID(AppID)」"
@@ -32,9 +52,15 @@
           </el-tooltip>
           appId
         </span>
-        <el-input v-model="formData.appId" placeholder="请输入公众号 appId" />
+        <el-input
+          v-model="formData.appId"
+          placeholder="请输入公众号 appId"
+        />
       </el-form-item>
-      <el-form-item label="appSecret" prop="appSecret">
+      <el-form-item
+        label="appSecret"
+        prop="appSecret"
+      >
         <span slot="label">
           <el-tooltip
             content="在微信公众平台（mp.weixin.qq.com）的菜单 [设置与开发 - 公众号设置 - 基本设置] 中能找到「开发者密码(AppSecret)」"
@@ -44,20 +70,50 @@
           </el-tooltip>
           appSecret
         </span>
-        <el-input v-model="formData.appSecret" placeholder="请输入公众号 appSecret" />
+        <el-input
+          v-model="formData.appSecret"
+          placeholder="请输入公众号 appSecret"
+        />
       </el-form-item>
-      <el-form-item label="token" prop="token">
-        <el-input v-model="formData.token" placeholder="请输入公众号token" />
+      <el-form-item
+        label="token"
+        prop="token"
+      >
+        <el-input
+          v-model="formData.token"
+          placeholder="请输入公众号token"
+        />
       </el-form-item>
-      <el-form-item label="消息加解密密钥" prop="aesKey">
-        <el-input v-model="formData.aesKey" placeholder="请输入消息加解密密钥" />
+      <el-form-item
+        label="消息加解密密钥"
+        prop="aesKey"
+      >
+        <el-input
+          v-model="formData.aesKey"
+          placeholder="请输入消息加解密密钥"
+        />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

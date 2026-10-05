@@ -2,10 +2,17 @@
   <div class="app-container oa-attendance-report">
     <el-card shadow="never">
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="周报" name="week">
+        <el-tab-pane
+          label="周报"
+          name="week"
+        >
           <oa-attendance-week-report />
         </el-tab-pane>
-        <el-tab-pane label="月报" name="month" lazy>
+        <el-tab-pane
+          label="月报"
+          name="month"
+          lazy
+        >
           <oa-attendance-month-report />
         </el-tab-pane>
       </el-tabs>

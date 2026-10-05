@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-    <doc-alert title="会员等级、积分、签到" url="https://doc.iocoder.cn/member/level/" />
+    <doc-alert
+      title="会员等级、积分、签到"
+      url="https://doc.iocoder.cn/member/level/"
+    />
 
     <el-form
       ref="queryForm"
@@ -9,7 +12,10 @@
       size="small"
       label-width="68px"
     >
-      <el-form-item label="签到用户" prop="nickname">
+      <el-form-item
+        label="签到用户"
+        prop="nickname"
+      >
         <el-input
           v-model="queryParams.nickname"
           placeholder="请输入签到用户"
@@ -17,7 +23,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="签到天数" prop="day">
+      <el-form-item
+        label="签到天数"
+        prop="day"
+      >
         <el-input
           v-model="queryParams.day"
           placeholder="请输入签到天数"
@@ -25,7 +34,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="签到时间" prop="createTime">
+      <el-form-item
+        label="签到时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           style="width: 240px"
@@ -38,24 +50,65 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="签到用户" align="center" prop="nickname" />
-      <el-table-column label="签到天数" align="center" prop="day">
-        <template v-slot="scope">第 {{ scope.row.day }} 天</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="签到用户"
+        align="center"
+        prop="nickname"
+      />
+      <el-table-column
+        label="签到天数"
+        align="center"
+        prop="day"
+      >
+        <template slot-scope="scope">第 {{ scope.row.day }} 天</template>
       </el-table-column>
-      <el-table-column label="获得积分" align="center" prop="point" width="100">
-        <template v-slot="scope">
-          <el-tag v-if="scope.row.point > 0" size="mini" type="success">+{{ scope.row.point }}</el-tag>
-          <el-tag v-else size="mini" type="danger">{{ scope.row.point }}</el-tag>
+      <el-table-column
+        label="获得积分"
+        align="center"
+        prop="point"
+        width="100"
+      >
+        <template slot-scope="scope">
+          <el-tag
+            v-if="scope.row.point > 0"
+            size="mini"
+            type="success"
+          >+{{ scope.row.point }}</el-tag>
+          <el-tag
+            v-else
+            size="mini"
+            type="danger"
+          >{{ scope.row.point }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="签到时间" align="center" prop="createTime" width="180" :formatter="dateFormatter" />
+      <el-table-column
+        label="签到时间"
+        align="center"
+        prop="createTime"
+        width="180"
+        :formatter="dateFormatter"
+      />
     </el-table>
 
     <pagination

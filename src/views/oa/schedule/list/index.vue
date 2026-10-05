@@ -10,10 +10,19 @@
       @submit.native.prevent
     >
       <el-form-item label="日程范围">
-        <el-checkbox v-model="queryParams.includeMine" @change="handleQuery">我的日程</el-checkbox>
-        <el-checkbox v-model="queryParams.includeReceived" @change="handleQuery">共享给我</el-checkbox>
+        <el-checkbox
+          v-model="queryParams.includeMine"
+          @change="handleQuery"
+        >我的日程</el-checkbox>
+        <el-checkbox
+          v-model="queryParams.includeReceived"
+          @change="handleQuery"
+        >共享给我</el-checkbox>
       </el-form-item>
-      <el-form-item label="标题" prop="title">
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入日程标题"
@@ -22,7 +31,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="日程类型" prop="type">
+      <el-form-item
+        label="日程类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择日程类型"
@@ -37,7 +49,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="优先级" prop="priority">
+      <el-form-item
+        label="优先级"
+        prop="priority"
+      >
         <el-select
           v-model="queryParams.priority"
           placeholder="请选择优先级"
@@ -52,7 +67,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="开始时间" prop="startTime">
+      <el-form-item
+        label="开始时间"
+        prop="startTime"
+      >
         <el-date-picker
           v-model="queryParams.startTime"
           type="datetimerange"
@@ -63,8 +81,15 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:schedule:create']"
           type="primary"
@@ -76,22 +101,50 @@
     </el-form>
 
     <!-- 日程列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="标题" prop="title" min-width="180" show-overflow-tooltip>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="标题"
+        prop="title"
+        min-width="180"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
-          <el-button type="text" class="link-button" @click="openDetail(scope.row.id)">
+          <el-button
+            type="text"
+            class="link-button"
+            @click="openDetail(scope.row.id)"
+          >
             {{ scope.row.title }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="类型" align="center" width="100">
+      <el-table-column
+        label="类型"
+        align="center"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_SCHEDULE_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_SCHEDULE_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="优先级" align="center" width="90">
+      <el-table-column
+        label="优先级"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PRIORITY" :value="scope.row.priority" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PRIORITY"
+            :value="scope.row.priority"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -108,13 +161,28 @@
         align="center"
         width="180"
       />
-      <el-table-column label="参与人" min-width="150" show-overflow-tooltip>
+      <el-table-column
+        label="参与人"
+        min-width="150"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
           {{ (scope.row.participantUserNames && scope.row.participantUserNames.join('、')) || '-' }}
         </template>
       </el-table-column>
-      <el-table-column label="发布人" prop="creatorName" align="center" min-width="100" />
-      <el-table-column label="部门" prop="creatorDeptName" align="center" min-width="120" show-overflow-tooltip />
+      <el-table-column
+        label="发布人"
+        prop="creatorName"
+        align="center"
+        min-width="100"
+      />
+      <el-table-column
+        label="部门"
+        prop="creatorDeptName"
+        align="center"
+        min-width="120"
+        show-overflow-tooltip
+      />
       <el-table-column
         label="发布时间"
         prop="createTime"
@@ -122,12 +190,24 @@
         align="center"
         width="180"
       />
-      <el-table-column label="提醒" align="center" width="70">
+      <el-table-column
+        label="提醒"
+        align="center"
+        width="70"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.remind" />
+          <dict-tag
+            :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+            :value="scope.row.remind"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="140" fixed="right">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="140"
+        fixed="right"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="isCreator(scope.row)"
@@ -156,9 +236,15 @@
     />
 
     <!-- 添加或修改日程对话框 -->
-    <oa-schedule-form ref="formRef" @success="getList" />
+    <oa-schedule-form
+      ref="formRef"
+      @success="getList"
+    />
     <!-- 日程详情对话框 -->
-    <oa-schedule-detail ref="detailRef" @edit="openForm('update', $event)" />
+    <oa-schedule-detail
+      ref="detailRef"
+      @edit="openForm('update', $event)"
+    />
   </div>
 </template>
 

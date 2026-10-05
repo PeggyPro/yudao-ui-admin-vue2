@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-dialog title="管理文档标签" :visible.sync="dialogVisible" width="720px" append-to-body>
+    <el-dialog
+      title="管理文档标签"
+      :visible.sync="dialogVisible"
+      width="720px"
+      append-to-body
+    >
       <div class="label-toolbar">
         <span>文档标签可用于归类和快速筛选知识文档</span>
         <el-button
@@ -9,14 +14,34 @@
           @click="openLabelForm('create')"
         >新增标签</el-button>
       </div>
-      <el-table v-loading="loading" :data="labelList" :show-overflow-tooltip="true" border>
-        <el-table-column label="标签" min-width="220">
+      <el-table
+        v-loading="loading"
+        :data="labelList"
+        :show-overflow-tooltip="true"
+        border
+      >
+        <el-table-column
+          label="标签"
+          min-width="220"
+        >
           <template slot-scope="scope">
-            <el-tag :color="scope.row.color" effect="dark">{{ scope.row.name }}</el-tag>
+            <el-tag
+              :color="scope.row.color"
+              effect="dark"
+            >{{ scope.row.name }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="颜色" prop="color" width="140" />
-        <el-table-column align="center" label="操作" width="160">
+        <el-table-column
+          align="center"
+          label="颜色"
+          prop="color"
+          width="140"
+        />
+        <el-table-column
+          align="center"
+          label="操作"
+          width="160"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['pms:kb:library:update']"
@@ -30,13 +55,20 @@
               :title="'确认删除标签“' + scope.row.name + '”吗？'"
               @confirm="handleDelete(scope.row)"
             >
-              <el-button slot="reference" class="danger-text" type="text">删除</el-button>
+              <el-button
+                slot="reference"
+                class="danger-text"
+                type="text"
+              >删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
     </el-dialog>
-    <knowledge-label-form ref="labelForm" @success="handleLabelChanged" />
+    <knowledge-label-form
+      ref="labelForm"
+      @success="handleLabelChanged"
+    />
   </div>
 </template>
 

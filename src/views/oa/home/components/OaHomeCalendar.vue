@@ -1,18 +1,39 @@
 <template>
-  <oa-home-panel title="行事历" v-loading="loading">
+  <oa-home-panel
+    v-loading="loading"
+    title="行事历"
+  >
     <template slot="actions">
-      <el-button type="text" @click="$router.push('/oa/schedule/calendar')">日程管理</el-button>
+      <el-button
+        type="text"
+        @click="$router.push('/oa/schedule/calendar')"
+      >日程管理</el-button>
     </template>
 
-    <div v-if="loadError" class="load-error">
+    <div
+      v-if="loadError"
+      class="load-error"
+    >
       加载失败，
-      <el-button type="text" @click="getList">重新加载</el-button>
+      <el-button
+        type="text"
+        @click="getList"
+      >重新加载</el-button>
     </div>
-    <el-calendar v-model="selectedDate" class="home-calendar">
-      <template slot="dateCell" slot-scope="{ data }">
+    <el-calendar
+      v-model="selectedDate"
+      class="home-calendar"
+    >
+      <template
+        slot="dateCell"
+        slot-scope="{ data }"
+      >
         <div class="calendar-cell">
           <span>{{ Number(data.day.slice(8)) }}</span>
-          <i v-if="hasSchedule(data.day)" class="schedule-dot" />
+          <i
+            v-if="hasSchedule(data.day)"
+            class="schedule-dot"
+          />
         </div>
       </template>
     </el-calendar>
@@ -20,7 +41,11 @@
     <!-- 选中日期的日程 -->
     <div class="selected-panel">
       <div class="selected-title">{{ selectedDateTitle }}</div>
-      <el-empty v-if="selectedSchedules.length === 0" :image-size="48" description="暂无日程" />
+      <el-empty
+        v-if="selectedSchedules.length === 0"
+        :image-size="48"
+        description="暂无日程"
+      />
       <div
         v-for="item in selectedSchedules"
         v-else

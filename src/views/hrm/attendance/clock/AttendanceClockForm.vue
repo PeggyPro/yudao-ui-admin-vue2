@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="680px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="680px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,7 +14,10 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="员工" prop="employeeId">
+          <el-form-item
+            label="员工"
+            prop="employeeId"
+          >
             <HrmEmployeeSelect
               v-model="formData.employeeId"
               :disabled="formType === 'update'"
@@ -18,8 +26,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="打卡类型" prop="type">
-            <el-select v-model="formData.type" class="form-control" @change="applyShiftDefaultTime">
+          <el-form-item
+            label="打卡类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              class="form-control"
+              @change="applyShiftDefaultTime"
+            >
               <el-option
                 v-for="dict in clockTypeDictDatas"
                 :key="dict.value"
@@ -32,7 +47,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="打卡日期" prop="attendanceTime">
+          <el-form-item
+            label="打卡日期"
+            prop="attendanceTime"
+          >
             <el-date-picker
               v-model="formData.attendanceTime"
               type="date"
@@ -43,7 +61,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="打卡时间" prop="clockTime">
+          <el-form-item
+            label="打卡时间"
+            prop="clockTime"
+          >
             <el-time-picker
               v-model="formData.clockTime"
               format="HH:mm:ss"
@@ -67,7 +88,10 @@
         :closable="false"
         class="shift-alert"
       />
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           type="textarea"
@@ -78,7 +102,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

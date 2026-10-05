@@ -1,6 +1,13 @@
 <template>
-  <el-form label-width="80px" :model="formData" :rules="rules">
-    <el-form-item label="样式" prop="styleType">
+  <el-form
+    label-width="80px"
+    :model="formData"
+    :rules="rules"
+  >
+    <el-form-item
+      label="样式"
+      prop="styleType"
+    >
       <el-radio-group v-model="formData.styleType">
         <el-radio label="normal">标准</el-radio>
         <el-tooltip
@@ -11,47 +18,101 @@
         </el-tooltip>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="formData.styleType === 'inner'" label="显示方式" prop="showType">
+    <el-form-item
+      v-if="formData.styleType === 'inner'"
+      label="显示方式"
+      prop="showType"
+    >
       <el-radio-group v-model="formData.showType">
-        <el-tooltip content="头部导航栏固定显示" placement="top">
+        <el-tooltip
+          content="头部导航栏固定显示"
+          placement="top"
+        >
           <el-radio label="always">常驻显示</el-radio>
         </el-tooltip>
-        <el-tooltip content="头部导航栏将在页面滑动时淡入" placement="top">
+        <el-tooltip
+          content="头部导航栏将在页面滑动时淡入"
+          placement="top"
+        >
           <el-radio label="scroll">滚动显示</el-radio>
         </el-tooltip>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="背景类型" prop="bgType">
+    <el-form-item
+      label="背景类型"
+      prop="bgType"
+    >
       <el-radio-group v-model="formData.bgType">
         <el-radio label="color">纯色</el-radio>
         <el-radio label="img">图片</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="formData.bgType === 'color'" label="背景颜色" prop="bgColor">
+    <el-form-item
+      v-if="formData.bgType === 'color'"
+      label="背景颜色"
+      prop="bgColor"
+    >
       <ColorInput v-model="formData.bgColor" />
     </el-form-item>
-    <el-form-item v-else label="背景图片" prop="bgImg">
+    <el-form-item
+      v-else
+      label="背景图片"
+      prop="bgImg"
+    >
       <div class="background-upload">
-        <UploadImg v-model="formData.bgImg" :limit="1" width="56px" height="56px" />
+        <UploadImg
+          v-model="formData.bgImg"
+          :limit="1"
+          width="56px"
+          height="56px"
+        />
         <span class="upload-tip">建议宽度：750</span>
       </div>
     </el-form-item>
-    <el-card class="property-group" shadow="never">
-      <div slot="header" class="card-header">
+    <el-card
+      class="property-group"
+      shadow="never"
+    >
+      <div
+        slot="header"
+        class="card-header"
+      >
         <span>内容（小程序）</span>
-        <el-form-item prop="_local.previewMp" class="preview-checkbox">
-          <el-checkbox v-model="formData._local.previewMp" @change="togglePreview('mp')">
+        <el-form-item
+          prop="_local.previewMp"
+          class="preview-checkbox"
+        >
+          <el-checkbox
+            v-model="formData._local.previewMp"
+            @change="togglePreview('mp')"
+          >
             预览
           </el-checkbox>
         </el-form-item>
       </div>
-      <NavigationBarCellProperty v-model="formData.mpCells" form-path="mpCells" is-mp />
+      <NavigationBarCellProperty
+        v-model="formData.mpCells"
+        form-path="mpCells"
+        is-mp
+      />
     </el-card>
-    <el-card class="property-group" shadow="never">
-      <div slot="header" class="card-header">
+    <el-card
+      class="property-group"
+      shadow="never"
+    >
+      <div
+        slot="header"
+        class="card-header"
+      >
         <span>内容（非小程序）</span>
-        <el-form-item prop="_local.previewOther" class="preview-checkbox">
-          <el-checkbox v-model="formData._local.previewOther" @change="togglePreview('other')">
+        <el-form-item
+          prop="_local.previewOther"
+          class="preview-checkbox"
+        >
+          <el-checkbox
+            v-model="formData._local.previewOther"
+            @change="togglePreview('other')"
+          >
             预览
           </el-checkbox>
         </el-form-item>

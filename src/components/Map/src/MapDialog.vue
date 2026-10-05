@@ -40,13 +40,23 @@
         </el-form-item>
       </el-form>
       <!-- 第三行：地图 -->
-      <div v-if="state.mapContainerReady" ref="mapContainer" class="map-dialog-map" />
-      <div v-else class="map-dialog-map map-dialog-loading">
+      <div
+        v-if="state.mapContainerReady"
+        ref="mapContainer"
+        class="map-dialog-map"
+      />
+      <div
+        v-else
+        class="map-dialog-map map-dialog-loading"
+      >
         <span>地图加载中...</span>
       </div>
     </div>
     <span slot="footer">
-      <el-button type="primary" @click="handleConfirm">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="handleConfirm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

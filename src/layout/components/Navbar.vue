@@ -1,62 +1,135 @@
 <template>
   <div class="navbar">
-    <hamburger v-if="hamburger" id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger
+      v-if="hamburger"
+      id="hamburger-container"
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!topNav && breadcrumb"/>
-    <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav"/>
+    <breadcrumb
+      v-if="!topNav && breadcrumb"
+      id="breadcrumb-container"
+      class="breadcrumb-container"
+    />
+    <top-nav
+      v-if="topNav"
+      id="topmenu-container"
+      class="topmenu-container"
+    />
 
     <div class="right-menu">
       <fms-account-set-switch />
       <template v-if="device!=='mobile'">
         <!-- 租户下拉框 -->
-        <tenant-visit v-if="tenantEnable" v-hasPermi="['system:tenant:visit']" class="right-menu-item" />
+        <tenant-visit
+          v-if="tenantEnable"
+          v-hasPermi="['system:tenant:visit']"
+          class="right-menu-item"
+        />
 
         <!-- 菜单搜索 -->
-        <search id="header-search" class="right-menu-item" />
+        <search
+          id="header-search"
+          class="right-menu-item"
+        />
 
         <!-- 站内信 -->
-        <notify-message v-if="message" class="right-menu-item hover-effect" />
+        <notify-message
+          v-if="message"
+          class="right-menu-item hover-effect"
+        />
 
         <!-- IM 聊天入口：IM 是全屏沉浸式壳，新标签页打开 IM 主页 -->
-        <el-tooltip v-if="im" content="IM 聊天" effect="dark" placement="bottom">
-          <div class="right-menu-item hover-effect" @click="goToChat">
+        <el-tooltip
+          v-if="im"
+          content="IM 聊天"
+          effect="dark"
+          placement="bottom"
+        >
+          <div
+            class="right-menu-item hover-effect"
+            @click="goToChat"
+          >
             <i class="el-icon-chat-dot-round" />
           </div>
         </el-tooltip>
 
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
+        <el-tooltip
+          content="源码地址"
+          effect="dark"
+          placement="bottom"
+        >
+          <ruo-yi-git
+            id="ruoyi-git"
+            class="right-menu-item hover-effect"
+          />
         </el-tooltip>
 
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
+        <el-tooltip
+          content="文档地址"
+          effect="dark"
+          placement="bottom"
+        >
+          <ruo-yi-doc
+            id="ruoyi-doc"
+            class="right-menu-item hover-effect"
+          />
         </el-tooltip>
 
-        <screenfull v-if="screenfull" id="screenfull" class="right-menu-item hover-effect" />
+        <screenfull
+          v-if="screenfull"
+          id="screenfull"
+          class="right-menu-item hover-effect"
+        />
 
-        <el-tooltip v-if="size" content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
+        <el-tooltip
+          v-if="size"
+          content="布局大小"
+          effect="dark"
+          placement="bottom"
+        >
+          <size-select
+            id="size-select"
+            class="right-menu-item hover-effect"
+          />
         </el-tooltip>
 
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+      <el-dropdown
+        class="avatar-container right-menu-item hover-effect"
+        trigger="click"
+      >
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
-          <span v-if="nickname" class="user-nickname">{{ nickname }}</span>
+          <img
+            :src="avatar"
+            class="user-avatar"
+          >
+          <span
+            v-if="nickname"
+            class="user-nickname"
+          >{{ nickname }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/user/profile">
             <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link>
-          <el-dropdown-item divided @click.native="lockScreen">
+          <el-dropdown-item
+            divided
+            @click.native="lockScreen"
+          >
             <span>锁屏</span>
           </el-dropdown-item>
           <el-dropdown-item @click.native="setting = true">
             <span>布局设置</span>
           </el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
+          <el-dropdown-item
+            divided
+            @click.native="logout"
+          >
             <span>退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -85,7 +158,7 @@ import TenantVisit from '@/components/TenantVisit'
 import FmsAccountSetSwitch from '@/views/fms/components/account-set/FmsAccountSetSwitch.vue'
 import LockDialog from '@/layout/components/Lock/LockDialog.vue'
 import LockPage from '@/layout/components/Lock/LockPage.vue'
-import {getPath, getTenantEnable} from "@/utils/ruoyi";
+import { getPath, getTenantEnable } from '@/utils/ruoyi'
 
 export default {
   components: {
@@ -173,13 +246,12 @@ export default {
     async logout() {
       this.$modal.confirm('确定注销并退出系统吗？', '提示').then(() => {
         this.$store.dispatch('LogOut').then(() => {
-          location.href = getPath('/index');
+          location.href = getPath('/index')
         })
-      }).catch(() => {});
+      }).catch(() => {})
     },
     checkPermi(permissions) {
       return this.$auth.hasPermi(permissions)
-      return true;
     }
   }
 }

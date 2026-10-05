@@ -36,7 +36,7 @@
       label="操作"
       align="center"
       width="80"
-    ><template v-slot="scope"><el-button
+    ><template slot-scope="scope"><el-button
       type="text"
       @click="handleDelete(scope.row.id)"
     >删除</el-button></template></el-table-column></el-table>

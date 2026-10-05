@@ -24,7 +24,11 @@
 
     <template v-if="accountSetId">
       <fms-home-shortcuts :writable="isWritable" />
-      <el-card v-loading="loading" class="home-metrics" shadow="never">
+      <el-card
+        v-loading="loading"
+        class="home-metrics"
+        shadow="never"
+      >
         <fms-home-metric-cards
           :home="home"
           :selected-metric-key="selectedMetricKey"
@@ -39,7 +43,10 @@
         />
       </el-card>
     </template>
-    <el-empty v-else description="请选择账套" />
+    <el-empty
+      v-else
+      description="请选择账套"
+    />
   </div>
 </template>
 

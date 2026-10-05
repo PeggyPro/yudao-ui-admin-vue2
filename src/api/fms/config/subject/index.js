@@ -2,11 +2,11 @@ import request from '@/utils/request'
 
 // FMS 科目 API（与 Vue3 /fms/config/subject 对齐）
 export function getSubjectList(accountSetId, type) {
-  return request({ url: '/fms/config/subject/list', method: 'get', params: { accountSetId, type } })
+  return request({ url: '/fms/config/subject/list', method: 'get', params: { accountSetId, type }})
 }
 
 export function getSubjectSimpleList(accountSetId, type) {
-  return request({ url: '/fms/config/subject/simple-list', method: 'get', params: { accountSetId, type } })
+  return request({ url: '/fms/config/subject/simple-list', method: 'get', params: { accountSetId, type }})
 }
 
 export function getDetailSubjectList(params) {
@@ -14,11 +14,11 @@ export function getDetailSubjectList(params) {
 }
 
 export function getSubject(accountSetId, id) {
-  return request({ url: '/fms/config/subject/get', method: 'get', params: { accountSetId, id } })
+  return request({ url: '/fms/config/subject/get', method: 'get', params: { accountSetId, id }})
 }
 
 export function getSubjectUsage(accountSetId, id) {
-  return request({ url: '/fms/config/subject/get-usage', method: 'get', params: { accountSetId, id } })
+  return request({ url: '/fms/config/subject/get-usage', method: 'get', params: { accountSetId, id }})
 }
 
 export function createSubject(data) {
@@ -30,7 +30,7 @@ export function updateSubject(data) {
 }
 
 export function deleteSubjectList(accountSetId, ids) {
-  return request({ url: '/fms/config/subject/delete-list', method: 'delete', data: { accountSetId, ids } })
+  return request({ url: '/fms/config/subject/delete-list', method: 'delete', data: { accountSetId, ids }})
 }
 
 export function updateSubjectStatus(data) {

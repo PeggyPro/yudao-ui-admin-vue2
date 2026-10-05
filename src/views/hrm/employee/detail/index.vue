@@ -379,7 +379,9 @@ export default {
         })
         this.$modal.msgSuccess('已取消离职')
         await this.handleEmployeeQuitSuccess()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     async handleDelete() {
       await this.$modal.confirm(`确认删除员工“${this.employee.name}”的档案吗？`)

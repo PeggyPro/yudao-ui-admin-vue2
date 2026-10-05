@@ -5,7 +5,10 @@
     size="580px"
     :before-close="handleBeforeClose"
   >
-    <div slot="title" class="copy-task-config-title">
+    <div
+      slot="title"
+      class="copy-task-config-title"
+    >
       <el-input
         v-if="editingName"
         v-model="draft.name"
@@ -15,17 +18,43 @@
       />
       <span v-else>
         {{ drawerTitle }}
-        <i class="el-icon-edit" title="编辑节点名称" @click="editingName = true" />
+        <i
+          class="el-icon-edit"
+          title="编辑节点名称"
+          @click="editingName = true"
+        />
       </span>
     </div>
 
     <div class="copy-task-config">
-      <el-tabs v-model="activeTab" type="border-card">
-        <el-tab-pane label="抄送人" name="user">
-          <el-form ref="copyForm" :model="draft" :rules="rules" label-position="top" size="small">
-            <el-form-item label="抄送人设置" prop="candidateStrategy">
-              <el-radio-group v-model="draft.candidateStrategy" @change="changeCandidateStrategy">
-                <el-radio v-for="item in copyUserStrategies" :key="item.value" :label="item.value">
+      <el-tabs
+        v-model="activeTab"
+        type="border-card"
+      >
+        <el-tab-pane
+          label="抄送人"
+          name="user"
+        >
+          <el-form
+            ref="copyForm"
+            :model="draft"
+            :rules="rules"
+            label-position="top"
+            size="small"
+          >
+            <el-form-item
+              label="抄送人设置"
+              prop="candidateStrategy"
+            >
+              <el-radio-group
+                v-model="draft.candidateStrategy"
+                @change="changeCandidateStrategy"
+              >
+                <el-radio
+                  v-for="item in copyUserStrategies"
+                  :key="item.value"
+                  :label="item.value"
+                >
                   {{ item.label }}
                 </el-radio>
               </el-radio-group>
@@ -36,8 +65,19 @@
               label="指定角色"
               prop="roleIds"
             >
-              <el-select v-model="draft.roleIds" filterable clearable multiple style="width: 100%">
-                <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select
+                v-model="draft.roleIds"
+                filterable
+                clearable
+                multiple
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in roleList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
               </el-select>
             </el-form-item>
 
@@ -46,8 +86,19 @@
               label="指定部门"
               prop="deptIds"
             >
-              <el-select v-model="draft.deptIds" filterable clearable multiple style="width: 100%">
-                <el-option v-for="item in deptList" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select
+                v-model="draft.deptIds"
+                filterable
+                clearable
+                multiple
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in deptList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
               </el-select>
             </el-form-item>
 
@@ -56,8 +107,19 @@
               label="指定岗位"
               prop="postIds"
             >
-              <el-select v-model="draft.postIds" filterable clearable multiple style="width: 100%">
-                <el-option v-for="item in postList" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select
+                v-model="draft.postIds"
+                filterable
+                clearable
+                multiple
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in postList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
               </el-select>
             </el-form-item>
 
@@ -66,7 +128,13 @@
               label="指定用户"
               prop="userIds"
             >
-              <el-select v-model="draft.userIds" filterable clearable multiple style="width: 100%">
+              <el-select
+                v-model="draft.userIds"
+                filterable
+                clearable
+                multiple
+                style="width: 100%"
+              >
                 <el-option
                   v-for="item in userList"
                   :key="item.id"
@@ -81,8 +149,19 @@
               label="指定用户组"
               prop="userGroups"
             >
-              <el-select v-model="draft.userGroups" filterable clearable multiple style="width: 100%">
-                <el-option v-for="item in userGroupList" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select
+                v-model="draft.userGroups"
+                filterable
+                clearable
+                multiple
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in userGroupList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
               </el-select>
             </el-form-item>
 
@@ -91,7 +170,12 @@
               label="表单内用户字段"
               prop="formUser"
             >
-              <el-select v-model="draft.formUser" filterable clearable style="width: 100%">
+              <el-select
+                v-model="draft.formUser"
+                filterable
+                clearable
+                style="width: 100%"
+              >
                 <el-option
                   v-for="item in userFieldList"
                   :key="item.field"
@@ -107,7 +191,12 @@
               label="表单内部门字段"
               prop="formDept"
             >
-              <el-select v-model="draft.formDept" filterable clearable style="width: 100%">
+              <el-select
+                v-model="draft.formDept"
+                filterable
+                clearable
+                style="width: 100%"
+              >
                 <el-option
                   v-for="item in deptFieldList"
                   :key="item.field"
@@ -118,9 +207,23 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item v-if="requiresDeptLevel" label="部门负责人来源层级" prop="deptLevel">
-              <el-select v-model="draft.deptLevel" filterable clearable style="width: 100%">
-                <el-option v-for="item in multiLevelDeptOptions" :key="item.value" :label="item.label" :value="item.value" />
+            <el-form-item
+              v-if="requiresDeptLevel"
+              label="部门负责人来源层级"
+              prop="deptLevel"
+            >
+              <el-select
+                v-model="draft.deptLevel"
+                filterable
+                clearable
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in multiLevelDeptOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </el-form-item>
 
@@ -129,19 +232,41 @@
               label="流程表达式"
               prop="expression"
             >
-              <el-input v-model="draft.expression" type="textarea" :rows="3" clearable />
+              <el-input
+                v-model="draft.expression"
+                type="textarea"
+                :rows="3"
+                clearable
+              />
             </el-form-item>
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane v-if="isNormalForm" label="表单字段权限" name="fields">
+        <el-tab-pane
+          v-if="isNormalForm"
+          label="表单字段权限"
+          name="fields"
+        >
           <div class="field-setting-desc">字段权限（抄送节点默认只读）</div>
           <div class="permission-actions">
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.READ)">全部只读</el-button>
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.WRITE)">全部可编辑</el-button>
-            <el-button size="mini" @click="setAllPermission(FieldPermissionType.NONE)">全部隐藏</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.READ)"
+            >全部只读</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.WRITE)"
+            >全部可编辑</el-button>
+            <el-button
+              size="mini"
+              @click="setAllPermission(FieldPermissionType.NONE)"
+            >全部隐藏</el-button>
           </div>
-          <div v-for="item in fieldsPermission" :key="item.field" class="permission-row">
+          <div
+            v-for="item in fieldsPermission"
+            :key="item.field"
+            class="permission-row"
+          >
             <span class="permission-field">{{ item.title || item.field }}</span>
             <el-radio-group v-model="item.permission">
               <el-radio :label="FieldPermissionType.READ">只读</el-radio>
@@ -149,13 +274,19 @@
               <el-radio :label="FieldPermissionType.NONE">隐藏</el-radio>
             </el-radio-group>
           </div>
-          <div v-if="!fieldsPermission.length" class="empty-tip">当前表单暂无可配置字段</div>
+          <div
+            v-if="!fieldsPermission.length"
+            class="empty-tip"
+          >当前表单暂无可配置字段</div>
         </el-tab-pane>
       </el-tabs>
     </div>
 
     <div class="drawer-footer">
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
       <el-button @click="cancelConfig">取 消</el-button>
     </div>
   </el-drawer>
@@ -262,9 +393,6 @@ function clearCandidateControls(data, strategy) {
 
 export default {
   name: 'CopyTaskNodeConfig',
-  props: {
-    flowNode: { type: Object, required: true }
-  },
   inject: {
     roleListRef: { from: 'roleList', default: () => ({ value: [] }) },
     postListRef: { from: 'postList', default: () => ({ value: [] }) },
@@ -273,6 +401,9 @@ export default {
     userGroupListRef: { from: 'userGroupList', default: () => ({ value: [] }) },
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
     formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
+  },
+  props: {
+    flowNode: { type: Object, required: true }
   },
   data() {
     return {

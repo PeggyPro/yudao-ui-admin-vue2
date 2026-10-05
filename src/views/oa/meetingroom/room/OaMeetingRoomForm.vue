@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="1050px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="1050px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,13 +13,27 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="会议室名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入名称" maxlength="100" />
+          <el-form-item
+            label="会议室名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入名称"
+              maxlength="100"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="会议室类型" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择类型" style="width: 100%">
+          <el-form-item
+            label="会议室类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in typeOptions"
                 :key="dict.value"
@@ -28,26 +46,46 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item label="会议室位置" prop="location">
-            <el-input v-model="formData.location" placeholder="请输入位置" maxlength="255" />
+          <el-form-item
+            label="会议室位置"
+            prop="location"
+          >
+            <el-input
+              v-model="formData.location"
+              placeholder="请输入位置"
+              maxlength="255"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="负责人" prop="managerUserId">
-            <user-select-v2 v-model="formData.managerUserId" @change="handleManagerChange" />
+          <el-form-item
+            label="负责人"
+            prop="managerUserId"
+          >
+            <user-select-v2
+              v-model="formData.managerUserId"
+              @change="handleManagerChange"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="负责人联系方式">
-            <el-input v-model="formData.managerPhone" placeholder="选择负责人后显示" disabled />
+            <el-input
+              v-model="formData.managerPhone"
+              placeholder="选择负责人后显示"
+              disabled
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="可用状态" prop="status">
+          <el-form-item
+            label="可用状态"
+            prop="status"
+          >
             <el-radio-group v-model="formData.status">
               <el-radio
                 v-for="dict in statusOptions"
@@ -58,19 +96,33 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="会议室图片" prop="picUrl">
+          <el-form-item
+            label="会议室图片"
+            prop="picUrl"
+          >
             <upload-img v-model="formData.picUrl" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="坐席数" prop="seatCount">
-            <el-input-number v-model="formData.seatCount" :min="1" :precision="0" style="width: 100%" />
+          <el-form-item
+            label="坐席数"
+            prop="seatCount"
+          >
+            <el-input-number
+              v-model="formData.seatCount"
+              :min="1"
+              :precision="0"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="会议室设备" prop="equipments">
+          <el-form-item
+            label="会议室设备"
+            prop="equipments"
+          >
             <el-select
               v-model="formData.equipments"
               placeholder="请选择设备"
@@ -89,19 +141,28 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="允许预定" prop="allowBooking">
+          <el-form-item
+            label="允许预定"
+            prop="allowBooking"
+          >
             <el-switch v-model="formData.allowBooking" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="预定需审批" prop="needApproval">
+          <el-form-item
+            label="预定需审批"
+            prop="needApproval"
+          >
             <el-switch v-model="formData.needApproval" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="可用范围" prop="bookingScope">
+          <el-form-item
+            label="可用范围"
+            prop="bookingScope"
+          >
             <el-radio-group v-model="formData.bookingScope">
               <el-radio
                 v-for="dict in bookingScopeOptions"
@@ -112,8 +173,16 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="显示顺序" prop="sort">
-            <el-input-number v-model="formData.sort" :min="0" :precision="0" style="width: 100%" />
+          <el-form-item
+            label="显示顺序"
+            prop="sort"
+          >
+            <el-input-number
+              v-model="formData.sort"
+              :min="0"
+              :precision="0"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -124,20 +193,33 @@
             label="指定成员"
             prop="bookingUserIds"
           >
-            <user-select-v2 v-model="formData.bookingUserIds" :multiple="true" />
+            <user-select-v2
+              v-model="formData.bookingUserIds"
+              :multiple="true"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item label="附件" prop="fileUrls">
-            <upload-file v-model="formData.fileUrls" :limit="10" :file-size="10" />
+          <el-form-item
+            label="附件"
+            prop="fileUrls"
+          >
+            <upload-file
+              v-model="formData.fileUrls"
+              :limit="10"
+              :file-size="10"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               type="textarea"
@@ -150,16 +232,23 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as MeetingRoomApi from '@/api/oa/meetingroom/room'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 import { OaMeetingRoomStatus, OaMeetingRoomBookingScope } from '@/views/oa/utils/constants'
@@ -189,7 +278,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaMeetingRoomForm',
-  components: { Dialog, UserSelectV2 },
+  components: { AppDialog, UserSelectV2 },
   data() {
     return {
       OaMeetingRoomBookingScope,

@@ -1,8 +1,17 @@
 <template>
   <div class="tab-bar-property">
-    <el-form :model="formData" label-width="80px">
-      <el-form-item label="主题" prop="theme">
-        <el-select v-model="formData.theme" @change="handleThemeChange">
+    <el-form
+      :model="formData"
+      label-width="80px"
+    >
+      <el-form-item
+        label="主题"
+        prop="theme"
+      >
+        <el-select
+          v-model="formData.theme"
+          @change="handleThemeChange"
+        >
           <el-option
             v-for="(theme, index) in themeList"
             :key="index"
@@ -10,7 +19,10 @@
             :value="theme.id"
           >
             <div class="theme-option">
-              <svg-icon :icon-class="theme.icon" :color="theme.color" />
+              <svg-icon
+                :icon-class="theme.icon"
+                :color="theme.color"
+              />
               <span>{{ theme.name }}</span>
             </div>
           </el-option>
@@ -28,18 +40,31 @@
           <el-radio-button label="img">图片</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="formData.style.bgType === 'color'" label="选择颜色">
+      <el-form-item
+        v-if="formData.style.bgType === 'color'"
+        label="选择颜色"
+      >
         <ColorInput v-model="formData.style.bgColor" />
       </el-form-item>
-      <el-form-item v-if="formData.style.bgType === 'img'" label="选择图片">
-        <UploadImg v-model="formData.style.bgImg" width="100%" height="50px">
+      <el-form-item
+        v-if="formData.style.bgType === 'img'"
+        label="选择图片"
+      >
+        <UploadImg
+          v-model="formData.style.bgImg"
+          width="100%"
+          height="50px"
+        >
           <template slot="tip">建议尺寸 375 * 50</template>
         </UploadImg>
       </el-form-item>
 
       <p class="section-title">图标设置</p>
       <p class="section-tip">拖动左上角的小圆点可对其排序, 图标建议尺寸 44*44</p>
-      <Draggable v-model="formData.items" :limit="5">
+      <Draggable
+        v-model="formData.items"
+        :limit="5"
+      >
         <template slot-scope="{ element }">
           <div class="icon-setting">
             <div class="icon-upload">
@@ -63,10 +88,23 @@
               <span class="caption">已选中</span>
             </div>
           </div>
-          <el-form-item prop="text" label="文字" label-width="48px" class="compact-item">
-            <el-input v-model="element.text" placeholder="请输入文字" />
+          <el-form-item
+            prop="text"
+            label="文字"
+            label-width="48px"
+            class="compact-item"
+          >
+            <el-input
+              v-model="element.text"
+              placeholder="请输入文字"
+            />
           </el-form-item>
-          <el-form-item prop="url" label="链接" label-width="48px" class="last-item">
+          <el-form-item
+            prop="url"
+            label="链接"
+            label-width="48px"
+            class="last-item"
+          >
             <AppLinkInput v-model="element.url" />
           </el-form-item>
         </template>

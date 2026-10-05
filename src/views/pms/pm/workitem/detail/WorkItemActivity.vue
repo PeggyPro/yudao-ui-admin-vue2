@@ -1,11 +1,25 @@
 <template>
   <div class="work-item-activity">
-    <el-divider v-if="showTitle" content-position="left">工作项动态</el-divider>
+    <el-divider
+      v-if="showTitle"
+      content-position="left"
+    >工作项动态</el-divider>
     <div v-loading="loading">
-      <el-empty v-if="activityList.length === 0" :image-size="60" description="暂无动态" />
+      <el-empty
+        v-if="activityList.length === 0"
+        :image-size="60"
+        description="暂无动态"
+      />
       <div v-else>
-        <div v-for="activity in activityList" :key="activity.id" class="activity-row">
-          <el-avatar :size="32" :src="activity.operatorUserAvatar">
+        <div
+          v-for="activity in activityList"
+          :key="activity.id"
+          class="activity-row"
+        >
+          <el-avatar
+            :size="32"
+            :src="activity.operatorUserAvatar"
+          >
             {{ activity.operatorUserName ? activity.operatorUserName.slice(0, 1) : '' }}
           </el-avatar>
           <div class="activity-content">

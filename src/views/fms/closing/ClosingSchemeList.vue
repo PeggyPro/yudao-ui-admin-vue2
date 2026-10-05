@@ -1,5 +1,8 @@
 <template>
-  <el-card shadow="never" class="scheme-list-wrap">
+  <el-card
+    shadow="never"
+    class="scheme-list-wrap"
+  >
     <div class="list-header">
       <div>
         <div class="list-title">期末结转方案</div>
@@ -23,7 +26,10 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="scheme-grid">
+    <div
+      v-loading="loading"
+      class="scheme-grid"
+    >
       <ClosingSchemeCard
         name="结转损益"
         :checked="selectedSchemeIds.includes(PROFIT_LOSS_SCHEME_ID)"

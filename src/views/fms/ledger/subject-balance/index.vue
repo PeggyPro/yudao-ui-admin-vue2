@@ -1,7 +1,13 @@
 <template>
   <div class="app-container fms-ledger-page">
-    <doc-alert title="【账簿】账簿管理" url="https://doc.iocoder.cn/fms/ledger/" />
-    <el-card class="ledger-toolbar" shadow="never">
+    <doc-alert
+      title="【账簿】账簿管理"
+      url="https://doc.iocoder.cn/fms/ledger/"
+    />
+    <el-card
+      class="ledger-toolbar"
+      shadow="never"
+    >
       <FmsLedgerSearchBar
         :before-print="expandBalanceForPrint"
         :end-month="queryParams.endMonth"
@@ -14,7 +20,12 @@
         @export="handleExport"
         @search="handleQuery"
       >
-        <template slot="actions"><el-button type="danger" plain icon="el-icon-sort" @click="toggleExpandAll">展开/折叠</el-button></template>
+        <template slot="actions"><el-button
+          type="danger"
+          plain
+          icon="el-icon-sort"
+          @click="toggleExpandAll"
+        >展开/折叠</el-button></template>
       </FmsLedgerSearchBar>
     </el-card>
     <el-card shadow="never">
@@ -30,25 +41,81 @@
         stripe
         height="calc(100vh - 285px)"
       >
-        <el-table-column label="科目编码" prop="subjectCode" min-width="125">
-          <template slot-scope="scope"><el-button v-if="Number(scope.row.nodeType) === 1" type="text" @click="openDetail(scope.row)">{{ scope.row.subjectCode }}</el-button><span v-else>{{ scope.row.subjectCode }}</span></template>
+        <el-table-column
+          label="科目编码"
+          prop="subjectCode"
+          min-width="125"
+        >
+          <template slot-scope="scope"><el-button
+            v-if="Number(scope.row.nodeType) === 1"
+            type="text"
+            @click="openDetail(scope.row)"
+          >{{ scope.row.subjectCode }}</el-button><span v-else>{{ scope.row.subjectCode }}</span></template>
         </el-table-column>
-        <el-table-column label="科目名称" prop="subjectName" min-width="150" />
-        <el-table-column align="center" label="期初余额">
-          <el-table-column align="right" label="借方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.openingDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.openingCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          label="科目名称"
+          prop="subjectName"
+          min-width="150"
+        />
+        <el-table-column
+          align="center"
+          label="期初余额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.openingDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.openingCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本期发生额">
-          <el-table-column align="right" label="借方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本期发生额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.periodCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="本年累计发生额">
-          <el-table-column align="right" label="借方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="本年累计发生额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.yearCreditAmount) }}</template></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="期末余额">
-          <el-table-column align="right" label="借方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.endingDebitAmount) }}</template></el-table-column>
-          <el-table-column align="right" label="贷方" width="125"><template slot-scope="scope">{{ formatMoney(scope.row.endingCreditAmount) }}</template></el-table-column>
+        <el-table-column
+          align="center"
+          label="期末余额"
+        >
+          <el-table-column
+            align="right"
+            label="借方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.endingDebitAmount) }}</template></el-table-column>
+          <el-table-column
+            align="right"
+            label="贷方"
+            width="125"
+          ><template slot-scope="scope">{{ formatMoney(scope.row.endingCreditAmount) }}</template></el-table-column>
         </el-table-column>
       </el-table>
     </el-card>

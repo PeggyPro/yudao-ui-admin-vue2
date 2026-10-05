@@ -1,5 +1,8 @@
 <template>
-  <div class="operation-bar" v-if="processInstance && processInstance.id">
+  <div
+    v-if="processInstance && processInstance.id"
+    class="operation-bar"
+  >
     <template v-if="todoTask && todoTask.id && canHandleTask">
       <el-button
         v-if="isShowButton(OperationButtonType.APPROVE)"
@@ -15,12 +18,42 @@
         size="small"
         @click="openAction('reject')"
       >{{ getButtonDisplayName(OperationButtonType.REJECT) }}</el-button>
-      <el-button type="primary" icon="el-icon-chat-line-round" size="small" @click="openAction('comment')">评论</el-button>
-      <el-button v-if="isShowButton(OperationButtonType.RETURN)" icon="el-icon-back" size="small" @click="openAction('return')">{{ getButtonDisplayName(OperationButtonType.RETURN) }}</el-button>
-      <el-button v-if="isShowButton(OperationButtonType.TRANSFER)" icon="el-icon-position" size="small" @click="openAction('transfer')">{{ getButtonDisplayName(OperationButtonType.TRANSFER) }}</el-button>
-      <el-button v-if="isShowButton(OperationButtonType.DELEGATE)" icon="el-icon-user" size="small" @click="openAction('delegate')">{{ getButtonDisplayName(OperationButtonType.DELEGATE) }}</el-button>
-      <el-button v-if="isShowButton(OperationButtonType.ADD_SIGN)" icon="el-icon-plus" size="small" @click="openAction('addSign')">{{ getButtonDisplayName(OperationButtonType.ADD_SIGN) }}</el-button>
-      <el-button v-if="isShowButton(OperationButtonType.COPY)" icon="el-icon-message" size="small" @click="openAction('copy')">{{ getButtonDisplayName(OperationButtonType.COPY) }}</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-chat-line-round"
+        size="small"
+        @click="openAction('comment')"
+      >评论</el-button>
+      <el-button
+        v-if="isShowButton(OperationButtonType.RETURN)"
+        icon="el-icon-back"
+        size="small"
+        @click="openAction('return')"
+      >{{ getButtonDisplayName(OperationButtonType.RETURN) }}</el-button>
+      <el-button
+        v-if="isShowButton(OperationButtonType.TRANSFER)"
+        icon="el-icon-position"
+        size="small"
+        @click="openAction('transfer')"
+      >{{ getButtonDisplayName(OperationButtonType.TRANSFER) }}</el-button>
+      <el-button
+        v-if="isShowButton(OperationButtonType.DELEGATE)"
+        icon="el-icon-user"
+        size="small"
+        @click="openAction('delegate')"
+      >{{ getButtonDisplayName(OperationButtonType.DELEGATE) }}</el-button>
+      <el-button
+        v-if="isShowButton(OperationButtonType.ADD_SIGN)"
+        icon="el-icon-plus"
+        size="small"
+        @click="openAction('addSign')"
+      >{{ getButtonDisplayName(OperationButtonType.ADD_SIGN) }}</el-button>
+      <el-button
+        v-if="isShowButton(OperationButtonType.COPY)"
+        icon="el-icon-message"
+        size="small"
+        @click="openAction('copy')"
+      >{{ getButtonDisplayName(OperationButtonType.COPY) }}</el-button>
     </template>
     <template v-else>
       <el-button
@@ -47,19 +80,40 @@
       @click="openAction('deleteSign')"
     >减签</el-button>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="760px" append-to-body @close="handleDialogClose">
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="760px"
+      append-to-body
+      @close="handleDialogClose"
+    >
       <form-create
         v-if="actionType === 'approve' && approveForm.rule && approveForm.rule.length"
-        class="approve-node-form"
         v-model="approveFormApi"
+        class="approve-node-form"
         :rule="approveForm.rule"
         :option="approveForm.option"
         @change="handleApproveFormChange"
       />
 
-      <el-form ref="form" :model="form" :rules="actionRules" label-width="120px">
-        <el-form-item v-if="needsUser" :label="userSelectLabel" prop="userId">
-          <el-select v-model="form.userId" filterable clearable placeholder="请选择用户" style="width: 100%">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="actionRules"
+        label-width="120px"
+      >
+        <el-form-item
+          v-if="needsUser"
+          :label="userSelectLabel"
+          prop="userId"
+        >
+          <el-select
+            v-model="form.userId"
+            filterable
+            clearable
+            placeholder="请选择用户"
+            style="width: 100%"
+          >
             <el-option
               v-for="item in userOptions"
               :key="item.id"
@@ -68,8 +122,19 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="needsUserList" :label="userSelectLabel" prop="userIds">
-          <el-select v-model="form.userIds" filterable multiple clearable placeholder="请选择用户" style="width: 100%">
+        <el-form-item
+          v-if="needsUserList"
+          :label="userSelectLabel"
+          prop="userIds"
+        >
+          <el-select
+            v-model="form.userIds"
+            filterable
+            multiple
+            clearable
+            placeholder="请选择用户"
+            style="width: 100%"
+          >
             <el-option
               v-for="item in userOptions"
               :key="item.id"
@@ -78,8 +143,17 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="actionType === 'deleteSign'" label="减签人员" prop="deleteSignTaskId">
-          <el-select v-model="form.deleteSignTaskId" clearable placeholder="请选择减签人员" style="width: 100%">
+        <el-form-item
+          v-if="actionType === 'deleteSign'"
+          label="减签人员"
+          prop="deleteSignTaskId"
+        >
+          <el-select
+            v-model="form.deleteSignTaskId"
+            clearable
+            placeholder="请选择减签人员"
+            style="width: 100%"
+          >
             <el-option
               v-for="item in deleteSignTaskList"
               :key="item.id"
@@ -88,8 +162,17 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="actionType === 'return'" label="退回节点" prop="targetTaskDefinitionKey">
-          <el-select v-model="form.targetTaskDefinitionKey" clearable placeholder="请选择退回节点" style="width: 100%">
+        <el-form-item
+          v-if="actionType === 'return'"
+          label="退回节点"
+          prop="targetTaskDefinitionKey"
+        >
+          <el-select
+            v-model="form.targetTaskDefinitionKey"
+            clearable
+            placeholder="请选择退回节点"
+            style="width: 100%"
+          >
             <el-option
               v-for="item in returnNodeList"
               :key="item.taskDefinitionKey || item.id"
@@ -98,14 +181,25 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="actionType === 'addSign'" label="加签位置" prop="type">
+        <el-form-item
+          v-if="actionType === 'addSign'"
+          label="加签位置"
+          prop="type"
+        >
           <el-radio-group v-model="form.type">
             <el-radio label="before">前加签</el-radio>
             <el-radio label="after">后加签</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="actionType === 'approve' && todoTask && todoTask.signEnable" label="签名图片" prop="signPicUrl">
-          <el-button size="small" @click="$refs.signDialog && $refs.signDialog.open(form.signPicUrl)">点击签名</el-button>
+        <el-form-item
+          v-if="actionType === 'approve' && todoTask && todoTask.signEnable"
+          label="签名图片"
+          prop="signPicUrl"
+        >
+          <el-button
+            size="small"
+            @click="$refs.signDialog && $refs.signDialog.open(form.signPicUrl)"
+          >点击签名</el-button>
           <el-image
             v-if="form.signPicUrl"
             class="sign-preview"
@@ -114,7 +208,10 @@
             fit="contain"
           />
         </el-form-item>
-        <el-form-item :label="reasonLabel" prop="reason">
+        <el-form-item
+          :label="reasonLabel"
+          prop="reason"
+        >
           <el-input
             v-model="form.reason"
             type="textarea"
@@ -124,7 +221,10 @@
             show-word-limit
           />
         </el-form-item>
-        <el-form-item v-if="actionType === 'approve' || actionType === 'reject'" label="上传附件/图片">
+        <el-form-item
+          v-if="actionType === 'approve' || actionType === 'reject'"
+          label="上传附件/图片"
+        >
           <FileUpload
             v-model="form.attachments"
             :limit="10"
@@ -149,10 +249,17 @@
       </el-form>
       <div slot="footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" :loading="formLoading" @click="submitAction">确 定</el-button>
+        <el-button
+          type="primary"
+          :loading="formLoading"
+          @click="submitAction"
+        >确 定</el-button>
       </div>
     </el-dialog>
-    <SignDialog ref="signDialog" @success="handleSignFinish" />
+    <SignDialog
+      ref="signDialog"
+      @success="handleSignFinish"
+    />
   </div>
 </template>
 
@@ -520,7 +627,7 @@ export default {
       this.cancelApprovalRefresh()
       this.pendingNextNodesTask = new Promise(resolve => {
         this.resolveApprovalRefresh = resolve
-        this.approvalRefreshTimer = setTimeout(async () => {
+        this.approvalRefreshTimer = setTimeout(async() => {
           this.approvalRefreshTimer = null
           this.resolveApprovalRefresh = null
           try {

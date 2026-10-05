@@ -9,7 +9,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="月份" prop="month">
+      <el-form-item
+        label="月份"
+        prop="month"
+      >
         <el-date-picker
           v-model="queryParams.month"
           type="month"
@@ -19,27 +22,95 @@
           style="width: 220px"
         />
       </el-form-item>
-      <el-form-item label="员工" prop="userId">
-        <user-select-v2 v-model="queryParams.userId" style="width: 220px" />
+      <el-form-item
+        label="员工"
+        prop="userId"
+      >
+        <user-select-v2
+          v-model="queryParams.userId"
+          style="width: 220px"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 月报列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="员工" prop="userName" align="center" min-width="120" />
-      <el-table-column label="部门" prop="deptName" align="center" min-width="120" />
-      <el-table-column label="上班打卡" prop="clockInCount" align="center" width="110" />
-      <el-table-column label="下班打卡" prop="clockOutCount" align="center" width="110" />
-      <el-table-column label="正常次数" prop="normalCount" align="center" width="100" />
-      <el-table-column label="迟到次数" prop="lateCount" align="center" width="100" />
-      <el-table-column label="早退次数" prop="earlyCount" align="center" width="100" />
-      <el-table-column label="请假天数" prop="leaveDays" align="center" width="100" />
-      <el-table-column label="出差天数" prop="travelDays" align="center" width="100" />
-      <el-table-column label="旷工天数" prop="absentDays" align="center" min-width="150" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="员工"
+        prop="userName"
+        align="center"
+        min-width="120"
+      />
+      <el-table-column
+        label="部门"
+        prop="deptName"
+        align="center"
+        min-width="120"
+      />
+      <el-table-column
+        label="上班打卡"
+        prop="clockInCount"
+        align="center"
+        width="110"
+      />
+      <el-table-column
+        label="下班打卡"
+        prop="clockOutCount"
+        align="center"
+        width="110"
+      />
+      <el-table-column
+        label="正常次数"
+        prop="normalCount"
+        align="center"
+        width="100"
+      />
+      <el-table-column
+        label="迟到次数"
+        prop="lateCount"
+        align="center"
+        width="100"
+      />
+      <el-table-column
+        label="早退次数"
+        prop="earlyCount"
+        align="center"
+        width="100"
+      />
+      <el-table-column
+        label="请假天数"
+        prop="leaveDays"
+        align="center"
+        width="100"
+      />
+      <el-table-column
+        label="出差天数"
+        prop="travelDays"
+        align="center"
+        width="100"
+      />
+      <el-table-column
+        label="旷工天数"
+        prop="absentDays"
+        align="center"
+        min-width="150"
+      />
     </el-table>
   </div>
 </template>

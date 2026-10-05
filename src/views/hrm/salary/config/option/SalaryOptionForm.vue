@@ -12,7 +12,10 @@
       :rules="formRules"
       label-width="96px"
     >
-      <el-form-item label="工资项分类" prop="parentCode">
+      <el-form-item
+        label="工资项分类"
+        prop="parentCode"
+      >
         <el-select
           v-model="formData.parentCode"
           disabled
@@ -27,10 +30,20 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="工资项名称" prop="name">
-        <el-input v-model="formData.name" maxlength="64" placeholder="请输入工资项名称" />
+      <el-form-item
+        label="工资项名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="64"
+          placeholder="请输入工资项名称"
+        />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           maxlength="255"
@@ -41,7 +54,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

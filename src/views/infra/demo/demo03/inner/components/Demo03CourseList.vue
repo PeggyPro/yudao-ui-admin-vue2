@@ -6,21 +6,52 @@
       :stripe="true"
       :show-overflow-tooltip="true"
     >
-      <el-table-column label="编号" align="center" prop="id"/>
-      <el-table-column label="名字" align="center" prop="name"/>
-      <el-table-column label="分数" align="center" prop="score"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="名字"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="分数"
+        align="center"
+        prop="score"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="openForm(scope.row.id)"
-                     v-hasPermi="['infra:demo03-student:update']">修改
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['infra:demo03-student:update']"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="openForm(scope.row.id)"
+          >修改
           </el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['infra:demo03-student:delete']">删除
+          <el-button
+            v-hasPermi="['infra:demo03-student:delete']"
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+          >删除
           </el-button>
         </template>
       </el-table-column>
@@ -29,36 +60,36 @@
 </template>
 
 <script>
-import * as Demo03StudentApi from '@/api/infra/demo/demo03/inner';
+import * as Demo03StudentApi from '@/api/infra/demo/demo03/inner'
 
 export default {
-  name: "Demo03CourseList",
+  name: 'Demo03CourseList',
   props: [
     'studentId'
-  ],// 学生编号（主表的关联字段）
+  ], // 学生编号（主表的关联字段）
   data() {
     return {
       // 遮罩层
       loading: true,
       // 列表的数据
-      list: [],
-    };
+      list: []
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询列表 */
     async getList() {
       try {
-        this.loading = true;
-        const res = await Demo03StudentApi.getDemo03CourseListByStudentId(this.studentId);
-        this.list = res.data;
+        this.loading = true
+        const res = await Demo03StudentApi.getDemo03CourseListByStudentId(this.studentId)
+        this.list = res.data
       } finally {
-        this.loading = false;
+        this.loading = false
       }
-    },
+    }
 
   }
-};
+}
 </script>

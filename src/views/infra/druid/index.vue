@@ -1,9 +1,18 @@
 <template>
   <div>
-    <doc-alert title="数据库 MyBatis" url="https://doc.iocoder.cn/mybatis/" />
-    <doc-alert title="多数据源（读写分离）" url="https://doc.iocoder.cn/dynamic-datasource/" />
+    <doc-alert
+      title="数据库 MyBatis"
+      url="https://doc.iocoder.cn/mybatis/"
+    />
+    <doc-alert
+      title="多数据源（读写分离）"
+      url="https://doc.iocoder.cn/dynamic-datasource/"
+    />
 
-    <i-frame v-if="!loading" :src="url" />
+    <i-frame
+      v-if="!loading"
+      :src="url"
+    />
   </div>
 </template>
 <script>

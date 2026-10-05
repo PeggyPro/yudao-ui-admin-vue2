@@ -13,9 +13,15 @@
       label-width="100px"
     >
       <el-form-item label="当前内容">
-        <el-input :value="contentTitle" disabled />
+        <el-input
+          :value="contentTitle"
+          disabled
+        />
       </el-form-item>
-      <el-form-item label="目标知识库" prop="targetLibraryId">
+      <el-form-item
+        label="目标知识库"
+        prop="targetLibraryId"
+      >
         <knowledge-library-select
           v-model="formData.targetLibraryId"
           class="full-width"
@@ -23,7 +29,10 @@
           @change="loadTargetTree"
         />
       </el-form-item>
-      <el-form-item label="目标位置" prop="targetKey">
+      <el-form-item
+        label="目标位置"
+        prop="targetKey"
+      >
         <div class="target-tree-wrap">
           <el-tree
             v-if="targetOptions.length"
@@ -34,19 +43,39 @@
             :props="{ label: 'label', children: 'children', disabled: 'disabled' }"
             @node-click="handleTargetSelect"
           >
-            <span slot-scope="{ data }" class="target-tree-node">
+            <span
+              slot-scope="{ data }"
+              class="target-tree-node"
+            >
               <i :class="targetIcon(data)" />
               <span>{{ data.label }}</span>
-              <el-tag v-if="formData.targetKey === data.value" size="mini">已选择</el-tag>
-              <span v-if="data.disabled" class="disabled-text">无管理权限</span>
+              <el-tag
+                v-if="formData.targetKey === data.value"
+                size="mini"
+              >已选择</el-tag>
+              <span
+                v-if="data.disabled"
+                class="disabled-text"
+              >无管理权限</span>
             </span>
           </el-tree>
-          <el-empty v-else :image-size="60" description="暂无可选位置" />
+          <el-empty
+            v-else
+            :image-size="60"
+            description="暂无可选位置"
+          />
         </div>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="loading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="loading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

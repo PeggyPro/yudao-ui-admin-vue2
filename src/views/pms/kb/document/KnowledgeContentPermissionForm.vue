@@ -1,7 +1,16 @@
 <template>
-  <el-dialog title="内容协作权限" :visible.sync="dialogVisible" width="820px" append-to-body>
+  <el-dialog
+    title="内容协作权限"
+    :visible.sync="dialogVisible"
+    width="820px"
+    append-to-body
+  >
     <div v-loading="formLoading">
-      <el-alert :closable="false" class="permission-alert" type="info">
+      <el-alert
+        :closable="false"
+        class="permission-alert"
+        type="info"
+      >
         子文件夹和子文档默认继承同一套权限；知识库创建人和管理员始终拥有管理权限。
       </el-alert>
       <el-form label-width="100px">
@@ -11,8 +20,14 @@
             <el-radio-button :label="false">仅协作者可见</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="formData.openStatus" label="公开权限">
-          <el-select v-model="formData.openLevel" style="width: 280px">
+        <el-form-item
+          v-if="formData.openStatus"
+          label="公开权限"
+        >
+          <el-select
+            v-model="formData.openLevel"
+            style="width: 280px"
+          >
             <el-option
               v-for="option in contentLevelOptions"
               :key="option.value"
@@ -26,21 +41,39 @@
         <span>协作者</span>
         <el-button @click="addMember">添加协作者</el-button>
       </div>
-      <el-table :data="memberList" border>
-        <el-table-column label="类型" width="100">
+      <el-table
+        :data="memberList"
+        border
+      >
+        <el-table-column
+          label="类型"
+          width="100"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.ownerStatus" type="success">拥有者</el-tag>
+            <el-tag
+              v-if="scope.row.ownerStatus"
+              type="success"
+            >拥有者</el-tag>
             <el-select
               v-else
               v-model="scope.row.identityType"
               @change="handleIdentityTypeChange(scope.row)"
             >
-              <el-option label="成员" :value="PmsKnowledgeContentIdentityType.USER" />
-              <el-option label="部门" :value="PmsKnowledgeContentIdentityType.DEPT" />
+              <el-option
+                label="成员"
+                :value="PmsKnowledgeContentIdentityType.USER"
+              />
+              <el-option
+                label="部门"
+                :value="PmsKnowledgeContentIdentityType.DEPT"
+              />
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="协作者" min-width="250">
+        <el-table-column
+          label="协作者"
+          min-width="250"
+        >
           <template slot-scope="scope">
             <span v-if="scope.row.ownerStatus">{{ scope.row.userName }}</span>
             <user-select-v2
@@ -88,10 +121,19 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="权限" width="170">
+        <el-table-column
+          label="权限"
+          width="170"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.ownerStatus" type="success">管理员</el-tag>
-            <el-select v-else v-model="scope.row.level">
+            <el-tag
+              v-if="scope.row.ownerStatus"
+              type="success"
+            >管理员</el-tag>
+            <el-select
+              v-else
+              v-model="scope.row.level"
+            >
               <el-option
                 v-for="option in contentLevelOptions"
                 :key="option.value"
@@ -101,7 +143,11 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="80">
+        <el-table-column
+          align="center"
+          label="操作"
+          width="80"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="!scope.row.ownerStatus"
@@ -113,8 +159,15 @@
         </el-table-column>
       </el-table>
     </div>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

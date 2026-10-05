@@ -1,4 +1,8 @@
-<template><simple-channel-form ref="inner" config-name="mock-conf" @success="$emit('success')" /></template>
+<template><simple-channel-form
+  ref="inner"
+  config-name="mock-conf"
+  @success="$emit('success')"
+/></template>
 <script>
 import SimpleChannelForm from './SimpleChannelForm.vue'
 export default {

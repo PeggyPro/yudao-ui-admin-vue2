@@ -1,35 +1,177 @@
 <!-- MES 物料产品的新增/修改 -->
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="1000px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="120px" :disabled="isDetail">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="1000px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="120px"
+      :disabled="isDetail"
+    >
       <el-row :gutter="20">
-        <el-col :span="8"><el-form-item label="物料编码" prop="code"><el-input v-model="formData.code" placeholder="请输入物料编码"><el-button slot="append" @click="generateCode">生成</el-button></el-input></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="物料名称" prop="name"><el-input v-model="formData.name" placeholder="请输入物料名称" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="规格型号" prop="specification"><el-input v-model="formData.specification" placeholder="请输入规格型号" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="单位" prop="unitMeasureId"><md-unit-measure-select v-model="formData.unitMeasureId" placeholder="请选择计量单位" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="物料分类" prop="itemTypeId"><md-item-type-select v-model="formData.itemTypeId" @change="handleItemTypeChange" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="状态" prop="status"><el-radio-group v-model="formData.status" disabled><el-radio v-for="dict in statusOptions" :key="dict.value" :label="dict.value">{{ dict.label }}</el-radio></el-radio-group></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="高值物料" prop="highValue"><el-switch v-model="formData.highValue" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="批次管理" prop="batchFlag"><el-switch v-model="formData.batchFlag" /></el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="安全库存" prop="safeStockFlag"><el-switch v-model="formData.safeStockFlag" /></el-form-item></el-col>
-        <el-col v-if="formData.safeStockFlag" :span="8"><el-form-item label="最低库存量" prop="minStock"><el-input-number v-model="formData.minStock" :min="0" :precision="2" controls-position="right" class="full-width" /></el-form-item></el-col>
-        <el-col v-if="formData.safeStockFlag" :span="8"><el-form-item label="最高库存量" prop="maxStock"><el-input-number v-model="formData.maxStock" :min="0" :precision="2" controls-position="right" class="full-width" /></el-form-item></el-col>
-        <el-col :span="24"><el-form-item label="备注" prop="remark"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="物料编码"
+          prop="code"
+        ><el-input
+          v-model="formData.code"
+          placeholder="请输入物料编码"
+        ><el-button
+          slot="append"
+          @click="generateCode"
+        >生成</el-button></el-input></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="物料名称"
+          prop="name"
+        ><el-input
+          v-model="formData.name"
+          placeholder="请输入物料名称"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="规格型号"
+          prop="specification"
+        ><el-input
+          v-model="formData.specification"
+          placeholder="请输入规格型号"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="单位"
+          prop="unitMeasureId"
+        ><md-unit-measure-select
+          v-model="formData.unitMeasureId"
+          placeholder="请选择计量单位"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="物料分类"
+          prop="itemTypeId"
+        ><md-item-type-select
+          v-model="formData.itemTypeId"
+          @change="handleItemTypeChange"
+        /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="状态"
+          prop="status"
+        ><el-radio-group
+          v-model="formData.status"
+          disabled
+        ><el-radio
+          v-for="dict in statusOptions"
+          :key="dict.value"
+          :label="dict.value"
+        >{{ dict.label }}</el-radio></el-radio-group></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="高值物料"
+          prop="highValue"
+        ><el-switch v-model="formData.highValue" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="批次管理"
+          prop="batchFlag"
+        ><el-switch v-model="formData.batchFlag" /></el-form-item></el-col>
+        <el-col :span="8"><el-form-item
+          label="安全库存"
+          prop="safeStockFlag"
+        ><el-switch v-model="formData.safeStockFlag" /></el-form-item></el-col>
+        <el-col
+          v-if="formData.safeStockFlag"
+          :span="8"
+        ><el-form-item
+          label="最低库存量"
+          prop="minStock"
+        ><el-input-number
+          v-model="formData.minStock"
+          :min="0"
+          :precision="2"
+          controls-position="right"
+          class="full-width"
+        /></el-form-item></el-col>
+        <el-col
+          v-if="formData.safeStockFlag"
+          :span="8"
+        ><el-form-item
+          label="最高库存量"
+          prop="maxStock"
+        ><el-input-number
+          v-model="formData.maxStock"
+          :min="0"
+          :precision="2"
+          controls-position="right"
+          class="full-width"
+        /></el-form-item></el-col>
+        <el-col :span="24"><el-form-item
+          label="备注"
+          prop="remark"
+        ><el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        /></el-form-item></el-col>
       </el-row>
     </el-form>
 
-    <el-tabs v-if="formType !== 'create' && formData.id" v-model="activeTab">
-      <el-tab-pane label="BOM 组成" name="bom" lazy><md-product-bom-form :item-id="formData.id" :form-type="formType" /></el-tab-pane>
-      <el-tab-pane v-if="formData.batchFlag" label="批次属性" name="batch" lazy><md-item-batch-config-form :item-id="formData.id" :item-or-product="currentItemOrProduct" :form-type="formType" /></el-tab-pane>
+    <el-tabs
+      v-if="formType !== 'create' && formData.id"
+      v-model="activeTab"
+    >
+      <el-tab-pane
+        label="BOM 组成"
+        name="bom"
+        lazy
+      ><md-product-bom-form
+        :item-id="formData.id"
+        :form-type="formType"
+      /></el-tab-pane>
+      <el-tab-pane
+        v-if="formData.batchFlag"
+        label="批次属性"
+        name="batch"
+        lazy
+      ><md-item-batch-config-form
+        :item-id="formData.id"
+        :item-or-product="currentItemOrProduct"
+        :form-type="formType"
+      /></el-tab-pane>
       <!-- TODO @芋艿：【对齐】替代品，目前没这个，可忽略 -->
-      <el-tab-pane label="替代品" name="substitute" lazy><el-empty description="替代品（待实现）" /></el-tab-pane>
-      <el-tab-pane label="SIP" name="sip" lazy><md-product-sip-form :item-id="formData.id" :form-type="formType" /></el-tab-pane>
-      <el-tab-pane label="SOP" name="sop" lazy><md-product-sop-form :item-id="formData.id" :form-type="formType" /></el-tab-pane>
+      <el-tab-pane
+        label="替代品"
+        name="substitute"
+        lazy
+      ><el-empty description="替代品（待实现）" /></el-tab-pane>
+      <el-tab-pane
+        label="SIP"
+        name="sip"
+        lazy
+      ><md-product-sip-form
+        :item-id="formData.id"
+        :form-type="formType"
+      /></el-tab-pane>
+      <el-tab-pane
+        label="SOP"
+        name="sop"
+        lazy
+      ><md-product-sop-form
+        :item-id="formData.id"
+        :form-type="formType"
+      /></el-tab-pane>
     </el-tabs>
 
     <span slot="footer">
-      <el-button v-if="isDetail && formData.id" type="primary" plain @click="handleBarcode">查看条码</el-button>
-      <el-button v-if="!isDetail" type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        v-if="isDetail && formData.id"
+        type="primary"
+        plain
+        @click="handleBarcode"
+      >查看条码</el-button>
+      <el-button
+        v-if="!isDetail"
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
     <barcode-detail ref="barcodeDetail" />

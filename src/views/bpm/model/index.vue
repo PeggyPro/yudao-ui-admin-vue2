@@ -1,6 +1,9 @@
 <template>
   <div class="app-container bpm-model-page">
-    <doc-alert title="流程设计器" url="https://doc.iocoder.cn/bpm/model-designer-dingding/" />
+    <doc-alert
+      title="流程设计器"
+      url="https://doc.iocoder.cn/bpm/model-designer-dingding/"
+    />
 
     <div class="model-page-card">
       <div class="model-page-header">
@@ -44,29 +47,55 @@
             </el-button>
           </el-form-item>
           <el-form-item>
-            <el-dropdown trigger="click" placement="bottom-end" @command="handleHeaderCommand">
-              <el-button plain class="model-setting-button" icon="el-icon-setting" />
+            <el-dropdown
+              trigger="click"
+              placement="bottom-end"
+              @command="handleHeaderCommand"
+            >
+              <el-button
+                plain
+                class="model-setting-button"
+                icon="el-icon-setting"
+              />
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="categoryAdd" v-hasPermi="['bpm:category:create']">
+                <el-dropdown-item
+                  v-hasPermi="['bpm:category:create']"
+                  command="categoryAdd"
+                >
                   <i class="el-icon-circle-plus-outline" /> 新建分类
                 </el-dropdown-item>
-                <el-dropdown-item command="categorySort" v-hasPermi="['bpm:category:update']">
+                <el-dropdown-item
+                  v-hasPermi="['bpm:category:update']"
+                  command="categorySort"
+                >
                   <i class="el-icon-sort" /> 分类排序
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-form-item>
         </el-form>
-        <div v-else class="model-sort-actions">
+        <div
+          v-else
+          class="model-sort-actions"
+        >
           <el-button @click="cancelCategorySort">取 消</el-button>
-          <el-button type="primary" @click="saveCategorySort">保存排序</el-button>
+          <el-button
+            type="primary"
+            @click="saveCategorySort"
+          >保存排序</el-button>
         </div>
       </div>
 
       <el-divider />
 
-      <div v-loading="loading" class="model-category-list">
-        <el-empty v-if="!loading && categoryGroup.length === 0" description="暂无流程模型" />
+      <div
+        v-loading="loading"
+        class="model-category-list"
+      >
+        <el-empty
+          v-if="!loading && categoryGroup.length === 0"
+          description="暂无流程模型"
+        />
         <draggable
           v-model="categoryGroup"
           :disabled="!isCategorySorting"
@@ -90,21 +119,49 @@
     </div>
 
     <!-- 可复用表单：分类新增/重命名与模型 JSON 导入。 -->
-    <CategoryForm ref="categoryForm" @success="getList" />
-    <ModelImportForm ref="modelImportForm" @success="getList" />
+    <CategoryForm
+      ref="categoryForm"
+      @success="getList"
+    />
+    <ModelImportForm
+      ref="modelImportForm"
+      @success="getList"
+    />
 
-    <el-dialog title="表单详情" :visible.sync="formDetailVisible" width="800px" append-to-body>
-      <form-create v-if="formDetailVisible" :rule="formDetail.rule" :option="formDetail.option" />
+    <el-dialog
+      title="表单详情"
+      :visible.sync="formDetailVisible"
+      width="800px"
+      append-to-body
+    >
+      <form-create
+        v-if="formDetailVisible"
+        :rule="formDetail.rule"
+        :option="formDetail.option"
+      />
     </el-dialog>
 
-    <el-dialog title="流程图" :visible.sync="bpmnVisible" width="80%" append-to-body>
-      <my-process-viewer v-if="bpmnXML" key="viewer" v-model="bpmnXML" :prefix="'flowable'" />
+    <el-dialog
+      title="流程图"
+      :visible.sync="bpmnVisible"
+      width="80%"
+      append-to-body
+    >
+      <my-process-viewer
+        v-if="bpmnXML"
+        key="viewer"
+        v-model="bpmnXML"
+        :prefix="'flowable'"
+      />
       <SimpleProcessViewer
         v-else-if="simpleModel"
         :flow-node="simpleModel"
         :tasks="[]"
       />
-      <el-empty v-else description="暂无流程图" />
+      <el-empty
+        v-else
+        description="暂无流程图"
+      />
     </el-dialog>
   </div>
 </template>

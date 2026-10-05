@@ -1,19 +1,40 @@
 <template>
-  <el-table :data="socialUsers" :show-header="false">
-    <el-table-column label="社交平台" align="left" width="120">
-      <template v-slot="scope">
-        <img style="height:20px;vertical-align: middle;" :src="scope.row.img" /> {{ scope.row.title }}
+  <el-table
+    :data="socialUsers"
+    :show-header="false"
+  >
+    <el-table-column
+      label="社交平台"
+      align="left"
+      width="120"
+    >
+      <template slot-scope="scope">
+        <img
+          style="height:20px;vertical-align: middle;"
+          :src="scope.row.img"
+        > {{ scope.row.title }}
       </template>
     </el-table-column>
-    <el-table-column label="操作" align="left" >
-      <template v-slot="scope">
+    <el-table-column
+      label="操作"
+      align="left"
+    >
+      <template slot-scope="scope">
         <div v-if="scope.row.openid">
           已绑定
-          <el-button size="large" type="text" @click="unbind(scope.row)">(解绑)</el-button>
+          <el-button
+            size="large"
+            type="text"
+            @click="unbind(scope.row)"
+          >(解绑)</el-button>
         </div>
         <div v-else>
           未绑定
-          <el-button size="large" type="text" @click="bind(scope.row)">(绑定)</el-button>
+          <el-button
+            size="large"
+            type="text"
+            @click="bind(scope.row)"
+          >(绑定)</el-button>
         </div>
       </template>
     </el-table-column>
@@ -22,9 +43,9 @@
 
 <script>
 
-import {SystemUserSocialTypeEnum} from "@/utils/constants";
-import { getBindSocialUserList } from "@/api/system/social/user";
-import { socialAuthRedirect, socialBind, socialUnbind } from "@/api/system/user/socialUser";
+import { SystemUserSocialTypeEnum } from '@/utils/constants'
+import { getBindSocialUserList } from '@/api/system/social/user'
+import { socialAuthRedirect, socialBind, socialUnbind } from '@/api/system/user/socialUser'
 
 export default {
   props: {
@@ -41,45 +62,45 @@ export default {
   data() {
     return {
       socialUsers: []
-    };
+    }
   },
   computed: {
   },
   async created() {
     // 初始化社交用户列表
-    await this.initSocial();
-    
+    await this.initSocial()
+
     // 社交绑定
-    const type = this.$route.query.type;
-    const code = this.$route.query.code;
-    const state = this.$route.query.state;
+    const type = this.$route.query.type
+    const code = this.$route.query.code
+    const state = this.$route.query.state
     if (!code) {
-      return;
+      return
     }
     socialBind(type, code, state).then(resp => {
-      this.$modal.msgSuccess("绑定成功");
-      this.$router.replace('/user/profile');
+      this.$modal.msgSuccess('绑定成功')
+      this.$router.replace('/user/profile')
       // 调用父组件, 刷新
-      this.setActiveTab('userSocial');
+      this.setActiveTab('userSocial')
       // 重新初始化社交用户列表
-      this.initSocial();
-    });
+      this.initSocial()
+    })
   },
   methods: {
     async initSocial() {
-      this.socialUsers = []; // 重置避免无限增长
+      this.socialUsers = [] // 重置避免无限增长
       // 获取已绑定的社交用户列表
-      const response = await getBindSocialUserList();
-      const bindSocialUserList = response.data;
+      const response = await getBindSocialUserList()
+      const bindSocialUserList = response.data
       // 检查该社交平台是否已绑定
       for (const i in SystemUserSocialTypeEnum) {
-        const socialUser = { ...SystemUserSocialTypeEnum[i] };
-        this.socialUsers.push(socialUser);
+        const socialUser = { ...SystemUserSocialTypeEnum[i] }
+        this.socialUsers.push(socialUser)
         if (bindSocialUserList.length > 0) {
           for (const bindUser of bindSocialUserList) {
             if (socialUser.type === bindUser.type) {
-              socialUser.openid = bindUser.openid;
-              break;
+              socialUser.openid = bindUser.openid
+              break
             }
           }
         }
@@ -87,21 +108,21 @@ export default {
     },
     bind(socialUser) {
       // 计算 redirectUri
-      const redirectUri = location.origin + '/user/profile?type=' + socialUser.type;
+      const redirectUri = location.origin + '/user/profile?type=' + socialUser.type
       // 进行跳转
       socialAuthRedirect(socialUser.type, encodeURIComponent(redirectUri)).then((res) => {
-        window.location.href = res.data;
-      });
+        window.location.href = res.data
+      })
     },
     unbind(socialUser) {
       socialUnbind(socialUser.type, socialUser.openid).then(resp => {
-        this.$modal.msgSuccess("解绑成功");
-        socialUser.openid = undefined;
-      });
+        this.$modal.msgSuccess('解绑成功')
+        socialUser.openid = undefined
+      })
     },
     close() {
-      this.$tab.closePage();
+      this.$tab.closePage()
     }
   }
-};
+}
 </script>

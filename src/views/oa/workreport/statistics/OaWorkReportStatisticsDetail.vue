@@ -1,7 +1,14 @@
 <template>
   <div>
-    <Dialog v-model="dialogVisible" :title="(currentUser && currentUser.userName || '') + '的汇报明细'" width="760px">
-      <el-descriptions :column="3" class="user-desc">
+    <AppDialog
+      v-model="dialogVisible"
+      :title="(currentUser && currentUser.userName || '') + '的汇报明细'"
+      width="760px"
+    >
+      <el-descriptions
+        :column="3"
+        class="user-desc"
+      >
         <el-descriptions-item label="姓名">{{ currentUser && currentUser.userName }}</el-descriptions-item>
         <el-descriptions-item label="部门">{{ currentUser && currentUser.deptName }}</el-descriptions-item>
         <el-descriptions-item label="统计周期">
@@ -10,19 +17,47 @@
         </el-descriptions-item>
       </el-descriptions>
       <el-tabs v-model="detailTab">
-        <el-tab-pane :label="'已填 ' + ((currentUser && currentUser.submittedReports) || []).length" name="submitted">
-          <el-table :data="(currentUser && currentUser.submittedReports) || []" border max-height="360">
-            <el-table-column label="日期" prop="startTime" :formatter="dateFormatter2" width="120" />
-            <el-table-column label="汇报标题" prop="title" min-width="260" show-overflow-tooltip>
+        <el-tab-pane
+          :label="'已填 ' + ((currentUser && currentUser.submittedReports) || []).length"
+          name="submitted"
+        >
+          <el-table
+            :data="(currentUser && currentUser.submittedReports) || []"
+            border
+            max-height="360"
+          >
+            <el-table-column
+              label="日期"
+              prop="startTime"
+              :formatter="dateFormatter2"
+              width="120"
+            />
+            <el-table-column
+              label="汇报标题"
+              prop="title"
+              min-width="260"
+              show-overflow-tooltip
+            >
               <template slot-scope="scope">
-                <el-button type="text" class="link-button" @click="openReportDetail(scope.row.id)">
+                <el-button
+                  type="text"
+                  class="link-button"
+                  @click="openReportDetail(scope.row.id)"
+                >
                   {{ scope.row.title }}
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="状态" align="center" width="100">
+            <el-table-column
+              label="状态"
+              align="center"
+              width="100"
+            >
               <template slot-scope="scope">
-                <dict-tag :type="DICT_TYPE.OA_WORK_REPORT_STATUS" :value="scope.row.status" />
+                <dict-tag
+                  :type="DICT_TYPE.OA_WORK_REPORT_STATUS"
+                  :value="scope.row.status"
+                />
               </template>
             </el-table-column>
             <el-table-column
@@ -34,9 +69,20 @@
             />
           </el-table>
         </el-tab-pane>
-        <el-tab-pane :label="'未填 ' + (currentUser ? currentUser.missingCount : 0)" name="missing">
-          <el-table :data="missingRows" border max-height="360">
-            <el-table-column type="index" label="序号" width="60" />
+        <el-tab-pane
+          :label="'未填 ' + (currentUser ? currentUser.missingCount : 0)"
+          name="missing"
+        >
+          <el-table
+            :data="missingRows"
+            border
+            max-height="360"
+          >
+            <el-table-column
+              type="index"
+              label="序号"
+              width="60"
+            />
             <el-table-column
               v-if="queryParams.type !== OA_WORK_REPORT_TYPE.DAILY"
               :label="queryParams.type === OA_WORK_REPORT_TYPE.WEEKLY ? '周次' : '月份'"
@@ -54,11 +100,15 @@
               prop="weekDay"
               width="100"
             />
-            <el-table-column label="逾期天数" prop="overdueDays" width="110" />
+            <el-table-column
+              label="逾期天数"
+              prop="overdueDays"
+              width="110"
+            />
           </el-table>
         </el-tab-pane>
       </el-tabs>
-    </Dialog>
+    </AppDialog>
 
     <!-- 工作汇报详情 -->
     <oa-work-report-form ref="workReportFormRef" />
@@ -67,8 +117,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import * as WorkReportApi from '@/api/oa/workreport'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE } from '@/utils/dict'
 import { formatDate, dateFormatter, dateFormatter2 } from '@/utils/formatTime'
 import { OA_WEEKDAY_NAMES, OA_WORK_REPORT_TYPE } from '@/views/oa/utils/constants-collab'
@@ -77,7 +126,7 @@ import OaWorkReportForm from '../OaWorkReportForm.vue'
 
 export default {
   name: 'OaWorkReportStatisticsDetail',
-  components: { Dialog, OaWorkReportForm },
+  components: { AppDialog, OaWorkReportForm },
   data() {
     return {
       DICT_TYPE,

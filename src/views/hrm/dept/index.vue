@@ -1,17 +1,77 @@
 <template>
   <div class="app-container hrm-dept-page">
-    <doc-alert title="【组织】工作台、组织架构" url="https://doc.iocoder.cn/hrm/organization/" />
-    <el-card shadow="never" class="search-card">
-      <el-form :inline="true" :model="queryParams" size="small" @submit.native.prevent>
-        <el-form-item label="部门名称"><el-input v-model="queryParams.name" clearable placeholder="请输入部门名称" @keyup.enter.native="handleQuery" /></el-form-item>
-        <el-form-item><el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button><el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button><el-button v-hasPermi="['system:dept:create']" type="primary" plain icon="el-icon-plus" @click="openDeptManagement">新建部门</el-button></el-form-item>
+    <doc-alert
+      title="【组织】工作台、组织架构"
+      url="https://doc.iocoder.cn/hrm/organization/"
+    />
+    <el-card
+      shadow="never"
+      class="search-card"
+    >
+      <el-form
+        :inline="true"
+        :model="queryParams"
+        size="small"
+        @submit.native.prevent
+      >
+        <el-form-item label="部门名称"><el-input
+          v-model="queryParams.name"
+          clearable
+          placeholder="请输入部门名称"
+          @keyup.enter.native="handleQuery"
+        /></el-form-item>
+        <el-form-item><el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button><el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button><el-button
+          v-hasPermi="['system:dept:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          @click="openDeptManagement"
+        >新建部门</el-button></el-form-item>
       </el-form>
     </el-card>
-    <el-card shadow="never"><el-alert title="人数格式为：直属人数（包含下级部门人数）" type="info" :closable="false" show-icon class="statistics-tip" /><el-table v-loading="loading" :data="filteredDeptList" row-key="id" default-expand-all stripe>
-      <el-table-column label="部门名称" min-width="280"><template slot-scope="scope"><el-link type="primary" :underline="false" @click="openDetail(scope.row.id)">{{ scope.row.name }}</el-link></template></el-table-column>
-      <el-table-column label="在职员工" align="center" min-width="150"><template slot-scope="scope">{{ formatStatistics(scope.row.directStatistics, scope.row.totalStatistics, 'activeCount') }}</template></el-table-column>
-      <el-table-column label="全职员工" align="center" min-width="150"><template slot-scope="scope">{{ formatStatistics(scope.row.directStatistics, scope.row.totalStatistics, 'fullTimeCount') }}</template></el-table-column>
-      <el-table-column label="非全职人数" align="center" min-width="150"><template slot-scope="scope">{{ formatStatistics(scope.row.directStatistics, scope.row.totalStatistics, 'nonFullTimeCount') }}</template></el-table-column>
+    <el-card shadow="never"><el-alert
+      title="人数格式为：直属人数（包含下级部门人数）"
+      type="info"
+      :closable="false"
+      show-icon
+      class="statistics-tip"
+    /><el-table
+      v-loading="loading"
+      :data="filteredDeptList"
+      row-key="id"
+      default-expand-all
+      stripe
+    >
+      <el-table-column
+        label="部门名称"
+        min-width="280"
+      ><template slot-scope="scope"><el-link
+        type="primary"
+        :underline="false"
+        @click="openDetail(scope.row.id)"
+      >{{ scope.row.name }}</el-link></template></el-table-column>
+      <el-table-column
+        label="在职员工"
+        align="center"
+        min-width="150"
+      ><template slot-scope="scope">{{ formatStatistics(scope.row.directStatistics, scope.row.totalStatistics, 'activeCount') }}</template></el-table-column>
+      <el-table-column
+        label="全职员工"
+        align="center"
+        min-width="150"
+      ><template slot-scope="scope">{{ formatStatistics(scope.row.directStatistics, scope.row.totalStatistics, 'fullTimeCount') }}</template></el-table-column>
+      <el-table-column
+        label="非全职人数"
+        align="center"
+        min-width="150"
+      ><template slot-scope="scope">{{ formatStatistics(scope.row.directStatistics, scope.row.totalStatistics, 'nonFullTimeCount') }}</template></el-table-column>
     </el-table></el-card>
   </div>
 </template>

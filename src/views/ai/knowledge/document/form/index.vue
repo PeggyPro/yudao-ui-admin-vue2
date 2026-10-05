@@ -3,7 +3,12 @@
     <div class="document-form-shell">
       <header class="document-form-header">
         <div class="header-title">
-          <i class="el-icon-arrow-left back-icon" role="button" tabindex="0" @click="handleBack" />
+          <i
+            class="el-icon-arrow-left back-icon"
+            role="button"
+            tabindex="0"
+            @click="handleBack"
+          />
           <span>{{ formData.id ? '编辑知识库文档' : '创建知识库文档' }}</span>
         </div>
         <div class="steps">

@@ -1,28 +1,69 @@
 <template>
   <div>
-    <el-dialog :visible.sync="dialogVisible" title="工作项标签管理" width="680px" append-to-body>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      title="工作项标签管理"
+      width="680px"
+      append-to-body
+    >
       <div class="label-toolbar">
-        <el-button type="primary" @click="openForm()">新增标签</el-button>
+        <el-button
+          type="primary"
+          @click="openForm()"
+        >新增标签</el-button>
       </div>
-      <el-table v-loading="loading" :data="labelList">
-        <el-table-column label="标签" min-width="220" show-overflow-tooltip>
+      <el-table
+        v-loading="loading"
+        :data="labelList"
+      >
+        <el-table-column
+          label="标签"
+          min-width="220"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
-            <el-tag :color="scope.row.color" effect="dark">{{ scope.row.name }}</el-tag>
+            <el-tag
+              :color="scope.row.color"
+              effect="dark"
+            >{{ scope.row.name }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="颜色" prop="color" width="140" />
-        <el-table-column align="center" label="操作" width="160">
+        <el-table-column
+          align="center"
+          label="颜色"
+          prop="color"
+          width="140"
+        />
+        <el-table-column
+          align="center"
+          label="操作"
+          width="160"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openForm(scope.row)">编辑</el-button>
-            <el-popconfirm cancel-button-text="取消" confirm-button-text="确定"
-              :title="`确认删除标签“${scope.row.name}”吗？`" @confirm="handleDelete(scope.row)">
-              <el-button slot="reference" type="text" class="delete-label">删除</el-button>
+            <el-button
+              type="text"
+              @click="openForm(scope.row)"
+            >编辑</el-button>
+            <el-popconfirm
+              cancel-button-text="取消"
+              confirm-button-text="确定"
+              :title="`确认删除标签“${scope.row.name}”吗？`"
+              @confirm="handleDelete(scope.row)"
+            >
+              <el-button
+                slot="reference"
+                type="text"
+                class="delete-label"
+              >删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
     </el-dialog>
-    <WorkItemLabelForm ref="formRef" @success="handleFormSuccess" />
+    <WorkItemLabelForm
+      ref="formRef"
+      @success="handleFormSuccess"
+    />
   </div>
 </template>
 

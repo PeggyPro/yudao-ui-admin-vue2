@@ -1,7 +1,20 @@
 <template>
-  <el-dialog title="凭证摘要库" :visible.sync="dialogVisible" append-to-body width="620px">
-    <el-form ref="form" :model="formData" :rules="formRules" label-position="top">
-      <el-form-item label="摘要内容" prop="content">
+  <el-dialog
+    title="凭证摘要库"
+    :visible.sync="dialogVisible"
+    append-to-body
+    width="620px"
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-position="top"
+    >
+      <el-form-item
+        label="摘要内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           :rows="3"
@@ -37,8 +50,17 @@
       stripe
       @row-dblclick="selectDigest"
     >
-      <el-table-column label="摘要内容" min-width="360" prop="content" show-overflow-tooltip />
-      <el-table-column align="center" label="操作" width="160">
+      <el-table-column
+        label="摘要内容"
+        min-width="360"
+        prop="content"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        align="center"
+        label="操作"
+        width="160"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="isWritable"
@@ -53,7 +75,10 @@
             type="text"
             @click="handleDelete(scope.row)"
           >删除</el-button>
-          <el-button type="text" @click="selectDigest(scope.row)">套用</el-button>
+          <el-button
+            type="text"
+            @click="selectDigest(scope.row)"
+          >套用</el-button>
         </template>
       </el-table-column>
     </el-table>

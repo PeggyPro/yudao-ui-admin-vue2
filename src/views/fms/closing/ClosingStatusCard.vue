@@ -1,5 +1,8 @@
 <template>
-  <el-card shadow="never" class="closing-status-card">
+  <el-card
+    shadow="never"
+    class="closing-status-card"
+  >
     <div class="status-title">{{ title }}</div>
     <div class="status-value">{{ value }}</div>
     <el-tag :type="tagType">{{ tagLabel }}</el-tag>

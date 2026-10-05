@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import '@/views/iot/styles/vue2.css';
+import '@/views/iot/styles/vue2.css'
 const ICONS = {
   'ep:clock': 'el-icon-time',
   'ep:grid': 'el-icon-s-grid',

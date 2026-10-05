@@ -36,7 +36,7 @@
       label="操作"
       align="center"
       width="120"
-    ><template v-slot="scope"><el-button
+    ><template slot-scope="scope"><el-button
       type="text"
       @click="openForm('update', scope.row)"
     >编辑</el-button><el-button

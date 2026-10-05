@@ -26,7 +26,10 @@
         :disabled="composing || operating"
         @click="$emit('folder-change', folder.key)"
       >
-        <span class="mail-folder__name" :title="folder.name">{{ folder.name }}</span>
+        <span
+          class="mail-folder__name"
+          :title="folder.name"
+        >{{ folder.name }}</span>
         <span
           v-if="folder.unreadCount > 0"
           class="mail-folder__unread"
@@ -37,10 +40,18 @@
       </button>
     </nav>
     <div class="mail-folder__footer">
-      <el-button size="small" :loading="syncing" :disabled="!accountId || composing" @click="$emit('sync')">
+      <el-button
+        size="small"
+        :loading="syncing"
+        :disabled="!accountId || composing"
+        @click="$emit('sync')"
+      >
         同步
       </el-button>
-      <el-button size="small" @click="$emit('settings')">账号设置</el-button>
+      <el-button
+        size="small"
+        @click="$emit('settings')"
+      >账号设置</el-button>
     </div>
   </aside>
 </template>

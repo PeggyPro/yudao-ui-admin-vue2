@@ -1,7 +1,13 @@
 <!-- MES 设备类型树面板 -->
 <template>
   <div>
-    <el-input v-model="filterText" placeholder="搜索分类" clearable prefix-icon="el-icon-search" class="tree-filter" />
+    <el-input
+      v-model="filterText"
+      placeholder="搜索分类"
+      clearable
+      prefix-icon="el-icon-search"
+      class="tree-filter"
+    />
     <el-tree
       ref="tree"
       :data="treeData"

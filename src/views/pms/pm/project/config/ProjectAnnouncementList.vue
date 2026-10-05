@@ -14,22 +14,42 @@
     </div>
 
     <!-- 公告列表 -->
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true">
-      <el-table-column label="公告内容" min-width="360">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="公告内容"
+        min-width="360"
+      >
         <template slot-scope="scope">
           <div class="line-clamp-2 whitespace-pre-wrap leading-22px">
             {{ scope.row.content }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="附件" width="110">
+      <el-table-column
+        align="center"
+        label="附件"
+        width="110"
+      >
         <template slot-scope="scope">
-          <el-dropdown v-if="scope.row.fileUrls && scope.row.fileUrls.length" trigger="click">
+          <el-dropdown
+            v-if="scope.row.fileUrls && scope.row.fileUrls.length"
+            trigger="click"
+          >
             <el-button type="text">{{ scope.row.fileUrls.length }} 个附件</el-button>
             <template slot="dropdown">
               <el-dropdown-menu>
-                <el-dropdown-item v-for="(url, index) in scope.row.fileUrls" :key="url">
-                  <el-link :href="url" target="_blank">附件 {{ Number(index) + 1 }}</el-link>
+                <el-dropdown-item
+                  v-for="(url, index) in scope.row.fileUrls"
+                  :key="url"
+                >
+                  <el-link
+                    :href="url"
+                    target="_blank"
+                  >附件 {{ Number(index) + 1 }}</el-link>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -37,18 +57,36 @@
           <span v-else>--</span>
         </template>
       </el-table-column>
-      <el-table-column label="发布人" min-width="140" prop="creatorUserName" />
-      <el-table-column :formatter="dateFormatter" label="发布时间" prop="createTime" width="180" />
-      <el-table-column v-if="editable" align="center" fixed="right" label="操作" width="120">
+      <el-table-column
+        label="发布人"
+        min-width="140"
+        prop="creatorUserName"
+      />
+      <el-table-column
+        :formatter="dateFormatter"
+        label="发布时间"
+        prop="createTime"
+        width="180"
+      />
+      <el-table-column
+        v-if="editable"
+        align="center"
+        fixed="right"
+        label="操作"
+        width="120"
+      >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['pms:pm:project:update']" type="text"
+            v-hasPermi="['pms:pm:project:update']"
+            type="text"
             @click="openForm('update', scope.row.id)"
           >
             编辑
           </el-button>
           <el-button
-            v-hasPermi="['pms:pm:project:update']" type="text" class="delete-button"
+            v-hasPermi="['pms:pm:project:update']"
+            type="text"
+            class="delete-button"
             @click="handleDelete(scope.row.id)"
           >
             删除
@@ -58,7 +96,10 @@
     </el-table>
 
     <!-- 添加或修改项目公告对话框 -->
-    <ProjectAnnouncementForm ref="formRef" @success="getList" />
+    <ProjectAnnouncementForm
+      ref="formRef"
+      @success="getList"
+    />
   </div>
 </template>
 
@@ -71,7 +112,7 @@ export default {
   components: { ProjectAnnouncementForm },
   props: { projectId: { type: Number, required: true }, editable: Boolean },
   data() { return { loading: true, list: [] } },
-  watch: { projectId: { immediate: true, handler() { this.getList() } } },
+  watch: { projectId: { immediate: true, handler() { this.getList() } }},
   methods: {
     dateFormatter,
     async getList() {
@@ -83,8 +124,7 @@ export default {
     },
     openForm(type, id) { this.$refs.formRef.open(type, this.projectId, id) },
     async handleDelete(id) {
-      try { await this.$confirm('是否确认删除该公告？', '提示', { type: 'warning' }) }
-      catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
+      try { await this.$confirm('是否确认删除该公告？', '提示', { type: 'warning' }) } catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
       await ProjectAnnouncementApi.deleteProjectAnnouncement(id)
       this.$message.success('删除成功')
       await this.getList()

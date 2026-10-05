@@ -17,8 +17,11 @@
       autoplay
       playsinline
       :muted="participant.isLocal"
-    ></video>
-    <div v-else class="flex justify-center items-center w-full h-full">
+    />
+    <div
+      v-else
+      class="flex justify-center items-center w-full h-full"
+    >
       <UserAvatar
         :url="participant.avatar"
         :name="participant.nickname"
@@ -34,7 +37,7 @@
       :ref="audioRef"
       autoplay
       :muted="!speakerEnabled"
-    ></audio>
+    />
 
     <!-- 左下角名字胶囊 -->
     <div
@@ -61,7 +64,7 @@
           :key="i"
           class="tile-dot w-1.5 h-1.5 rounded-full bg-white/60"
           :style="{ animationDelay: `${(i - 1) * 0.2}s` }"
-        ></span>
+        />
       </div>
       <span class="text-xs text-white/70">接入中</span>
     </div>
@@ -69,10 +72,10 @@
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import UserAvatar from '../user/UserAvatar.vue';
-import { useMediaStreamElement } from '../../composables/useMediaStreamElement';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import UserAvatar from '../user/UserAvatar.vue'
+import { useMediaStreamElement } from '../../composables/useMediaStreamElement'
+export default /* #__PURE__*/_defineComponent({
   components: {
     UserAvatar
   },
@@ -90,23 +93,23 @@ export default /*#__PURE__*/_defineComponent({
   setup(__props, {
     expose
   }) {
-    expose();
-    const props = __props;
-    const videoRef = useMediaStreamElement(() => props.participant.videoStream);
-    const audioRef = useMediaStreamElement(() => props.participant.audioStream);
+    expose()
+    const props = __props
+    const videoRef = useMediaStreamElement(() => props.participant.videoStream)
+    const audioRef = useMediaStreamElement(() => props.participant.audioStream)
     const __returned__ = {
       props,
       videoRef,
       audioRef,
       UserAvatar
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped>
 

@@ -1,6 +1,10 @@
 <template>
   <el-input v-model="color">
-    <el-color-picker slot="prepend" v-model="color" :predefine="PREDEFINE_COLORS" />
+    <el-color-picker
+      slot="prepend"
+      v-model="color"
+      :predefine="PREDEFINE_COLORS"
+    />
   </el-input>
 </template>
 

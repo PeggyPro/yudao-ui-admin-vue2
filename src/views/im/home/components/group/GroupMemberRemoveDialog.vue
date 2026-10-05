@@ -16,10 +16,10 @@
     <div class="h-[480px]">
       <GroupMemberPickerPanel
         :selected-ids="selectedIds"
-        @update:selectedIds="selectedIds = $event"
         :members="members"
         :hide-ids="hideIds"
         :max-size="50"
+        @update:selectedIds="selectedIds = $event"
       />
     </div>
 
@@ -38,12 +38,12 @@
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { ref } from 'vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { removeGroupMember } from '@/api/im/group/member';
-import GroupMemberPickerPanel from '../picker/GroupMemberPickerPanel.vue';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { ref } from 'vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { removeGroupMember } from '@/api/im/group/member'
+import GroupMemberPickerPanel from '../picker/GroupMemberPickerPanel.vue'
+export default /* #__PURE__*/_defineComponent({
   components: {
     GroupMemberPickerPanel
   },
@@ -52,42 +52,42 @@ export default /*#__PURE__*/_defineComponent({
     expose,
     emit
   }) {
-    const message = useMessage();
-    const visible = ref(false);
-    const submitting = ref(false);
-    const groupId = ref(0);
-    const members = ref([]);
-    const hideIds = ref([]);
-    const selectedIds = ref([]);
+    const message = useMessage()
+    const visible = ref(false)
+    const submitting = ref(false)
+    const groupId = ref(0)
+    const members = ref([])
+    const hideIds = ref([])
+    const selectedIds = ref([])
     expose({
       /** 打开移除群成员弹窗：reset → 灌参 → visible=true */
       open(opts) {
-        groupId.value = opts.groupId;
-        members.value = opts.members;
-        hideIds.value = opts.hideIds ? [...opts.hideIds] : [];
-        selectedIds.value = [];
-        submitting.value = false;
-        visible.value = true;
+        groupId.value = opts.groupId
+        members.value = opts.members
+        hideIds.value = opts.hideIds ? [...opts.hideIds] : []
+        selectedIds.value = []
+        submitting.value = false
+        visible.value = true
       }
-    });
+    })
 
     /** 一次性批量踢人：选中成员 userId 数组传给后端，比循环调 N 次接口省往返 */
     async function handleOk() {
       if (!groupId.value || selectedIds.value.length === 0) {
-        return;
+        return
       }
-      submitting.value = true;
+      submitting.value = true
       try {
-        const memberUserIds = [...selectedIds.value];
+        const memberUserIds = [...selectedIds.value]
         await removeGroupMember({
           groupId: groupId.value,
           memberUserIds
-        });
-        message.success(`已移除 ${memberUserIds.length} 位成员`);
-        emit('reload');
-        visible.value = false;
+        })
+        message.success(`已移除 ${memberUserIds.length} 位成员`)
+        emit('reload')
+        visible.value = false
       } finally {
-        submitting.value = false;
+        submitting.value = false
       }
     }
     const __returned__ = {
@@ -101,14 +101,14 @@ export default /*#__PURE__*/_defineComponent({
       selectedIds,
       handleOk,
       GroupMemberPickerPanel
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped lang="scss">
 

@@ -8,7 +8,12 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :content="displayLabel" :disabled="!displayLabel" placement="top" :open-delay="500">
+      <el-tooltip
+        :content="displayLabel"
+        :disabled="!displayLabel"
+        placement="top"
+        :open-delay="500"
+      >
         <el-input
           :disabled="disabled"
           :value="displayLabel"
@@ -35,8 +40,8 @@ import HrmEmployeeSelectDialog from './HrmEmployeeSelectDialog.vue'
 
 export default {
   name: 'HrmEmployeeSelect',
-  inheritAttrs: false,
   components: { HrmEmployeeSelectDialog },
+  inheritAttrs: false,
   model: { prop: 'value', event: 'input' },
   props: {
     value: { type: [Number, Array], default: undefined },

@@ -16,29 +16,33 @@
     <div class="h-[480px]">
       <GroupMemberPickerPanel
         :selected-ids="selectedIds"
-        @update:selectedIds="selectedIds = $event"
         :members="members"
         :hide-ids="hideIds"
         :max-size="maxSize"
         selected-display="grid"
+        @update:selectedIds="selectedIds = $event"
       />
     </div>
 
     <template #footer>
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" :loading="submitting" @click="handleOk">确定</el-button>
+      <el-button
+        type="primary"
+        :loading="submitting"
+        @click="handleOk"
+      >确定</el-button>
     </template>
   </el-dialog>
 
 </template>
 <script>
-import { defineComponent as _defineComponent } from 'vue';
-import { ref } from 'vue';
-import { useMessage } from '@/views/im/utils/messageUi';
-import { addGroupAdmin, removeGroupAdmin } from '@/api/im/group';
-import { GROUP_ADMIN_MAX_COUNT } from '@/views/im/utils/config';
-import GroupMemberPickerPanel from '../picker/GroupMemberPickerPanel.vue';
-export default /*#__PURE__*/_defineComponent({
+import { defineComponent as _defineComponent } from 'vue'
+import { ref } from 'vue'
+import { useMessage } from '@/views/im/utils/messageUi'
+import { addGroupAdmin, removeGroupAdmin } from '@/api/im/group'
+import { GROUP_ADMIN_MAX_COUNT } from '@/views/im/utils/config'
+import GroupMemberPickerPanel from '../picker/GroupMemberPickerPanel.vue'
+export default /* #__PURE__*/_defineComponent({
   components: {
     GroupMemberPickerPanel
   },
@@ -47,64 +51,64 @@ export default /*#__PURE__*/_defineComponent({
     expose,
     emit
   }) {
-    const message = useMessage();
-    const visible = ref(false);
-    const submitting = ref(false);
-    const groupId = ref(0);
-    const members = ref([]);
+    const message = useMessage()
+    const visible = ref(false)
+    const submitting = ref(false)
+    const groupId = ref(0)
+    const members = ref([])
     /** 当前管理员 userId 列表：默认勾选 + 提交时 diff */
-    const currentAdminIds = ref([]);
-    const hideIds = ref([]);
-    const maxSize = ref(GROUP_ADMIN_MAX_COUNT);
-    const selectedIds = ref([]);
+    const currentAdminIds = ref([])
+    const hideIds = ref([])
+    const maxSize = ref(GROUP_ADMIN_MAX_COUNT)
+    const selectedIds = ref([])
     expose({
       /** 打开设置管理员弹窗：reset → 灌参 → visible=true */
       open(opts) {
-        groupId.value = opts.groupId;
-        members.value = opts.members;
-        currentAdminIds.value = [...opts.currentAdminIds];
-        hideIds.value = opts.hideIds ? [...opts.hideIds] : [];
-        maxSize.value = opts.maxSize ?? GROUP_ADMIN_MAX_COUNT;
-        selectedIds.value = [...opts.currentAdminIds];
-        submitting.value = false;
-        visible.value = true;
+        groupId.value = opts.groupId
+        members.value = opts.members
+        currentAdminIds.value = [...opts.currentAdminIds]
+        hideIds.value = opts.hideIds ? [...opts.hideIds] : []
+        maxSize.value = opts.maxSize ?? GROUP_ADMIN_MAX_COUNT
+        selectedIds.value = [...opts.currentAdminIds]
+        submitting.value = false
+        visible.value = true
       }
-    });
+    })
 
     /** 跟当前管理员列表做差集，分别拿到要新增 / 撤销的 userId */
     async function handleOk() {
       if (!groupId.value) {
-        return;
+        return
       }
-      const previousIds = currentAdminIds.value;
-      const previousIdSet = new Set(previousIds);
-      const nextIds = selectedIds.value;
-      const nextIdSet = new Set(nextIds);
-      const addedIds = nextIds.filter(id => !previousIdSet.has(id));
-      const removedIds = previousIds.filter(id => !nextIdSet.has(id));
+      const previousIds = currentAdminIds.value
+      const previousIdSet = new Set(previousIds)
+      const nextIds = selectedIds.value
+      const nextIdSet = new Set(nextIds)
+      const addedIds = nextIds.filter(id => !previousIdSet.has(id))
+      const removedIds = previousIds.filter(id => !nextIdSet.has(id))
       if (addedIds.length === 0 && removedIds.length === 0) {
-        visible.value = false;
-        return;
+        visible.value = false
+        return
       }
-      submitting.value = true;
+      submitting.value = true
       try {
         if (addedIds.length > 0) {
           await addGroupAdmin({
             id: groupId.value,
             userIds: addedIds
-          });
+          })
         }
         if (removedIds.length > 0) {
           await removeGroupAdmin({
             id: groupId.value,
             userIds: removedIds
-          });
+          })
         }
-        message.success(`已更新群管理员（新增 ${addedIds.length} 位，撤销 ${removedIds.length} 位）`);
-        emit('reload');
-        visible.value = false;
+        message.success(`已更新群管理员（新增 ${addedIds.length} 位，撤销 ${removedIds.length} 位）`)
+        emit('reload')
+        visible.value = false
       } finally {
-        submitting.value = false;
+        submitting.value = false
       }
     }
     const __returned__ = {
@@ -120,14 +124,14 @@ export default /*#__PURE__*/_defineComponent({
       selectedIds,
       handleOk,
       GroupMemberPickerPanel
-    };
+    }
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
       value: true
-    });
-    return __returned__;
+    })
+    return __returned__
   }
-});
+})
 </script>
 <style scoped lang="scss">
 

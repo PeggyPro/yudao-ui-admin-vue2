@@ -9,32 +9,57 @@
         ]"
       >
         <div class="node-title-container">
-          <div class="node-title-icon delay-node"><span class="iconfont icon-delay"></span></div>
+          <div class="node-title-icon delay-node"><span class="iconfont icon-delay" /></div>
           <input
             v-if="!readonly && showInput"
+            v-model="currentNode.name"
+            v-mountedFocus
             type="text"
             class="editable-title-input"
-            @blur="blurEvent()"
-            v-mountedFocus
-            v-model="currentNode.name"
             :placeholder="currentNode.name"
-          />
-          <div v-else class="node-title" @click="clickTitle">
+            @blur="blurEvent()"
+          >
+          <div
+            v-else
+            class="node-title"
+            @click="clickTitle"
+          >
             {{ currentNode.name }}
           </div>
         </div>
-        <div class="node-content" @click="openNodeConfig">
-          <div class="node-text" :title="currentNode.showText" v-if="currentNode.showText">
+        <div
+          class="node-content"
+          @click="openNodeConfig"
+        >
+          <div
+            v-if="currentNode.showText"
+            class="node-text"
+            :title="currentNode.showText"
+          >
             {{ currentNode.showText }}
           </div>
-          <div class="node-text" v-else>
+          <div
+            v-else
+            class="node-text"
+          >
             {{ NODE_DEFAULT_TEXT.get(NodeType.DELAY_TIMER_NODE) }}
           </div>
-          <svg-icon v-if="!readonly" icon-class="ep:arrow-right-bold" />
+          <svg-icon
+            v-if="!readonly"
+            icon-class="ep:arrow-right-bold"
+          />
         </div>
-        <div v-if="!readonly" class="node-toolbar">
+        <div
+          v-if="!readonly"
+          class="node-toolbar"
+        >
           <div class="toolbar-icon">
-            <svg-icon color="#0089ff" icon-class="ep:circle-close-filled" :size="18" @click="deleteNode" />
+            <svg-icon
+              color="#0089ff"
+              icon-class="ep:circle-close-filled"
+              :size="18"
+              @click="deleteNode"
+            />
           </div>
         </div>
       </div>

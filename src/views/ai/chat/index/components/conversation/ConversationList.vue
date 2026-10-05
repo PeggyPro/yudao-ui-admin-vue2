@@ -1,7 +1,14 @@
 <template>
-  <el-aside width="260px" class="conversation-list">
+  <el-aside
+    width="260px"
+    class="conversation-list"
+  >
     <div class="conversation-list__main">
-      <el-button class="conversation-list__create" type="primary" @click="createConversation">
+      <el-button
+        class="conversation-list__create"
+        type="primary"
+        @click="createConversation"
+      >
         <i class="el-icon-plus" />
         新建对话
       </el-button>
@@ -15,7 +22,10 @@
         @input="searchConversation"
       />
 
-      <div class="conversation-list__scroll" v-loading="loading">
+      <div
+        v-loading="loading"
+        class="conversation-list__scroll"
+      >
         <el-empty
           v-if="!loading && conversationList.length === 0"
           description="暂无对话"
@@ -77,11 +87,17 @@
     </div>
 
     <div class="conversation-list__toolbar">
-      <button type="button" @click="handleRoleRepository">
+      <button
+        type="button"
+        @click="handleRoleRepository"
+      >
         <i class="el-icon-user" />
         角色仓库
       </button>
-      <button type="button" @click="handleClearConversation">
+      <button
+        type="button"
+        @click="handleClearConversation"
+      >
         <i class="el-icon-delete" />
         清空未置顶对话
       </button>

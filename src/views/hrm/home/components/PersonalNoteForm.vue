@@ -1,7 +1,20 @@
 <template>
-  <el-dialog title="新增备忘" :visible.sync="dialogVisible" width="520px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="84px">
-      <el-form-item label="提醒时间" prop="reminderTime">
+  <el-dialog
+    title="新增备忘"
+    :visible.sync="dialogVisible"
+    width="520px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="84px"
+    >
+      <el-form-item
+        label="提醒时间"
+        prop="reminderTime"
+      >
         <el-date-picker
           v-model="formData.reminderTime"
           type="datetime"
@@ -9,7 +22,10 @@
           class="width-full"
         />
       </el-form-item>
-      <el-form-item label="备忘内容" prop="content">
+      <el-form-item
+        label="备忘内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           type="textarea"
@@ -20,7 +36,11 @@
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button :loading="submitting" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :loading="submitting"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

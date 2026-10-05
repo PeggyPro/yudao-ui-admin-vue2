@@ -1,21 +1,65 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="数据源名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入数据源名称" />
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="500px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
+      <el-form-item
+        label="数据源名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入数据源名称"
+        />
       </el-form-item>
-      <el-form-item label="数据源连接" prop="url">
-        <el-input v-model="formData.url" placeholder="请输入数据源连接" />
+      <el-form-item
+        label="数据源连接"
+        prop="url"
+      >
+        <el-input
+          v-model="formData.url"
+          placeholder="请输入数据源连接"
+        />
       </el-form-item>
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="formData.username" placeholder="请输入用户名" />
+      <el-form-item
+        label="用户名"
+        prop="username"
+      >
+        <el-input
+          v-model="formData.username"
+          placeholder="请输入用户名"
+        />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="formData.password" type="password" show-password placeholder="请输入密码" />
+      <el-form-item
+        label="密码"
+        prop="password"
+      >
+        <el-input
+          v-model="formData.password"
+          type="password"
+          show-password
+          placeholder="请输入密码"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

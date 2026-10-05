@@ -1,6 +1,12 @@
 <template>
-  <el-card shadow="never" class="home-card">
-    <div slot="header" class="home-card__title">我的团队（{{ currentMonthRange }}）</div>
+  <el-card
+    shadow="never"
+    class="home-card"
+  >
+    <div
+      slot="header"
+      class="home-card__title"
+    >我的团队（{{ currentMonthRange }}）</div>
     <div class="overview-grid">
       <button
         v-for="(item, index) in overviewItems"

@@ -1,5 +1,9 @@
 <template>
-  <Dialog :title="title" v-model="visible" append-to-body>
+  <AppDialog
+    v-model="visible"
+    :title="title"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="loading"
@@ -7,7 +11,10 @@
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item label="切片内容" prop="content">
+      <el-form-item
+        label="切片内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           type="textarea"
@@ -16,20 +23,27 @@
         />
       </el-form-item>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="loading" @click="submitForm">确 定</el-button>
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="loading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </span>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { KnowledgeSegmentApi } from '@/api/ai/knowledge/segment'
 
 export default {
   name: 'KnowledgeSegmentForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       visible: false,

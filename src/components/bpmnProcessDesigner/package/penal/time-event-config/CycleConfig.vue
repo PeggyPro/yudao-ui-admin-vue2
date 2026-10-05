@@ -1,26 +1,64 @@
 <template>
-  <el-tabs v-model="tab" class="cycle-config">
-    <el-tab-pane label="CRON表达式" name="cron">
+  <el-tabs
+    v-model="tab"
+    class="cycle-config"
+  >
+    <el-tab-pane
+      label="CRON表达式"
+      name="cron"
+    >
       <div class="cycle-config__row">
-        <el-input v-model="cronStr" readonly style="width: 100%; font-weight: bold" />
+        <el-input
+          v-model="cronStr"
+          readonly
+          style="width: 100%; font-weight: bold"
+        />
       </div>
       <div class="cycle-config__fields">
-        <el-input v-model="fields.second" placeholder="秒" />
-        <el-input v-model="fields.minute" placeholder="分" />
-        <el-input v-model="fields.hour" placeholder="时" />
-        <el-input v-model="fields.day" placeholder="天" />
-        <el-input v-model="fields.month" placeholder="月" />
-        <el-input v-model="fields.week" placeholder="周" />
-        <el-input v-model="fields.year" placeholder="年" />
+        <el-input
+          v-model="fields.second"
+          placeholder="秒"
+        />
+        <el-input
+          v-model="fields.minute"
+          placeholder="分"
+        />
+        <el-input
+          v-model="fields.hour"
+          placeholder="时"
+        />
+        <el-input
+          v-model="fields.day"
+          placeholder="天"
+        />
+        <el-input
+          v-model="fields.month"
+          placeholder="月"
+        />
+        <el-input
+          v-model="fields.week"
+          placeholder="周"
+        />
+        <el-input
+          v-model="fields.year"
+          placeholder="年"
+        />
       </div>
-      <el-tabs v-model="activeField" type="card" class="cycle-config__field-tabs">
+      <el-tabs
+        v-model="activeField"
+        type="card"
+        class="cycle-config__field-tabs"
+      >
         <el-tab-pane
           v-for="field in cronFieldList"
           :key="field.key"
           :label="field.label"
           :name="field.key"
         >
-          <el-radio-group v-model="cronMode[field.key]" class="cycle-config__modes">
+          <el-radio-group
+            v-model="cronMode[field.key]"
+            class="cycle-config__modes"
+          >
             <el-radio label="every">每{{ field.label }}</el-radio>
             <el-radio label="range">
               从
@@ -75,7 +113,10 @@
       </el-tabs>
     </el-tab-pane>
 
-    <el-tab-pane label="标准格式" name="iso">
+    <el-tab-pane
+      label="标准格式"
+      name="iso"
+    >
       <div class="cycle-config__row">
         <el-input
           v-model="isoStr"
@@ -86,7 +127,11 @@
       </div>
       <div class="cycle-config__row">
         循环次数：
-        <el-input-number v-model="repeat" :min="1" style="width: 120px" />
+        <el-input-number
+          v-model="repeat"
+          :min="1"
+          style="width: 120px"
+        />
       </div>
       <div class="cycle-config__row">
         日期时间：
@@ -99,7 +144,11 @@
       </div>
       <div class="cycle-config__row">
         当前时长：
-        <el-input v-model="isoDuration" placeholder="如 P3DT30M30S" style="width: 240px" />
+        <el-input
+          v-model="isoDuration"
+          placeholder="如 P3DT30M30S"
+          style="width: 240px"
+        />
       </div>
       <div class="cycle-config__presets">
         <div>
@@ -157,34 +206,34 @@
 
 <script>
 const CRON_FIELD_LIST = [
-  { key: "second", label: "秒", min: 0, max: 59 },
-  { key: "minute", label: "分", min: 0, max: 59 },
-  { key: "hour", label: "时", min: 0, max: 23 },
-  { key: "day", label: "天", min: 1, max: 31 },
-  { key: "month", label: "月", min: 1, max: 12 },
-  { key: "week", label: "周", min: 1, max: 7 },
-  { key: "year", label: "年", min: 1970, max: 2099 }
-];
+  { key: 'second', label: '秒', min: 0, max: 59 },
+  { key: 'minute', label: '分', min: 0, max: 59 },
+  { key: 'hour', label: '时', min: 0, max: 23 },
+  { key: 'day', label: '天', min: 1, max: 31 },
+  { key: 'month', label: '月', min: 1, max: 12 },
+  { key: 'week', label: '周', min: 1, max: 7 },
+  { key: 'year', label: '年', min: 1970, max: 2099 }
+]
 
 const createFields = () => ({
-  second: "*",
-  minute: "*",
-  hour: "*",
-  day: "*",
-  month: "*",
-  week: "?",
-  year: ""
-});
+  second: '*',
+  minute: '*',
+  hour: '*',
+  day: '*',
+  month: '*',
+  week: '?',
+  year: ''
+})
 
 const createModes = () => ({
-  second: "every",
-  minute: "every",
-  hour: "every",
-  day: "every",
-  month: "every",
-  week: "every",
-  year: "every"
-});
+  second: 'every',
+  minute: 'every',
+  hour: 'every',
+  day: 'every',
+  month: 'every',
+  week: 'every',
+  year: 'every'
+})
 
 const createAppoints = () => ({
   second: [],
@@ -194,7 +243,7 @@ const createAppoints = () => ({
   month: [],
   week: [],
   year: []
-});
+})
 
 const createRanges = () => ({
   second: [0, 1],
@@ -204,7 +253,7 @@ const createRanges = () => ({
   month: [1, 2],
   week: [1, 2],
   year: [1970, 1971]
-});
+})
 
 const createSteps = () => ({
   second: [0, 1],
@@ -214,209 +263,209 @@ const createSteps = () => ({
   month: [1, 1],
   week: [1, 1],
   year: [1970, 1]
-});
+})
 
 export default {
-  name: "CycleConfig",
+  name: 'CycleConfig',
   props: {
     value: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   data() {
     return {
-      tab: "cron",
-      cronStr: "* * * * * ?",
+      tab: 'cron',
+      cronStr: '* * * * * ?',
       fields: createFields(),
       cronFieldList: CRON_FIELD_LIST,
-      activeField: "second",
+      activeField: 'second',
       cronMode: createModes(),
       cronAppoint: createAppoints(),
       cronRange: createRanges(),
       cronStep: createSteps(),
-      isoStr: "",
+      isoStr: '',
       repeat: 1,
-      isoDate: "",
-      isoDuration: "",
+      isoDate: '',
+      isoDuration: '',
       syncingValue: false
-    };
+    }
   },
   watch: {
     value: {
       immediate: true,
       handler(value) {
-        this.syncFromValue(value);
+        this.syncFromValue(value)
       }
     },
     fields: {
       deep: true,
       handler() {
-        this.buildCron();
+        this.buildCron()
       }
     },
     cronMode: {
       deep: true,
       handler() {
-        this.buildCron();
+        this.buildCron()
       }
     },
     cronAppoint: {
       deep: true,
       handler() {
-        this.buildCron();
+        this.buildCron()
       }
     },
     cronRange: {
       deep: true,
       handler() {
-        this.buildCron();
+        this.buildCron()
       }
     },
     cronStep: {
       deep: true,
       handler() {
-        this.buildCron();
+        this.buildCron()
       }
     },
     repeat() {
-      this.updateIsoStr();
+      this.updateIsoStr()
     },
     isoDate() {
-      this.updateIsoStr();
+      this.updateIsoStr()
     },
     isoDuration() {
-      this.updateIsoStr();
+      this.updateIsoStr()
     },
     tab(value) {
-      if (this.syncingValue) return;
-      this.$emit("change", value === "cron" ? this.cronStr : this.isoStr);
+      if (this.syncingValue) return
+      this.$emit('change', value === 'cron' ? this.cronStr : this.isoStr)
     }
   },
   methods: {
     pad(value) {
-      return Number(value) < 10 ? `0${Number(value)}` : String(value);
+      return Number(value) < 10 ? `0${Number(value)}` : String(value)
     },
     appointValues(field) {
-      const result = [];
+      const result = []
       for (let value = field.min; value <= field.max; value += 1) {
-        result.push(value);
+        result.push(value)
       }
-      return result;
+      return result
     },
     tokenForField(field) {
-      const key = field.key;
-      const mode = this.cronMode[key];
-      if (mode === "appoint") return this.cronAppoint[key].join(",") || "*";
-      if (mode === "range") return `${this.cronRange[key][0]}-${this.cronRange[key][1]}`;
-      if (mode === "step") return `${this.cronStep[key][0]}/${this.cronStep[key][1]}`;
-      if (key === "week") return this.fields.week === "*" ? "*" : "?";
-      if (key === "year") return this.fields.year || "";
-      return "*";
+      const key = field.key
+      const mode = this.cronMode[key]
+      if (mode === 'appoint') return this.cronAppoint[key].join(',') || '*'
+      if (mode === 'range') return `${this.cronRange[key][0]}-${this.cronRange[key][1]}`
+      if (mode === 'step') return `${this.cronStep[key][0]}/${this.cronStep[key][1]}`
+      if (key === 'week') return this.fields.week === '*' ? '*' : '?'
+      if (key === 'year') return this.fields.year || ''
+      return '*'
     },
     buildCron() {
-      if (this.syncingValue) return;
-      const tokens = this.cronFieldList.map(field => this.tokenForField(field));
-      if (!tokens[6]) tokens.pop();
-      this.cronStr = tokens.join(" ");
-      if (this.tab === "cron") this.$emit("change", this.cronStr);
+      if (this.syncingValue) return
+      const tokens = this.cronFieldList.map(field => this.tokenForField(field))
+      if (!tokens[6]) tokens.pop()
+      this.cronStr = tokens.join(' ')
+      if (this.tab === 'cron') this.$emit('change', this.cronStr)
     },
     parseCron(value) {
-      const tokens = String(value).trim().split(/\s+/);
-      if (tokens.length < 6 || tokens.length > 7) return;
-      this.fields = createFields();
-      this.cronMode = createModes();
-      this.cronAppoint = createAppoints();
-      this.cronRange = createRanges();
-      this.cronStep = createSteps();
+      const tokens = String(value).trim().split(/\s+/)
+      if (tokens.length < 6 || tokens.length > 7) return
+      this.fields = createFields()
+      this.cronMode = createModes()
+      this.cronAppoint = createAppoints()
+      this.cronRange = createRanges()
+      this.cronStep = createSteps()
       this.cronFieldList.forEach((field, index) => {
-        if (index >= tokens.length) return;
-        const token = tokens[index];
-        this.$set(this.fields, field.key, token);
-        if (token === "*" || token === "?" || token === "") {
-          this.$set(this.cronMode, field.key, "every");
-        } else if (token.includes("/")) {
-          this.$set(this.cronMode, field.key, "step");
-          this.$set(this.cronStep, field.key, token.split("/").map(item => Number(item)));
-        } else if (token.includes("-") && !token.startsWith("-")) {
-          this.$set(this.cronMode, field.key, "range");
-          this.$set(this.cronRange, field.key, token.split("-").map(item => Number(item)));
+        if (index >= tokens.length) return
+        const token = tokens[index]
+        this.$set(this.fields, field.key, token)
+        if (token === '*' || token === '?' || token === '') {
+          this.$set(this.cronMode, field.key, 'every')
+        } else if (token.includes('/')) {
+          this.$set(this.cronMode, field.key, 'step')
+          this.$set(this.cronStep, field.key, token.split('/').map(item => Number(item)))
+        } else if (token.includes('-') && !token.startsWith('-')) {
+          this.$set(this.cronMode, field.key, 'range')
+          this.$set(this.cronRange, field.key, token.split('-').map(item => Number(item)))
         } else {
-          this.$set(this.cronMode, field.key, "appoint");
-          this.$set(this.cronAppoint, field.key, token.split(","));
+          this.$set(this.cronMode, field.key, 'appoint')
+          this.$set(this.cronAppoint, field.key, token.split(','))
         }
-      });
+      })
     },
     syncFromValue(value) {
-      this.syncingValue = true;
+      this.syncingValue = true
       if (!value) {
-        this.tab = "cron";
-        this.cronStr = "* * * * * ?";
-        this.isoStr = "";
+        this.tab = 'cron'
+        this.cronStr = '* * * * * ?'
+        this.isoStr = ''
       } else if (/^R\d*(?:\/|$)/.test(value)) {
-        this.tab = "iso";
-        this.isoStr = value;
-        this.parseIso(value);
+        this.tab = 'iso'
+        this.isoStr = value
+        this.parseIso(value)
       } else {
-        this.tab = "cron";
-        this.cronStr = value;
-        this.parseCron(value);
+        this.tab = 'cron'
+        this.cronStr = value
+        this.parseCron(value)
       }
       this.$nextTick(() => {
-        this.syncingValue = false;
-      });
+        this.syncingValue = false
+      })
     },
     parseIso(value) {
-      const parts = String(value).split("/");
-      const repeatMatch = (parts[0] || "").match(/^R(\d*)$/);
-      this.repeat = repeatMatch && repeatMatch[1] ? Number(repeatMatch[1]) : 1;
-      this.isoDate = "";
-      this.isoDuration = "";
+      const parts = String(value).split('/')
+      const repeatMatch = (parts[0] || '').match(/^R(\d*)$/)
+      this.repeat = repeatMatch && repeatMatch[1] ? Number(repeatMatch[1]) : 1
+      this.isoDate = ''
+      this.isoDuration = ''
       if (parts.length === 2 && /^P/.test(parts[1])) {
-        this.isoDuration = parts[1];
+        this.isoDuration = parts[1]
       } else {
-        this.isoDate = parts[1] || "";
-        this.isoDuration = parts[2] || "";
+        this.isoDate = parts[1] || ''
+        this.isoDuration = parts[2] || ''
       }
     },
     setDuration(type, value, timePart) {
-      let duration = this.isoDuration || "P";
-      const sections = duration.split("T");
-      let dateSection = sections[0] || "P";
-      let timeSection = sections[1] || "";
+      const duration = this.isoDuration || 'P'
+      const sections = duration.split('T')
+      let dateSection = sections[0] || 'P'
+      let timeSection = sections[1] || ''
       // Keep the two-argument API used by the Vue3 component intuitive for
       // callers that add minutes to an existing time portion. The template
       // passes the explicit flag because ISO uses M for both month and minute.
-      if (timePart === undefined) timePart = duration.indexOf("T") !== -1;
-      const expression = new RegExp(`\\d+${type}`);
+      if (timePart === undefined) timePart = duration.indexOf('T') !== -1
+      const expression = new RegExp(`\\d+${type}`)
       if (timePart) {
         timeSection = expression.test(timeSection)
           ? timeSection.replace(expression, `${value}${type}`)
-          : `${timeSection}${value}${type}`;
+          : `${timeSection}${value}${type}`
       } else {
         dateSection = expression.test(dateSection)
           ? dateSection.replace(expression, `${value}${type}`)
-          : `${dateSection}${value}${type}`;
+          : `${dateSection}${value}${type}`
       }
-      this.isoDuration = `${dateSection}${timeSection ? `T${timeSection}` : ""}`;
-      this.updateIsoStr();
+      this.isoDuration = `${dateSection}${timeSection ? `T${timeSection}` : ''}`
+      this.updateIsoStr()
     },
     updateIsoStr() {
-      if (this.syncingValue) return;
-      let value = `R${this.repeat}`;
+      if (this.syncingValue) return
+      let value = `R${this.repeat}`
       if (this.isoDate) {
-        const date = typeof this.isoDate === "string" ? this.isoDate : new Date(this.isoDate).toISOString();
-        value += `/${date}`;
+        const date = typeof this.isoDate === 'string' ? this.isoDate : new Date(this.isoDate).toISOString()
+        value += `/${date}`
       }
-      if (this.isoDuration) value += `/${this.isoDuration}`;
-      this.isoStr = value;
-      if (this.tab === "iso") this.$emit("change", value);
+      if (this.isoDuration) value += `/${this.isoDuration}`
+      this.isoStr = value
+      if (this.tab === 'iso') this.$emit('change', value)
     },
     emitIsoString(value) {
-      if (!this.syncingValue && this.tab === "iso") this.$emit("change", value);
+      if (!this.syncingValue && this.tab === 'iso') this.$emit('change', value)
     }
   }
-};
+}
 </script>
 
 <style scoped>

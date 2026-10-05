@@ -11,21 +11,70 @@
       @click="openForm('create')"
     >添加班次</el-button>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true" border>
-      <el-table-column label="顺序" align="center" prop="sort" width="80" />
-      <el-table-column label="班次名称" align="center" prop="name" min-width="120" />
-      <el-table-column label="开始时间" align="center" prop="startTime" width="100" />
-      <el-table-column label="结束时间" align="center" prop="endTime" width="100" />
-      <el-table-column label="备注" align="center" prop="remark" min-width="150" />
-      <el-table-column v-if="!isDetail" label="操作" align="center" width="120">
-        <template v-slot="scope">
-          <el-button type="text" size="mini" @click="openForm('update', scope.row)">编辑</el-button>
-          <el-button type="text" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+      border
+    >
+      <el-table-column
+        label="顺序"
+        align="center"
+        prop="sort"
+        width="80"
+      />
+      <el-table-column
+        label="班次名称"
+        align="center"
+        prop="name"
+        min-width="120"
+      />
+      <el-table-column
+        label="开始时间"
+        align="center"
+        prop="startTime"
+        width="100"
+      />
+      <el-table-column
+        label="结束时间"
+        align="center"
+        prop="endTime"
+        width="100"
+      />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        min-width="150"
+      />
+      <el-table-column
+        v-if="!isDetail"
+        label="操作"
+        align="center"
+        width="120"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="mini"
+            @click="openForm('update', scope.row)"
+          >编辑</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="500px"
+      append-to-body
+    >
       <el-form
         ref="form"
         v-loading="formLoading"
@@ -33,13 +82,30 @@
         :rules="formRules"
         label-width="80px"
       >
-        <el-form-item label="顺序" prop="sort">
-          <el-input-number v-model="formData.sort" :min="1" controls-position="right" class="full-width" />
+        <el-form-item
+          label="顺序"
+          prop="sort"
+        >
+          <el-input-number
+            v-model="formData.sort"
+            :min="1"
+            controls-position="right"
+            class="full-width"
+          />
         </el-form-item>
-        <el-form-item label="班次名称" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入班次名称" />
+        <el-form-item
+          label="班次名称"
+          prop="name"
+        >
+          <el-input
+            v-model="formData.name"
+            placeholder="请输入班次名称"
+          />
         </el-form-item>
-        <el-form-item label="开始时间" prop="startTime">
+        <el-form-item
+          label="开始时间"
+          prop="startTime"
+        >
           <el-time-picker
             v-model="formData.startTime"
             format="HH:mm"
@@ -48,7 +114,10 @@
             class="full-width"
           />
         </el-form-item>
-        <el-form-item label="结束时间" prop="endTime">
+        <el-form-item
+          label="结束时间"
+          prop="endTime"
+        >
           <el-time-picker
             v-model="formData.endTime"
             format="HH:mm"
@@ -57,12 +126,23 @@
             class="full-width"
           />
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" />
+        <el-form-item
+          label="备注"
+          prop="remark"
+        >
+          <el-input
+            v-model="formData.remark"
+            type="textarea"
+            placeholder="请输入备注"
+          />
         </el-form-item>
       </el-form>
       <span slot="footer">
-        <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+        <el-button
+          type="primary"
+          :disabled="formLoading"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>

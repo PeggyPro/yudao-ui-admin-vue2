@@ -14,20 +14,20 @@ import plugins from './plugins' // plugins
 import './assets/icons' // icon
 import './permission' // permission control
 import './tongji' // 百度统计
-import { getDicts } from "@/api/system/dict/data";
-import { getDictDataByType } from "@/api/system/dict/data";
-import { getConfigKey } from "@/api/infra/config";
-import { parseTime, resetForm, handleTree, addBeginAndEndTime, divide } from "@/utils/ruoyi";
-import { isEmpty } from "@/utils";
-import Pagination from "@/components/Pagination";
+import { getDicts } from '@/api/system/dict/data'
+import { getDictDataByType } from '@/api/system/dict/data'
+import { getConfigKey } from '@/api/infra/config'
+import { parseTime, resetForm, handleTree, addBeginAndEndTime, divide } from '@/utils/ruoyi'
+import { isEmpty } from '@/utils'
+import Pagination from '@/components/Pagination'
 // 自定义表格工具扩展
-import RightToolbar from "@/components/RightToolbar"
+import RightToolbar from '@/components/RightToolbar'
 // JSON 编辑器组件
-import JsonEditor from "@/components/JsonEditor"
+import JsonEditor from '@/components/JsonEditor'
 // 代码高亮插件
 // import hljs from 'highlight.js'
 // import 'highlight.js/styles/github-gist.css'
-import { DICT_TYPE, getDictDataLabel, getDictDatas, getDictDatas2 } from "@/utils/dict";
+import { DICT_TYPE, getDictDataLabel, getDictDatas, getDictDatas2 } from '@/utils/dict'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -78,14 +78,14 @@ Vue.use(VueMeta)
 // Vue.use(hljs.vuePlugin);
 
 // bpmnProcessDesigner 需要引入
-import MyPD from "@/components/bpmnProcessDesigner/package/index.js";
+import MyPD from '@/components/bpmnProcessDesigner/package/index.js'
 
-Vue.use(MyPD);
-import "@/components/bpmnProcessDesigner/package/theme/index.scss";
-import "bpmn-js/dist/assets/diagram-js.css";
-import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
-import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
-import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+Vue.use(MyPD)
+import '@/components/bpmnProcessDesigner/package/theme/index.scss'
+import 'bpmn-js/dist/assets/diagram-js.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 
 import '@/styles/index.scss'
 
@@ -104,8 +104,8 @@ ElementUI.Dialog.props.closeOnClickModal.default = false
  */
 
 Vue.use(Element, {
-  size: localStorage.getItem("size") || "medium", // set element-ui default size
-});
+  size: localStorage.getItem('size') || 'medium' // set element-ui default size
+})
 
 Vue.config.productionTip = false
 

@@ -2,13 +2,23 @@
   <div class="app-container oa-contact">
     <el-row :gutter="20">
       <!-- 左侧联系人分类及共享入口 -->
-      <el-col :span="4" :xs="24">
+      <el-col
+        :span="4"
+        :xs="24"
+      >
         <div class="contact-side">
           <div class="contact-side__header">
             <span>分类</span>
-            <el-button type="text" @click="$refs.categoryDialog.open()">管理分类</el-button>
+            <el-button
+              type="text"
+              @click="$refs.categoryDialog.open()"
+            >管理分类</el-button>
           </div>
-          <el-menu class="contact-side__menu" :default-active="activeCategory" @select="handleCategorySelect">
+          <el-menu
+            class="contact-side__menu"
+            :default-active="activeCategory"
+            @select="handleCategorySelect"
+          >
             <el-menu-item index="all">
               <span slot="title">全部联系人</span>
             </el-menu-item>
@@ -17,13 +27,20 @@
               :key="category.id"
               :index="'category-' + category.id"
             >
-              <span slot="title" :title="category.name">{{ category.name }}</span>
+              <span
+                slot="title"
+                :title="category.name"
+              >{{ category.name }}</span>
             </el-menu-item>
           </el-menu>
           <!-- 类型导航，与分类组合筛选 -->
           <el-divider />
           <div class="contact-side__section">类型</div>
-          <el-menu class="contact-side__menu" :default-active="String(activeScene)" @select="handleTypeSelect">
+          <el-menu
+            class="contact-side__menu"
+            :default-active="String(activeScene)"
+            @select="handleTypeSelect"
+          >
             <el-menu-item :index="String(OA_CONTACT_SCENE_TYPE.MINE)">
               <span slot="title">我的联系人</span>
             </el-menu-item>
@@ -36,10 +53,22 @@
           </el-menu>
         </div>
       </el-col>
-      <el-col :span="20" :xs="24">
+      <el-col
+        :span="20"
+        :xs="24"
+      >
         <!-- 搜索 -->
-        <el-form ref="queryForm" :inline="true" :model="queryParams" class="query-form" @submit.native.prevent>
-          <el-form-item label="关键字" prop="keyword">
+        <el-form
+          ref="queryForm"
+          :inline="true"
+          :model="queryParams"
+          class="query-form"
+          @submit.native.prevent
+        >
+          <el-form-item
+            label="关键字"
+            prop="keyword"
+          >
             <el-input
               v-model="queryParams.keyword"
               clearable
@@ -48,7 +77,10 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item label="首字母" prop="alphabet">
+          <el-form-item
+            label="首字母"
+            prop="alphabet"
+          >
             <el-select
               v-model="queryParams.alphabet"
               clearable
@@ -74,13 +106,26 @@
               placeholder="请选择处理状态"
               style="width: 240px"
             >
-              <el-option label="待处理" :value="false" />
-              <el-option label="已处理" :value="true" />
+              <el-option
+                label="待处理"
+                :value="false"
+              />
+              <el-option
+                label="已处理"
+                :value="true"
+              />
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              @click="handleQuery"
+            >搜索</el-button>
+            <el-button
+              icon="el-icon-refresh"
+              @click="resetQuery"
+            >重置</el-button>
             <el-button
               v-if="activeScene === OA_CONTACT_SCENE_TYPE.MINE"
               v-hasPermi="['oa:contact:create']"
@@ -95,33 +140,81 @@
         </el-form>
 
         <!-- 联系人及共享记录列表 -->
-        <el-table v-loading="loading" :data="list" border stripe>
-          <el-table-column label="姓名" prop="name" min-width="130">
+        <el-table
+          v-loading="loading"
+          :data="list"
+          border
+          stripe
+        >
+          <el-table-column
+            label="姓名"
+            prop="name"
+            min-width="130"
+          >
             <template slot-scope="scope">
-              <el-button type="text" class="primary-text" @click="$refs.detail.open(scope.row.id)">
+              <el-button
+                type="text"
+                class="primary-text"
+                @click="$refs.detail.open(scope.row.id)"
+              >
                 {{ scope.row.name }}
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="头像" width="75" align="center">
+          <el-table-column
+            label="头像"
+            width="75"
+            align="center"
+          >
             <template slot-scope="scope">
-              <el-avatar :src="scope.row.avatar" :size="32" />
+              <el-avatar
+                :src="scope.row.avatar"
+                :size="32"
+              />
             </template>
           </el-table-column>
-          <el-table-column label="性别" width="80" align="center">
+          <el-table-column
+            label="性别"
+            width="80"
+            align="center"
+          >
             <template slot-scope="scope">
-              <dict-tag :type="DICT_TYPE.SYSTEM_USER_SEX" :value="scope.row.sex" />
+              <dict-tag
+                :type="DICT_TYPE.SYSTEM_USER_SEX"
+                :value="scope.row.sex"
+              />
             </template>
           </el-table-column>
-          <el-table-column label="分类" width="120">
+          <el-table-column
+            label="分类"
+            width="120"
+          >
             <template slot-scope="scope">
               {{ scope.row.sharedCategoryName || '未分类' }}
             </template>
           </el-table-column>
-          <el-table-column label="手机号码" prop="mobile" width="140" />
-          <el-table-column label="邮箱" prop="email" min-width="180" show-overflow-tooltip />
-          <el-table-column label="公司名称" prop="companyName" min-width="160" show-overflow-tooltip />
-          <el-table-column label="创建人" prop="ownerUserName" width="120" />
+          <el-table-column
+            label="手机号码"
+            prop="mobile"
+            width="140"
+          />
+          <el-table-column
+            label="邮箱"
+            prop="email"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            label="公司名称"
+            prop="companyName"
+            min-width="160"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            label="创建人"
+            prop="ownerUserName"
+            width="120"
+          />
           <el-table-column
             v-if="activeScene === OA_CONTACT_SCENE_TYPE.RECEIVED"
             label="分享人"
@@ -163,9 +256,17 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="220" fixed="right">
+          <el-table-column
+            label="操作"
+            width="220"
+            fixed="right"
+          >
             <template slot-scope="scope">
-              <el-button type="text" class="primary-text" @click="openShareForm(scope.row)">共享</el-button>
+              <el-button
+                type="text"
+                class="primary-text"
+                @click="openShareForm(scope.row)"
+              >共享</el-button>
               <template v-if="activeScene === OA_CONTACT_SCENE_TYPE.MINE">
                 <template v-if="isContactOwner(scope.row)">
                   <el-button
@@ -186,10 +287,18 @@
                   </el-button>
                 </template>
                 <template v-else>
-                  <el-button type="text" class="primary-text" @click="openHandleForm(scope.row)">
+                  <el-button
+                    type="text"
+                    class="primary-text"
+                    @click="openHandleForm(scope.row)"
+                  >
                     移动
                   </el-button>
-                  <el-button type="text" class="danger-text" @click="handleDelete(scope.row.id, true)">
+                  <el-button
+                    type="text"
+                    class="danger-text"
+                    @click="handleDelete(scope.row.id, true)"
+                  >
                     删除
                   </el-button>
                 </template>
@@ -203,7 +312,11 @@
                 >
                   处理
                 </el-button>
-                <el-button type="text" class="danger-text" @click="handleDelete(scope.row.id, true)">
+                <el-button
+                  type="text"
+                  class="danger-text"
+                  @click="handleDelete(scope.row.id, true)"
+                >
                   删除
                 </el-button>
               </template>
@@ -221,14 +334,24 @@
     </el-row>
 
     <!-- 联系人表单 -->
-    <oa-contact-form ref="form" @success="handleCategoryChange" />
+    <oa-contact-form
+      ref="form"
+      @success="handleCategoryChange"
+    />
     <!-- 联系人详情 -->
     <oa-contact-detail ref="detail" />
     <!-- 共享接收人明细 -->
     <oa-contact-share-detail ref="shareDetail" />
     <!-- 共享联系人 -->
-    <Dialog v-model="shareDialogVisible" title="共享联系人" width="560px">
-      <el-form v-loading="shareLoading" label-width="100px">
+    <AppDialog
+      v-model="shareDialogVisible"
+      title="共享联系人"
+      width="560px"
+    >
+      <el-form
+        v-loading="shareLoading"
+        label-width="100px"
+      >
         <el-form-item label="共享接收人">
           <user-select-v2
             v-model="shareUserIds"
@@ -241,7 +364,10 @@
           <div class="share-tip">此处仅追加共享接收人，取消勾选不会撤销已有共享。</div>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button
           :disabled="shareLoading || !shareUserIds.some(id => !sharedUserIds.includes(id))"
           :loading="shareLoading"
@@ -252,9 +378,13 @@
         </el-button>
         <el-button @click="shareDialogVisible = false">取 消</el-button>
       </div>
-    </Dialog>
+    </AppDialog>
     <!-- 处理共享 -->
-    <Dialog v-model="handleDialogVisible" :title="handleDialogTitle" width="480px">
+    <AppDialog
+      v-model="handleDialogVisible"
+      :title="handleDialogTitle"
+      width="480px"
+    >
       <el-form label-width="90px">
         <el-form-item label="归入分类">
           <oa-contact-category-select
@@ -265,18 +395,28 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button :loading="handleLoading" type="primary" @click="submitHandle">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          :loading="handleLoading"
+          type="primary"
+          @click="submitHandle"
+        >确 定</el-button>
         <el-button @click="handleDialogVisible = false">取 消</el-button>
       </div>
-    </Dialog>
+    </AppDialog>
     <!-- 联系人分类管理 -->
-    <oa-contact-category-list ref="categoryDialog" @success="handleCategoryChange" />
+    <oa-contact-category-list
+      ref="categoryDialog"
+      @success="handleCategoryChange"
+    />
   </div>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UserSelectV2 from '@/views/system/user/components/UserSelectV2.vue'
 import * as ContactApi from '@/api/oa/contact'
 import * as ContactCategoryApi from '@/api/oa/contact/category'
@@ -293,7 +433,7 @@ import OaContactCategorySelect from './components/OaContactCategorySelect.vue'
 export default {
   name: 'OaContact',
   components: {
-    Dialog,
+    AppDialog,
     UserSelectV2,
     OaContactForm,
     OaContactDetail,

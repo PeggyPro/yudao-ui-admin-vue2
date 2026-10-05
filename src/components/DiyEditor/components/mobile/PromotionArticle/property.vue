@@ -1,7 +1,13 @@
 <template>
   <ComponentContainerProperty v-model="formData.style">
-    <el-form label-width="40px" :model="formData">
-      <el-form-item label="文章" prop="id">
+    <el-form
+      label-width="40px"
+      :model="formData"
+    >
+      <el-form-item
+        label="文章"
+        prop="id"
+      >
         <el-select
           v-model="articleId"
           placeholder="请选择文章"

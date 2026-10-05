@@ -9,7 +9,11 @@
         @keyup.enter.native="$emit('query')"
         @clear="$emit('query')"
       >
-        <el-button slot="append" icon="el-icon-search" @click="$emit('query')" />
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="$emit('query')"
+        />
       </el-input>
       <el-radio-group
         :value="filter"
@@ -22,9 +26,20 @@
         <el-radio-button label="attach">有附件</el-radio-button>
       </el-radio-group>
     </div>
-    <div v-loading="loading" class="mail-message-list__body">
-      <el-alert v-if="listError" :title="listError" type="error" :closable="false" />
-      <el-empty v-if="!list.length && !loading" :description="emptyText" />
+    <div
+      v-loading="loading"
+      class="mail-message-list__body"
+    >
+      <el-alert
+        v-if="listError"
+        :title="listError"
+        type="error"
+        :closable="false"
+      />
+      <el-empty
+        v-if="!list.length && !loading"
+        :description="emptyText"
+      />
       <button
         v-for="mail in list"
         :key="mail.id"
@@ -35,7 +50,11 @@
         @click="$emit('select', mail)"
       >
         <div class="mail-message-list__row">
-          <span v-if="!mail.readStatus" class="mail-message-list__dot" title="未读" />
+          <span
+            v-if="!mail.readStatus"
+            class="mail-message-list__dot"
+            title="未读"
+          />
           <span class="mail-message-list__subject">
             {{ mail.subject || '（无主题）' }}
           </span>
@@ -44,7 +63,10 @@
           </span>
         </div>
         <div class="mail-message-list__sender">{{ mail.sender }}</div>
-        <div v-if="mail.hasAttach" class="mail-message-list__attach">有附件</div>
+        <div
+          v-if="mail.hasAttach"
+          class="mail-message-list__attach"
+        >有附件</div>
       </button>
     </div>
     <div class="mail-message-list__pagination">

@@ -59,5 +59,9 @@
   ref="form"
   @success="getList"
 /></div></template>
-<script>import { dateFormatter2 } from '@/utils'; import { getEmployeeWorkExperienceList, deleteEmployeeWorkExperience } from '@/api/hrm/employee/work-experience'; import EmployeeWorkExperienceForm from './EmployeeWorkExperienceForm.vue'; export default { name: 'HrmEmployeeWorkExperienceList', components: { EmployeeWorkExperienceForm }, props: { employeeId: { type: Number, required: true }}, data() { return { loading: true, list: [] } }, created() { this.getList() }, methods: { dateFormatter2, async getList() { this.loading = true; try { const response = await getEmployeeWorkExperienceList(this.employeeId); this.list = response.data } finally { this.loading = false } }, openForm(row) { this.$refs.form.open(this.employeeId, row) }, async handleDelete(id) { if (!id) return; try { await this.$modal.confirm('是否确认删除该工作经历?'); await deleteEmployeeWorkExperience(id); this.$modal.msgSuccess('删除成功'); await this.getList() } catch (error) {} } }}</script>
+<script>import { dateFormatter2 } from '@/utils'; import { getEmployeeWorkExperienceList, deleteEmployeeWorkExperience } from '@/api/hrm/employee/work-experience'; import EmployeeWorkExperienceForm from './EmployeeWorkExperienceForm.vue'; export default { name: 'HrmEmployeeWorkExperienceList', components: { EmployeeWorkExperienceForm }, props: { employeeId: { type: Number, required: true }}, data() { return { loading: true, list: [] } }, created() { this.getList() }, methods: { dateFormatter2, async getList() { this.loading = true; try { const response = await getEmployeeWorkExperienceList(this.employeeId); this.list = response.data } finally { this.loading = false } }, openForm(row) { this.$refs.form.open(this.employeeId, row) }, async handleDelete(id) {
+  if (!id) return; try { await this.$modal.confirm('是否确认删除该工作经历?'); await deleteEmployeeWorkExperience(id); this.$modal.msgSuccess('删除成功'); await this.getList() } catch (error) {
+  // 取消操作或请求失败时保留当前状态
+  }
+} }}</script>
 <style scoped>.toolbar { display:flex; justify-content:flex-end; margin-bottom:12px; }.danger-button { color:#f56c6c; }</style>

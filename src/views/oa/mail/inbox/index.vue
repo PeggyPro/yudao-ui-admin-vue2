@@ -34,7 +34,10 @@
         @select="handleDetail"
       />
       <!-- 右栏：详情操作及安全正文，写信在当前区域展开 -->
-      <section v-loading="detailLoading" class="oa-mail-inbox__detail">
+      <section
+        v-loading="detailLoading"
+        class="oa-mail-inbox__detail"
+      >
         <mail-message-form
           v-if="composeData"
           :key="composeKey"

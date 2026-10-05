@@ -15,7 +15,10 @@
             type="text"
             @click="handleScope(item.value)"
           >
-            <i :class="item.icon" class="oa-file__side-icon" />{{ item.label }}
+            <i
+              :class="item.icon"
+              class="oa-file__side-icon"
+            />{{ item.label }}
           </el-button>
         </div>
         <el-divider />
@@ -29,15 +32,28 @@
             type="text"
             @click="handleCategory(item.value)"
           >
-            <i :class="fileCategoryIcons[item.value]" class="oa-file__side-icon" />{{ item.label }}
+            <i
+              :class="fileCategoryIcons[item.value]"
+              class="oa-file__side-icon"
+            />{{ item.label }}
           </el-button>
         </div>
       </div>
 
       <div class="oa-file__content">
         <!-- 查询与操作 -->
-        <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px" class="query-form" @submit.native.prevent>
-          <el-form-item label="名称" prop="name">
+        <el-form
+          ref="queryForm"
+          :model="queryParams"
+          :inline="true"
+          label-width="68px"
+          class="query-form"
+          @submit.native.prevent
+        >
+          <el-form-item
+            label="名称"
+            prop="name"
+          >
             <el-input
               v-model="queryParams.name"
               placeholder="请输入名称"
@@ -46,8 +62,16 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item label="类型" prop="category">
-            <el-select v-model="queryParams.category" placeholder="请选择类型" clearable style="width: 240px">
+          <el-form-item
+            label="类型"
+            prop="category"
+          >
+            <el-select
+              v-model="queryParams.category"
+              placeholder="请选择类型"
+              clearable
+              style="width: 240px"
+            >
               <el-option
                 v-for="item in categoryOptions.filter(item => item.value !== OA_FILE_CATEGORY.ALL)"
                 :key="item.value"
@@ -56,7 +80,10 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="创建时间" prop="createTime">
+          <el-form-item
+            label="创建时间"
+            prop="createTime"
+          >
             <el-date-picker
               v-model="queryParams.createTime"
               value-format="yyyy-MM-dd HH:mm:ss"
@@ -67,8 +94,15 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              @click="handleQuery"
+            >搜索</el-button>
+            <el-button
+              icon="el-icon-refresh"
+              @click="resetQuery"
+            >重置</el-button>
             <el-button
               v-if="canCreate"
               v-hasPermi="['oa:file:create']"
@@ -90,13 +124,31 @@
 
         <!-- 文件列表与目录面包屑 -->
         <div class="oa-file__list">
-          <el-breadcrumb separator="/" class="oa-file__breadcrumb">
-            <el-breadcrumb-item v-for="(item, index) in paths" :key="item.id">
-              <el-link :underline="false" type="primary" @click="handlePath(index)">{{ item.name }}</el-link>
+          <el-breadcrumb
+            separator="/"
+            class="oa-file__breadcrumb"
+          >
+            <el-breadcrumb-item
+              v-for="(item, index) in paths"
+              :key="item.id"
+            >
+              <el-link
+                :underline="false"
+                type="primary"
+                @click="handlePath(index)"
+              >{{ item.name }}</el-link>
             </el-breadcrumb-item>
           </el-breadcrumb>
-          <el-table v-loading="loading" :data="list" row-key="id">
-            <el-table-column label="名称" min-width="240" show-overflow-tooltip>
+          <el-table
+            v-loading="loading"
+            :data="list"
+            row-key="id"
+          >
+            <el-table-column
+              label="名称"
+              min-width="240"
+              show-overflow-tooltip
+            >
               <template slot-scope="nameScope">
                 <div class="oa-file__name">
                   <i
@@ -115,13 +167,25 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="大小" width="110">
+            <el-table-column
+              label="大小"
+              width="110"
+            >
               <template slot-scope="sizeScope">
                 {{ sizeScope.row.type === OA_FILE_NODE_TYPE.FILE ? formatFileSize(sizeScope.row.size || 0) : '' }}
               </template>
             </el-table-column>
-            <el-table-column label="创建时间" prop="createTime" :formatter="dateFormatter" width="180" />
-            <el-table-column label="操作" align="center" width="180">
+            <el-table-column
+              label="创建时间"
+              prop="createTime"
+              :formatter="dateFormatter"
+              width="180"
+            />
+            <el-table-column
+              label="操作"
+              align="center"
+              width="180"
+            >
               <template slot-scope="opScope">
                 <div class="oa-file__actions">
                   <template v-if="scope === OA_FILE_SCOPE.RECYCLE">
@@ -160,8 +224,14 @@
                     >
                       共享
                     </el-button>
-                    <el-dropdown trigger="click" @command="command => handleCommand(command, opScope.row)">
-                      <el-button type="text" size="mini">更多<i class="el-icon-arrow-down el-icon--right" /></el-button>
+                    <el-dropdown
+                      trigger="click"
+                      @command="command => handleCommand(command, opScope.row)"
+                    >
+                      <el-button
+                        type="text"
+                        size="mini"
+                      >更多<i class="el-icon-arrow-down el-icon--right" /></el-button>
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="favorite">
                           {{ opScope.row.favorite ? '取消收藏' : '收藏' }}
@@ -212,8 +282,14 @@
 
     <!-- 文件预览、新增、重命名、移动及共享弹窗 -->
     <oa-file-preview ref="preview" />
-    <oa-file-node-form ref="form" @success="handleSuccess" />
-    <oa-file-permission-list ref="permission" @success="handleSuccess" />
+    <oa-file-node-form
+      ref="form"
+      @success="handleSuccess"
+    />
+    <oa-file-permission-list
+      ref="permission"
+      @success="handleSuccess"
+    />
   </div>
 </template>
 

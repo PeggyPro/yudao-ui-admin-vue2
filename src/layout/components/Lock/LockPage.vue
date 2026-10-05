@@ -1,6 +1,10 @@
 <template>
   <div class="lock-page">
-    <div v-show="showDate" class="lock-page-unlock" @click="handleShowForm(false)">
+    <div
+      v-show="showDate"
+      class="lock-page-unlock"
+      @click="handleShowForm(false)"
+    >
       <i class="el-icon-lock" />
       <span>解锁</span>
     </div>
@@ -8,7 +12,10 @@
     <div class="lock-page-time">
       <div class="lock-page-hour">
         <span>{{ hour }}</span>
-        <span v-show="showDate" class="meridiem">{{ meridiem }}</span>
+        <span
+          v-show="showDate"
+          class="meridiem"
+        >{{ meridiem }}</span>
       </div>
       <div class="lock-page-minute">
         <span>{{ minute }}</span>
@@ -16,10 +23,17 @@
     </div>
 
     <transition name="fade-slide">
-      <div v-show="!showDate" class="lock-page-entry">
+      <div
+        v-show="!showDate"
+        class="lock-page-entry"
+      >
         <div class="lock-page-entry-content">
           <div class="lock-page-entry-header">
-            <img :src="avatar" alt="" class="lock-page-entry-img" />
+            <img
+              :src="avatar"
+              alt=""
+              class="lock-page-entry-img"
+            >
             <div class="lock-page-entry-name">{{ userName }}</div>
           </div>
           <el-input
@@ -28,15 +42,33 @@
             placeholder="请输入锁屏密码"
             @keyup.enter.native="unLock"
           />
-          <span v-if="errMsg" class="lock-page-entry-err-msg">锁屏密码错误</span>
+          <span
+            v-if="errMsg"
+            class="lock-page-entry-err-msg"
+          >锁屏密码错误</span>
           <div class="lock-page-entry-footer">
-            <el-button type="text" size="small" :disabled="loading" @click="handleShowForm(true)">
+            <el-button
+              type="text"
+              size="small"
+              :disabled="loading"
+              @click="handleShowForm(true)"
+            >
               返回
             </el-button>
-            <el-button type="text" size="small" :disabled="loading" @click="goLogin">
+            <el-button
+              type="text"
+              size="small"
+              :disabled="loading"
+              @click="goLogin"
+            >
               返回登录
             </el-button>
-            <el-button type="text" size="small" :disabled="loading" @click="unLock">
+            <el-button
+              type="text"
+              size="small"
+              :disabled="loading"
+              @click="unLock"
+            >
               进入系统
             </el-button>
           </div>
@@ -45,7 +77,10 @@
     </transition>
 
     <div class="lock-page-date">
-      <div v-show="!showDate" class="lock-page-date-time">
+      <div
+        v-show="!showDate"
+        class="lock-page-date-time"
+      >
         {{ hour }}:{{ minute }} <span>{{ meridiem }}</span>
       </div>
       <div>{{ year }}/{{ month }}/{{ day }} {{ week }}</div>

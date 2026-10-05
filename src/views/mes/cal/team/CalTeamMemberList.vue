@@ -11,19 +11,59 @@
       @click="openForm"
     >添加成员</el-button>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true" border>
-      <el-table-column label="用户编号" align="center" prop="userId" width="100" />
-      <el-table-column label="用户昵称" align="center" prop="nickname" min-width="120" />
-      <el-table-column label="手机号" align="center" prop="telephone" min-width="120" />
-      <el-table-column label="备注" align="center" prop="remark" min-width="150" />
-      <el-table-column v-if="isEditable" label="操作" align="center" width="80">
-        <template v-slot="scope">
-          <el-button type="text" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+      border
+    >
+      <el-table-column
+        label="用户编号"
+        align="center"
+        prop="userId"
+        width="100"
+      />
+      <el-table-column
+        label="用户昵称"
+        align="center"
+        prop="nickname"
+        min-width="120"
+      />
+      <el-table-column
+        label="手机号"
+        align="center"
+        prop="telephone"
+        min-width="120"
+      />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        min-width="150"
+      />
+      <el-table-column
+        v-if="isEditable"
+        label="操作"
+        align="center"
+        width="80"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog title="添加成员" :visible.sync="dialogVisible" width="500px" append-to-body>
+    <el-dialog
+      title="添加成员"
+      :visible.sync="dialogVisible"
+      width="500px"
+      append-to-body
+    >
       <el-form
         ref="form"
         v-loading="formLoading"
@@ -31,17 +71,41 @@
         :rules="formRules"
         label-width="80px"
       >
-        <el-form-item label="用户" prop="userId">
-          <el-select v-model="formData.userId" placeholder="请选择用户" filterable class="full-width">
-            <el-option v-for="user in userList" :key="user.id" :label="user.nickname" :value="user.id" />
+        <el-form-item
+          label="用户"
+          prop="userId"
+        >
+          <el-select
+            v-model="formData.userId"
+            placeholder="请选择用户"
+            filterable
+            class="full-width"
+          >
+            <el-option
+              v-for="user in userList"
+              :key="user.id"
+              :label="user.nickname"
+              :value="user.id"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" />
+        <el-form-item
+          label="备注"
+          prop="remark"
+        >
+          <el-input
+            v-model="formData.remark"
+            type="textarea"
+            placeholder="请输入备注"
+          />
         </el-form-item>
       </el-form>
       <span slot="footer">
-        <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+        <el-button
+          type="primary"
+          :disabled="formLoading"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>

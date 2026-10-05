@@ -23,7 +23,7 @@
           :src="value"
           alt=""
           class="upload-image"
-        />
+        >
         <div
           class="upload-handle"
           @click.stop
@@ -77,7 +77,7 @@
         :src="value"
         alt=""
         class="preview-image"
-      />
+      >
     </el-dialog>
   </div>
 </template>

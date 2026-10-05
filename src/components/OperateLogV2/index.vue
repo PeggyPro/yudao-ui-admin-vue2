@@ -8,11 +8,17 @@
         placement="top"
       >
         <div class="el-timeline-right-content">
-          <el-tag class="mr-10" type="success">{{ log.userName }}</el-tag>
+          <el-tag
+            class="mr-10"
+            type="success"
+          >{{ log.userName }}</el-tag>
           {{ log.action }}
         </div>
         <template slot="dot">
-          <span :style="{ backgroundColor: getUserTypeColor(log.userType) }" class="dot-node-style">
+          <span
+            :style="{ backgroundColor: getUserTypeColor(log.userType) }"
+            class="dot-node-style"
+          >
             {{ getUserTypeLabel(log.userType) }}
           </span>
         </template>

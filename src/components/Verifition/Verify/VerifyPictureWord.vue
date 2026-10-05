@@ -10,7 +10,12 @@
           'margin-bottom': vSpace + 'px'
         }"
       >
-        <div v-show="showRefresh" class="verify-refresh" style="z-index: 3" @click="refresh">
+        <div
+          v-show="showRefresh"
+          class="verify-refresh"
+          style="z-index: 3"
+          @click="refresh"
+        >
           <i class="iconfont icon-refresh" />
         </div>
         <img
@@ -19,7 +24,7 @@
           alt=""
           style="display: block; width: 100%; height: 100%"
           @click="refresh"
-        />
+        >
       </div>
     </div>
     <div
@@ -32,9 +37,18 @@
     >
       <div class="verify-msg">{{ text }}</div>
       <div :style="{ 'line-height': barSize.height }">
-        <input class="verify-input" v-model="userCode" type="text" />
+        <input
+          v-model="userCode"
+          class="verify-input"
+          type="text"
+        >
       </div>
-      <button type="button" class="verify-btn" :disabled="checking" @click="submit">
+      <button
+        type="button"
+        class="verify-btn"
+        :disabled="checking"
+        @click="submit"
+      >
         {{ checking ? '验证中' : '验 证' }}
       </button>
     </div>
@@ -106,7 +120,7 @@ export default {
   mounted() {
     // 禁止拖拽
     this.init()
-    this.$el.onselectstart = function () {
+    this.$el.onselectstart = function() {
       return false
     }
   },

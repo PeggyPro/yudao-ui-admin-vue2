@@ -1,6 +1,11 @@
 <!-- MES 假期设置表单 -->
 <template>
-  <el-dialog title="假期设置" :visible.sync="dialogVisible" width="400px" append-to-body>
+  <el-dialog
+    title="假期设置"
+    :visible.sync="dialogVisible"
+    width="400px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -8,22 +13,47 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="日期" prop="day">
-        <el-input :value="dayDisplay" readonly />
+      <el-form-item
+        label="日期"
+        prop="day"
+      >
+        <el-input
+          :value="dayDisplay"
+          readonly
+        />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
+      <el-form-item
+        label="类型"
+        prop="type"
+      >
         <el-radio-group v-model="formData.type">
-          <el-radio v-for="dict in holidayTypeOptions" :key="dict.value" :label="dict.value">
+          <el-radio
+            v-for="dict in holidayTypeOptions"
+            :key="dict.value"
+            :label="dict.value"
+          >
             {{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" :rows="3" placeholder="请输入备注" />
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
+        <el-input
+          v-model="formData.remark"
+          type="textarea"
+          :rows="3"
+          placeholder="请输入备注"
+        />
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

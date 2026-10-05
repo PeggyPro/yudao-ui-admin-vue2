@@ -1,72 +1,187 @@
 <template>
   <div class="app-container">
-    <doc-alert title="公众号标签" url="https://doc.iocoder.cn/mp/tag/" />
+    <doc-alert
+      title="公众号标签"
+      url="https://doc.iocoder.cn/mp/tag/"
+    />
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="公众号" prop="accountId">
-        <el-select v-model="queryParams.accountId" placeholder="请选择公众号">
-          <el-option v-for="item in accounts" :key="parseInt(item.id)" :label="item.name" :value="parseInt(item.id)" />
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="公众号"
+        prop="accountId"
+      >
+        <el-select
+          v-model="queryParams.accountId"
+          placeholder="请选择公众号"
+        >
+          <el-option
+            v-for="item in accounts"
+            :key="parseInt(item.id)"
+            :label="item.name"
+            :value="parseInt(item.id)"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="标签名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入标签名称" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item
+        label="标签名称"
+        prop="name"
+      >
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入标签名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['mp:tag:create']">新增
+        <el-button
+          v-hasPermi="['mp:tag:create']"
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+        >新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="info" plain icon="el-icon-refresh" size="mini" @click="handleSync"
-                   v-hasPermi="['mp:tag:sync']">同步
+        <el-button
+          v-hasPermi="['mp:tag:sync']"
+          type="info"
+          plain
+          icon="el-icon-refresh"
+          size="mini"
+          @click="handleSync"
+        >同步
         </el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="编号" align="center" prop="id"/>
-      <el-table-column label="标签名称" align="center" prop="name"/>
-      <el-table-column label="粉丝数" align="center" prop="count"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="标签名称"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="粉丝数"
+        align="center"
+        prop="count"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['mp:tag:update']">修改
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['mp:tag:update']"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+          >修改
           </el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['mp:tag:delete']">删除
+          <el-button
+            v-hasPermi="['mp:tag:delete']"
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+          >删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
 
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="标签名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入标签名称"/>
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+      >
+        <el-form-item
+          label="标签名称"
+          prop="name"
+        >
+          <el-input
+            v-model="form.name"
+            placeholder="请输入标签名称"
+          />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="submitForm"
+        >确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -80,7 +195,7 @@ import {
   deleteTag,
   getTag,
   getTagPage,
-  syncTag,
+  syncTag
 } from '@/api/mp/tag'
 import { getSimpleAccountList } from '@/api/mp/account'
 
@@ -104,12 +219,12 @@ export default {
       // 查询参数
       queryParams: {
         accountId: null,
-        name: null,
+        name: null
       },
       // 表单参数
       form: {
         accountId: undefined,
-        name: undefined,
+        name: undefined
       },
       // 表单校验
       rules: {
@@ -122,13 +237,13 @@ export default {
   },
   created() {
     getSimpleAccountList().then(response => {
-      this.accounts = response.data;
+      this.accounts = response.data
       // 默认选中第一个
       if (this.accounts.length > 0) {
-        this.queryParams.accountId = this.accounts[0].id;
+        this.queryParams.accountId = this.accounts[0].id
       }
       // 加载数据
-      this.getList();
+      this.getList()
     })
   },
   methods: {
@@ -142,7 +257,7 @@ export default {
 
       this.loading = true
       // 处理查询参数
-      let params = {...this.queryParams}
+      const params = { ...this.queryParams }
       // 执行查询
       try {
         const response = await getTagPage(params)
@@ -161,7 +276,7 @@ export default {
     reset() {
       this.form = {
         accountId: undefined,
-        name: undefined,
+        name: undefined
       }
       this.resetForm('form')
     },
@@ -175,7 +290,7 @@ export default {
       this.resetForm('queryForm')
       // 默认选中第一个
       if (this.accounts.length > 0) {
-        this.queryParams.accountId = this.accounts[0].id;
+        this.queryParams.accountId = this.accounts[0].id
       }
       this.handleQuery()
     },
@@ -201,7 +316,7 @@ export default {
         if (!valid) {
           return
         }
-        this.form.accountId = this.queryParams.accountId;
+        this.form.accountId = this.queryParams.accountId
         // 修改的提交
         if (this.form.id != null) {
           updateTag(this.form).then(response => {
@@ -222,7 +337,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const id = row.id
-      this.$modal.confirm('是否确认删除公众号标签编号为"' + id + '"的数据项?').then(function () {
+      this.$modal.confirm('是否确认删除公众号标签编号为"' + id + '"的数据项?').then(function() {
         return deleteTag(id)
       }).then(() => {
         this.getList()
@@ -233,14 +348,14 @@ export default {
     /** 同步标签 */
     handleSync() {
       const accountId = this.queryParams.accountId
-      this.$modal.confirm('是否确认同步标签？').then(function () {
+      this.$modal.confirm('是否确认同步标签？').then(function() {
         return syncTag(accountId)
       }).then(() => {
         this.$modal.msgSuccess('同步标签成功')
         return this.getList()
       }).catch(() => {
       })
-    },
+    }
   }
 }
 </script>

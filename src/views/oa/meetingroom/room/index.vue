@@ -9,7 +9,10 @@
       label-width="110px"
       @submit.native.prevent
     >
-      <el-form-item label="会议室名称" prop="name">
+      <el-form-item
+        label="会议室名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           placeholder="请输入会议室名称"
@@ -18,7 +21,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会议室位置" prop="location">
+      <el-form-item
+        label="会议室位置"
+        prop="location"
+      >
         <el-input
           v-model="queryParams.location"
           placeholder="请输入会议室位置"
@@ -27,7 +33,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会议室类型" prop="type">
+      <el-form-item
+        label="会议室类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择会议室类型"
@@ -42,7 +51,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="负责人" prop="managerName">
+      <el-form-item
+        label="负责人"
+        prop="managerName"
+      >
         <el-input
           v-model="queryParams.managerName"
           placeholder="请输入负责人姓名"
@@ -51,7 +63,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="可用状态" prop="status">
+      <el-form-item
+        label="可用状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择可用状态"
@@ -67,8 +82,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:meeting-room:create']"
           type="primary"
@@ -80,8 +102,17 @@
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="会议室图片" width="110" align="center">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="会议室图片"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-image
             v-if="scope.row.picUrl"
@@ -92,38 +123,107 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="会议室名称" prop="name" min-width="180" show-overflow-tooltip />
-      <el-table-column label="坐席数" prop="seatCount" width="90" align="center" />
-      <el-table-column label="会议室类型" min-width="120" align="center">
+      <el-table-column
+        label="会议室名称"
+        prop="name"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="坐席数"
+        prop="seatCount"
+        width="90"
+        align="center"
+      />
+      <el-table-column
+        label="会议室类型"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_MEETING_ROOM_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_MEETING_ROOM_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="会议室位置" prop="location" min-width="180" show-overflow-tooltip />
-      <el-table-column label="负责人" prop="managerName" min-width="120" show-overflow-tooltip />
-      <el-table-column label="联系方式" prop="managerPhone" min-width="140" show-overflow-tooltip />
-      <el-table-column label="可用状态" min-width="100" align="center">
+      <el-table-column
+        label="会议室位置"
+        prop="location"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="负责人"
+        prop="managerName"
+        min-width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="联系方式"
+        prop="managerPhone"
+        min-width="140"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="可用状态"
+        min-width="100"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_MEETING_ROOM_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_MEETING_ROOM_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="会议室设备" min-width="200">
+      <el-table-column
+        label="会议室设备"
+        min-width="200"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_MEETING_ROOM_EQUIPMENT" :value="scope.row.equipments" />
+          <dict-tag
+            :type="DICT_TYPE.OA_MEETING_ROOM_EQUIPMENT"
+            :value="scope.row.equipments"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="允许预定" min-width="100" align="center">
+      <el-table-column
+        label="允许预定"
+        min-width="100"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.allowBooking" />
+          <dict-tag
+            :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+            :value="scope.row.allowBooking"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="需审批" min-width="100" align="center">
+      <el-table-column
+        label="需审批"
+        min-width="100"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.needApproval" />
+          <dict-tag
+            :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+            :value="scope.row.needApproval"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="显示顺序" prop="sort" width="90" align="center" />
-      <el-table-column label="备注" prop="remark" min-width="180" show-overflow-tooltip />
+      <el-table-column
+        label="显示顺序"
+        prop="sort"
+        width="90"
+        align="center"
+      />
+      <el-table-column
+        label="备注"
+        prop="remark"
+        min-width="180"
+        show-overflow-tooltip
+      />
       <el-table-column
         label="创建时间"
         prop="createTime"
@@ -131,7 +231,12 @@
         align="center"
         width="180"
       />
-      <el-table-column label="操作" align="center" fixed="right" width="220">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="220"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:meeting-room:query', 'oa:meeting-room-booking:query']"
@@ -164,7 +269,10 @@
     />
 
     <!-- 表单弹窗 -->
-    <oa-meeting-room-form ref="form" @success="getList" />
+    <oa-meeting-room-form
+      ref="form"
+      @success="getList"
+    />
     <!-- 预定信息弹窗 -->
     <oa-meeting-room-schedule-dialog ref="scheduleDialog" />
   </div>

@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="520px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="520px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,7 +12,10 @@
       :rules="formRules"
       label-width="88px"
     >
-      <el-form-item label="日期" prop="date">
+      <el-form-item
+        label="日期"
+        prop="date"
+      >
         <el-date-picker
           v-model="formData.date"
           type="date"
@@ -16,8 +24,15 @@
           class="form-control"
         />
       </el-form-item>
-      <el-form-item label="日期类型" prop="type">
-        <el-select v-model="formData.type" placeholder="请选择日期类型" class="form-control">
+      <el-form-item
+        label="日期类型"
+        prop="type"
+      >
+        <el-select
+          v-model="formData.type"
+          placeholder="请选择日期类型"
+          class="form-control"
+        >
           <el-option
             v-for="dict in holidayTypeOptions"
             :key="dict.value"
@@ -28,7 +43,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

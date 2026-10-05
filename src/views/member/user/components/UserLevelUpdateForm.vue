@@ -1,12 +1,46 @@
 <template>
-  <el-dialog title="修改用户等级" :visible.sync="dialogVisible" width="600px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
-      <el-form-item label="用户编号"><el-input v-model="formData.id" disabled /></el-form-item>
-      <el-form-item label="用户昵称"><el-input v-model="formData.nickname" disabled /></el-form-item>
-      <el-form-item label="用户等级" prop="levelId"><member-level-select v-model="formData.levelId" /></el-form-item>
-      <el-form-item label="修改原因" prop="reason"><el-input v-model="formData.reason" type="textarea" placeholder="请输入修改原因" /></el-form-item>
+  <el-dialog
+    title="修改用户等级"
+    :visible.sync="dialogVisible"
+    width="600px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="100px"
+    >
+      <el-form-item label="用户编号"><el-input
+        v-model="formData.id"
+        disabled
+      /></el-form-item>
+      <el-form-item label="用户昵称"><el-input
+        v-model="formData.nickname"
+        disabled
+      /></el-form-item>
+      <el-form-item
+        label="用户等级"
+        prop="levelId"
+      ><member-level-select v-model="formData.levelId" /></el-form-item>
+      <el-form-item
+        label="修改原因"
+        prop="reason"
+      ><el-input
+        v-model="formData.reason"
+        type="textarea"
+        placeholder="请输入修改原因"
+      /></el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer"><el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button><el-button @click="cancel">取 消</el-button></div>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    ><el-button
+      type="primary"
+      :loading="formLoading"
+      @click="submitForm"
+    >确 定</el-button><el-button @click="cancel">取 消</el-button></div>
   </el-dialog>
 </template>
 

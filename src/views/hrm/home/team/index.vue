@@ -1,15 +1,29 @@
 <template>
-  <div v-loading="loading" class="app-container hrm-home">
+  <div
+    v-loading="loading"
+    class="app-container hrm-home"
+  >
     <div class="home-title">团队工作台</div>
-    <el-row :gutter="16" type="flex" align="top" class="home-row">
-      <el-col :lg="16" :md="24">
+    <el-row
+      :gutter="16"
+      type="flex"
+      align="top"
+      class="home-row"
+    >
+      <el-col
+        :lg="16"
+        :md="24"
+      >
         <hrm-team-overview
           :leader-employee-id="summary && summary.leaderEmployeeId"
           :overview="summary && summary.teamOverview"
         />
         <hrm-team-survey :survey="summary && summary.teamSurvey" />
       </el-col>
-      <el-col :lg="8" :md="24">
+      <el-col
+        :lg="8"
+        :md="24"
+      >
         <hrm-home-calendar
           ref="calendar"
           :get-calendar-items="getTeamHomeCalendar"

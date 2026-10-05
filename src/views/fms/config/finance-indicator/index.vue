@@ -1,8 +1,15 @@
 <template>
   <div class="app-container fms-finance-indicator-page">
-    <doc-alert title="【设置】账套管理、财务参数、财务指标" url="https://doc.iocoder.cn/fms/config/account-set/" />
+    <doc-alert
+      title="【设置】账套管理、财务参数、财务指标"
+      url="https://doc.iocoder.cn/fms/config/account-set/"
+    />
 
-    <el-form :inline="true" class="indicator-toolbar" label-width="78px">
+    <el-form
+      :inline="true"
+      class="indicator-toolbar"
+      label-width="78px"
+    >
       <el-form-item label="当前账套">
         <el-select
           v-model="accountSetId"
@@ -41,22 +48,62 @@
       type="info"
     />
 
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" stripe>
-      <el-table-column label="名称" min-width="160" prop="name" />
-      <el-table-column label="编码" min-width="140" prop="code" />
-      <el-table-column align="center" label="取数报表" width="140">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      stripe
+    >
+      <el-table-column
+        label="名称"
+        min-width="160"
+        prop="name"
+      />
+      <el-table-column
+        label="编码"
+        min-width="140"
+        prop="code"
+      />
+      <el-table-column
+        align="center"
+        label="取数报表"
+        width="140"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.FMS_FINANCE_INDICATOR_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.FMS_FINANCE_INDICATOR_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="公式" min-width="280" prop="formula" show-overflow-tooltip />
-      <el-table-column label="排序" prop="sort" width="90" />
-      <el-table-column label="状态" width="90">
+      <el-table-column
+        label="公式"
+        min-width="280"
+        prop="formula"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="排序"
+        prop="sort"
+        width="90"
+      />
+      <el-table-column
+        label="状态"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column align="center" fixed="right" label="操作" width="160">
+      <el-table-column
+        align="center"
+        fixed="right"
+        label="操作"
+        width="160"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="isWritable"
@@ -75,7 +122,10 @@
       </el-table-column>
     </el-table>
 
-    <fms-finance-indicator-form ref="form" @success="getList" />
+    <fms-finance-indicator-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

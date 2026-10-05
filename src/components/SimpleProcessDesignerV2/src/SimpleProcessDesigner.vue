@@ -3,8 +3,17 @@
     <div class="simple-process-designer__toolbar">
       <span class="simple-process-designer__title">{{ modelName || '仿真流程设计' }}</span>
       <div>
-        <el-button size="mini" icon="el-icon-refresh" @click="resetModel">重置</el-button>
-        <el-button size="mini" type="primary" icon="el-icon-check" @click="saveModel">保存流程</el-button>
+        <el-button
+          size="mini"
+          icon="el-icon-refresh"
+          @click="resetModel"
+        >重置</el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          icon="el-icon-check"
+          @click="saveModel"
+        >保存流程</el-button>
       </div>
     </div>
     <SimpleProcessModel
@@ -57,6 +66,23 @@ function createDefaultModel() {
 export default {
   name: 'SimpleProcessDesigner',
   components: { SimpleProcessModel },
+  provide() {
+    return {
+      processData: this.processDataRef,
+      formFields: this.formFieldsRef,
+      formType: this.formTypeRef,
+      roleList: this.roleListRef,
+      postList: this.postListRef,
+      userList: this.userListRef,
+      deptList: this.deptListRef,
+      userGroupList: this.userGroupListRef,
+      deptTree: this.deptTreeRef,
+      startUserIds: this.startUserIds,
+      startDeptIds: this.startDeptIds,
+      tasks: [],
+      processInstance: {}
+    }
+  },
   props: {
     modelName: {
       type: String,
@@ -81,23 +107,6 @@ export default {
     value: {
       type: Object,
       default: undefined
-    }
-  },
-  provide() {
-    return {
-      processData: this.processDataRef,
-      formFields: this.formFieldsRef,
-      formType: this.formTypeRef,
-      roleList: this.roleListRef,
-      postList: this.postListRef,
-      userList: this.userListRef,
-      deptList: this.deptListRef,
-      userGroupList: this.userGroupListRef,
-      deptTree: this.deptTreeRef,
-      startUserIds: this.startUserIds,
-      startDeptIds: this.startDeptIds,
-      tasks: [],
-      processInstance: {}
     }
   },
   data() {

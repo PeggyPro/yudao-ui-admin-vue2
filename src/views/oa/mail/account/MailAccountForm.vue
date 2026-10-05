@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="600px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="600px"
+  >
     <!-- 账号配置 -->
     <el-form
       ref="form"
@@ -8,7 +12,10 @@
       :rules="formRules"
       label-width="110px"
     >
-      <el-form-item label="邮箱地址" prop="mail">
+      <el-form-item
+        label="邮箱地址"
+        prop="mail"
+      >
         <el-input
           v-model="formData.mail"
           :disabled="formType !== 'create'"
@@ -16,17 +23,30 @@
           @blur="handleMailBlur"
         />
       </el-form-item>
-      <el-form-item label="邮箱服务" prop="providerId">
-        <mail-provider-select v-model="formData.providerId" :disabled="formType !== 'create'" style="width: 100%" />
+      <el-form-item
+        label="邮箱服务"
+        prop="providerId"
+      >
+        <mail-provider-select
+          v-model="formData.providerId"
+          :disabled="formType !== 'create'"
+          style="width: 100%"
+        />
       </el-form-item>
-      <el-form-item label="登录名" prop="username">
+      <el-form-item
+        label="登录名"
+        prop="username"
+      >
         <el-input
           v-model="formData.username"
           :disabled="formType !== 'create'"
           placeholder="请输入登录名"
         />
       </el-form-item>
-      <el-form-item label="授权码/密码" prop="password">
+      <el-form-item
+        label="授权码/密码"
+        prop="password"
+      >
         <el-input
           v-model="formData.password"
           type="password"
@@ -51,15 +71,22 @@
       </el-form-item>
     </el-form>
     <!-- 表单操作 -->
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { CommonStatusEnum } from '@/utils/constants'
 import * as AccountApi from '@/api/oa/mail/account'
@@ -78,7 +105,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaMailAccountForm',
-  components: { Dialog, MailProviderSelect },
+  components: { AppDialog, MailProviderSelect },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

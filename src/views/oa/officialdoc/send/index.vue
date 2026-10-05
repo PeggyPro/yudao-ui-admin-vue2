@@ -9,7 +9,10 @@
       label-width="80px"
       @submit.native.prevent
     >
-      <el-form-item label="公文标题" prop="title">
+      <el-form-item
+        label="公文标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入公文标题"
@@ -18,7 +21,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发文字号" prop="documentNo">
+      <el-form-item
+        label="发文字号"
+        prop="documentNo"
+      >
         <el-input
           v-model="queryParams.documentNo"
           placeholder="请输入发文字号"
@@ -27,14 +33,20 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="流程状态" prop="status">
+      <el-form-item
+        label="流程状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择流程状态"
           clearable
           style="width: 240px"
         >
-          <el-option label="未提交" :value="BpmProcessInstanceStatus.NOT_START" />
+          <el-option
+            label="未提交"
+            :value="BpmProcessInstanceStatus.NOT_START"
+          />
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -44,8 +56,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:officialdoc-send:create']"
           type="primary"
@@ -57,36 +76,92 @@
     </el-form>
 
     <!-- 公文发文列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="单据编号" min-width="190">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="单据编号"
+        min-width="190"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="openDetail(scope.row.id)">{{ scope.row.no }}</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="openDetail(scope.row.id)"
+          >{{ scope.row.no }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="公文标题" prop="title" min-width="190" show-overflow-tooltip />
-      <el-table-column label="发文字号" prop="documentNo" min-width="190" show-overflow-tooltip />
-      <el-table-column label="密级" min-width="120" align="center">
+      <el-table-column
+        label="公文标题"
+        prop="title"
+        min-width="190"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="发文字号"
+        prop="documentNo"
+        min-width="190"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="密级"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_SECRET_LEVEL" :value="scope.row.secrecyLevel" />
+          <dict-tag
+            :type="DICT_TYPE.OA_OFFICIAL_DOC_SECRET_LEVEL"
+            :value="scope.row.secrecyLevel"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="紧急程度" min-width="120" align="center">
+      <el-table-column
+        label="紧急程度"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_OFFICIAL_DOC_URGENCY_LEVEL" :value="scope.row.urgencyLevel" />
+          <dict-tag
+            :type="DICT_TYPE.OA_OFFICIAL_DOC_URGENCY_LEVEL"
+            :value="scope.row.urgencyLevel"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="发文部门" prop="sendDeptName" min-width="120" show-overflow-tooltip />
-      <el-table-column label="主送部门" min-width="120">
+      <el-table-column
+        label="发文部门"
+        prop="sendDeptName"
+        min-width="120"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="主送部门"
+        min-width="120"
+      >
         <template slot-scope="scope">
           {{ scope.row.mainDeptNames && scope.row.mainDeptNames.join('、') }}
         </template>
       </el-table-column>
-      <el-table-column label="流程状态" min-width="120" align="center">
+      <el-table-column
+        label="流程状态"
+        min-width="120"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+          <el-tag
+            v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
+            type="info"
+            size="small"
+          >
             未提交
           </el-tag>
-          <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            v-else
+            :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -96,7 +171,12 @@
         :formatter="dateFormatter"
         align="center"
       />
-      <el-table-column label="操作" align="center" fixed="right" width="180">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="180"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.processInstanceId"
@@ -148,7 +228,10 @@
     />
 
     <!-- 表单弹窗 -->
-    <oa-official-doc-send-form ref="form" @success="getList" />
+    <oa-official-doc-send-form
+      ref="form"
+      @success="getList"
+    />
     <!-- 详情弹窗 -->
     <oa-official-doc-send-detail ref="detail" />
   </div>

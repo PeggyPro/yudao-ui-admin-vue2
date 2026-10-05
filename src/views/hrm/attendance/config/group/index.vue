@@ -1,11 +1,25 @@
 <template>
   <div class="app-container">
-    <doc-alert title="【考勤】考勤管理" url="https://doc.iocoder.cn/hrm/attendance/" />
+    <doc-alert
+      title="【考勤】考勤管理"
+      url="https://doc.iocoder.cn/hrm/attendance/"
+    />
 
-    <el-card shadow="never" class="search-card">
+    <el-card
+      shadow="never"
+      class="search-card"
+    >
       <!-- 搜索工作栏 -->
-      <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
-        <el-form-item label="考勤组" prop="name">
+      <el-form
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
+        label-width="68px"
+      >
+        <el-form-item
+          label="考勤组"
+          prop="name"
+        >
           <el-input
             v-model="queryParams.name"
             placeholder="请输入考勤组名称"
@@ -31,9 +45,20 @@
 
     <!-- 列表 -->
     <el-card shadow="never">
-      <el-table v-loading="loading" :data="list">
-        <el-table-column label="考勤组" prop="name" fixed="left" min-width="160" />
-        <el-table-column label="考勤班次" min-width="420">
+      <el-table
+        v-loading="loading"
+        :data="list"
+      >
+        <el-table-column
+          label="考勤组"
+          prop="name"
+          fixed="left"
+          min-width="160"
+        />
+        <el-table-column
+          label="考勤班次"
+          min-width="420"
+        >
           <template slot-scope="scope">
             <div class="shift-list">
               <el-tag
@@ -47,10 +72,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="考勤规则" min-width="120">
+        <el-table-column
+          label="考勤规则"
+          min-width="120"
+        >
           <template>早晚打卡</template>
         </el-table-column>
-        <el-table-column label="适用范围" min-width="220">
+        <el-table-column
+          label="适用范围"
+          min-width="220"
+        >
           <template slot-scope="scope">
             <div v-if="scope.row.deptNames && scope.row.deptNames.length">
               部门：{{ scope.row.deptNames.join('、') }}
@@ -68,7 +99,12 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" width="120" fixed="right">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="120"
+          fixed="right"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['hrm:attendance:group:update']"
@@ -100,7 +136,10 @@
     </el-card>
 
     <!-- 表单弹窗：添加/修改 -->
-    <AttendanceGroupForm ref="form" @success="refresh" />
+    <AttendanceGroupForm
+      ref="form"
+      @success="refresh"
+    />
   </div>
 </template>
 

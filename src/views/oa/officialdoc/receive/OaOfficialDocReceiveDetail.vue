@@ -1,19 +1,30 @@
 <template>
-  <Dialog title="公文收文详情" v-model="dialogVisible" width="1000px">
-    <official-doc-receive-detail v-if="dialogVisible && detailId" :key="detailId" :id="detailId" />
-    <div slot="footer" class="dialog-footer">
+  <AppDialog
+    v-model="dialogVisible"
+    title="公文收文详情"
+    width="1000px"
+  >
+    <official-doc-receive-detail
+      v-if="dialogVisible && detailId"
+      :id="detailId"
+      :key="detailId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import OfficialDocReceiveDetail from './detail/index.vue'
 
 export default {
   name: 'OaOfficialDocReceiveDetail',
-  components: { Dialog, OfficialDocReceiveDetail },
+  components: { AppDialog, OfficialDocReceiveDetail },
   data() {
     return {
       dialogVisible: false,

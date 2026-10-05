@@ -1,5 +1,8 @@
 <template>
-  <div class="divider" :style="{ height: property.height + 'px' }">
+  <div
+    class="divider"
+    :style="{ height: property.height + 'px' }"
+  >
     <div
       class="divider-line"
       :style="{

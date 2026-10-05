@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="480px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="480px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,23 +12,44 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="目录名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入目录名称" maxlength="255" />
+      <el-form-item
+        label="目录名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入目录名称"
+          maxlength="255"
+        />
       </el-form-item>
-      <el-form-item label="显示排序" prop="sort">
-        <el-input-number v-model="formData.sort" :min="0" style="width: 100%" />
+      <el-form-item
+        label="显示排序"
+        prop="sort"
+      >
+        <el-input-number
+          v-model="formData.sort"
+          :min="0"
+          style="width: 100%"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as NoteCategoryApi from '@/api/oa/note/category'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 function createDefaultFormData() {
   return {
@@ -35,7 +61,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaNoteCategoryForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

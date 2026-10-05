@@ -1,5 +1,9 @@
 <template>
-  <dialog-component :title="dialogTitle" v-model="dialogVisible" width="900px">
+  <dialog-component
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="900px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -9,27 +13,51 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="所属部门" prop="deptId">
-            <dept-select v-model="formData.deptId" placeholder="请选择所属部门" style="width: 100%" />
+          <el-form-item
+            label="所属部门"
+            prop="deptId"
+          >
+            <dept-select
+              v-model="formData.deptId"
+              placeholder="请选择所属部门"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="印章编号">
-            <el-input v-model="formData.no" placeholder="保存后自动生成" disabled />
+            <el-input
+              v-model="formData.no"
+              placeholder="保存后自动生成"
+              disabled
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="印章名称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入印章名称" />
+          <el-form-item
+            label="印章名称"
+            prop="name"
+          >
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入印章名称"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="印章类型" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择印章类型" style="width: 100%">
+          <el-form-item
+            label="印章类型"
+            prop="type"
+          >
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择印章类型"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in typeOptions"
                 :key="dict.value"
@@ -40,8 +68,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="印章分类" prop="category">
-            <el-select v-model="formData.category" placeholder="请选择印章分类" style="width: 100%">
+          <el-form-item
+            label="印章分类"
+            prop="category"
+          >
+            <el-select
+              v-model="formData.category"
+              placeholder="请选择印章分类"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in categoryOptions"
                 :key="dict.value"
@@ -54,21 +89,40 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="保管人" prop="keeperUserId">
-            <user-select-v2 v-model="formData.keeperUserId" style="width: 100%" />
+          <el-form-item
+            label="保管人"
+            prop="keeperUserId"
+          >
+            <user-select-v2
+              v-model="formData.keeperUserId"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="保管部门" prop="keeperDeptId">
-            <dept-select v-model="formData.keeperDeptId" style="width: 100%" />
+          <el-form-item
+            label="保管部门"
+            prop="keeperDeptId"
+          >
+            <dept-select
+              v-model="formData.keeperDeptId"
+              style="width: 100%"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <!-- 状态及日期随表单保存 -->
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="状态" prop="status">
-            <el-select v-model="formData.status" placeholder="请选择状态" style="width: 100%">
+          <el-form-item
+            label="状态"
+            prop="status"
+          >
+            <el-select
+              v-model="formData.status"
+              placeholder="请选择状态"
+              style="width: 100%"
+            >
               <el-option
                 v-for="dict in statusOptions"
                 :key="dict.value"
@@ -81,7 +135,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="购买时间" prop="purchaseTime">
+          <el-form-item
+            label="购买时间"
+            prop="purchaseTime"
+          >
             <el-date-picker
               v-model="formData.purchaseTime"
               type="datetime"
@@ -92,7 +149,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="启用时间" prop="enableTime">
+          <el-form-item
+            label="启用时间"
+            prop="enableTime"
+          >
             <el-date-picker
               v-model="formData.enableTime"
               type="datetime"
@@ -105,7 +165,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="停用时间" prop="disableTime">
+          <el-form-item
+            label="停用时间"
+            prop="disableTime"
+          >
             <el-date-picker
               v-model="formData.disableTime"
               type="datetime"
@@ -118,12 +181,18 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="印章照片" prop="picUrl">
+          <el-form-item
+            label="印章照片"
+            prop="picUrl"
+          >
             <upload-img v-model="formData.picUrl" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="显示顺序" prop="sort">
+          <el-form-item
+            label="显示顺序"
+            prop="sort"
+          >
             <el-input-number
               v-model="formData.sort"
               :min="0"
@@ -136,7 +205,10 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
+          <el-form-item
+            label="备注"
+            prop="remark"
+          >
             <el-input
               v-model="formData.remark"
               placeholder="请输入备注"
@@ -147,8 +219,15 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </dialog-component>

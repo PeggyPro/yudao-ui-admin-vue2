@@ -1,13 +1,28 @@
 <template>
-  <el-card shadow="never" class="calendar-panel">
-    <div slot="header" class="home-card__title">日历</div>
+  <el-card
+    shadow="never"
+    class="calendar-panel"
+  >
+    <div
+      slot="header"
+      class="home-card__title"
+    >日历</div>
     <div v-loading="loading">
       <el-calendar v-model="calendarDate">
-        <template slot="dateCell" slot-scope="{ data }">
-          <div class="calendar-cell" @click.stop="selectDate(data.day)">
+        <template
+          slot="dateCell"
+          slot-scope="{ data }"
+        >
+          <div
+            class="calendar-cell"
+            @click.stop="selectDate(data.day)"
+          >
             <span class="calendar-cell__day">{{ data.day.slice(8) }}</span>
             <span class="calendar-cell__lunar">{{ getHrmLunarDateInfo(data.day).dayText }}</span>
-            <i v-if="calendarDateSet.has(data.day)" class="calendar-cell__dot" />
+            <i
+              v-if="calendarDateSet.has(data.day)"
+              class="calendar-cell__dot"
+            />
           </div>
         </template>
       </el-calendar>
@@ -34,8 +49,15 @@
           :key="`${item.type}-${item.personalNoteId || item.typeId || item.content}`"
           class="event-row"
         >
-          <el-tag size="small" :type="eventTagType(item.type)" effect="light">{{ item.typeName }}</el-tag>
-          <span v-if="shouldShowItemTime(item)" class="event-row__time">{{ formatTime(item.eventTime) }}</span>
+          <el-tag
+            size="small"
+            :type="eventTagType(item.type)"
+            effect="light"
+          >{{ item.typeName }}</el-tag>
+          <span
+            v-if="shouldShowItemTime(item)"
+            class="event-row__time"
+          >{{ formatTime(item.eventTime) }}</span>
           <button
             :class="['event-row__content', { 'event-row__content--clickable': canOpenItem(item) }]"
             type="button"
@@ -54,10 +76,17 @@
           type="text"
           @click="showAllEvents = true"
         >查看更多事项</el-button>
-        <el-empty v-if="dayItems.length === 0" :image-size="72" description="暂无数据" />
+        <el-empty
+          v-if="dayItems.length === 0"
+          :image-size="72"
+          description="暂无数据"
+        />
       </div>
     </div>
-    <personal-note-form ref="personalNoteForm" @success="refresh" />
+    <personal-note-form
+      ref="personalNoteForm"
+      @success="refresh"
+    />
   </el-card>
 </template>
 

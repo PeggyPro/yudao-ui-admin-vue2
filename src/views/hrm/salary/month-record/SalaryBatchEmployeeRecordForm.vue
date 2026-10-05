@@ -148,7 +148,9 @@ export default {
         await this.$modal.confirm('当前修改尚未保存，确定放弃编辑吗？')
         this.edited = false
         done()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     async handleCancel() {
       if (!this.edited) {
@@ -159,7 +161,9 @@ export default {
         await this.$modal.confirm('当前修改尚未保存，确定放弃编辑吗？')
         this.edited = false
         this.dialogVisible = false
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     },
     async submitForm() {
       this.loading = true

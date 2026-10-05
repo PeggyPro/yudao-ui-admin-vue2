@@ -9,7 +9,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="公告标题" prop="title">
+      <el-form-item
+        label="公告标题"
+        prop="title"
+      >
         <el-input
           v-model="queryParams.title"
           placeholder="请输入公告标题"
@@ -18,7 +21,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="公告类型" prop="type">
+      <el-form-item
+        label="公告类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择公告类型"
@@ -33,7 +39,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="优先级" prop="priority">
+      <el-form-item
+        label="优先级"
+        prop="priority"
+      >
         <el-select
           v-model="queryParams.priority"
           placeholder="请选择优先级"
@@ -48,18 +57,30 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="阅读状态" prop="readStatus">
+      <el-form-item
+        label="阅读状态"
+        prop="readStatus"
+      >
         <el-select
           v-model="queryParams.readStatus"
           placeholder="请选择阅读状态"
           clearable
           style="width: 240px"
         >
-          <el-option label="未读" :value="false" />
-          <el-option label="已读" :value="true" />
+          <el-option
+            label="未读"
+            :value="false"
+          />
+          <el-option
+            label="已读"
+            :value="true"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间" prop="createTime">
+      <el-form-item
+        label="发布时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -70,20 +91,45 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 公告列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="置顶" width="70" align="center">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="置顶"
+        width="70"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.top" type="danger" effect="plain">置顶</el-tag>
+          <el-tag
+            v-if="scope.row.top"
+            type="danger"
+            effect="plain"
+          >置顶</el-tag>
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column label="公告标题" prop="title" min-width="220" show-overflow-tooltip>
+      <el-table-column
+        label="公告标题"
+        prop="title"
+        min-width="220"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -94,26 +140,56 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="类型" prop="type" align="center" width="90">
+      <el-table-column
+        label="类型"
+        prop="type"
+        align="center"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_ANNOUNCEMENT_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_ANNOUNCEMENT_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="优先级" prop="priority" align="center" width="100">
+      <el-table-column
+        label="优先级"
+        prop="priority"
+        align="center"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PRIORITY" :value="scope.row.priority" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PRIORITY"
+            :value="scope.row.priority"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="发布人" prop="publisherUserName" min-width="120" show-overflow-tooltip>
+      <el-table-column
+        label="发布人"
+        prop="publisherUserName"
+        min-width="120"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
           {{ scope.row.publisherUserName || '-' }}
         </template>
       </el-table-column>
       <!-- 所属部门为发布人的部门 -->
-      <el-table-column label="所属部门" prop="publisherDeptName" min-width="140" show-overflow-tooltip>
+      <el-table-column
+        label="所属部门"
+        prop="publisherDeptName"
+        min-width="140"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">{{ scope.row.publisherDeptName || '-' }}</template>
       </el-table-column>
-      <el-table-column label="阅读状态" width="90" align="center">
+      <el-table-column
+        label="阅读状态"
+        width="90"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-tag :type="scope.row.readStatus ? 'success' : 'warning'">
             {{ scope.row.readStatus ? '已读' : '未读' }}
@@ -127,9 +203,19 @@
         align="center"
         width="180"
       />
-      <el-table-column label="操作" align="center" fixed="right" width="140">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="140"
+      >
         <template slot-scope="scope">
-          <el-button v-if="scope.row.forwarded" type="text" size="mini" disabled>已转发</el-button>
+          <el-button
+            v-if="scope.row.forwarded"
+            type="text"
+            size="mini"
+            disabled
+          >已转发</el-button>
           <el-button
             v-else
             type="text"
@@ -156,7 +242,10 @@
     />
 
     <!-- 公告详情 -->
-    <oa-announcement-detail ref="detailRef" @read="handleRead" />
+    <oa-announcement-detail
+      ref="detailRef"
+      @read="handleRead"
+    />
   </div>
 </template>
 

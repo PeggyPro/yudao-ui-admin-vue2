@@ -1,27 +1,64 @@
 <template>
-  <oa-home-panel title="公告通知" v-loading="loading">
+  <oa-home-panel
+    v-loading="loading"
+    title="公告通知"
+  >
     <template slot="actions">
-      <el-button type="text" @click="$router.push('/oa/announcement/my')">更多</el-button>
+      <el-button
+        type="text"
+        @click="$router.push('/oa/announcement/my')"
+      >更多</el-button>
     </template>
-    <div v-if="loadError" class="load-error">
+    <div
+      v-if="loadError"
+      class="load-error"
+    >
       加载失败，
-      <el-button type="text" @click="getList">重新加载</el-button>
+      <el-button
+        type="text"
+        @click="getList"
+      >重新加载</el-button>
     </div>
-    <el-table :data="list" :show-overflow-tooltip="true" size="small">
-      <el-table-column label="发布部门" min-width="130" prop="publisherDeptName" />
-      <el-table-column align="center" label="优先级" width="90">
+    <el-table
+      :data="list"
+      :show-overflow-tooltip="true"
+      size="small"
+    >
+      <el-table-column
+        label="发布部门"
+        min-width="130"
+        prop="publisherDeptName"
+      />
+      <el-table-column
+        align="center"
+        label="优先级"
+        width="90"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_PRIORITY" :value="scope.row.priority" />
+          <dict-tag
+            :type="DICT_TYPE.OA_PRIORITY"
+            :value="scope.row.priority"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="标题" min-width="240">
+      <el-table-column
+        label="标题"
+        min-width="240"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="$refs.detailRef.open(scope.row.id, true)">
+          <el-button
+            type="text"
+            @click="$refs.detailRef.open(scope.row.id, true)"
+          >
             {{ scope.row.title }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" width="90">
+      <el-table-column
+        align="center"
+        label="状态"
+        width="90"
+      >
         <template slot-scope="scope">
           <el-tag :type="scope.row.readStatus ? 'info' : 'danger'">
             {{ scope.row.readStatus ? '已读' : '未读' }}
@@ -36,7 +73,10 @@
         width="170"
       />
     </el-table>
-    <oa-announcement-detail ref="detailRef" @read="handleRead" />
+    <oa-announcement-detail
+      ref="detailRef"
+      @read="handleRead"
+    />
   </oa-home-panel>
 </template>
 

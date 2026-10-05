@@ -1,5 +1,8 @@
 <template>
-  <div class="app-container" v-loading="true" />
+  <div
+    v-loading="true"
+    class="app-container"
+  />
 </template>
 
 <script>

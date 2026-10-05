@@ -1,7 +1,7 @@
-import { computed } from 'vue';
-import { useRtcStore } from '../store/rtcStore';
-import { ImConversationType } from '../../utils/constants';
-import { getSenderAvatar, getSenderDisplayName } from '../../utils/user';
+import { computed } from 'vue'
+import { useRtcStore } from '../store/rtcStore'
+import { ImConversationType } from '../../utils/constants'
+import { getSenderAvatar, getSenderDisplayName } from '../../utils/user'
 
 /** 群通话成员视图模型：已加入 + 接入中；pending 头像 UI 半透明，joined 不透明 */
 
@@ -13,23 +13,23 @@ import { getSenderAvatar, getSenderDisplayName } from '../../utils/user';
  * @param fallbackInviterId 兜底主叫；缓存为空时填一个头像，标记为已加入而非 pending
  */
 export function useGroupCallMembers(groupId, fallbackInviterId) {
-  const rtcStore = useRtcStore();
+  const rtcStore = useRtcStore()
   return computed(() => {
-    const gid = groupId.value;
+    const gid = groupId.value
     if (!gid) {
-      return [];
+      return []
     }
-    const groupCall = rtcStore.getGroupCall(gid);
-    const joinedIds = groupCall?.joinedUserIds ?? [];
-    const inviteeIds = groupCall?.inviteeIds ?? [];
-    const joinedSet = new Set(joinedIds);
-    const orderedIds = [...joinedIds, ...inviteeIds.filter(id => !joinedSet.has(id))];
+    const groupCall = rtcStore.getGroupCall(gid)
+    const joinedIds = groupCall?.joinedUserIds ?? []
+    const inviteeIds = groupCall?.inviteeIds ?? []
+    const joinedSet = new Set(joinedIds)
+    const orderedIds = [...joinedIds, ...inviteeIds.filter(id => !joinedSet.has(id))]
     if (orderedIds.length > 0) {
-      return orderedIds.map(userId => toVM(userId, gid, !joinedSet.has(userId)));
+      return orderedIds.map(userId => toVM(userId, gid, !joinedSet.has(userId)))
     }
-    const fallback = fallbackInviterId?.value;
-    return fallback ? [toVM(fallback, gid, false)] : [];
-  });
+    const fallback = fallbackInviterId?.value
+    return fallback ? [toVM(fallback, gid, false)] : []
+  })
 }
 
 /** 把 userId 翻译成视图模型，统一走 user.ts helper 解析昵称 / 头像 */
@@ -39,5 +39,5 @@ function toVM(userId, groupId, pending) {
     nickname: getSenderDisplayName(userId, ImConversationType.GROUP, groupId),
     avatar: getSenderAvatar(userId, ImConversationType.GROUP, groupId) || undefined,
     pending
-  };
+  }
 }

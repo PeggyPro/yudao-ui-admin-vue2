@@ -1,37 +1,85 @@
 <template>
   <ComponentContainerProperty v-model="formData.style">
-    <el-form label-width="80px" :model="formData" class="property-form">
-      <el-form-item label="每行数量" prop="column">
+    <el-form
+      label-width="80px"
+      :model="formData"
+      class="property-form"
+    >
+      <el-form-item
+        label="每行数量"
+        prop="column"
+      >
         <el-radio-group v-model="formData.column">
           <el-radio :label="3">3个</el-radio>
           <el-radio :label="4">4个</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-card header="菜单设置" class="property-group" shadow="never">
-        <Draggable v-model="formData.list" :empty-item="emptyItem">
+      <el-card
+        header="菜单设置"
+        class="property-group"
+        shadow="never"
+      >
+        <Draggable
+          v-model="formData.list"
+          :empty-item="emptyItem"
+        >
           <template slot-scope="{ element }">
-            <el-form-item label="图标" prop="iconUrl">
-              <UploadImg v-model="element.iconUrl" height="80px" width="80px">
+            <el-form-item
+              label="图标"
+              prop="iconUrl"
+            >
+              <UploadImg
+                v-model="element.iconUrl"
+                height="80px"
+                width="80px"
+              >
                 <template slot="tip">建议尺寸：44 * 44</template>
               </UploadImg>
             </el-form-item>
-            <el-form-item label="标题" prop="title">
-              <InputWithColor v-model="element.title" :color.sync="element.titleColor" />
+            <el-form-item
+              label="标题"
+              prop="title"
+            >
+              <InputWithColor
+                v-model="element.title"
+                :color.sync="element.titleColor"
+              />
             </el-form-item>
-            <el-form-item label="副标题" prop="subtitle">
-              <InputWithColor v-model="element.subtitle" :color.sync="element.subtitleColor" />
+            <el-form-item
+              label="副标题"
+              prop="subtitle"
+            >
+              <InputWithColor
+                v-model="element.subtitle"
+                :color.sync="element.subtitleColor"
+              />
             </el-form-item>
-            <el-form-item label="链接" prop="url">
+            <el-form-item
+              label="链接"
+              prop="url"
+            >
               <AppLinkInput v-model="element.url" />
             </el-form-item>
-            <el-form-item label="显示角标" prop="badge.show">
+            <el-form-item
+              label="显示角标"
+              prop="badge.show"
+            >
               <el-switch v-model="element.badge.show" />
             </el-form-item>
             <template v-if="element.badge.show">
-              <el-form-item label="角标内容" prop="badge.text">
-                <InputWithColor v-model="element.badge.text" :color.sync="element.badge.textColor" />
+              <el-form-item
+                label="角标内容"
+                prop="badge.text"
+              >
+                <InputWithColor
+                  v-model="element.badge.text"
+                  :color.sync="element.badge.textColor"
+                />
               </el-form-item>
-              <el-form-item label="背景颜色" prop="badge.bgColor">
+              <el-form-item
+                label="背景颜色"
+                prop="badge.bgColor"
+              >
                 <ColorInput v-model="element.badge.bgColor" />
               </el-form-item>
             </template>

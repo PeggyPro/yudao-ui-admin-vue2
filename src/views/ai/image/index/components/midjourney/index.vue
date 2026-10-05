@@ -61,7 +61,12 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>版本</strong></div>
-      <el-select v-model="selectVersion" class="ai-image-form__select" clearable placeholder="请选择版本">
+      <el-select
+        v-model="selectVersion"
+        class="ai-image-form__select"
+        clearable
+        placeholder="请选择版本"
+      >
         <el-option
           v-for="item in versionList"
           :key="item.value"
@@ -73,11 +78,20 @@
 
     <div class="ai-image-form__field">
       <div class="ai-image-form__label"><strong>参考图</strong></div>
-      <UploadImg v-model="referImageUrl" height="120px" width="120px" />
+      <UploadImg
+        v-model="referImageUrl"
+        height="120px"
+        width="120px"
+      />
     </div>
 
     <div class="ai-image-form__submit">
-      <el-button type="primary" round :disabled="!prompt" @click="handleGenerateImage">
+      <el-button
+        type="primary"
+        round
+        :disabled="!prompt"
+        @click="handleGenerateImage"
+      >
         {{ drawIn ? '生成中' : '生成内容' }}
       </el-button>
     </div>

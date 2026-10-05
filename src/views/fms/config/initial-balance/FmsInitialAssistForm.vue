@@ -5,9 +5,17 @@
     width="520px"
     append-to-body
   >
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="110px">
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="110px"
+    >
       <el-form-item label="科目">
-        <el-input :value="subjectLabel" disabled />
+        <el-input
+          :value="subjectLabel"
+          disabled
+        />
       </el-form-item>
       <el-divider content-position="left">辅助核算</el-divider>
       <el-form-item
@@ -26,8 +34,14 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submitForm">确定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        @click="submitForm"
+      >确定</el-button>
       <el-button @click="visible = false">取消</el-button>
     </div>
   </el-dialog>

@@ -1,5 +1,9 @@
 <template>
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="480px">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="480px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,22 +11,43 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="分类名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入分类名称" maxlength="50" />
+      <el-form-item
+        label="分类名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入分类名称"
+          maxlength="50"
+        />
       </el-form-item>
-      <el-form-item label="显示排序" prop="sort">
-        <el-input-number v-model="formData.sort" :min="0" style="width: 100%" />
+      <el-form-item
+        label="显示排序"
+        prop="sort"
+      >
+        <el-input-number
+          v-model="formData.sort"
+          :min="0"
+          style="width: 100%"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as ContactCategoryApi from '@/api/oa/contact/category'
 
 function createDefaultFormData() {
@@ -35,7 +60,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaContactCategoryForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, // 弹窗的是否展示

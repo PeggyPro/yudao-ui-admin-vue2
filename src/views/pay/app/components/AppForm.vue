@@ -1,20 +1,82 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px" append-to-body v-dialogDrag>
-    <el-form ref="form" v-loading="formLoading" :model="form" :rules="rules" label-width="160px">
-      <el-form-item label="应用名" prop="name"><el-input v-model="form.name" placeholder="请输入应用名" /></el-form-item>
-      <el-form-item label="应用标识" prop="appKey"><el-input v-model="form.appKey" placeholder="请输入应用标识" /></el-form-item>
-      <el-form-item label="开启状态" prop="status">
+  <el-dialog
+    v-dialogDrag
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="800px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="form"
+      :rules="rules"
+      label-width="160px"
+    >
+      <el-form-item
+        label="应用名"
+        prop="name"
+      ><el-input
+        v-model="form.name"
+        placeholder="请输入应用名"
+      /></el-form-item>
+      <el-form-item
+        label="应用标识"
+        prop="appKey"
+      ><el-input
+        v-model="form.appKey"
+        placeholder="请输入应用标识"
+      /></el-form-item>
+      <el-form-item
+        label="开启状态"
+        prop="status"
+      >
         <el-radio-group v-model="form.status">
-          <el-radio v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)" :key="dict.value" :label="toNumber(dict.value)">{{ dict.label }}</el-radio>
+          <el-radio
+            v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
+            :key="dict.value"
+            :label="toNumber(dict.value)"
+          >{{ dict.label }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="支付结果的回调地址" prop="orderNotifyUrl"><el-input v-model="form.orderNotifyUrl" placeholder="请输入支付结果的回调地址" /></el-form-item>
-      <el-form-item label="退款结果的回调地址" prop="refundNotifyUrl"><el-input v-model="form.refundNotifyUrl" placeholder="请输入退款结果的回调地址" /></el-form-item>
-      <el-form-item label="转账结果的回调地址" prop="transferNotifyUrl"><el-input v-model="form.transferNotifyUrl" placeholder="请输入转账结果的回调地址" /></el-form-item>
-      <el-form-item label="备注" prop="remark"><el-input v-model="form.remark" placeholder="请输入备注" /></el-form-item>
+      <el-form-item
+        label="支付结果的回调地址"
+        prop="orderNotifyUrl"
+      ><el-input
+        v-model="form.orderNotifyUrl"
+        placeholder="请输入支付结果的回调地址"
+      /></el-form-item>
+      <el-form-item
+        label="退款结果的回调地址"
+        prop="refundNotifyUrl"
+      ><el-input
+        v-model="form.refundNotifyUrl"
+        placeholder="请输入退款结果的回调地址"
+      /></el-form-item>
+      <el-form-item
+        label="转账结果的回调地址"
+        prop="transferNotifyUrl"
+      ><el-input
+        v-model="form.transferNotifyUrl"
+        placeholder="请输入转账结果的回调地址"
+      /></el-form-item>
+      <el-form-item
+        label="备注"
+        prop="remark"
+      ><el-input
+        v-model="form.remark"
+        placeholder="请输入备注"
+      /></el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="close">取 消</el-button>
     </div>
   </el-dialog>

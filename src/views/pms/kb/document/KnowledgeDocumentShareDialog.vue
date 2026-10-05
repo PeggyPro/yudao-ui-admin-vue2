@@ -1,14 +1,34 @@
 <template>
-  <el-dialog title="分享文档" :visible.sync="dialogVisible" width="600px" append-to-body>
-    <el-form v-loading="formLoading" label-width="100px">
+  <el-dialog
+    title="分享文档"
+    :visible.sync="dialogVisible"
+    width="600px"
+    append-to-body
+  >
+    <el-form
+      v-loading="formLoading"
+      label-width="100px"
+    >
       <el-form-item label="公开链接">
-        <div v-if="share" class="share-url-row">
-          <el-input :value="shareUrl" readonly />
+        <div
+          v-if="share"
+          class="share-url-row"
+        >
+          <el-input
+            :value="shareUrl"
+            readonly
+          />
           <el-button @click="copyShareUrl">复制链接</el-button>
         </div>
-        <span v-else class="secondary-text">开启后，任何获得链接的人都可以查看当前文档。</span>
+        <span
+          v-else
+          class="secondary-text"
+        >开启后，任何获得链接的人都可以查看当前文档。</span>
       </el-form-item>
-      <el-form-item v-if="share" label="二维码">
+      <el-form-item
+        v-if="share"
+        label="二维码"
+      >
         <div class="qrcode-row">
           <qrcode
             :text="shareUrl"
@@ -17,7 +37,10 @@
             class="share-qrcode"
             @done="handleQrCodeDone"
           />
-          <el-button :disabled="!qrCodeDataUrl" @click="downloadQrCode">下载二维码</el-button>
+          <el-button
+            :disabled="!qrCodeDataUrl"
+            @click="downloadQrCode"
+          >下载二维码</el-button>
         </div>
       </el-form-item>
       <el-form-item label="分享给成员">
@@ -28,7 +51,10 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-popconfirm
         v-if="share"
         cancel-button-text="取消"
@@ -36,9 +62,17 @@
         title="关闭后，现有公开链接将立即失效。是否继续？"
         @confirm="closeShare"
       >
-        <el-button slot="reference" :disabled="formLoading" type="danger">关闭分享</el-button>
+        <el-button
+          slot="reference"
+          :disabled="formLoading"
+          type="danger"
+        >关闭分享</el-button>
       </el-popconfirm>
-      <el-button :disabled="formLoading" type="primary" @click="submitShare">
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitShare"
+      >
         {{ share ? '保存成员' : '开启分享' }}
       </el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>

@@ -100,13 +100,13 @@
         prop="logo"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <img
             v-if="scope.row.logo"
             :src="scope.row.logo"
             alt="门店 logo"
             style="height: 50px"
-          />
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -128,7 +128,7 @@
         label="营业时间"
         min-width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           {{ scope.row.openingTime }} ~ {{ scope.row.closingTime }}
         </template>
       </el-table-column>
@@ -138,7 +138,7 @@
         prop="status"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -151,7 +151,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -161,7 +161,7 @@
         min-width="180"
         class-name="small-padding fixed-width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['trade:delivery:pick-up-store:update']"
             type="text"

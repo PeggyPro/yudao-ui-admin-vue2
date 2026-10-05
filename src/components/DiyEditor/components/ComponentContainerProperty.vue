@@ -1,26 +1,59 @@
 <template>
   <el-tabs stretch>
-    <el-tab-pane v-if="$slots.default" label="内容">
+    <el-tab-pane
+      v-if="$slots.default"
+      label="内容"
+    >
       <slot />
     </el-tab-pane>
-    <el-tab-pane label="样式" lazy>
-      <el-card header="组件样式" class="property-group">
-        <el-form :model="formData" label-width="80px">
-          <el-form-item label="组件背景" prop="bgType">
+    <el-tab-pane
+      label="样式"
+      lazy
+    >
+      <el-card
+        header="组件样式"
+        class="property-group"
+      >
+        <el-form
+          :model="formData"
+          label-width="80px"
+        >
+          <el-form-item
+            label="组件背景"
+            prop="bgType"
+          >
             <el-radio-group v-model="formData.bgType">
               <el-radio label="color">纯色</el-radio>
               <el-radio label="img">图片</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="formData.bgType === 'color'" label="选择颜色" prop="bgColor">
+          <el-form-item
+            v-if="formData.bgType === 'color'"
+            label="选择颜色"
+            prop="bgColor"
+          >
             <ColorInput v-model="formData.bgColor" />
           </el-form-item>
-          <el-form-item v-else label="上传图片" prop="bgImg">
-            <UploadImg v-model="formData.bgImg" :limit="1" />
+          <el-form-item
+            v-else
+            label="上传图片"
+            prop="bgImg"
+          >
+            <UploadImg
+              v-model="formData.bgImg"
+              :limit="1"
+            />
             <div class="upload-tip">建议宽度 750px</div>
           </el-form-item>
-          <el-tree :data="treeData" :expand-on-click-node="false" default-expand-all>
-            <div slot-scope="{ node, data }" class="tree-form-item">
+          <el-tree
+            :data="treeData"
+            :expand-on-click-node="false"
+            default-expand-all
+          >
+            <div
+              slot-scope="{ node, data }"
+              class="tree-form-item"
+            >
               <el-form-item
                 :label="data.label"
                 :prop="data.prop"
@@ -38,7 +71,10 @@
               </el-form-item>
             </div>
           </el-tree>
-          <slot name="style" :style="formData" />
+          <slot
+            name="style"
+            :style="formData"
+          />
         </el-form>
       </el-card>
     </el-tab-pane>

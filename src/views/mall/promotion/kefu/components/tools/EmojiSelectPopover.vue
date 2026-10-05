@@ -13,7 +13,7 @@
           class="icon-item"
           @click="handleSelect(item)"
         >
-          <img :src="item.url" />
+          <img :src="item.url">
         </li>
       </ul>
     </el-scrollbar>

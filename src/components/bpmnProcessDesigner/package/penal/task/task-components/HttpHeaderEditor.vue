@@ -9,8 +9,17 @@
   >
     <div class="header-editor">
       <div class="header-list">
-        <div v-for="(item, index) in headerList" :key="index" class="header-item">
-          <el-input v-model="item.key" class="header-key" clearable placeholder="请输入参数名" />
+        <div
+          v-for="(item, index) in headerList"
+          :key="index"
+          class="header-item"
+        >
+          <el-input
+            v-model="item.key"
+            class="header-key"
+            clearable
+            placeholder="请输入参数名"
+          />
           <span class="separator">:</span>
           <el-input
             v-model="item.value"
@@ -28,13 +37,24 @@
           />
         </div>
       </div>
-      <el-button type="primary" icon="el-icon-plus" class="add-button" @click="addHeader">
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        class="add-button"
+        @click="addHeader"
+      >
         添加请求头
       </el-button>
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="handleSave">保存</el-button>
+      <el-button
+        type="primary"
+        @click="handleSave"
+      >保存</el-button>
     </span>
   </el-dialog>
 </template>

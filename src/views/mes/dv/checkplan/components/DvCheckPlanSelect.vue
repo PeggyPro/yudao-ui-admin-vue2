@@ -8,18 +8,43 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-        <div v-if="selectedItem" slot="content" class="plan-tooltip">
+      <el-tooltip
+        :disabled="!selectedItem"
+        placement="top"
+        :open-delay="500"
+      >
+        <div
+          v-if="selectedItem"
+          slot="content"
+          class="plan-tooltip"
+        >
           <div>编码：{{ selectedItem.code }}</div>
           <div>名称：{{ selectedItem.name }}</div>
-          <div>频度：{{ selectedItem.cycleCount || '-' }} <dict-tag :type="MES_DV_CYCLE_TYPE" :value="selectedItem.cycleType" /></div>
+          <div>频度：{{ selectedItem.cycleCount || '-' }} <dict-tag
+            :type="MES_DV_CYCLE_TYPE"
+            :value="selectedItem.cycleType"
+          /></div>
         </div>
-        <el-input :value="displayLabel" :placeholder="placeholder" :disabled="disabled" readonly>
-          <i slot="suffix" :class="showClear ? 'el-icon-circle-close' : 'el-icon-search'" />
+        <el-input
+          :value="displayLabel"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          readonly
+        >
+          <i
+            slot="suffix"
+            :class="showClear ? 'el-icon-circle-close' : 'el-icon-search'"
+          />
         </el-input>
       </el-tooltip>
     </div>
-    <dv-check-plan-select-dialog ref="dialog" :multiple="false" :type="type" :status="status" @selected="handleSelected" />
+    <dv-check-plan-select-dialog
+      ref="dialog"
+      :multiple="false"
+      :type="type"
+      :status="status"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 

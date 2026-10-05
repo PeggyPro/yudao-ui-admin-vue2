@@ -9,7 +9,10 @@
       label-width="85px"
       @submit.native.prevent
     >
-      <el-form-item label="单据编号" prop="no">
+      <el-form-item
+        label="单据编号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入单据编号"
@@ -18,14 +21,20 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="单据状态" prop="status">
+      <el-form-item
+        label="单据状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择单据状态"
           clearable
           style="width: 240px"
         >
-          <el-option label="未提交" :value="BpmProcessInstanceStatus.NOT_START" />
+          <el-option
+            label="未提交"
+            :value="BpmProcessInstanceStatus.NOT_START"
+          />
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -34,7 +43,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="车辆" prop="vehicleNo">
+      <el-form-item
+        label="车辆"
+        prop="vehicleNo"
+      >
         <el-input
           v-model="queryParams.vehicleNo"
           placeholder="请输入车牌号"
@@ -43,10 +55,19 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="申请部门" prop="deptId">
-        <dept-select v-model="queryParams.deptId" style="width: 240px" />
+      <el-form-item
+        label="申请部门"
+        prop="deptId"
+      >
+        <dept-select
+          v-model="queryParams.deptId"
+          style="width: 240px"
+        />
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -56,7 +77,10 @@
           style="width: 240px"
         />
       </el-form-item>
-      <el-form-item label="还车状态" prop="returnStatus">
+      <el-form-item
+        label="还车状态"
+        prop="returnStatus"
+      >
         <el-select
           v-model="queryParams.returnStatus"
           placeholder="请选择还车状态"
@@ -72,8 +96,15 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['oa:vehicle-apply:create']"
           type="primary"
@@ -85,28 +116,92 @@
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="单据编号" min-width="220">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="单据编号"
+        min-width="220"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="openDetail(scope.row.id)">{{ scope.row.no }}</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="openDetail(scope.row.id)"
+          >{{ scope.row.no }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" width="110" align="center">
+      <el-table-column
+        label="单据状态"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START" type="info" size="small">
+          <el-tag
+            v-if="scope.row.status === BpmProcessInstanceStatus.NOT_START"
+            type="info"
+            size="small"
+          >
             未提交
           </el-tag>
-          <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            v-else
+            :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="车辆" prop="vehicleNo" width="130" />
-      <el-table-column label="用车事由" prop="reason" min-width="180" show-overflow-tooltip />
-      <el-table-column label="出车时间" prop="startTime" :formatter="dateFormatter" width="180" align="center" />
-      <el-table-column label="回车时间" prop="endTime" :formatter="dateFormatter" width="180" align="center" />
-      <el-table-column label="出车地点" prop="startLocation" min-width="160" show-overflow-tooltip />
-      <el-table-column label="回车地点" prop="endLocation" min-width="160" show-overflow-tooltip />
-      <el-table-column label="随行人" prop="passenger" min-width="160" show-overflow-tooltip />
-      <el-table-column label="还车状态" width="110" align="center">
+      <el-table-column
+        label="车辆"
+        prop="vehicleNo"
+        width="130"
+      />
+      <el-table-column
+        label="用车事由"
+        prop="reason"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="出车时间"
+        prop="startTime"
+        :formatter="dateFormatter"
+        width="180"
+        align="center"
+      />
+      <el-table-column
+        label="回车时间"
+        prop="endTime"
+        :formatter="dateFormatter"
+        width="180"
+        align="center"
+      />
+      <el-table-column
+        label="出车地点"
+        prop="startLocation"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="回车地点"
+        prop="endLocation"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="随行人"
+        prop="passenger"
+        min-width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="还车状态"
+        width="110"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-tag
             :type="scope.row.returnStatus === OA_VEHICLE_RETURN_STATUS.RETURNED ? 'success' : 'info'"
@@ -116,10 +211,30 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="申请人" prop="userName" width="120" />
-      <el-table-column label="申请部门" prop="deptName" width="160" show-overflow-tooltip />
-      <el-table-column label="创建时间" prop="createTime" :formatter="dateFormatter" width="180" align="center" />
-      <el-table-column label="操作" width="160" align="center" fixed="right">
+      <el-table-column
+        label="申请人"
+        prop="userName"
+        width="120"
+      />
+      <el-table-column
+        label="申请部门"
+        prop="deptName"
+        width="160"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="创建时间"
+        prop="createTime"
+        :formatter="dateFormatter"
+        width="180"
+        align="center"
+      />
+      <el-table-column
+        label="操作"
+        width="160"
+        align="center"
+        fixed="right"
+      >
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.processInstanceId"
@@ -179,9 +294,15 @@
     />
 
     <!-- 表单及详情弹窗 -->
-    <oa-vehicle-apply-form ref="form" @success="getList" />
+    <oa-vehicle-apply-form
+      ref="form"
+      @success="getList"
+    />
     <oa-vehicle-apply-detail ref="detail" />
-    <oa-vehicle-return-form ref="returnForm" @success="handleReturnSuccess" />
+    <oa-vehicle-return-form
+      ref="returnForm"
+      @success="handleReturnSuccess"
+    />
   </div>
 </template>
 

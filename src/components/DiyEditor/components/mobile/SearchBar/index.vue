@@ -1,5 +1,8 @@
 <template>
-  <div class="search-bar" :style="{ color: property.textColor }">
+  <div
+    class="search-bar"
+    :style="{ color: property.textColor }"
+  >
     <div
       class="inner"
       :style="{
@@ -8,13 +11,22 @@
         borderRadius: property.borderRadius + 'px'
       }"
     >
-      <div class="placeholder" :style="{ justifyContent: property.placeholderPosition }">
+      <div
+        class="placeholder"
+        :style="{ justifyContent: property.placeholderPosition }"
+      >
         <svg-icon icon-class="ep:search" />
         <span>{{ property.placeholder || '搜索商品' }}</span>
       </div>
       <div class="right">
-        <span v-for="(keyword, index) in property.hotKeywords" :key="index">{{ keyword }}</span>
-        <svg-icon v-show="property.showScan" icon-class="ant-design:scan-outlined" />
+        <span
+          v-for="(keyword, index) in property.hotKeywords"
+          :key="index"
+        >{{ keyword }}</span>
+        <svg-icon
+          v-show="property.showScan"
+          icon-class="ant-design:scan-outlined"
+        />
       </div>
     </div>
   </div>

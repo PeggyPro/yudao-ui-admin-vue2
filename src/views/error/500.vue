@@ -5,9 +5,21 @@
         <div class="pic-500__code">
           500
         </div>
-        <img class="pic-500__child left" src="@/assets/404_images/404_cloud.png" alt="500">
-        <img class="pic-500__child mid" src="@/assets/404_images/404_cloud.png" alt="500">
-        <img class="pic-500__child right" src="@/assets/404_images/404_cloud.png" alt="500">
+        <img
+          class="pic-500__child left"
+          src="@/assets/404_images/404_cloud.png"
+          alt="500"
+        >
+        <img
+          class="pic-500__child mid"
+          src="@/assets/404_images/404_cloud.png"
+          alt="500"
+        >
+        <img
+          class="pic-500__child right"
+          src="@/assets/404_images/404_cloud.png"
+          alt="500"
+        >
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
@@ -19,7 +31,10 @@
         <div class="bullshit__info">
           对不起，服务器报告错误，请稍后重试。您可以返回首页，或联系管理员反馈问题。
         </div>
-        <router-link to="/" class="bullshit__return-home">
+        <router-link
+          to="/"
+          class="bullshit__return-home"
+        >
           返回首页
         </router-link>
       </div>

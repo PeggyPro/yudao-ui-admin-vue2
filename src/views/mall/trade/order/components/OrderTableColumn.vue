@@ -12,7 +12,7 @@
         </div>
       </div>
     </template>
-    <template v-slot="scope">
+    <template slot-scope="scope">
       <el-table
         ref="orderTables"
         :border="true"
@@ -59,7 +59,7 @@
               />
             </div>
           </template>
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             <div class="product-info">
               <div class="product-main">
                 <el-image
@@ -97,7 +97,7 @@
           prop="price"
           width="150"
         >
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             {{ floatToFixed2(row.price) }} 元 / {{ row.count }}
           </template>
         </el-table-column>
@@ -106,7 +106,7 @@
           prop="afterSaleStatus"
           width="120"
         >
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             <dict-tag
               :type="DICT_TYPE.TRADE_ORDER_ITEM_AFTER_SALE_STATUS"
               :value="row.afterSaleStatus"

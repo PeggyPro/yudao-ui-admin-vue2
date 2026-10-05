@@ -148,8 +148,8 @@
         prop="ownerUserName"
       />
       <el-table-column
-        show-overflow-tooltip
         v-if="editable"
+        show-overflow-tooltip
         align="center"
         fixed="right"
         label="操作"

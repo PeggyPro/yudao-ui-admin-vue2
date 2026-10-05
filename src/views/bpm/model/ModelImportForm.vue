@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    title="导入流程模型"
+  <AppDialog
     v-model="dialogVisible"
+    title="导入流程模型"
     :width="width"
     @closed="handleClosed"
   >
@@ -28,7 +28,7 @@
           accept=".json"
           action="#"
           drag
-      :on-change="handleFileChange"
+          :on-change="handleFileChange"
           :on-remove="handleFileRemove"
           :on-exceed="handleFileExceed"
         >
@@ -36,24 +36,47 @@
           <div class="el-upload__text">将 JSON 流程模型文件拖到此处，或<em>点击上传</em></div>
         </el-upload>
       </el-form-item>
-      <el-form-item label="流程标识" prop="key">
-        <el-input v-model="formData.key" placeholder="请输入流程标识" />
+      <el-form-item
+        label="流程标识"
+        prop="key"
+      >
+        <el-input
+          v-model="formData.key"
+          placeholder="请输入流程标识"
+        />
       </el-form-item>
-      <el-form-item label="流程名称" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入流程名称" />
+      <el-form-item
+        label="流程名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          placeholder="请输入流程名称"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitForm"
+      >
         确 定
       </el-button>
-      <el-button :disabled="formLoading" @click="dialogVisible = false">取 消</el-button>
+      <el-button
+        :disabled="formLoading"
+        @click="dialogVisible = false"
+      >取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { importModel } from '@/api/bpm/model'
 
 function createDefaultForm() {
@@ -66,7 +89,7 @@ function createDefaultForm() {
 /** 可复用的 BPM JSON 模型导入表单。 */
 export default {
   name: 'ModelImportForm',
-  components: { Dialog },
+  components: { AppDialog },
   props: {
     width: {
       type: String,

@@ -32,7 +32,7 @@ export function deleteConfig(id) {
 
 // 批量删除参数
 export function deleteConfigList(ids) {
-  return request({ url: '/infra/config/delete-list', method: 'delete', params: { ids: ids.join(',') } })
+  return request({ url: '/infra/config/delete-list', method: 'delete', params: { ids: ids.join(',') }})
 }
 
 // 导出参数

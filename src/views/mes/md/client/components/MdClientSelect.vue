@@ -9,8 +9,16 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-        <div v-if="selectedItem" slot="content" class="client-tooltip">
+      <el-tooltip
+        :disabled="!selectedItem"
+        placement="top"
+        :open-delay="500"
+      >
+        <div
+          v-if="selectedItem"
+          slot="content"
+          class="client-tooltip"
+        >
           <div>编码：{{ selectedItem.code }}</div>
           <div>名称：{{ selectedItem.name }}</div>
           <div>简称：{{ selectedItem.nickname || '-' }}</div>
@@ -25,7 +33,11 @@
         />
       </el-tooltip>
     </div>
-    <md-client-select-dialog ref="dialog" :multiple="false" @selected="handleSelected" />
+    <md-client-select-dialog
+      ref="dialog"
+      :multiple="false"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 
@@ -35,8 +47,8 @@ import MdClientSelectDialog from './MdClientSelectDialog.vue'
 
 export default {
   name: 'MdClientSelect',
-  inheritAttrs: false,
   components: { MdClientSelectDialog },
+  inheritAttrs: false,
   props: {
     value: Number,
     modelValue: Number,

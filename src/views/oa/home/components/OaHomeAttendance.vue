@@ -15,10 +15,17 @@
           @click.stop="handleClock"
         >立即打卡</el-button>
       </div>
-      <div v-if="loadError" class="home-card__error" @click.stop="getList">
+      <div
+        v-if="loadError"
+        class="home-card__error"
+        @click.stop="getList"
+      >
         加载失败，点击重试
       </div>
-      <div v-else class="home-card__value">{{ attendanceText }}</div>
+      <div
+        v-else
+        class="home-card__value"
+      >{{ attendanceText }}</div>
       <div class="home-card__desc">{{ attendanceDescription }}</div>
     </div>
     <div class="home-card__icon"><i class="el-icon-date" /></div>

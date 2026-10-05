@@ -1,8 +1,20 @@
 <template>
   <div class="attendance-clock-overview">
-    <el-card shadow="never" class="search-card">
-      <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px" @submit.native.prevent>
-        <el-form-item label="月份" prop="month">
+    <el-card
+      shadow="never"
+      class="search-card"
+    >
+      <el-form
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
+        label-width="68px"
+        @submit.native.prevent
+      >
+        <el-form-item
+          label="月份"
+          prop="month"
+        >
           <el-date-picker
             v-model="queryParams.month"
             type="month"
@@ -11,7 +23,10 @@
             class="query-control"
           />
         </el-form-item>
-        <el-form-item label="员工" prop="search">
+        <el-form-item
+          label="员工"
+          prop="search"
+        >
           <el-input
             v-model="queryParams.search"
             placeholder="请输入员工姓名或工号"
@@ -20,29 +35,71 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="部门" prop="deptIds">
-          <DeptSelect v-model="queryParams.deptIds" multiple class="query-control" />
+        <el-form-item
+          label="部门"
+          prop="deptIds"
+        >
+          <DeptSelect
+            v-model="queryParams.deptIds"
+            multiple
+            class="query-control"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
           <el-button
+            icon="el-icon-search"
+            @click="handleQuery"
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            @click="resetQuery"
+          >重置</el-button>
+          <el-button
+            v-hasPermi="['hrm:attendance:clock:export']"
             plain
             icon="el-icon-download"
             :loading="exportLoading"
             @click="handleExport"
-            v-hasPermi="['hrm:attendance:clock:export']"
           >导出</el-button>
         </el-form-item>
       </el-form>
     </el-card>
 
     <el-card shadow="never">
-      <el-table v-loading="loading" :data="list" stripe border>
-        <el-table-column label="员工" prop="employeeName" fixed="left" width="120" show-overflow-tooltip />
-        <el-table-column label="工号" prop="jobNumber" fixed="left" width="120" show-overflow-tooltip />
-        <el-table-column label="部门" prop="deptName" fixed="left" width="140" show-overflow-tooltip />
-        <el-table-column label="岗位" prop="postName" fixed="left" width="140" show-overflow-tooltip />
+      <el-table
+        v-loading="loading"
+        :data="list"
+        stripe
+        border
+      >
+        <el-table-column
+          label="员工"
+          prop="employeeName"
+          fixed="left"
+          width="120"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="工号"
+          prop="jobNumber"
+          fixed="left"
+          width="120"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="部门"
+          prop="deptName"
+          fixed="left"
+          width="140"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          label="岗位"
+          prop="postName"
+          fixed="left"
+          width="140"
+          show-overflow-tooltip
+        />
         <el-table-column
           v-for="day in dayColumns"
           :key="day.date"
@@ -75,13 +132,20 @@
                     <span class="overview-time">{{ item.time }}</span>
                     <span :class="getOverviewTextClass(item.status)">{{ item.status }}</span>
                   </template>
-                  <span v-else class="overview-summary" :class="getOverviewTextClass(item.text)">
+                  <span
+                    v-else
+                    class="overview-summary"
+                    :class="getOverviewTextClass(item.text)"
+                  >
                     {{ item.text }}
                   </span>
                 </span>
               </span>
             </el-button>
-            <span v-else class="text-placeholder">-</span>
+            <span
+              v-else
+              class="text-placeholder"
+            >-</span>
           </template>
         </el-table-column>
       </el-table>

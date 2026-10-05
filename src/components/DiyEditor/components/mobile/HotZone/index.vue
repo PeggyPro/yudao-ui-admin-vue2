@@ -1,6 +1,9 @@
 <template>
   <div class="hot-zone-preview">
-    <el-image :src="property.imgUrl" class="preview-image" />
+    <el-image
+      :src="property.imgUrl"
+      class="preview-image"
+    />
     <div
       v-for="(item, index) in property.list"
       :key="index"

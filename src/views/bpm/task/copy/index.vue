@@ -1,9 +1,22 @@
 <template>
   <div class="app-container">
-    <doc-alert title="审批转办、委派、抄送" url="https://doc.iocoder.cn/bpm/task-delegation-and-cc/" />
+    <doc-alert
+      title="审批转办、委派、抄送"
+      url="https://doc.iocoder.cn/bpm/task-delegation-and-cc/"
+    />
 
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" v-show="showSearch" label-width="72px">
-      <el-form-item label="流程名称" prop="processInstanceName">
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      size="small"
+      :inline="true"
+      label-width="72px"
+    >
+      <el-form-item
+        label="流程名称"
+        prop="processInstanceName"
+      >
         <el-input
           v-model="queryParams.processInstanceName"
           placeholder="请输入流程名称"
@@ -11,7 +24,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="抄送时间" prop="createTime">
+      <el-form-item
+        label="抄送时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -23,37 +39,97 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list">
-      <el-table-column label="流程名" align="center" prop="processInstanceName" min-width="180" />
-      <el-table-column label="摘要" min-width="180">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+    >
+      <el-table-column
+        label="流程名"
+        align="center"
+        prop="processInstanceName"
+        min-width="180"
+      />
+      <el-table-column
+        label="摘要"
+        min-width="180"
+      >
+        <template slot-scope="scope">
           <div v-if="scope.row.summary && scope.row.summary.length">
-            <div v-for="(item, index) in scope.row.summary" :key="index" class="task-summary-item">
+            <div
+              v-for="(item, index) in scope.row.summary"
+              :key="index"
+              class="task-summary-item"
+            >
               {{ item.key }} : {{ item.value }}
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="流程发起人" align="center" prop="startUser.nickname" min-width="100" />
-      <el-table-column label="流程发起时间" align="center" prop="processInstanceStartTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.processInstanceStartTime) }}</template>
+      <el-table-column
+        label="流程发起人"
+        align="center"
+        prop="startUser.nickname"
+        min-width="100"
+      />
+      <el-table-column
+        label="流程发起时间"
+        align="center"
+        prop="processInstanceStartTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.processInstanceStartTime) }}</template>
       </el-table-column>
-      <el-table-column label="抄送节点" align="center" prop="activityName" min-width="180" />
-      <el-table-column label="抄送人" align="center" min-width="100">
-        <template v-slot="scope">{{ (scope.row.createUser && scope.row.createUser.nickname) || '系统' }}</template>
+      <el-table-column
+        label="抄送节点"
+        align="center"
+        prop="activityName"
+        min-width="180"
+      />
+      <el-table-column
+        label="抄送人"
+        align="center"
+        min-width="100"
+      >
+        <template slot-scope="scope">{{ (scope.row.createUser && scope.row.createUser.nickname) || '系统' }}</template>
       </el-table-column>
-      <el-table-column label="抄送意见" align="center" prop="reason" width="150" />
-      <el-table-column label="抄送时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="抄送意见"
+        align="center"
+        prop="reason"
+        width="150"
+      />
+      <el-table-column
+        label="抄送时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="80">
-        <template v-slot="scope">
-          <el-button type="text" size="mini" @click="handleDetail(scope.row)">详情</el-button>
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="80"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="mini"
+            @click="handleDetail(scope.row)"
+          >详情</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -15,8 +15,17 @@
       :size="width"
       :value="renderText"
     />
-    <img v-if="logoSource" class="qrcode-logo" :src="logoSource" alt="" />
-    <div v-if="disabled" class="qrcode-disabled" @click.stop="$emit('disabled-click')">
+    <img
+      v-if="logoSource"
+      class="qrcode-logo"
+      :src="logoSource"
+      alt=""
+    >
+    <div
+      v-if="disabled"
+      class="qrcode-disabled"
+      @click.stop="$emit('disabled-click')"
+    >
       <i class="el-icon-refresh-right" />
       <div>{{ disabledText }}</div>
     </div>

@@ -9,10 +9,19 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="员工" prop="userId">
-        <user-select-v2 v-model="queryParams.userId" style="width: 240px" />
+      <el-form-item
+        label="员工"
+        prop="userId"
+      >
+        <user-select-v2
+          v-model="queryParams.userId"
+          style="width: 240px"
+        />
       </el-form-item>
-      <el-form-item label="考勤类型" prop="type">
+      <el-form-item
+        label="考勤类型"
+        prop="type"
+      >
         <el-select
           v-model="queryParams.type"
           placeholder="请选择考勤类型"
@@ -27,7 +36,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="考勤状态" prop="status">
+      <el-form-item
+        label="考勤状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择考勤状态"
@@ -42,7 +54,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="考勤时间" prop="attendanceTime">
+      <el-form-item
+        label="考勤时间"
+        prop="attendanceTime"
+      >
         <el-date-picker
           v-model="queryParams.attendanceTime"
           value-format="yyyy-MM-dd HH:mm:ss"
@@ -53,23 +68,59 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" border stripe>
-      <el-table-column label="员工" prop="userName" align="center" min-width="120" />
-      <el-table-column label="部门" prop="deptName" align="center" min-width="120" />
-      <el-table-column label="考勤类型" align="center" width="110">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      border
+      stripe
+    >
+      <el-table-column
+        label="员工"
+        prop="userName"
+        align="center"
+        min-width="120"
+      />
+      <el-table-column
+        label="部门"
+        prop="deptName"
+        align="center"
+        min-width="120"
+      />
+      <el-table-column
+        label="考勤类型"
+        align="center"
+        width="110"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_ATTENDANCE_TYPE" :value="scope.row.type" />
+          <dict-tag
+            :type="DICT_TYPE.OA_ATTENDANCE_TYPE"
+            :value="scope.row.type"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="考勤状态" align="center" width="100">
+      <el-table-column
+        label="考勤状态"
+        align="center"
+        width="100"
+      >
         <template slot-scope="scope">
-          <dict-tag :type="DICT_TYPE.OA_ATTENDANCE_STATUS" :value="scope.row.status" />
+          <dict-tag
+            :type="DICT_TYPE.OA_ATTENDANCE_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -79,7 +130,12 @@
         align="center"
         width="180"
       />
-      <el-table-column label="考勤 IP" prop="attendanceIp" align="center" min-width="130" />
+      <el-table-column
+        label="考勤 IP"
+        prop="attendanceIp"
+        align="center"
+        min-width="130"
+      />
       <el-table-column
         label="备注"
         prop="remark"
@@ -87,7 +143,12 @@
         min-width="180"
         show-overflow-tooltip
       />
-      <el-table-column label="操作" align="center" fixed="right" width="140">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="140"
+      >
         <template slot-scope="scope">
           <el-button
             v-hasPermi="['oa:attendance:update']"
@@ -114,7 +175,10 @@
     />
 
     <!-- 修改考勤记录弹窗 -->
-    <oa-attendance-form ref="attendanceForm" @success="getList" />
+    <oa-attendance-form
+      ref="attendanceForm"
+      @success="getList"
+    />
   </div>
 </template>
 

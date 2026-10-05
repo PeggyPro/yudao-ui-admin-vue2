@@ -16,10 +16,17 @@
         aria-label="清空车辆"
         @click.stop="handleClear"
       />
-      <i v-else slot="suffix" class="el-input__icon el-icon-search" />
+      <i
+        v-else
+        slot="suffix"
+        class="el-input__icon el-icon-search"
+      />
     </el-input>
     <!-- 车辆选择弹窗 -->
-    <oa-vehicle-select-dialog ref="selectDialog" @selected="handleSelected" />
+    <oa-vehicle-select-dialog
+      ref="selectDialog"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 

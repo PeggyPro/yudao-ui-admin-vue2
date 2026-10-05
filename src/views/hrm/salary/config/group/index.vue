@@ -10,7 +10,11 @@
           @click="openForm('create')"
         >新增</el-button>
       </div>
-      <el-table v-loading="loading" :data="list" stripe>
+      <el-table
+        v-loading="loading"
+        :data="list"
+        stripe
+      >
         <el-table-column
           label="薪资组名称"
           align="center"
@@ -18,7 +22,12 @@
           min-width="150"
           show-overflow-tooltip
         />
-        <el-table-column label="计薪标准" align="center" prop="salaryStandard" width="110">
+        <el-table-column
+          label="计薪标准"
+          align="center"
+          prop="salaryStandard"
+          width="110"
+        >
           <template slot-scope="scope">{{ scope.row.salaryStandard == null ? 0 : scope.row.salaryStandard }} 天/月</template>
         </el-table-column>
         <el-table-column
@@ -35,10 +44,19 @@
           min-width="220"
           show-overflow-tooltip
         />
-        <el-table-column align="center" label="适用范围" min-width="180">
+        <el-table-column
+          align="center"
+          label="适用范围"
+          min-width="180"
+        >
           <template slot-scope="scope">{{ formatSalaryGroupScope(scope.row) }}</template>
         </el-table-column>
-        <el-table-column label="操作" align="center" width="160" fixed="right">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="160"
+          fixed="right"
+        >
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['hrm:salary:group:update']"
@@ -62,7 +80,10 @@
         @pagination="getList"
       />
     </el-card>
-    <salary-group-form ref="form" @success="getList" />
+    <salary-group-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 
@@ -106,7 +127,9 @@ export default {
         await deleteSalaryGroup(id)
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     }
   }
 }

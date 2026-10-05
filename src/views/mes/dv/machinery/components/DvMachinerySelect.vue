@@ -8,19 +8,39 @@
       @mouseenter="hovering = true"
       @mouseleave="hovering = false"
     >
-      <el-tooltip :disabled="!selectedItem" placement="top" :open-delay="500">
-        <div v-if="selectedItem" slot="content" class="machinery-tooltip">
+      <el-tooltip
+        :disabled="!selectedItem"
+        placement="top"
+        :open-delay="500"
+      >
+        <div
+          v-if="selectedItem"
+          slot="content"
+          class="machinery-tooltip"
+        >
           <div>设备编码：{{ selectedItem.code }}</div>
           <div>设备名称：{{ selectedItem.name }}</div>
           <div v-if="selectedItem.brand">品牌：{{ selectedItem.brand }}</div>
           <div v-if="selectedItem.specification">规格型号：{{ selectedItem.specification }}</div>
         </div>
-        <el-input :value="displayLabel" :placeholder="placeholder" :disabled="disabled" readonly>
-          <i slot="suffix" :class="showClear ? 'el-icon-circle-close' : 'el-icon-search'" />
+        <el-input
+          :value="displayLabel"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          readonly
+        >
+          <i
+            slot="suffix"
+            :class="showClear ? 'el-icon-circle-close' : 'el-icon-search'"
+          />
         </el-input>
       </el-tooltip>
     </div>
-    <dv-machinery-select-dialog ref="dialog" :multiple="false" @selected="handleSelected" />
+    <dv-machinery-select-dialog
+      ref="dialog"
+      :multiple="false"
+      @selected="handleSelected"
+    />
   </div>
 </template>
 

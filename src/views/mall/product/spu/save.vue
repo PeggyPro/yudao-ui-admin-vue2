@@ -175,7 +175,7 @@
                   :key="index"
                   :label="item.specName"
                 >
-                  <template v-slot="scope">
+                  <template slot-scope="scope">
                     <el-input
                       v-if="scope.row.spec"
                       v-model="scope.row.spec[index]"
@@ -190,7 +190,7 @@
                 width="120px"
                 :render-header="addRedStar"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <ImageUpload
                     v-model="scope.row.picUrl"
                     :limit="1"
@@ -204,7 +204,7 @@
                 label="市场价(元)"
                 :render-header="addRedStar"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-form-item
                     :prop="'rates.'+ scope.$index + '.marketPrice'"
                     :rules="[{required: true, trigger: 'change'}]"
@@ -221,7 +221,7 @@
                 label="销售价(元)"
                 :render-header="addRedStar"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-form-item
                     :prop="'rates.'+ scope.$index + '.price'"
                     :rules="[{required: true, trigger: 'change'}]"
@@ -238,7 +238,7 @@
                 label="成本价"
                 :render-header="addRedStar"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-form-item
                     :prop="'rates.'+ scope.$index + '.costPrice'"
                     :rules="[{required: true, trigger: 'change'}]"
@@ -255,7 +255,7 @@
                 label="库存"
                 :render-header="addRedStar"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-form-item
                     :prop="'rates.'+ scope.$index + '.stock'"
                     :rules="[{required: true, trigger: 'change'}]"
@@ -271,7 +271,7 @@
                 key="96"
                 label="预警库存"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.warnStock"
                     oninput="value=value.replace(/^(0+)|[^\d]+/g,'')"
@@ -282,7 +282,7 @@
                 key="97"
                 label="体积"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-input v-model="scope.row.volume" />
                 </template>
               </el-table-column>
@@ -290,7 +290,7 @@
                 key="98"
                 label="重量"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-input v-model="scope.row.weight" />
                 </template>
               </el-table-column>
@@ -298,7 +298,7 @@
                 key="99"
                 label="条码"
               >
-                <template v-slot="scope">
+                <template slot-scope="scope">
                   <el-input v-model="scope.row.barCode" />
                 </template>
               </el-table-column>
@@ -309,7 +309,7 @@
                   label="操作"
                   width="50"
                 >
-                  <template v-slot="scope">
+                  <template slot-scope="scope">
                     <el-button
                       v-show="scope.row.status === undefined || scope.row.status === 0 "
                       type="text"

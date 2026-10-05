@@ -1,5 +1,8 @@
 <template>
-  <div :style="{zIndex:zIndex,height:height,width:width}" class="pan-item">
+  <div
+    :style="{zIndex:zIndex,height:height,width:width}"
+    class="pan-item"
+  >
     <div class="pan-info">
       <div class="pan-info-roles-container">
         <slot />

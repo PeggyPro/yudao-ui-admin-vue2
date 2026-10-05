@@ -5,7 +5,10 @@
     arrow="hover"
     indicator-position="outside"
   >
-    <el-carousel-item v-for="(page, pageIndex) in pages" :key="pageIndex">
+    <el-carousel-item
+      v-for="(page, pageIndex) in pages"
+      :key="pageIndex"
+    >
       <div class="menu-page">
         <div
           v-for="(item, index) in page"
@@ -21,7 +24,11 @@
             >
               {{ item.badge.text }}
             </span>
-            <el-image v-if="item.iconUrl" :src="item.iconUrl" class="menu-icon" />
+            <el-image
+              v-if="item.iconUrl"
+              :src="item.iconUrl"
+              class="menu-icon"
+            />
           </div>
           <span
             v-if="property.layout === 'iconText'"

@@ -1,7 +1,14 @@
 <template>
   <div class="http-request-param-setting">
-    <el-form-item label="请求头" label-position="top">
-      <div v-for="(item, index) in header" :key="`header-${index}`" class="http-param-row">
+    <el-form-item
+      label="请求头"
+      label-position="top"
+    >
+      <div
+        v-for="(item, index) in header"
+        :key="`header-${index}`"
+        class="http-param-row"
+      >
         <el-input
           v-model="item.key"
           class="http-param-key"
@@ -53,11 +60,22 @@
           @click="deleteParam(header, index)"
         />
       </div>
-      <el-button type="text" icon="el-icon-plus" @click="addParam(header)">添加一行</el-button>
+      <el-button
+        type="text"
+        icon="el-icon-plus"
+        @click="addParam(header)"
+      >添加一行</el-button>
     </el-form-item>
 
-    <el-form-item label="请求体" label-position="top">
-      <div v-for="(item, index) in body" :key="`body-${index}`" class="http-param-row">
+    <el-form-item
+      label="请求体"
+      label-position="top"
+    >
+      <div
+        v-for="(item, index) in body"
+        :key="`body-${index}`"
+        class="http-param-row"
+      >
         <el-input
           v-model="item.key"
           class="http-param-key"
@@ -109,7 +127,11 @@
           @click="deleteParam(body, index)"
         />
       </div>
-      <el-button type="text" icon="el-icon-plus" @click="addParam(body)">添加一行</el-button>
+      <el-button
+        type="text"
+        icon="el-icon-plus"
+        @click="addParam(body)"
+      >添加一行</el-button>
     </el-form-item>
   </div>
 </template>
@@ -172,7 +194,7 @@ export default {
       this.$set(item, 'value', '')
     },
     ensureItemShape(list) {
-      ;(list || []).forEach((item) => {
+      (list || []).forEach((item) => {
         if (!item || typeof item !== 'object') return
         const type = Number(item.type)
         this.$set(item, 'type', type === BpmHttpRequestParamTypeEnum.FROM_FORM

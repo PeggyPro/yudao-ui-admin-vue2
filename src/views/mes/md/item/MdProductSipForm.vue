@@ -1,21 +1,105 @@
 <!-- MES 产品 SIP 列表 -->
 <template>
   <div>
-    <el-button v-if="!isReadOnly" type="primary" plain size="small" icon="el-icon-plus" class="add-button" @click="openForm('create')">添加 SIP</el-button>
-    <el-row v-loading="loading" :gutter="12">
-      <el-col v-for="item in list" :key="item.id" :span="6" class="card-col"><el-card shadow="hover" :body-style="{ padding: '0' }"><el-image v-if="item.url" :src="item.url" fit="cover" class="image" :preview-src-list="[item.url]" /><div v-else class="image-empty"><i class="el-icon-picture-outline" /></div><div class="card-body"><div class="title">{{ item.title }}</div><div v-if="item.description" class="description">{{ item.description }}</div><div v-if="!isReadOnly" class="card-actions"><el-button type="text" size="small" @click="openForm('update', item)">编辑</el-button><el-button type="text" size="small" class="danger" @click="handleDelete(item.id)">删除</el-button></div></div></el-card></el-col>
-      <el-col v-if="!loading && list.length === 0" :span="24"><el-empty description="暂无 SIP 数据" /></el-col>
+    <el-button
+      v-if="!isReadOnly"
+      type="primary"
+      plain
+      size="small"
+      icon="el-icon-plus"
+      class="add-button"
+      @click="openForm('create')"
+    >添加 SIP</el-button>
+    <el-row
+      v-loading="loading"
+      :gutter="12"
+    >
+      <el-col
+        v-for="item in list"
+        :key="item.id"
+        :span="6"
+        class="card-col"
+      ><el-card
+        shadow="hover"
+        :body-style="{ padding: '0' }"
+      ><el-image
+        v-if="item.url"
+        :src="item.url"
+        fit="cover"
+        class="image"
+        :preview-src-list="[item.url]"
+      /><div
+        v-else
+        class="image-empty"
+      ><i class="el-icon-picture-outline" /></div><div class="card-body"><div class="title">{{ item.title }}</div><div
+        v-if="item.description"
+        class="description"
+      >{{ item.description }}</div><div
+        v-if="!isReadOnly"
+        class="card-actions"
+      ><el-button
+        type="text"
+        size="small"
+        @click="openForm('update', item)"
+      >编辑</el-button><el-button
+        type="text"
+        size="small"
+        class="danger"
+        @click="handleDelete(item.id)"
+      >删除</el-button></div></div></el-card></el-col>
+      <el-col
+        v-if="!loading && list.length === 0"
+        :span="24"
+      ><el-empty description="暂无 SIP 数据" /></el-col>
     </el-row>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="500px" append-to-body>
-      <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="100px">
-        <el-form-item label="标题" prop="title"><el-input v-model="formData.title" placeholder="请输入标题" /></el-form-item>
-        <el-form-item label="展示顺序" prop="sort"><el-input-number v-model="formData.sort" :min="0" controls-position="right" class="full-width" /></el-form-item>
-        <el-form-item label="内容说明"><el-input v-model="formData.description" type="textarea" :rows="3" placeholder="请输入详细描述" /></el-form-item>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="form"
+        v-loading="formLoading"
+        :model="formData"
+        :rules="formRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="标题"
+          prop="title"
+        ><el-input
+          v-model="formData.title"
+          placeholder="请输入标题"
+        /></el-form-item>
+        <el-form-item
+          label="展示顺序"
+          prop="sort"
+        ><el-input-number
+          v-model="formData.sort"
+          :min="0"
+          controls-position="right"
+          class="full-width"
+        /></el-form-item>
+        <el-form-item label="内容说明"><el-input
+          v-model="formData.description"
+          type="textarea"
+          :rows="3"
+          placeholder="请输入详细描述"
+        /></el-form-item>
         <el-form-item label="所属工序"><pro-process-select v-model="formData.processId" /></el-form-item>
         <el-form-item label="图片"><upload-img v-model="formData.url" /></el-form-item>
-        <el-form-item label="备注"><el-input v-model="formData.remark" type="textarea" placeholder="请输入备注" /></el-form-item>
+        <el-form-item label="备注"><el-input
+          v-model="formData.remark"
+          type="textarea"
+          placeholder="请输入备注"
+        /></el-form-item>
       </el-form>
-      <span slot="footer"><el-button type="primary" :disabled="formLoading" @click="submitForm">确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
+      <span slot="footer"><el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >确 定</el-button><el-button @click="dialogVisible = false">取 消</el-button></span>
     </el-dialog>
   </div>
 </template>

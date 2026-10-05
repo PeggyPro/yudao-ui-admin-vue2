@@ -14,8 +14,14 @@
     </div>
     <div class="calendar-panel">
       <calendar-legend />
-      <el-calendar v-model="currentDate" v-loading="loading">
-        <template slot="dateCell" slot-scope="{ data }">
+      <el-calendar
+        v-model="currentDate"
+        v-loading="loading"
+      >
+        <template
+          slot="dateCell"
+          slot-scope="{ data }"
+        >
           <calendar-date-cell
             :day="data.day"
             :holiday-set="holidaySet"

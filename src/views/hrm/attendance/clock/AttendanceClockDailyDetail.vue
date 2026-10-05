@@ -1,7 +1,16 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="820px" append-to-body>
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="820px"
+    append-to-body
+  >
     <div v-loading="loading">
-      <el-descriptions v-if="detailData" :column="2" border>
+      <el-descriptions
+        v-if="detailData"
+        :column="2"
+        border
+      >
         <el-descriptions-item label="班次">{{ detailData.shiftName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="考勤结果">
           {{ detailData.attendanceResult || '-' }}
@@ -13,20 +22,52 @@
           {{ detailData.clockList ? detailData.clockList.length : 0 }}
         </el-descriptions-item>
       </el-descriptions>
-      <el-table :data="detailData && detailData.clockList ? detailData.clockList : []" class="clock-table">
-        <el-table-column label="打卡类型" prop="type" width="110">
+      <el-table
+        :data="detailData && detailData.clockList ? detailData.clockList : []"
+        class="clock-table"
+      >
+        <el-table-column
+          label="打卡类型"
+          prop="type"
+          width="110"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.HRM_ATTENDANCE_CLOCK_TYPE" :value="scope.row.type" />
+            <dict-tag
+              :type="DICT_TYPE.HRM_ATTENDANCE_CLOCK_TYPE"
+              :value="scope.row.type"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="应打卡时间" prop="attendanceTime" width="170" :formatter="dateFormatter" />
-        <el-table-column label="打卡时间" prop="clockTime" width="170" :formatter="dateFormatter" />
-        <el-table-column label="状态" prop="status" width="90">
+        <el-table-column
+          label="应打卡时间"
+          prop="attendanceTime"
+          width="170"
+          :formatter="dateFormatter"
+        />
+        <el-table-column
+          label="打卡时间"
+          prop="clockTime"
+          width="170"
+          :formatter="dateFormatter"
+        />
+        <el-table-column
+          label="状态"
+          prop="status"
+          width="90"
+        >
           <template slot-scope="scope">
-            <dict-tag :type="DICT_TYPE.HRM_ATTENDANCE_CLOCK_STATUS" :value="scope.row.status" />
+            <dict-tag
+              :type="DICT_TYPE.HRM_ATTENDANCE_CLOCK_STATUS"
+              :value="scope.row.status"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="地点" prop="address" min-width="140" show-overflow-tooltip />
+        <el-table-column
+          label="地点"
+          prop="address"
+          min-width="140"
+          show-overflow-tooltip
+        />
       </el-table>
     </div>
     <span slot="footer">

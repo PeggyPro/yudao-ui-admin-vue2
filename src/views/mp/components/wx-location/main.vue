@@ -11,7 +11,7 @@
           <img
             :src="staticMapUrl"
             alt="位置地图"
-          />
+          >
         </el-row>
         <el-row>
           <i class="el-icon-map-location" />{{ label }}

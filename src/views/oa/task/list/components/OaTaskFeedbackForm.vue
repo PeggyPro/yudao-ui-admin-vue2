@@ -1,5 +1,10 @@
 <template>
-  <Dialog title="新增反馈" v-model="dialogVisible" width="600px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    title="新增反馈"
+    width="600px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,8 +12,14 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="任务状态" prop="status">
-        <el-select v-model="formData.status" style="width: 100%">
+      <el-form-item
+        label="任务状态"
+        prop="status"
+      >
+        <el-select
+          v-model="formData.status"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
@@ -17,7 +28,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="反馈内容" prop="content">
+      <el-form-item
+        label="反馈内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           :rows="5"
@@ -28,22 +42,32 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
-      <el-button :loading="formLoading" @click="dialogVisible = false">取 消</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
+      <el-button
+        :loading="formLoading"
+        @click="dialogVisible = false"
+      >取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as TaskApi from '@/api/oa/task'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { OA_TASK_STATUS } from '@/views/oa/utils/constants-collab'
 
 export default {
   name: 'OaTaskFeedbackForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

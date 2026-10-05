@@ -1,14 +1,55 @@
 <template>
-  <el-dialog title="修改用户余额" :visible.sync="dialogVisible" width="600px" append-to-body>
-    <el-form ref="form" v-loading="formLoading" :model="formData" :rules="formRules" label-width="130px">
-      <el-form-item label="用户编号"><el-input v-model="formData.id" disabled /></el-form-item>
-      <el-form-item label="用户昵称"><el-input v-model="formData.nickname" disabled /></el-form-item>
-      <el-form-item label="变动前余额(元)"><el-input :value="formData.balance" disabled /></el-form-item>
-      <el-form-item label="变动类型" prop="changeType"><el-radio-group v-model="formData.changeType"><el-radio :label="1">增加</el-radio><el-radio :label="-1">减少</el-radio></el-radio-group></el-form-item>
-      <el-form-item label="变动余额(元)" prop="changeBalance"><el-input-number v-model="formData.changeBalance" :min="0" :precision="2" :step="0.1" /></el-form-item>
-      <el-form-item label="变动后余额(元)"><el-input :value="balanceResult" disabled /></el-form-item>
+  <el-dialog
+    title="修改用户余额"
+    :visible.sync="dialogVisible"
+    width="600px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      v-loading="formLoading"
+      :model="formData"
+      :rules="formRules"
+      label-width="130px"
+    >
+      <el-form-item label="用户编号"><el-input
+        v-model="formData.id"
+        disabled
+      /></el-form-item>
+      <el-form-item label="用户昵称"><el-input
+        v-model="formData.nickname"
+        disabled
+      /></el-form-item>
+      <el-form-item label="变动前余额(元)"><el-input
+        :value="formData.balance"
+        disabled
+      /></el-form-item>
+      <el-form-item
+        label="变动类型"
+        prop="changeType"
+      ><el-radio-group v-model="formData.changeType"><el-radio :label="1">增加</el-radio><el-radio :label="-1">减少</el-radio></el-radio-group></el-form-item>
+      <el-form-item
+        label="变动余额(元)"
+        prop="changeBalance"
+      ><el-input-number
+        v-model="formData.changeBalance"
+        :min="0"
+        :precision="2"
+        :step="0.1"
+      /></el-form-item>
+      <el-form-item label="变动后余额(元)"><el-input
+        :value="balanceResult"
+        disabled
+      /></el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer"><el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button><el-button @click="cancel">取 消</el-button></div>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    ><el-button
+      type="primary"
+      :loading="formLoading"
+      @click="submitForm"
+    >确 定</el-button><el-button @click="cancel">取 消</el-button></div>
   </el-dialog>
 </template>
 

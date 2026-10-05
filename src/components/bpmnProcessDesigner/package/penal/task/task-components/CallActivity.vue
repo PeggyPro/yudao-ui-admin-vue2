@@ -1,9 +1,21 @@
 <template>
   <div class="call-activity-config">
-    <el-form-item v-if="supportsFlowableAttributes" label="实例名称" prop="processInstanceName">
-      <el-input v-model="form.processInstanceName" clearable placeholder="请输入实例名称" @change="updateCallActivityAttr('processInstanceName')" />
+    <el-form-item
+      v-if="supportsFlowableAttributes"
+      label="实例名称"
+      prop="processInstanceName"
+    >
+      <el-input
+        v-model="form.processInstanceName"
+        clearable
+        placeholder="请输入实例名称"
+        @change="updateCallActivityAttr('processInstanceName')"
+      />
     </el-form-item>
-    <el-form-item label="被调用流程" prop="calledElement">
+    <el-form-item
+      label="被调用流程"
+      prop="calledElement"
+    >
       <el-input
         v-model="form.calledElement"
         clearable
@@ -11,49 +23,152 @@
         @change="updateCallActivityAttr('calledElement')"
       />
     </el-form-item>
-    <el-form-item v-if="supportsFlowableAttributes" label="调用标识类型" prop="calledElementType">
-      <el-select v-model="form.calledElementType" style="width: 100%" @change="updateCallActivityAttr('calledElementType')">
-        <el-option label="流程标识（key）" value="key" />
-        <el-option label="流程定义 ID" value="id" />
+    <el-form-item
+      v-if="supportsFlowableAttributes"
+      label="调用标识类型"
+      prop="calledElementType"
+    >
+      <el-select
+        v-model="form.calledElementType"
+        style="width: 100%"
+        @change="updateCallActivityAttr('calledElementType')"
+      >
+        <el-option
+          label="流程标识（key）"
+          value="key"
+        />
+        <el-option
+          label="流程定义 ID"
+          value="id"
+        />
       </el-select>
     </el-form-item>
-    <el-form-item v-if="supportsFlowableAttributes" label="继承变量" prop="inheritVariables">
-      <el-switch v-model="form.inheritVariables" @change="updateCallActivityAttr('inheritVariables')" />
+    <el-form-item
+      v-if="supportsFlowableAttributes"
+      label="继承变量"
+      prop="inheritVariables"
+    >
+      <el-switch
+        v-model="form.inheritVariables"
+        @change="updateCallActivityAttr('inheritVariables')"
+      />
     </el-form-item>
-    <el-form-item v-if="supportsFlowableAttributes" label="继承业务键" prop="inheritBusinessKey">
-      <el-switch v-model="form.inheritBusinessKey" @change="updateCallActivityAttr('inheritBusinessKey')" />
+    <el-form-item
+      v-if="supportsFlowableAttributes"
+      label="继承业务键"
+      prop="inheritBusinessKey"
+    >
+      <el-switch
+        v-model="form.inheritBusinessKey"
+        @change="updateCallActivityAttr('inheritBusinessKey')"
+      />
     </el-form-item>
-    <el-form-item v-if="supportsFlowableAttributes && !form.inheritBusinessKey" label="业务键表达式" prop="businessKey">
-      <el-input v-model="form.businessKey" clearable placeholder="请输入业务键表达式" @change="updateCallActivityAttr('businessKey')" />
+    <el-form-item
+      v-if="supportsFlowableAttributes && !form.inheritBusinessKey"
+      label="业务键表达式"
+      prop="businessKey"
+    >
+      <el-input
+        v-model="form.businessKey"
+        clearable
+        placeholder="请输入业务键表达式"
+        @change="updateCallActivityAttr('businessKey')"
+      />
     </el-form-item>
 
     <el-divider content-position="left">输入参数</el-divider>
-    <el-table :data="inVariables" size="mini" border max-height="240" fit>
-      <el-table-column prop="source" label="源" min-width="100" show-overflow-tooltip />
-      <el-table-column prop="target" label="目标" min-width="100" show-overflow-tooltip />
-      <el-table-column label="操作" width="110">
+    <el-table
+      :data="inVariables"
+      size="mini"
+      border
+      max-height="240"
+      fit
+    >
+      <el-table-column
+        prop="source"
+        label="源"
+        min-width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="target"
+        label="目标"
+        min-width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="操作"
+        width="110"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="openVariableForm('in', scope.row, scope.$index)">编辑</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="openVariableForm('in', scope.row, scope.$index)"
+          >编辑</el-button>
           <el-divider direction="vertical" />
-          <el-button type="text" size="mini" class="danger-text" @click="removeVariable('in', scope.$index)">移除</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            class="danger-text"
+            @click="removeVariable('in', scope.$index)"
+          >移除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="text" size="mini" icon="el-icon-plus" @click="openVariableForm('in', null, -1)">添加参数</el-button>
+    <el-button
+      type="text"
+      size="mini"
+      icon="el-icon-plus"
+      @click="openVariableForm('in', null, -1)"
+    >添加参数</el-button>
 
     <el-divider content-position="left">输出参数</el-divider>
-    <el-table :data="outVariables" size="mini" border max-height="240" fit>
-      <el-table-column prop="source" label="源" min-width="100" show-overflow-tooltip />
-      <el-table-column prop="target" label="目标" min-width="100" show-overflow-tooltip />
-      <el-table-column label="操作" width="110">
+    <el-table
+      :data="outVariables"
+      size="mini"
+      border
+      max-height="240"
+      fit
+    >
+      <el-table-column
+        prop="source"
+        label="源"
+        min-width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="target"
+        label="目标"
+        min-width="100"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        label="操作"
+        width="110"
+      >
         <template slot-scope="scope">
-          <el-button type="text" size="mini" @click="openVariableForm('out', scope.row, scope.$index)">编辑</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="openVariableForm('out', scope.row, scope.$index)"
+          >编辑</el-button>
           <el-divider direction="vertical" />
-          <el-button type="text" size="mini" class="danger-text" @click="removeVariable('out', scope.$index)">移除</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            class="danger-text"
+            @click="removeVariable('out', scope.$index)"
+          >移除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="text" size="mini" icon="el-icon-plus" @click="openVariableForm('out', null, -1)">添加参数</el-button>
+    <el-button
+      type="text"
+      size="mini"
+      icon="el-icon-plus"
+      @click="openVariableForm('out', null, -1)"
+    >添加参数</el-button>
 
     <el-dialog
       title="参数配置"
@@ -62,17 +177,39 @@
       :visible.sync="variableVisible"
       :close-on-click-modal="false"
     >
-      <el-form ref="variableForm" :model="variable" :rules="variableRules" label-width="60px">
-        <el-form-item label="源" prop="source">
-          <el-input v-model="variable.source" clearable placeholder="请输入源变量" />
+      <el-form
+        ref="variableForm"
+        :model="variable"
+        :rules="variableRules"
+        label-width="60px"
+      >
+        <el-form-item
+          label="源"
+          prop="source"
+        >
+          <el-input
+            v-model="variable.source"
+            clearable
+            placeholder="请输入源变量"
+          />
         </el-form-item>
-        <el-form-item label="目标" prop="target">
-          <el-input v-model="variable.target" clearable placeholder="请输入目标变量" />
+        <el-form-item
+          label="目标"
+          prop="target"
+        >
+          <el-input
+            v-model="variable.target"
+            clearable
+            placeholder="请输入目标变量"
+          />
         </el-form-item>
       </el-form>
       <span slot="footer">
         <el-button @click="variableVisible = false">取消</el-button>
-        <el-button type="primary" @click="saveVariable">确定</el-button>
+        <el-button
+          type="primary"
+          @click="saveVariable"
+        >确定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -81,15 +218,15 @@
 <script>
 export default {
   name: 'CallActivity',
-  props: {
-    id: String,
-    type: String
-  },
   inject: {
     prefix: {
       from: 'prefix',
       default: 'flowable'
     }
+  },
+  props: {
+    id: String,
+    type: String
   },
   data() {
     return {
@@ -143,6 +280,9 @@ export default {
         this.$nextTick(this.reset)
       }
     }
+  },
+  beforeDestroy() {
+    this.bpmnElement = null
   },
   methods: {
     getBpmnInstances() {
@@ -248,9 +388,6 @@ export default {
       const extensionElements = instances.moddle.create('bpmn:ExtensionElements', { values })
       instances.modeling.updateProperties(this.bpmnElement, { extensionElements })
     }
-  },
-  beforeDestroy() {
-    this.bpmnElement = null
   }
 }
 </script>

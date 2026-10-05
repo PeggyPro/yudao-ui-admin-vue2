@@ -6,49 +6,75 @@
         class="branch-node-readonly"
         :class="`${useTaskStatusClass(currentNode && currentNode.activityStatus)}`"
       >
-        <span class="iconfont icon-parallel icon-size parallel"></span>
+        <span class="iconfont icon-parallel icon-size parallel" />
       </div>
-      <el-button v-else class="branch-node-add" color="#626aef" @click="addCondition" plain>
+      <el-button
+        v-else
+        class="branch-node-add"
+        color="#626aef"
+        plain
+        @click="addCondition"
+      >
         添加分支
       </el-button>
       <div
-        class="branch-node-item"
         v-for="(item, index) in currentNode.conditionNodes"
         :key="index"
+        class="branch-node-item"
       >
         <template v-if="index == 0">
-          <div class="branch-line-first-top"></div>
-          <div class="branch-line-first-bottom"></div>
+          <div class="branch-line-first-top" />
+          <div class="branch-line-first-bottom" />
         </template>
         <template v-if="index + 1 == (currentNode.conditionNodes || []).length">
-          <div class="branch-line-last-top"></div>
-          <div class="branch-line-last-bottom"></div>
+          <div class="branch-line-last-top" />
+          <div class="branch-line-last-bottom" />
         </template>
         <div class="node-wrapper">
           <div class="node-container">
-            <div class="node-box" :class="`${useTaskStatusClass(item.activityStatus)}`">
+            <div
+              class="node-box"
+              :class="`${useTaskStatusClass(item.activityStatus)}`"
+            >
               <div class="branch-node-title-container">
                 <div v-if="!readonly && showInputs[index]">
                   <input
+                    v-model="item.name"
+                    v-mountedFocus
                     type="text"
                     class="input-max-width editable-title-input"
                     @blur="blurEvent(index)"
-                    v-mountedFocus
-                    v-model="item.name"
-                  />
+                  >
                 </div>
-                <div v-else class="branch-title" @click="clickEvent(index)"> {{ item.name }} </div>
+                <div
+                  v-else
+                  class="branch-title"
+                  @click="clickEvent(index)"
+                > {{ item.name }} </div>
                 <div class="branch-priority">无优先级</div>
               </div>
-              <div class="branch-node-content" @click="conditionNodeConfig(item.id)">
-                <div class="branch-node-text" :title="item.showText" v-if="item.showText">
+              <div
+                class="branch-node-content"
+                @click="conditionNodeConfig(item.id)"
+              >
+                <div
+                  v-if="item.showText"
+                  class="branch-node-text"
+                  :title="item.showText"
+                >
                   {{ item.showText }}
                 </div>
-                <div class="branch-node-text" v-else>
+                <div
+                  v-else
+                  class="branch-node-text"
+                >
                   {{ NODE_DEFAULT_TEXT.get(NodeType.CONDITION_NODE) }}
                 </div>
               </div>
-              <div v-if="!readonly" class="node-toolbar">
+              <div
+                v-if="!readonly"
+                class="node-toolbar"
+              >
                 <div class="toolbar-icon">
                   <svg-icon
                     color="#0089ff"
@@ -59,7 +85,10 @@
                 </div>
               </div>
             </div>
-            <NodeHandler :child-node.sync="item.childNode" :current-node="item" />
+            <NodeHandler
+              :child-node.sync="item.childNode"
+              :current-node="item"
+            />
           </div>
         </div>
         <!-- 递归显示子节点  -->
@@ -132,7 +161,7 @@ const addCondition = () => {
   const conditionNodes = currentNode.value.conditionNodes
   if (conditionNodes) {
     const len = conditionNodes.length
-    let lastIndex = len - 1
+    const lastIndex = len - 1
     const conditionData = {
       id: 'Flow_' + generateUUID(),
       name: '并行' + len,
@@ -150,7 +179,7 @@ const deleteCondition = (index) => {
   const conditionNodes = currentNode.value.conditionNodes
   if (conditionNodes) {
     conditionNodes.splice(index, 1)
-    if (conditionNodes.length == 1) {
+    if (conditionNodes.length === 1) {
       const childNode = currentNode.value.childNode
       // 更新此节点为后续孩子节点
       emits('update:modelValue', childNode)

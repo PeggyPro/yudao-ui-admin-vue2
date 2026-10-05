@@ -4,6 +4,6 @@
  * */
 
 module.exports = {
-  __init__: ["ActivitiModdleExtension"],
-  ActivitiModdleExtension: ["type", require("./activitiExtension")]
-};
+  __init__: ['ActivitiModdleExtension'],
+  ActivitiModdleExtension: ['type', require('./activitiExtension')]
+}

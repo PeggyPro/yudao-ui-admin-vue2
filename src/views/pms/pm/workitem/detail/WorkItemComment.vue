@@ -1,8 +1,21 @@
 <template>
-  <div class="work-item-comment" v-loading="loading">
-    <el-divider v-if="showTitle" content-position="left">评论</el-divider>
-    <div v-if="editable" class="comment-create">
-      <el-avatar class="comment-avatar" :size="34" :src="loginUser.avatar">
+  <div
+    v-loading="loading"
+    class="work-item-comment"
+  >
+    <el-divider
+      v-if="showTitle"
+      content-position="left"
+    >评论</el-divider>
+    <div
+      v-if="editable"
+      class="comment-create"
+    >
+      <el-avatar
+        class="comment-avatar"
+        :size="34"
+        :src="loginUser.avatar"
+      >
         {{ loginUser.nickname ? loginUser.nickname.slice(0, 1) : '' }}
       </el-avatar>
       <div class="comment-main">
@@ -15,13 +28,28 @@
           type="textarea"
         />
         <div class="comment-submit">
-          <el-button :loading="submitting" type="primary" @click="submitRootComment">发表评论</el-button>
+          <el-button
+            :loading="submitting"
+            type="primary"
+            @click="submitRootComment"
+          >发表评论</el-button>
         </div>
       </div>
     </div>
-    <el-empty v-if="commentList.length === 0" description="暂无评论" :image-size="72" />
-    <div v-for="comment in commentList" :key="comment.id" class="comment-row">
-      <el-avatar class="comment-avatar" :size="32">
+    <el-empty
+      v-if="commentList.length === 0"
+      description="暂无评论"
+      :image-size="72"
+    />
+    <div
+      v-for="comment in commentList"
+      :key="comment.id"
+      class="comment-row"
+    >
+      <el-avatar
+        class="comment-avatar"
+        :size="32"
+      >
         {{ comment.userName ? comment.userName.slice(0, 1) : '' }}
       </el-avatar>
       <div class="comment-main">
@@ -37,26 +65,58 @@
           maxlength="2000"
           type="textarea"
         />
-        <div v-else class="comment-content">{{ comment.content }}</div>
-        <div v-if="editable" class="comment-actions">
+        <div
+          v-else
+          class="comment-content"
+        >{{ comment.content }}</div>
+        <div
+          v-if="editable"
+          class="comment-actions"
+        >
           <template v-if="comment.userId === loginUserId">
-            <el-button v-if="editingId !== comment.id" type="text" @click="startEdit(comment)">编辑</el-button>
-            <el-button v-else type="text" @click="submitEdit(comment)">保存</el-button>
-            <el-button v-if="editingId === comment.id" type="text" @click="cancelEdit">取消</el-button>
+            <el-button
+              v-if="editingId !== comment.id"
+              type="text"
+              @click="startEdit(comment)"
+            >编辑</el-button>
+            <el-button
+              v-else
+              type="text"
+              @click="submitEdit(comment)"
+            >保存</el-button>
+            <el-button
+              v-if="editingId === comment.id"
+              type="text"
+              @click="cancelEdit"
+            >取消</el-button>
             <el-popconfirm
               cancel-button-text="取消"
               confirm-button-text="确定"
               title="确认删除这条评论吗？"
               @confirm="handleDelete(comment)"
             >
-              <el-button slot="reference" class="danger-button" type="text">删除</el-button>
+              <el-button
+                slot="reference"
+                class="danger-button"
+                type="text"
+              >删除</el-button>
             </el-popconfirm>
           </template>
-          <el-button type="text" @click="startReply(comment, comment)">回复</el-button>
+          <el-button
+            type="text"
+            @click="startReply(comment, comment)"
+          >回复</el-button>
         </div>
 
-        <div v-for="reply in comment.children || []" :key="reply.id" class="reply-row">
-          <el-avatar class="comment-avatar" :size="28">
+        <div
+          v-for="reply in comment.children || []"
+          :key="reply.id"
+          class="reply-row"
+        >
+          <el-avatar
+            class="comment-avatar"
+            :size="28"
+          >
             {{ reply.userName ? reply.userName.slice(0, 1) : '' }}
           </el-avatar>
           <div class="comment-main">
@@ -64,7 +124,10 @@
               <span class="comment-user">{{ reply.userName || '-' }}</span>
               <span class="comment-time">{{ formatDate(reply.createTime) }}</span>
             </div>
-            <div v-if="reply.replyUserName" class="reply-target">回复 @{{ reply.replyUserName }}</div>
+            <div
+              v-if="reply.replyUserName"
+              class="reply-target"
+            >回复 @{{ reply.replyUserName }}</div>
             <el-input
               v-if="editingId === reply.id"
               v-model="editingContent"
@@ -73,34 +136,66 @@
               maxlength="2000"
               type="textarea"
             />
-            <div v-else class="comment-content reply-content">{{ reply.content }}</div>
-            <div v-if="editable" class="comment-actions">
+            <div
+              v-else
+              class="comment-content reply-content"
+            >{{ reply.content }}</div>
+            <div
+              v-if="editable"
+              class="comment-actions"
+            >
               <template v-if="reply.userId === loginUserId">
-                <el-button v-if="editingId !== reply.id" type="text" @click="startEdit(reply)">编辑</el-button>
-                <el-button v-else type="text" @click="submitEdit(reply)">保存</el-button>
-                <el-button v-if="editingId === reply.id" type="text" @click="cancelEdit">取消</el-button>
+                <el-button
+                  v-if="editingId !== reply.id"
+                  type="text"
+                  @click="startEdit(reply)"
+                >编辑</el-button>
+                <el-button
+                  v-else
+                  type="text"
+                  @click="submitEdit(reply)"
+                >保存</el-button>
+                <el-button
+                  v-if="editingId === reply.id"
+                  type="text"
+                  @click="cancelEdit"
+                >取消</el-button>
                 <el-popconfirm
                   cancel-button-text="取消"
                   confirm-button-text="确定"
                   title="确认删除这条评论吗？"
                   @confirm="handleDelete(reply)"
                 >
-                  <el-button slot="reference" class="danger-button" type="text">删除</el-button>
+                  <el-button
+                    slot="reference"
+                    class="danger-button"
+                    type="text"
+                  >删除</el-button>
                 </el-popconfirm>
               </template>
-              <el-button type="text" @click="startReply(comment, reply)">回复</el-button>
+              <el-button
+                type="text"
+                @click="startReply(comment, reply)"
+              >回复</el-button>
             </div>
           </div>
         </div>
 
-        <div v-if="replyMainId === comment.id" class="reply-create">
+        <div
+          v-if="replyMainId === comment.id"
+          class="reply-create"
+        >
           <el-input
             v-model="replyContent"
             :placeholder="`回复 ${replyUserName}`"
             maxlength="2000"
             @keyup.enter.native="submitReply"
           />
-          <el-button :loading="submitting" type="primary" @click="submitReply">回复</el-button>
+          <el-button
+            :loading="submitting"
+            type="primary"
+            @click="submitReply"
+          >回复</el-button>
           <el-button @click="cancelReply">取消</el-button>
         </div>
       </div>

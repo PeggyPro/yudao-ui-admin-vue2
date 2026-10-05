@@ -1,24 +1,31 @@
 <template>
-  <Dialog
-    title="离职申请详情"
+  <AppDialog
     v-model="dialogVisible"
+    title="离职申请详情"
     width="900px"
     append-to-body
   >
-    <oa-resign-apply-detail v-if="dialogVisible && detailId" :id="detailId" :key="detailId" />
-    <div slot="footer" class="dialog-footer">
+    <oa-resign-apply-detail
+      v-if="dialogVisible && detailId"
+      :id="detailId"
+      :key="detailId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import OaResignApplyDetail from './detail/index.vue'
 
 export default {
   name: 'OaResignApplyDetailDialog',
-  components: { Dialog, OaResignApplyDetail },
+  components: { AppDialog, OaResignApplyDetail },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

@@ -15,7 +15,10 @@
       >
         <div class="draggable-toolbar">
           <el-tooltip content="拖动排序">
-            <svg-icon icon-class="drag" class="drag-icon" />
+            <svg-icon
+              icon-class="drag"
+              class="drag-icon"
+            />
           </el-tooltip>
           <el-tooltip content="删除">
             <i
@@ -25,10 +28,16 @@
             />
           </el-tooltip>
         </div>
-        <slot :element="element" :index="index" />
+        <slot
+          :element="element"
+          :index="index"
+        />
       </div>
     </VueDraggable>
-    <el-tooltip :disabled="limit < 1" :content="`最多添加${limit}个`">
+    <el-tooltip
+      :disabled="limit < 1"
+      :content="`最多添加${limit}个`"
+    >
       <el-button
         type="primary"
         plain

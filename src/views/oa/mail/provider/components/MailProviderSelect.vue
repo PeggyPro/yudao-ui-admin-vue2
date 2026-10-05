@@ -9,7 +9,12 @@
     style="width: 100%"
     @change="handleChange"
   >
-    <el-option v-for="item in list" :key="item.id" :label="item.name" :value="item.id" />
+    <el-option
+      v-for="item in list"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id"
+    />
   </el-select>
 </template>
 

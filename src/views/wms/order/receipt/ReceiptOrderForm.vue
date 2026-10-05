@@ -158,7 +158,10 @@
         @change="handleSkuSelect"
       />
     </el-form>
-    <span slot="footer" class="dialog-footer"><span class="footer-left"><el-button
+    <span
+      slot="footer"
+      class="dialog-footer"
+    ><span class="footer-left"><el-button
       v-if="isSavedPrepareOrder"
       v-hasPermi="['wms:receipt-order:complete']"
       type="success"

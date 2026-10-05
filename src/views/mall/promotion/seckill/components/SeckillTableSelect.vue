@@ -66,7 +66,7 @@
             @change="handleCheckAll"
           />
         </template>
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-checkbox
             v-model="checkedStatus[scope.row.id]"
             @change="handleCheckOne($event, scope.row, true)"
@@ -78,7 +78,7 @@
         label="#"
         width="55"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-radio
             v-model="selectedActivityId"
             :label="scope.row.id"
@@ -103,7 +103,7 @@
         min-width="210"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           {{ formatDate(scope.row.startTime) }} ~ {{ formatDate(scope.row.endTime) }}
         </template>
       </el-table-column>
@@ -113,7 +113,7 @@
         min-width="80"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-image
             :src="scope.row.picUrl"
             :preview-src-list="scope.row.picUrl ? [scope.row.picUrl] : []"
@@ -140,7 +140,7 @@
         min-width="100"
         show-overflow-tooltip
       >
-        <template v-slot="scope">{{ formatSeckillPrice(scope.row.products) }}</template>
+        <template slot-scope="scope">{{ formatSeckillPrice(scope.row.products) }}</template>
       </el-table-column>
       <el-table-column
         label="开团组数"
@@ -167,7 +167,7 @@
         min-width="100"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -181,7 +181,7 @@
         width="180"
         show-overflow-tooltip
       >
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
     </el-table>
     <pagination

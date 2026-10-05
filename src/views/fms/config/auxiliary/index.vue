@@ -1,8 +1,15 @@
 <template>
   <div class="app-container fms-auxiliary-page">
-    <doc-alert title="【设置】币别、科目、辅助核算、初始余额" url="https://doc.iocoder.cn/fms/config/accounting/" />
+    <doc-alert
+      title="【设置】币别、科目、辅助核算、初始余额"
+      url="https://doc.iocoder.cn/fms/config/accounting/"
+    />
 
-    <el-form :inline="true" class="account-set-toolbar" label-width="78px">
+    <el-form
+      :inline="true"
+      class="account-set-toolbar"
+      label-width="78px"
+    >
       <el-form-item label="当前账套">
         <el-select
           v-model="accountSetId"
@@ -32,8 +39,14 @@
     />
 
     <div class="auxiliary-grid">
-      <el-card class="type-card" shadow="never">
-        <div slot="header" class="card-header">
+      <el-card
+        class="type-card"
+        shadow="never"
+      >
+        <div
+          slot="header"
+          class="card-header"
+        >
           <span class="card-title">核算类别</span>
           <el-button
             v-if="isWritable"
@@ -59,9 +72,16 @@
               <div class="type-row">
                 <div class="type-name">
                   <span class="truncate">{{ scope.row.name }}</span>
-                  <el-tag v-if="!scope.row.systemPreset" class="custom-tag" size="mini">自定义</el-tag>
+                  <el-tag
+                    v-if="!scope.row.systemPreset"
+                    class="custom-tag"
+                    size="mini"
+                  >自定义</el-tag>
                 </div>
-                <div v-if="!scope.row.systemPreset" class="type-actions">
+                <div
+                  v-if="!scope.row.systemPreset"
+                  class="type-actions"
+                >
                   <el-button
                     v-if="isWritable"
                     v-hasPermi="['fms:config:auxiliary:update']"
@@ -84,7 +104,10 @@
         </el-table>
       </el-card>
 
-      <el-card class="item-card" shadow="never">
+      <el-card
+        class="item-card"
+        shadow="never"
+      >
         <fms-auxiliary-item-panel
           :account-set-id="accountSetId"
           :auxiliary-type="currentAuxiliaryType"
@@ -93,7 +116,10 @@
       </el-card>
     </div>
 
-    <fms-auxiliary-type-form ref="form" @success="getList" />
+    <fms-auxiliary-type-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

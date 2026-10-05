@@ -18,14 +18,23 @@
         left: item.left * CUBE_SIZE + 'px'
       }"
     >
-      <el-image class="magic-cube-image" fit="cover" :src="item.imgUrl" :style="imageStyle">
+      <el-image
+        class="magic-cube-image"
+        fit="cover"
+        :src="item.imgUrl"
+        :style="imageStyle"
+      >
         <template slot="error">
           <div class="image-slot">
             <div
               class="image-error"
               :style="{ width: item.width * CUBE_SIZE + 'px', height: item.height * CUBE_SIZE + 'px' }"
             >
-              <svg-icon icon-class="ep:picture" color="gray" :size="CUBE_SIZE" />
+              <svg-icon
+                icon-class="ep:picture"
+                color="gray"
+                :size="CUBE_SIZE"
+              />
             </div>
           </div>
         </template>

@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    title="关联商机"
+  <AppDialog
     v-model="dialogVisible"
+    title="关联商机"
     @closed="handleClosed"
   >
     <el-form
@@ -122,18 +122,18 @@
       ref="form"
       @success="getList"
     />
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import { getBusinessPageByCustomer } from '@/api/crm/business'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { erpPriceTableColumnFormatter } from '@/utils'
 import BusinessForm from '../BusinessForm.vue'
 
 export default {
   name: 'BusinessListModal',
-  components: { Dialog, BusinessForm },
+  components: { AppDialog, BusinessForm },
   props: {
     customerId: { type: [Number, String], default: undefined }
   },

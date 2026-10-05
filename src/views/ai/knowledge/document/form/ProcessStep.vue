@@ -1,7 +1,11 @@
 <template>
   <div class="process-step">
     <div class="process-list">
-      <div v-for="(file, index) in modelData.list" :key="file.id || index" class="process-row">
+      <div
+        v-for="(file, index) in modelData.list"
+        :key="file.id || index"
+        class="process-row"
+      >
         <div class="process-file">
           <i class="el-icon-document" />
           <span>{{ file.name }}</span>

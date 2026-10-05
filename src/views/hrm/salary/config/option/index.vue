@@ -2,9 +2,18 @@
   <div class="app-container">
     <el-card shadow="never">
       <div class="option-header">
-        <el-tabs v-model="activeTab" class="option-tabs">
-          <el-tab-pane label="企业可选项" name="enterprise" />
-          <el-tab-pane label="系统默认项" name="system" />
+        <el-tabs
+          v-model="activeTab"
+          class="option-tabs"
+        >
+          <el-tab-pane
+            label="企业可选项"
+            name="enterprise"
+          />
+          <el-tab-pane
+            label="系统默认项"
+            name="system"
+          />
         </el-tabs>
         <el-button
           v-hasPermi="['hrm:salary:option:update']"
@@ -19,15 +28,35 @@
         default-expand-all
         row-key="id"
       >
-        <el-table-column label="薪资项" min-width="220" prop="name" show-overflow-tooltip />
-        <el-table-column align="center" label="类型" width="100">
+        <el-table-column
+          label="薪资项"
+          min-width="220"
+          prop="name"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          align="center"
+          label="类型"
+          width="100"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="isCategory(scope.row)" type="info">分类</el-tag>
-            <el-tag v-else-if="scope.row.templateId" type="warning">标准项</el-tag>
+            <el-tag
+              v-if="isCategory(scope.row)"
+              type="info"
+            >分类</el-tag>
+            <el-tag
+              v-else-if="scope.row.templateId"
+              type="warning"
+            >标准项</el-tag>
             <el-tag v-else>自定义项</el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="加减类型" prop="type" width="100">
+        <el-table-column
+          align="center"
+          label="加减类型"
+          prop="type"
+          width="100"
+        >
           <template slot-scope="scope">
             <dict-tag
               v-if="!isCategory(scope.row) && scope.row.type !== HrmSalaryOptionType.CALCULATED"
@@ -37,7 +66,12 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="计税" prop="taxEnabled" width="90">
+        <el-table-column
+          align="center"
+          label="计税"
+          prop="taxEnabled"
+          width="90"
+        >
           <template slot-scope="scope">
             <dict-tag
               v-if="!isCategory(scope.row)"
@@ -66,7 +100,12 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="180" prop="remark" show-overflow-tooltip />
+        <el-table-column
+          label="备注"
+          min-width="180"
+          prop="remark"
+          show-overflow-tooltip
+        />
         <el-table-column
           v-if="activeTab === 'enterprise'"
           align="center"
@@ -111,7 +150,10 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <salary-option-form ref="form" @success="getList" />
+    <salary-option-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 
@@ -234,7 +276,9 @@ export default {
         }
         this.$modal.msgSuccess(this.$t('common.delSuccess'))
         await this.getList()
-      } catch (error) {}
+      } catch (error) {
+        // 取消操作或请求失败时保留当前状态
+      }
     }
   }
 }

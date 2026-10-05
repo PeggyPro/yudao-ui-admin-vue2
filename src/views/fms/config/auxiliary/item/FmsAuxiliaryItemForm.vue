@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" append-to-body width="520px">
+  <el-dialog
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    append-to-body
+    width="520px"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,21 +12,52 @@
       :rules="formRules"
       label-width="88px"
     >
-      <el-form-item label="编码" prop="code">
-        <el-input v-model="formData.code" maxlength="64" placeholder="请输入编码" />
+      <el-form-item
+        label="编码"
+        prop="code"
+      >
+        <el-input
+          v-model="formData.code"
+          maxlength="64"
+          placeholder="请输入编码"
+        />
       </el-form-item>
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="formData.name" maxlength="255" placeholder="请输入名称" />
+      <el-form-item
+        label="名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="255"
+          placeholder="请输入名称"
+        />
       </el-form-item>
       <template v-if="isInventory">
-        <el-form-item label="规格" prop="specification">
-          <el-input v-model="formData.specification" maxlength="255" placeholder="请输入规格" />
+        <el-form-item
+          label="规格"
+          prop="specification"
+        >
+          <el-input
+            v-model="formData.specification"
+            maxlength="255"
+            placeholder="请输入规格"
+          />
         </el-form-item>
-        <el-form-item label="单位" prop="unit">
-          <el-input v-model="formData.unit" maxlength="255" placeholder="请输入单位" />
+        <el-form-item
+          label="单位"
+          prop="unit"
+        >
+          <el-input
+            v-model="formData.unit"
+            maxlength="255"
+            placeholder="请输入单位"
+          />
         </el-form-item>
       </template>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item
+        label="备注"
+        prop="remark"
+      >
         <el-input
           v-model="formData.remark"
           maxlength="500"
@@ -31,8 +67,15 @@
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :loading="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :loading="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

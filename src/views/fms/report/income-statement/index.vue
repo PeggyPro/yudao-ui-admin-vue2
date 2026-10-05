@@ -1,8 +1,14 @@
 <template>
   <div class="app-container fms-income-statement-page">
-    <doc-alert title="【报表】财务报表" url="https://doc.iocoder.cn/fms/report/" />
+    <doc-alert
+      title="【报表】财务报表"
+      url="https://doc.iocoder.cn/fms/report/"
+    />
 
-    <el-card class="toolbar-card" shadow="never">
+    <el-card
+      class="toolbar-card"
+      shadow="never"
+    >
       <fms-report-period-bar @query="handleQuery">
         <fms-report-print-button
           v-hasPermi="['fms:report:income-statement:print']"
@@ -23,8 +29,14 @@
       </fms-report-period-bar>
     </el-card>
 
-    <el-card class="report-card" shadow="never">
-      <fms-report-check-alert :report-type="FMS_REPORT_TYPE.INCOME_STATEMENT" :result="checkResult" />
+    <el-card
+      class="report-card"
+      shadow="never"
+    >
+      <fms-report-check-alert
+        :report-type="FMS_REPORT_TYPE.INCOME_STATEMENT"
+        :result="checkResult"
+      />
       <el-table
         id="fms-income-statement-table"
         v-loading="loading"
@@ -32,7 +44,10 @@
         border
         height="calc(100vh - 290px)"
       >
-        <el-table-column label="项目" min-width="420">
+        <el-table-column
+          label="项目"
+          min-width="420"
+        >
           <template slot-scope="scope">
             <div class="item-cell">
               <span :class="itemClass(scope.row)">{{ scope.row.name }}</span>
@@ -47,17 +62,33 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="行次" prop="rowNo" width="90" />
-        <el-table-column align="right" label="本年累计金额" min-width="180">
+        <el-table-column
+          align="center"
+          label="行次"
+          prop="rowNo"
+          width="90"
+        />
+        <el-table-column
+          align="right"
+          label="本年累计金额"
+          min-width="180"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.yearAmount) }}</template>
         </el-table-column>
-        <el-table-column align="right" label="本期金额" min-width="180">
+        <el-table-column
+          align="right"
+          label="本期金额"
+          min-width="180"
+        >
           <template slot-scope="scope">{{ formatMoney(scope.row.currentAmount) }}</template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <fms-report-formula-form ref="formulaForm" @success="getList" />
+    <fms-report-formula-form
+      ref="formulaForm"
+      @success="getList"
+    />
   </div>
 </template>
 

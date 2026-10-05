@@ -85,7 +85,13 @@
     </div>
 
     <div class="ai-image-form__submit">
-      <el-button type="primary" round :loading="drawIn" :disabled="!prompt" @click="handleGenerateImage">
+      <el-button
+        type="primary"
+        round
+        :loading="drawIn"
+        :disabled="!prompt"
+        @click="handleGenerateImage"
+      >
         {{ drawIn ? '生成中' : '生成内容' }}
       </el-button>
     </div>

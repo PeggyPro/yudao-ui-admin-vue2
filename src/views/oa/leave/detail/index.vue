@@ -1,12 +1,27 @@
 <template>
-  <div v-loading="detailLoading" class="oa-leave-apply-detail">
-    <el-descriptions :column="2" border>
-      <el-descriptions-item label="标题" :span="2"> {{ detailData.title }} </el-descriptions-item>
+  <div
+    v-loading="detailLoading"
+    class="oa-leave-apply-detail"
+  >
+    <el-descriptions
+      :column="2"
+      border
+    >
+      <el-descriptions-item
+        label="标题"
+        :span="2"
+      > {{ detailData.title }} </el-descriptions-item>
       <el-descriptions-item label="紧急程度">
-        <dict-tag :type="DICT_TYPE.OA_APPLY_URGENCY" :value="detailData.urgency" />
+        <dict-tag
+          :type="DICT_TYPE.OA_APPLY_URGENCY"
+          :value="detailData.urgency"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="请假类型">
-        <dict-tag :type="DICT_TYPE.OA_LEAVE_TYPE" :value="detailData.type" />
+        <dict-tag
+          :type="DICT_TYPE.OA_LEAVE_TYPE"
+          :value="detailData.type"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="开始时间">
         {{ formatDate(detailData.startTime) }}
@@ -14,11 +29,21 @@
       <el-descriptions-item label="结束时间">
         {{ formatDate(detailData.endTime) }}
       </el-descriptions-item>
-      <el-descriptions-item label="申请原因" :span="2">
+      <el-descriptions-item
+        label="申请原因"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.reason }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="附件" :span="2">
-        <upload-file :value="detailData.fileUrls" disabled :is-show-tip="false" />
+      <el-descriptions-item
+        label="附件"
+        :span="2"
+      >
+        <upload-file
+          :value="detailData.fileUrls"
+          disabled
+          :is-show-tip="false"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="天数"> {{ detailData.days }} 天 </el-descriptions-item>
       <el-descriptions-item label="申请人"> {{ detailData.creatorName }} </el-descriptions-item>
@@ -26,10 +51,17 @@
         {{ formatDate(detailData.createTime) }}
       </el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detailData.status === BpmProcessInstanceStatus.NOT_START" type="info">
+        <el-tag
+          v-if="detailData.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+        >
           未提交
         </el-tag>
-        <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="detailData.status" />
+        <dict-tag
+          v-else
+          :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+          :value="detailData.status"
+        />
       </el-descriptions-item>
     </el-descriptions>
   </div>

@@ -1,8 +1,14 @@
 <template>
   <div class="app-container knowledge-retrieval">
     <el-row :gutter="20">
-      <el-col :xs="24" :md="12">
-        <el-card class="retrieval-card" shadow="never">
+      <el-col
+        :xs="24"
+        :md="12"
+      >
+        <el-card
+          class="retrieval-card"
+          shadow="never"
+        >
           <div slot="header">
             <h3 class="retrieval-title">召回测试</h3>
             <div class="retrieval-description">根据给定的查询文本测试召回效果。</div>
@@ -18,7 +24,11 @@
           </div>
           <div class="setting-row">
             <span class="setting-label">topK:</span>
-            <el-input-number v-model="queryParams.topK" :min="1" :max="20" />
+            <el-input-number
+              v-model="queryParams.topK"
+              :min="1"
+              :max="20"
+            />
           </div>
           <div class="setting-row">
             <span class="setting-label">相似度:</span>
@@ -31,21 +41,44 @@
             />
           </div>
           <div class="retrieval-actions">
-            <el-button type="primary" :loading="loading" @click="getRetrievalResult">
+            <el-button
+              type="primary"
+              :loading="loading"
+              @click="getRetrievalResult"
+            >
               测试
             </el-button>
           </div>
         </el-card>
       </el-col>
 
-      <el-col :xs="24" :md="12">
-        <el-card class="retrieval-card result-card" shadow="never">
-          <el-empty v-if="loading" description="正在检索中..." />
-          <div v-else-if="segments.length > 0" class="result-count">
+      <el-col
+        :xs="24"
+        :md="12"
+      >
+        <el-card
+          class="retrieval-card result-card"
+          shadow="never"
+        >
+          <el-empty
+            v-if="loading"
+            description="正在检索中..."
+          />
+          <div
+            v-else-if="segments.length > 0"
+            class="result-count"
+          >
             {{ segments.length }} 个召回段落
           </div>
-          <el-empty v-else description="暂无召回结果" />
-          <div v-for="(segment, index) in segments" :key="index" class="segment-result">
+          <el-empty
+            v-else
+            description="暂无召回结果"
+          />
+          <div
+            v-for="(segment, index) in segments"
+            :key="index"
+            class="segment-result"
+          >
             <div class="segment-meta">
               <span>
                 分段({{ segment.id }}) · {{ segment.contentLength }} 字符数 ·
@@ -61,7 +94,10 @@
                 <i class="el-icon-document" />
                 {{ segment.documentName || '未知文档' }}
               </span>
-              <el-button size="mini" @click="toggleExpand(segment)">
+              <el-button
+                size="mini"
+                @click="toggleExpand(segment)"
+              >
                 {{ segment.expanded ? '收起' : '展开' }}
                 <i :class="segment.expanded ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
               </el-button>

@@ -1,6 +1,9 @@
 <template>
   <el-container class="role-repository">
-    <chat-role-form ref="form" @success="getActiveTabRole" />
+    <chat-role-form
+      ref="form"
+      @success="getActiveTabRole"
+    />
     <el-main class="role-repository__main">
       <div class="role-repository__query">
         <el-input
@@ -10,14 +13,25 @@
           prefix-icon="el-icon-search"
           @change="getActiveTabRole"
         />
-        <el-button v-if="activeTab === 'my-role'" type="primary" @click="handleAddRole">
+        <el-button
+          v-if="activeTab === 'my-role'"
+          type="primary"
+          @click="handleAddRole"
+        >
           <i class="el-icon-user" />
           添加角色
         </el-button>
       </div>
 
-      <el-tabs v-model="activeTab" class="role-repository__tabs" @tab-click="handleTabClick">
-        <el-tab-pane label="我的角色" name="my-role">
+      <el-tabs
+        v-model="activeTab"
+        class="role-repository__tabs"
+        @tab-click="handleTabClick"
+      >
+        <el-tab-pane
+          label="我的角色"
+          name="my-role"
+        >
           <role-list
             :loading="loading"
             :role-list="myRoleList"
@@ -28,7 +42,10 @@
             @on-page="handleCardPage('my')"
           />
         </el-tab-pane>
-        <el-tab-pane label="公共角色" name="public-role">
+        <el-tab-pane
+          label="公共角色"
+          name="public-role"
+        >
           <role-category-list
             :category-list="categoryList"
             :active="activeCategory"
@@ -149,7 +166,7 @@ export default {
       const conversationId = (await ChatConversationApi.createChatConversationMy({ roleId: role.id })).data
       // 2. 关闭当前标签页并跳转到新对话
       this.$store.dispatch('tagsView/delView', this.$route)
-      await this.$router.replace({ name: 'AiChat', query: { conversationId } })
+      await this.$router.replace({ name: 'AiChat', query: { conversationId }})
     }
   }
 }

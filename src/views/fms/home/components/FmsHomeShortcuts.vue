@@ -1,5 +1,9 @@
 <template>
-  <el-card v-if="visibleShortcuts.length > 0" class="fms-home-shortcuts" shadow="never">
+  <el-card
+    v-if="visibleShortcuts.length > 0"
+    class="fms-home-shortcuts"
+    shadow="never"
+  >
     <div class="shortcut-heading">
       <div class="shortcut-title">常用功能</div>
       <div class="shortcut-subtitle">快速进入日常财务工作</div>

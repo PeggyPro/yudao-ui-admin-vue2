@@ -1,24 +1,31 @@
 <template>
-  <Dialog
-    title="转正申请详情"
+  <AppDialog
     v-model="dialogVisible"
+    title="转正申请详情"
     width="900px"
     append-to-body
   >
-    <oa-regular-apply-detail v-if="dialogVisible && detailId" :id="detailId" :key="detailId" />
-    <div slot="footer" class="dialog-footer">
+    <oa-regular-apply-detail
+      v-if="dialogVisible && detailId"
+      :id="detailId"
+      :key="detailId"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">关 闭</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import OaRegularApplyDetail from './detail/index.vue'
 
 export default {
   name: 'OaRegularApplyDetailDialog',
-  components: { Dialog, OaRegularApplyDetail },
+  components: { AppDialog, OaRegularApplyDetail },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

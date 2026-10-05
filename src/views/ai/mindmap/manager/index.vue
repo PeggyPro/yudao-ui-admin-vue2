@@ -1,6 +1,9 @@
 <template>
   <div class="app-container ai-mindmap-manager">
-    <doc-alert title="AI 思维导图" url="https://doc.iocoder.cn/ai/mindmap/" />
+    <doc-alert
+      title="AI 思维导图"
+      url="https://doc.iocoder.cn/ai/mindmap/"
+    />
 
     <el-form
       ref="queryForm"
@@ -10,8 +13,16 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="用户编号" prop="userId">
-        <el-select v-model="queryParams.userId" clearable filterable placeholder="请输入用户编号">
+      <el-form-item
+        label="用户编号"
+        prop="userId"
+      >
+        <el-select
+          v-model="queryParams.userId"
+          clearable
+          filterable
+          placeholder="请输入用户编号"
+        >
           <el-option
             v-for="item in userList"
             :key="item.id"
@@ -20,7 +31,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="提示词" prop="prompt">
+      <el-form-item
+        label="提示词"
+        prop="prompt"
+      >
         <el-input
           v-model="queryParams.prompt"
           clearable
@@ -28,7 +42,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           type="daterange"
@@ -41,30 +58,86 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="编号" align="center" prop="id" width="180" fixed="left" />
-      <el-table-column label="用户" align="center" prop="userId" width="180">
-        <template v-slot="scope">{{ userNames[scope.row.userId] || scope.row.userId }}</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+        width="180"
+        fixed="left"
+      />
+      <el-table-column
+        label="用户"
+        align="center"
+        prop="userId"
+        width="180"
+      >
+        <template slot-scope="scope">{{ userNames[scope.row.userId] || scope.row.userId }}</template>
       </el-table-column>
-      <el-table-column label="提示词" align="center" prop="prompt" width="180" />
-      <el-table-column label="思维导图" align="center" prop="generatedContent" min-width="300" />
-      <el-table-column label="模型" align="center" prop="model" width="180" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="提示词"
+        align="center"
+        prop="prompt"
+        width="180"
+      />
+      <el-table-column
+        label="思维导图"
+        align="center"
+        prop="generatedContent"
+        min-width="300"
+      />
+      <el-table-column
+        label="模型"
+        align="center"
+        prop="model"
+        width="180"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="错误信息" align="center" prop="errorMessage" />
-      <el-table-column label="操作" align="center" width="120" fixed="right">
-        <template v-slot="scope">
-          <el-button type="text" size="mini" @click="openPreview(scope.row)">预览</el-button>
+      <el-table-column
+        label="错误信息"
+        align="center"
+        prop="errorMessage"
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        width="120"
+        fixed="right"
+      >
+        <template slot-scope="scope">
           <el-button
             type="text"
             size="mini"
+            @click="openPreview(scope.row)"
+          >预览</el-button>
+          <el-button
             v-hasPermi="['ai:mind-map:delete']"
+            type="text"
+            size="mini"
             @click="handleDelete(scope.row.id)"
           >
             删除

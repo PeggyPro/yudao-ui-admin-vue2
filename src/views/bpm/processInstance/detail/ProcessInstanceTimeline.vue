@@ -14,12 +14,19 @@
             :style="{ backgroundColor: getApprovalNodeColor(node.status) }"
             :aria-label="showStatusIcon ? getStatusIconLabel(node.status) : '流程节点'"
           >
-            <i v-if="showStatusIcon" :class="getStatusIconClass(node.status)" />
+            <i
+              v-if="showStatusIcon"
+              :class="getStatusIconClass(node.status)"
+            />
           </span>
         </template>
         <div class="timeline-title">
           <span>{{ node.name }}<span v-if="node.status === TaskStatusEnum.SKIP">【跳过】</span></span>
-          <dict-tag v-if="node.status !== undefined" :type="DICT_TYPE.BPM_TASK_STATUS" :value="node.status" />
+          <dict-tag
+            v-if="node.status !== undefined"
+            :type="DICT_TYPE.BPM_TASK_STATUS"
+            :value="node.status"
+          />
         </div>
 
         <el-button
@@ -33,8 +40,14 @@
           查看子流程
         </el-button>
 
-        <div v-if="shouldSelectUser(node)" class="timeline-users">
-          <el-tooltip content="添加用户" placement="left">
+        <div
+          v-if="shouldSelectUser(node)"
+          class="timeline-users"
+        >
+          <el-tooltip
+            content="添加用户"
+            placement="left"
+          >
             <el-button
               class="timeline-add-user"
               size="mini"
@@ -48,25 +61,49 @@
             :key="user.id || user.nickname || user.name"
             class="timeline-user"
           >
-            <el-avatar v-if="user.avatar" :src="user.avatar" :size="28" />
-            <el-avatar v-else :size="28">{{ userInitial(user) }}</el-avatar>
+            <el-avatar
+              v-if="user.avatar"
+              :src="user.avatar"
+              :size="28"
+            />
+            <el-avatar
+              v-else
+              :size="28"
+            >{{ userInitial(user) }}</el-avatar>
             <span>{{ userName(user) }}</span>
           </span>
         </div>
 
-        <div v-else class="timeline-users">
+        <div
+          v-else
+          class="timeline-users"
+        >
           <template v-if="node.tasks && node.tasks.length">
-            <div v-for="task in node.tasks" :key="task.id" class="timeline-task">
-              <span v-if="task.assigneeUser || task.ownerUser" class="timeline-user">
+            <div
+              v-for="task in node.tasks"
+              :key="task.id"
+              class="timeline-task"
+            >
+              <span
+                v-if="task.assigneeUser || task.ownerUser"
+                class="timeline-user"
+              >
                 <el-avatar
                   v-if="(task.assigneeUser || task.ownerUser).avatar"
                   :src="(task.assigneeUser || task.ownerUser).avatar"
                   :size="28"
                 />
-                <el-avatar v-else :size="28">{{ userInitial(task.assigneeUser || task.ownerUser) }}</el-avatar>
+                <el-avatar
+                  v-else
+                  :size="28"
+                >{{ userInitial(task.assigneeUser || task.ownerUser) }}</el-avatar>
                 <span>{{ userName(task.assigneeUser || task.ownerUser) }}</span>
               </span>
-              <dict-tag v-if="task.status !== undefined" :type="DICT_TYPE.BPM_TASK_STATUS" :value="task.status" />
+              <dict-tag
+                v-if="task.status !== undefined"
+                :type="DICT_TYPE.BPM_TASK_STATUS"
+                :value="task.status"
+              />
               <ProcessTaskEvidence
                 v-if="shouldShowReasonAndAttachment(task, node, index)"
                 :reason="task.reason"
@@ -82,19 +119,35 @@
               :key="user.id || user.nickname || user.name"
               class="timeline-user"
             >
-              <el-avatar v-if="user.avatar" :src="user.avatar" :size="28" />
-              <el-avatar v-else :size="28">{{ userInitial(user) }}</el-avatar>
+              <el-avatar
+                v-if="user.avatar"
+                :src="user.avatar"
+                :size="28"
+              />
+              <el-avatar
+                v-else
+                :size="28"
+              >{{ userInitial(user) }}</el-avatar>
               <span>{{ userName(user) }}</span>
             </span>
           </template>
-          <span v-else class="timeline-empty">系统自动计算</span>
+          <span
+            v-else
+            class="timeline-empty"
+          >系统自动计算</span>
         </div>
 
       </el-timeline-item>
     </el-timeline>
-    <el-empty v-else description="暂无审批记录" />
+    <el-empty
+      v-else
+      description="暂无审批记录"
+    />
 
-    <UserSelectForm ref="userSelectForm" @confirm="handleUserSelectConfirm" />
+    <UserSelectForm
+      ref="userSelectForm"
+      @confirm="handleUserSelectConfirm"
+    />
   </div>
 </template>
 

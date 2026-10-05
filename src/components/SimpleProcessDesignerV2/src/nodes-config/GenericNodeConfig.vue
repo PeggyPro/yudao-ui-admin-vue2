@@ -7,9 +7,18 @@
     size="560px"
   >
     <div class="generic-node-config">
-      <el-form ref="form" :model="form" label-width="110px" size="small">
+      <el-form
+        ref="form"
+        :model="form"
+        label-width="110px"
+        size="small"
+      >
         <el-form-item label="节点名称">
-          <el-input v-model="form.name" maxlength="30" show-word-limit />
+          <el-input
+            v-model="form.name"
+            maxlength="30"
+            show-word-limit
+          />
         </el-form-item>
         <el-form-item label="展示说明">
           <el-input
@@ -21,8 +30,15 @@
         </el-form-item>
 
         <template v-if="isUserNode">
-          <el-form-item v-if="isApprovalNode" label="审批类型">
-            <el-select v-model="form.approveType" clearable placeholder="请选择审批类型">
+          <el-form-item
+            v-if="isApprovalNode"
+            label="审批类型"
+          >
+            <el-select
+              v-model="form.approveType"
+              clearable
+              placeholder="请选择审批类型"
+            >
               <el-option
                 v-for="item in approveTypes"
                 :key="item.value"
@@ -46,8 +62,17 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.USER" label="指定用户">
-            <el-select v-model="form.userIds" multiple filterable clearable placeholder="请选择用户">
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.USER"
+            label="指定用户"
+          >
+            <el-select
+              v-model="form.userIds"
+              multiple
+              filterable
+              clearable
+              placeholder="请选择用户"
+            >
               <el-option
                 v-for="item in userList"
                 :key="item.id"
@@ -56,9 +81,23 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.ROLE" label="指定角色">
-            <el-select v-model="form.roleIds" multiple filterable clearable placeholder="请选择角色">
-              <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id" />
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.ROLE"
+            label="指定角色"
+          >
+            <el-select
+              v-model="form.roleIds"
+              multiple
+              filterable
+              clearable
+              placeholder="请选择角色"
+            >
+              <el-option
+                v-for="item in roleList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -69,22 +108,69 @@
             ].includes(Number(form.candidateStrategy))"
             label="指定部门"
           >
-            <el-select v-model="form.deptIds" multiple filterable clearable placeholder="请选择部门">
-              <el-option v-for="item in deptList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-select
+              v-model="form.deptIds"
+              multiple
+              filterable
+              clearable
+              placeholder="请选择部门"
+            >
+              <el-option
+                v-for="item in deptList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.POST" label="指定岗位">
-            <el-select v-model="form.postIds" multiple filterable clearable placeholder="请选择岗位">
-              <el-option v-for="item in postList" :key="item.id" :label="item.name" :value="item.id" />
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.POST"
+            label="指定岗位"
+          >
+            <el-select
+              v-model="form.postIds"
+              multiple
+              filterable
+              clearable
+              placeholder="请选择岗位"
+            >
+              <el-option
+                v-for="item in postList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.USER_GROUP" label="指定用户组">
-            <el-select v-model="form.userGroups" multiple filterable clearable placeholder="请选择用户组">
-              <el-option v-for="item in userGroupList" :key="item.id" :label="item.name" :value="item.id" />
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.USER_GROUP"
+            label="指定用户组"
+          >
+            <el-select
+              v-model="form.userGroups"
+              multiple
+              filterable
+              clearable
+              placeholder="请选择用户组"
+            >
+              <el-option
+                v-for="item in userGroupList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.FORM_USER" label="表单内用户字段">
-            <el-select v-model="form.formUser" filterable clearable placeholder="请选择用户字段">
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.FORM_USER"
+            label="表单内用户字段"
+          >
+            <el-select
+              v-model="form.formUser"
+              filterable
+              clearable
+              placeholder="请选择用户字段"
+            >
               <el-option
                 v-for="item in userFieldList"
                 :key="item.field"
@@ -93,8 +179,16 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER" label="表单内部门字段">
-            <el-select v-model="form.formDept" filterable clearable placeholder="请选择部门字段">
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER"
+            label="表单内部门字段"
+          >
+            <el-select
+              v-model="form.formDept"
+              filterable
+              clearable
+              placeholder="请选择部门字段"
+            >
               <el-option
                 v-for="item in deptFieldList"
                 :key="item.field"
@@ -107,7 +201,11 @@
             v-if="requiresDeptLevel"
             label="部门层级"
           >
-            <el-select v-model="form.deptLevel" clearable placeholder="请选择部门层级">
+            <el-select
+              v-model="form.deptLevel"
+              clearable
+              placeholder="请选择部门层级"
+            >
               <el-option
                 v-for="item in multiLevelDeptOptions"
                 :key="item.value"
@@ -116,7 +214,10 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.candidateStrategy === CandidateStrategy.EXPRESSION" label="流程表达式">
+          <el-form-item
+            v-if="form.candidateStrategy === CandidateStrategy.EXPRESSION"
+            label="流程表达式"
+          >
             <el-input
               v-model="form.expression"
               type="textarea"
@@ -132,7 +233,11 @@
             <el-switch v-model="form.conditionSetting.defaultFlow" />
           </el-form-item>
           <el-form-item label="条件类型">
-            <el-select v-model="form.conditionSetting.conditionType" clearable placeholder="请选择条件类型">
+            <el-select
+              v-model="form.conditionSetting.conditionType"
+              clearable
+              placeholder="请选择条件类型"
+            >
               <el-option
                 v-for="item in conditionTypes"
                 :key="item.value"
@@ -153,11 +258,23 @@
 
         <template v-if="isTimerNode">
           <el-form-item label="延迟时长">
-            <el-input-number v-model="form.delaySetting.timeDuration" :min="1" />
+            <el-input-number
+              v-model="form.delaySetting.timeDuration"
+              :min="1"
+            />
           </el-form-item>
           <el-form-item label="时间单位">
-            <el-select v-model="form.delaySetting.timeUnit" clearable placeholder="请选择时间单位">
-              <el-option v-for="item in timeUnitTypes" :key="item.value" :label="item.label" :value="item.value" />
+            <el-select
+              v-model="form.delaySetting.timeUnit"
+              clearable
+              placeholder="请选择时间单位"
+            >
+              <el-option
+                v-for="item in timeUnitTypes"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </template>
@@ -195,7 +312,10 @@
     </div>
     <div class="drawer-footer">
       <el-button @click="visible = false">取 消</el-button>
-      <el-button type="primary" @click="saveConfig">保 存</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >保 存</el-button>
     </div>
   </el-drawer>
 </template>
@@ -577,12 +697,6 @@ export default {
   components: {
     HttpRequestSetting
   },
-  props: {
-    flowNode: {
-      type: Object,
-      required: true
-    }
-  },
   inject: {
     roleListRef: { from: 'roleList', default: () => ({ value: [] }) },
     postListRef: { from: 'postList', default: () => ({ value: [] }) },
@@ -590,6 +704,12 @@ export default {
     deptListRef: { from: 'deptList', default: () => ({ value: [] }) },
     userGroupListRef: { from: 'userGroupList', default: () => ({ value: [] }) },
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) }
+  },
+  props: {
+    flowNode: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     const initialForm = this.createForm()
@@ -790,7 +910,6 @@ export default {
       // old candidateParam behind.
       if (candidateChanged) {
         const candidateParam = buildCandidateParam(merged)
-        const strategy = Number(merged.candidateStrategy)
         // For strategies whose fields are intentionally exposed only through
         // advanced JSON, retain an explicitly edited parameter. Otherwise the
         // visual controls are authoritative, including an intentional clear.

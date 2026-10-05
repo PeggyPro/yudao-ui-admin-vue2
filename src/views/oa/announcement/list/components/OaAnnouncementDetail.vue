@@ -1,7 +1,16 @@
 <template>
   <!-- 公告详情 -->
-  <Dialog title="公告详情" v-model="dialogVisible" width="780px">
-    <el-descriptions v-loading="loading" :column="1" border class="announcement-detail">
+  <AppDialog
+    v-model="dialogVisible"
+    title="公告详情"
+    width="780px"
+  >
+    <el-descriptions
+      v-loading="loading"
+      :column="1"
+      border
+      class="announcement-detail"
+    >
       <el-descriptions-item label="公告标题">{{ announcement ? announcement.title : '' }}</el-descriptions-item>
       <el-descriptions-item label="发布人">
         {{ announcement ? announcement.publisherUserName : '' }}
@@ -28,8 +37,8 @@
       </el-descriptions-item>
       <el-descriptions-item label="公告内容">
         <div
-          class="content-html"
           v-dompurify-html="(announcement && announcement.content) || ''"
+          class="content-html"
         />
       </el-descriptions-item>
       <el-descriptions-item label="相关链接">
@@ -41,18 +50,18 @@
         >打开链接</el-link>
       </el-descriptions-item>
     </el-descriptions>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import * as AnnouncementApi from '@/api/oa/announcement'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import { DICT_TYPE } from '@/utils/dict'
 import { formatDate } from '@/utils/formatTime'
 
 export default {
   name: 'OaAnnouncementDetail',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       DICT_TYPE,

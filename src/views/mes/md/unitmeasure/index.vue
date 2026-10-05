@@ -14,7 +14,10 @@
       size="small"
       @submit.native.prevent
     >
-      <el-form-item label="单位编码" prop="code">
+      <el-form-item
+        label="单位编码"
+        prop="code"
+      >
         <el-input
           v-model="queryParams.code"
           placeholder="请输入单位编码"
@@ -22,7 +25,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="单位名称" prop="name">
+      <el-form-item
+        label="单位名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           placeholder="请输入单位名称"
@@ -30,8 +36,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -41,8 +54,14 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+        <el-button
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
         <el-button
           v-hasPermi="['mes:md-unit-measure:create']"
           type="primary"
@@ -61,26 +80,70 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="单位编码" align="center" prop="code" />
-      <el-table-column label="单位名称" align="center" prop="name" />
-      <el-table-column label="是否主单位" align="center" prop="primaryFlag">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.INFRA_BOOLEAN_STRING" :value="scope.row.primaryFlag" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="单位编码"
+        align="center"
+        prop="code"
+      />
+      <el-table-column
+        label="单位名称"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="是否主单位"
+        align="center"
+        prop="primaryFlag"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
+            :value="scope.row.primaryFlag"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="与主单位换算比例" align="center" prop="changeRate" />
-      <el-table-column label="状态" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="与主单位换算比例"
+        align="center"
+        prop="changeRate"
+      />
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="130">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="130"
+      >
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['mes:md-unit-measure:update']"
             type="text"
@@ -104,7 +167,10 @@
       @pagination="getList"
     />
 
-    <unit-measure-form ref="form" @success="getList" />
+    <unit-measure-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

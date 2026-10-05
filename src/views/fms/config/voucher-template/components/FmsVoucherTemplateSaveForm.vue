@@ -1,7 +1,20 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" append-to-body title="新增凭证模板" width="480px">
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="90px">
-      <el-form-item label="模板分类" prop="categoryId">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    append-to-body
+    title="新增凭证模板"
+    width="480px"
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="90px"
+    >
+      <el-form-item
+        label="模板分类"
+        prop="categoryId"
+      >
         <fms-voucher-template-category-select
           v-model="formData.categoryId"
           :account-set-id="accountSetId"
@@ -9,15 +22,26 @@
           @change="handleCategoryChange"
         />
       </el-form-item>
-      <el-form-item label="模板名称" prop="name">
-        <el-input v-model="formData.name" maxlength="255" placeholder="请输入模板名称" />
+      <el-form-item
+        label="模板名称"
+        prop="name"
+      >
+        <el-input
+          v-model="formData.name"
+          maxlength="255"
+          placeholder="请输入模板名称"
+        />
       </el-form-item>
       <el-form-item label="保存金额">
         <el-checkbox v-model="saveMoney">保留数量、单价和借贷金额</el-checkbox>
       </el-form-item>
     </el-form>
     <div slot="footer">
-      <el-button :loading="submitting" type="primary" @click="submitForm">确 定</el-button>
+      <el-button
+        :loading="submitting"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
   </el-dialog>

@@ -1,7 +1,14 @@
 <template>
   <div class="tab-bar">
-    <div class="tab-bar-bg" :style="backgroundStyle">
-      <div v-for="(item, index) in property.items" :key="index" class="tab-bar-item">
+    <div
+      class="tab-bar-bg"
+      :style="backgroundStyle"
+    >
+      <div
+        v-for="(item, index) in property.items"
+        :key="index"
+        class="tab-bar-item"
+      >
         <el-image :src="index === 0 ? item.activeIconUrl : item.iconUrl">
           <template slot="error">
             <div class="image-error"><svg-icon icon-class="ep:picture" /></div>

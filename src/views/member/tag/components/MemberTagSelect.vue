@@ -10,7 +10,12 @@
       class="member-select-control"
       @input="$emit('input', $event)"
     >
-      <el-option v-for="tag in tags" :key="tag.id" :label="tag.name" :value="tag.id" />
+      <el-option
+        v-for="tag in tags"
+        :key="tag.id"
+        :label="tag.name"
+        :value="tag.id"
+      />
     </el-select>
     <el-button
       v-if="showAdd"
@@ -19,7 +24,10 @@
       class="member-select-add"
       @click="openForm('create')"
     >新增标签</el-button>
-    <tag-form ref="form" @success="getList" />
+    <tag-form
+      ref="form"
+      @success="getList"
+    />
   </span>
 </template>
 

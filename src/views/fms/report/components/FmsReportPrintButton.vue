@@ -1,6 +1,10 @@
 <template>
   <span class="fms-report-print-button">
-    <el-button :disabled="disabled" icon="el-icon-printer" @click="handlePrint">打印</el-button>
+    <el-button
+      :disabled="disabled"
+      icon="el-icon-printer"
+      @click="handlePrint"
+    >打印</el-button>
     <fms-print-preview ref="printPreview" />
   </span>
 </template>

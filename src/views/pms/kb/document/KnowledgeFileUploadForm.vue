@@ -1,5 +1,10 @@
 <template>
-  <Dialog title="上传文件" v-model="dialogVisible" width="560px" append-to-body>
+  <AppDialog
+    v-model="dialogVisible"
+    title="上传文件"
+    width="560px"
+    append-to-body
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -7,7 +12,10 @@
       :rules="formRules"
       label-width="80px"
     >
-      <el-form-item label="文件" prop="content">
+      <el-form-item
+        label="文件"
+        prop="content"
+      >
         <UploadFile
           v-model="formData.content"
           :file-size="PmsKnowledgeUploadFileSize"
@@ -18,15 +26,29 @@
           @update:fileSize="handleFileSizeChange"
         />
       </el-form-item>
-      <el-form-item label="文件名称" prop="title">
-        <el-input v-model="formData.title" maxlength="255" placeholder="上传后自动填充，可修改" />
+      <el-form-item
+        label="文件名称"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          maxlength="255"
+          placeholder="上传后自动填充，可修改"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
@@ -38,7 +60,7 @@ import {
   PmsKnowledgeUploadFileTypes
 } from '@/views/pms/kb/utils/constants'
 import UploadFile from '@/components/UploadFile'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 
 function getDefaultFormData() {
   return {
@@ -55,7 +77,7 @@ function getDefaultFormData() {
 
 export default {
   name: 'PmsKnowledgeFileUploadForm',
-  components: { UploadFile, Dialog },
+  components: { UploadFile, AppDialog },
   data() {
     return {
       PmsKnowledgeUploadFileSize,

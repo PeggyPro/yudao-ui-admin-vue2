@@ -1,7 +1,20 @@
 <template>
-  <el-dialog title="结转损益参数设置" :visible.sync="dialogVisible" width="680px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="formRules" label-width="230px">
-      <el-form-item label="凭证日期" prop="closingDay">
+  <el-dialog
+    title="结转损益参数设置"
+    :visible.sync="dialogVisible"
+    width="680px"
+    append-to-body
+  >
+    <el-form
+      ref="form"
+      :model="formData"
+      :rules="formRules"
+      label-width="230px"
+    >
+      <el-form-item
+        label="凭证日期"
+        prop="closingDay"
+      >
         <el-date-picker
           v-model="voucherDate"
           type="date"
@@ -11,20 +24,47 @@
           :picker-options="datePickerOptions"
         />
       </el-form-item>
-      <el-form-item label="凭证字" prop="voucherWordId">
-        <FmsVoucherWordSelect v-model="formData.voucherWordId" :options="voucherWords" class="field-width" />
+      <el-form-item
+        label="凭证字"
+        prop="voucherWordId"
+      >
+        <FmsVoucherWordSelect
+          v-model="formData.voucherWordId"
+          :options="voucherWords"
+          class="field-width"
+        />
       </el-form-item>
-      <el-form-item label="凭证摘要" prop="digest">
-        <el-input v-model="formData.digest" class="digest-width" placeholder="请输入凭证摘要" />
+      <el-form-item
+        label="凭证摘要"
+        prop="digest"
+      >
+        <el-input
+          v-model="formData.digest"
+          class="digest-width"
+          placeholder="请输入凭证摘要"
+        />
       </el-form-item>
-      <el-form-item label="凭证分类" prop="voucherType">
-        <el-radio-group v-model="formData.voucherType" class="voucher-types">
-          <el-radio v-for="item in voucherTypeOptions" :key="item.value" :label="item.value">
+      <el-form-item
+        label="凭证分类"
+        prop="voucherType"
+      >
+        <el-radio-group
+          v-model="formData.voucherType"
+          class="voucher-types"
+        >
+          <el-radio
+            v-for="item in voucherTypeOptions"
+            :key="item.value"
+            :label="item.value"
+          >
             {{ item.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="“以前年度损益调整”科目" prop="priorYearAdjustmentSubjectId">
+      <el-form-item
+        label="“以前年度损益调整”科目"
+        prop="priorYearAdjustmentSubjectId"
+      >
         <FmsSubjectSelect
           v-model="formData.priorYearAdjustmentSubjectId"
           :options="profitLossSubjects"
@@ -32,7 +72,10 @@
           placeholder="请选择科目"
         />
       </el-form-item>
-      <el-form-item label="“以前年度损益调整”结转科目" prop="adjustmentClosingSubjectId">
+      <el-form-item
+        label="“以前年度损益调整”结转科目"
+        prop="adjustmentClosingSubjectId"
+      >
         <FmsSubjectSelect
           v-model="formData.adjustmentClosingSubjectId"
           :options="closingSubjects"
@@ -40,7 +83,10 @@
           placeholder="请选择科目"
         />
       </el-form-item>
-      <el-form-item label="其他损益科目的结转科目" prop="otherClosingSubjectId">
+      <el-form-item
+        label="其他损益科目的结转科目"
+        prop="otherClosingSubjectId"
+      >
         <FmsSubjectSelect
           v-model="formData.otherClosingSubjectId"
           :options="closingSubjects"
@@ -52,7 +98,7 @@
         <el-checkbox v-model="formData.reverseBalance">
           结转方式：按余额反向结转
           <el-tooltip placement="top">
-            <div slot="content">选中时按科目实际余额的相反方向结转<br />未选中时按科目属性中定义的余额方向反向结转</div>
+            <div slot="content">选中时按科目实际余额的相反方向结转<br>未选中时按科目属性中定义的余额方向反向结转</div>
             <i class="el-icon-question" />
           </el-tooltip>
         </el-checkbox>
@@ -60,7 +106,11 @@
     </el-form>
 
     <div slot="footer">
-      <el-button type="primary" :loading="submitting" @click="submitForm">确定</el-button>
+      <el-button
+        type="primary"
+        :loading="submitting"
+        @click="submitForm"
+      >确定</el-button>
       <el-button @click="dialogVisible = false">取消</el-button>
     </div>
   </el-dialog>

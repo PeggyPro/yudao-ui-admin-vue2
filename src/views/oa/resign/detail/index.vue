@@ -1,17 +1,38 @@
 <template>
-  <div v-loading="detailLoading" class="oa-resign-apply-detail">
-    <el-descriptions :column="2" border>
-      <el-descriptions-item label="标题" :span="2"> {{ detailData.title }} </el-descriptions-item>
+  <div
+    v-loading="detailLoading"
+    class="oa-resign-apply-detail"
+  >
+    <el-descriptions
+      :column="2"
+      border
+    >
+      <el-descriptions-item
+        label="标题"
+        :span="2"
+      > {{ detailData.title }} </el-descriptions-item>
       <el-descriptions-item label="紧急程度">
-        <dict-tag :type="DICT_TYPE.OA_APPLY_URGENCY" :value="detailData.urgency" />
+        <dict-tag
+          :type="DICT_TYPE.OA_APPLY_URGENCY"
+          :value="detailData.urgency"
+        />
       </el-descriptions-item>
       <el-descriptions-item label="工作交接人">
-        <user-select-v2 :value="detailData.handoverUserId" disabled />
+        <user-select-v2
+          :value="detailData.handoverUserId"
+          disabled
+        />
       </el-descriptions-item>
-      <el-descriptions-item label="未完成事宜" :span="2">
+      <el-descriptions-item
+        label="未完成事宜"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.unfinishedWork }}</span>
       </el-descriptions-item>
-      <el-descriptions-item label="申请原因" :span="2">
+      <el-descriptions-item
+        label="申请原因"
+        :span="2"
+      >
         <span class="pre-wrap">{{ detailData.reason }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="是否有费用报销未完成">
@@ -25,10 +46,17 @@
         {{ formatDate(detailData.createTime) }}
       </el-descriptions-item>
       <el-descriptions-item label="审批状态">
-        <el-tag v-if="detailData.status === BpmProcessInstanceStatus.NOT_START" type="info">
+        <el-tag
+          v-if="detailData.status === BpmProcessInstanceStatus.NOT_START"
+          type="info"
+        >
           未提交
         </el-tag>
-        <dict-tag v-else :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="detailData.status" />
+        <dict-tag
+          v-else
+          :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
+          :value="detailData.status"
+        />
       </el-descriptions-item>
     </el-descriptions>
   </div>

@@ -1,15 +1,64 @@
 <template>
   <div class="related-list">
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="入库单编号" align="center" prop="receiptCode" min-width="160"><template v-slot="scope"><el-button type="text" @click="handleDetail(scope.row.receiptId)">{{ scope.row.receiptCode }}</el-button></template></el-table-column>
-      <el-table-column label="采购订单号" align="center" prop="purchaseOrderCode" min-width="150" />
-      <el-table-column label="物料编码" align="center" prop="itemCode" width="140" />
-      <el-table-column label="物料名称" align="center" prop="itemName" min-width="150" />
-      <el-table-column label="规格型号" align="center" prop="specification" min-width="120" />
-      <el-table-column label="单位" align="center" prop="unitMeasureName" width="80" />
-      <el-table-column label="入库数量" align="center" prop="receivedQuantity" width="100" />
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="入库单编号"
+        align="center"
+        prop="receiptCode"
+        min-width="160"
+      ><template slot-scope="scope"><el-button
+        type="text"
+        @click="handleDetail(scope.row.receiptId)"
+      >{{ scope.row.receiptCode }}</el-button></template></el-table-column>
+      <el-table-column
+        label="采购订单号"
+        align="center"
+        prop="purchaseOrderCode"
+        min-width="150"
+      />
+      <el-table-column
+        label="物料编码"
+        align="center"
+        prop="itemCode"
+        width="140"
+      />
+      <el-table-column
+        label="物料名称"
+        align="center"
+        prop="itemName"
+        min-width="150"
+      />
+      <el-table-column
+        label="规格型号"
+        align="center"
+        prop="specification"
+        min-width="120"
+      />
+      <el-table-column
+        label="单位"
+        align="center"
+        prop="unitMeasureName"
+        width="80"
+      />
+      <el-table-column
+        label="入库数量"
+        align="center"
+        prop="receivedQuantity"
+        width="100"
+      />
     </el-table>
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNo"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
     <item-receipt-form ref="form" />
   </div>
 </template>

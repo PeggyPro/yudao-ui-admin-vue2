@@ -8,7 +8,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="流程标识" prop="code">
+      <el-form-item
+        label="流程标识"
+        prop="code"
+      >
         <el-input
           v-model="queryParams.code"
           clearable
@@ -16,7 +19,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="流程名称" prop="name">
+      <el-form-item
+        label="流程名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           clearable
@@ -24,8 +30,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" clearable placeholder="状态">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
+        <el-select
+          v-model="queryParams.status"
+          clearable
+          placeholder="状态"
+        >
           <el-option
             v-for="dict in statusOptions"
             :key="dict.value"
@@ -34,7 +47,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           type="daterange"
@@ -47,13 +63,20 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
         <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
+        <el-button
+          v-hasPermi="['ai:workflow:create']"
           type="primary"
           plain
           icon="el-icon-plus"
-          v-hasPermi="['ai:workflow:create']"
           @click="openForm('create')"
         >
           新增
@@ -61,33 +84,71 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="流程标识" align="center" prop="code" />
-      <el-table-column label="流程名称" align="center" prop="name" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">{{ parseTime(scope.row.createTime) }}</template>
+    <el-table
+      v-loading="loading"
+      :data="list"
+      stripe
+      :show-overflow-tooltip="true"
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+      />
+      <el-table-column
+        label="流程标识"
+        align="center"
+        prop="code"
+      />
+      <el-table-column
+        label="流程名称"
+        align="center"
+        prop="name"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="状态" align="center" prop="status">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+      />
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :type="DICT_TYPE.COMMON_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="150">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="150"
+      >
+        <template slot-scope="scope">
           <el-button
+            v-hasPermi="['ai:workflow:update']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:workflow:update']"
             @click="openForm('update', scope.row.id)"
           >
             修改
           </el-button>
           <el-button
+            v-hasPermi="['ai:workflow:delete']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:workflow:delete']"
             @click="handleDelete(scope.row.id)"
           >
             删除

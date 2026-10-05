@@ -25,7 +25,7 @@
               :src="article.picUrl || article.thumbUrl"
               height="120px"
               alt=""
-            />
+            >
             <div class="news-content-title">
               <span>{{ article.title }}</span>
             </div>
@@ -47,7 +47,7 @@
                 :src="article.picUrl || article.thumbUrl"
                 height="100%"
                 alt=""
-              />
+              >
             </div>
           </div>
         </div>

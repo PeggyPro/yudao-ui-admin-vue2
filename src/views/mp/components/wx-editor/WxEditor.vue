@@ -6,15 +6,29 @@
 -->
 <template>
   <div id="wxEditor">
-    <div v-loading="quillUpdateImg" element-loading-text="请稍等，图片上传中">
+    <div
+      v-loading="quillUpdateImg"
+      element-loading-text="请稍等，图片上传中"
+    >
       <!-- 图片上传组件辅助-->
-      <el-upload class="avatar-uploader" name="file" :action="actionUrl" :headers="headers"
-                 :show-file-list="false" :data="uploadData"
-                 :on-success="uploadSuccess" :on-error="uploadError" :before-upload="beforeUpload">
-      </el-upload>
-      <quill-editor class="editor" v-model="content" ref="myQuillEditor" :options="editorOption"
-              @change="onEditorChange($event)">
-      </quill-editor>
+      <el-upload
+        class="avatar-uploader"
+        name="file"
+        :action="actionUrl"
+        :headers="headers"
+        :show-file-list="false"
+        :data="uploadData"
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
+        :before-upload="beforeUpload"
+      />
+      <quill-editor
+        ref="myQuillEditor"
+        v-model="content"
+        class="editor"
+        :options="editorOption"
+        @change="onEditorChange($event)"
+      />
     </div>
   </div>
 </template>
@@ -22,29 +36,33 @@
 <script>
 // 工具栏配置
 const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
-  ["blockquote", "code-block"], // 引用  代码块
+  ['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
+  ['blockquote', 'code-block'], // 引用  代码块
   [{ header: 1 }, { header: 2 }], // 1、2 级标题
-  [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
-  [{ script: "sub" }, { script: "super" }], // 上标/下标
-  [{ indent: "-1" }, { indent: "+1" }], // 缩进
+  [{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表
+  [{ script: 'sub' }, { script: 'super' }], // 上标/下标
+  [{ indent: '-1' }, { indent: '+1' }], // 缩进
   // [{'direction': 'rtl'}],                         // 文本方向
-  [{ size: ["small", false, "large", "huge"] }], // 字体大小
+  [{ size: ['small', false, 'large', 'huge'] }], // 字体大小
   [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
   [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
   [{ font: [] }], // 字体种类
   [{ align: [] }], // 对齐方式
-  ["clean"], // 清除文本格式
-  ["link", "image", "video"] // 链接、图片、视频
+  ['clean'], // 清除文本格式
+  ['link', 'image', 'video'] // 链接、图片、视频
 ]
 
-import { quillEditor } from "vue-quill-editor"
-import "quill/dist/quill.core.css"
-import "quill/dist/quill.snow.css"
-import "quill/dist/quill.bubble.css"
-import { getAccessToken } from "@/utils/auth";
+import { quillEditor } from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import { getAccessToken } from '@/utils/auth'
 
 export default {
+  name: 'wxEditor',
+  components: {
+    quillEditor
+  },
   props: {
     /* 公众号账号编号 */
     accountId: {
@@ -61,19 +79,15 @@ export default {
       default: 4000 // kb
     }
   },
-  name: 'wxEditor',
-  components: {
-    quillEditor
-  },
   data() {
     return {
       editorType: '1',
-      content: this.value.replace(/data-src/g, "src"),
+      content: this.value.replace(/data-src/g, 'src'),
 
       quillUpdateImg: false, // 根据图片上传状态来确定是否显示loading动画，刚开始是false,不显示
       editorOption: {
-        theme: "snow", // or 'bubble'
-        placeholder: "请输入文章内容",
+        theme: 'snow', // or 'bubble'
+        placeholder: '请输入文章内容',
         modules: {
           toolbar: {
             container: toolbarOptions,
@@ -82,35 +96,35 @@ export default {
               image: function(value) {
                 if (value) {
                   // 触发input框选择图片文件
-                  document.querySelector(".avatar-uploader input").click();
+                  document.querySelector('.avatar-uploader input').click()
                 } else {
-                  this.quill.format("image", false);
+                  this.quill.format('image', false)
                 }
               },
               link: function(value) {
                 if (value) {
-                  const href = prompt('注意！只支持公众号图文链接');
-                  this.quill.format("link", href);
+                  const href = prompt('注意！只支持公众号图文链接')
+                  this.quill.format('link', href)
                 } else {
-                  this.quill.format("link", false);
+                  this.quill.format('link', false)
                 }
-              },
+              }
             }
           }
         }
       },
-      actionUrl: process.env.VUE_APP_BASE_API +'/admin-api/mp/material/upload-news-image', // 这里写你要上传的图片服务器地址
-      headers: { Authorization: "Bearer " + getAccessToken() }, // 设置上传的请求头部
+      actionUrl: process.env.VUE_APP_BASE_API + '/admin-api/mp/material/upload-news-image', // 这里写你要上传的图片服务器地址
+      headers: { Authorization: 'Bearer ' + getAccessToken() }, // 设置上传的请求头部
       uploadData: {
-        "type": 'image', // TODO 芋艿：试试要不要换成 thumb
-        "accountId": this.accountId,
-      },
+        'type': 'image', // TODO 芋艿：试试要不要换成 thumb
+        'accountId': this.accountId
+      }
     }
   },
   methods: {
     onEditorChange(editor) {
-      //内容改变事件
-      this.$emit("input", this.content)
+      // 内容改变事件
+      this.$emit('input', this.content)
     },
 
     // 富文本图片上传前
@@ -124,12 +138,12 @@ export default {
     uploadSuccess(res, file) {
       // res为图片服务器返回的数据
       // 获取富文本组件实例
-      let quill = this.$refs.myQuillEditor.quill
+      const quill = this.$refs.myQuillEditor.quill
       // 如果上传成功
       const link = res.data
-      if (link){
+      if (link) {
         // 获取光标所在位置
-        let length = quill.getSelection().index;
+        const length = quill.getSelection().index
         // 插入图片  res.info为服务器返回的图片地址
         quill.insertEmbed(length, 'image', link)
         // 调整光标到最后
@@ -138,13 +152,13 @@ export default {
         this.$message.error('图片插入失败')
       }
       // loading 动画消失
-      this.quillUpdateImg = false;
+      this.quillUpdateImg = false
     },
     // 富文本图片上传失败
     uploadError() {
       // loading 动画消失
-      this.quillUpdateImg = false;
-      this.$message.error("图片插入失败");
+      this.quillUpdateImg = false
+      this.$message.error('图片插入失败')
     }
   }
 }

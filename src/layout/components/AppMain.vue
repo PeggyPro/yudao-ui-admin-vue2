@@ -1,8 +1,14 @@
 <template>
   <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
+    <transition
+      name="fade-transform"
+      mode="out-in"
+    >
       <keep-alive :include="cachedViews">
-        <router-view v-if="!$route.meta.link" :key="key" />
+        <router-view
+          v-if="!$route.meta.link"
+          :key="key"
+        />
       </keep-alive>
     </transition>
     <iframe-toggle />
@@ -11,8 +17,8 @@
 </template>
 
 <script>
-import iframeToggle from "./IframeToggle/index"
-import AppFooter from "./Footer/index.vue"
+import iframeToggle from './IframeToggle/index'
+import AppFooter from './Footer/index.vue'
 
 export default {
   name: 'AppMain',

@@ -5,8 +5,15 @@
       url="https://doc.iocoder.cn/fms/config/accounting/"
     />
 
-    <el-card class="toolbar-card" shadow="never">
-      <el-form :inline="true" label-width="78px" class="initial-balance-toolbar">
+    <el-card
+      class="toolbar-card"
+      shadow="never"
+    >
+      <el-form
+        :inline="true"
+        label-width="78px"
+        class="initial-balance-toolbar"
+      >
         <el-form-item label="当前账套">
           <el-select
             v-model="accountSetId"
@@ -115,14 +122,22 @@
         border
         stripe
       >
-        <el-table-column fixed="left" label="科目编码" min-width="140">
+        <el-table-column
+          fixed="left"
+          label="科目编码"
+          min-width="140"
+        >
           <template slot-scope="scope">
             <span :class="{ 'assist-row-text': scope.row.isAssist }">
               {{ scope.row.subjectCode }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column fixed="left" label="科目名称" min-width="240">
+        <el-table-column
+          fixed="left"
+          label="科目名称"
+          min-width="240"
+        >
           <template slot-scope="scope">
             <span
               :class="{ 'assist-row-text': scope.row.isAssist }"
@@ -143,14 +158,26 @@
             >删除</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" fixed="left" label="方向" width="72">
+        <el-table-column
+          align="center"
+          fixed="left"
+          label="方向"
+          width="72"
+        >
           <template slot-scope="scope">
             {{ scope.row.balanceDirection === FMS_DEBIT_CREDIT_DIRECTION.DEBIT ? '借' : '贷' }}
           </template>
         </el-table-column>
 
-        <el-table-column label="期初余额" align="center">
-          <el-table-column align="right" label="数量" min-width="135">
+        <el-table-column
+          label="期初余额"
+          align="center"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            min-width="135"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row) && scope.row.quantityAccounting"
@@ -164,7 +191,11 @@
               <span v-else>{{ formatQuantity(scope.row.openingQuantity, scope.row.quantityAccounting) }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="right" label="金额" min-width="145">
+          <el-table-column
+            align="right"
+            label="金额"
+            min-width="145"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row)"
@@ -180,8 +211,16 @@
           </el-table-column>
         </el-table-column>
 
-        <el-table-column v-if="!isJanuary" label="本年累计借方" align="center">
-          <el-table-column align="right" label="数量" min-width="135">
+        <el-table-column
+          v-if="!isJanuary"
+          label="本年累计借方"
+          align="center"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            min-width="135"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row) && scope.row.quantityAccounting"
@@ -195,7 +234,11 @@
               <span v-else>{{ formatQuantity(scope.row.yearDebitQuantity, scope.row.quantityAccounting) }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="right" label="金额" min-width="145">
+          <el-table-column
+            align="right"
+            label="金额"
+            min-width="145"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row)"
@@ -210,8 +253,16 @@
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column v-if="!isJanuary" label="本年累计贷方" align="center">
-          <el-table-column align="right" label="数量" min-width="135">
+        <el-table-column
+          v-if="!isJanuary"
+          label="本年累计贷方"
+          align="center"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            min-width="135"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row) && scope.row.quantityAccounting"
@@ -225,7 +276,11 @@
               <span v-else>{{ formatQuantity(scope.row.yearCreditQuantity, scope.row.quantityAccounting) }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="right" label="金额" min-width="145">
+          <el-table-column
+            align="right"
+            label="金额"
+            min-width="145"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row)"
@@ -240,13 +295,25 @@
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column v-if="!isJanuary" label="年初余额" align="center">
-          <el-table-column align="right" label="数量" min-width="135">
+        <el-table-column
+          v-if="!isJanuary"
+          label="年初余额"
+          align="center"
+        >
+          <el-table-column
+            align="right"
+            label="数量"
+            min-width="135"
+          >
             <template slot-scope="scope">
               {{ formatQuantity(scope.row.yearOpeningQuantity, scope.row.quantityAccounting) }}
             </template>
           </el-table-column>
-          <el-table-column align="right" label="金额" min-width="145">
+          <el-table-column
+            align="right"
+            label="金额"
+            min-width="145"
+          >
             <template slot-scope="scope">{{ formatAmount(scope.row.yearOpeningAmount) }}</template>
           </el-table-column>
         </el-table-column>
@@ -255,7 +322,11 @@
           align="center"
           label="实际损益发生额"
         >
-          <el-table-column align="right" label="数量" min-width="135">
+          <el-table-column
+            align="right"
+            label="数量"
+            min-width="135"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row) && scope.row.quantityAccounting"
@@ -269,7 +340,11 @@
               <span v-else>{{ formatQuantity(scope.row.profitLossQuantity, scope.row.quantityAccounting) }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="right" label="金额" min-width="145">
+          <el-table-column
+            align="right"
+            label="金额"
+            min-width="145"
+          >
             <template slot-scope="scope">
               <el-input-number
                 v-if="canEdit(scope.row)"
@@ -287,8 +362,14 @@
       </el-table>
     </el-card>
 
-    <fms-initial-assist-form ref="assistForm" @success="addAssist" />
-    <fms-initial-balance-import-form ref="importForm" @success="loadPage" />
+    <fms-initial-assist-form
+      ref="assistForm"
+      @success="addAssist"
+    />
+    <fms-initial-balance-import-form
+      ref="importForm"
+      @success="loadPage"
+    />
     <fms-trial-balance-dialog ref="trialBalance" />
   </div>
 </template>
@@ -360,6 +441,16 @@ function normalizeAmounts(row) {
 export default {
   name: 'FmsInitialBalance',
   components: { FmsInitialAssistForm, FmsInitialBalanceImportForm, FmsTrialBalanceDialog },
+  beforeRouteLeave(to, from, next) {
+    if (!this.edited) {
+      next()
+      return
+    }
+    this.$modal.confirm('当前修改尚未保存，确定放弃修改并离开页面吗？').then(() => {
+      this.edited = false
+      next()
+    }).catch(() => next(false))
+  },
   data() {
     const options = getDictDatas(DICT_TYPE.FMS_SUBJECT_TYPE)
       .map(item => ({ label: item.label, value: Number(item.value) }))
@@ -423,16 +514,6 @@ export default {
     window.removeEventListener('beforeunload', this.handleBeforeUnload)
     this.accountSetSequence += 1
     this.loadSequence += 1
-  },
-  beforeRouteLeave(to, from, next) {
-    if (!this.edited) {
-      next()
-      return
-    }
-    this.$modal.confirm('当前修改尚未保存，确定放弃修改并离开页面吗？').then(() => {
-      this.edited = false
-      next()
-    }).catch(() => next(false))
   },
   methods: {
     formatAmount,
