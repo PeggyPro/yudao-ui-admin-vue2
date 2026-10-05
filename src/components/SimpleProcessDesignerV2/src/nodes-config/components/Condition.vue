@@ -3,7 +3,7 @@
     <el-form-item label="配置方式" prop="conditionType">
       <el-radio-group v-model="condition.conditionType" @change="changeConditionType">
         <el-radio
-          v-for="item in conditionConfigTypesFiltered"
+          v-for="item in conditionConfigTypesBase"
           :key="item.value"
           :label="item.value"
         >
@@ -57,10 +57,12 @@
                 class="condition-field"
                 filterable
                 clearable
-                placeholder="字段"
+                :allow-create="isCustomForm"
+                :default-first-option="isCustomForm"
+                :placeholder="isCustomForm ? '请选择或输入字段' : '请选择字段'"
               >
                 <el-option
-                  v-for="field in fieldOptions"
+                  v-for="field in conditionFieldOptions"
                   :key="field.field"
                   :label="field.title"
                   :value="field.field"
@@ -198,12 +200,13 @@ export default {
       }
       return result
     },
-    conditionConfigTypesFiltered() {
-      const formType = this.formTypeRef && this.formTypeRef.value
-      if (Number(formType) === Number(BpmModelFormType.CUSTOM)) {
-        return this.conditionConfigTypesBase.filter((item) => item.value !== ConditionType.RULE)
-      }
-      return this.conditionConfigTypesBase
+    isCustomForm() {
+      return Number(this.formTypeRef && this.formTypeRef.value) === BpmModelFormType.CUSTOM
+    },
+    conditionFieldOptions() {
+      return this.isCustomForm
+        ? this.fieldOptions.filter((field) => field.field === 'PROCESS_START_USER_ID')
+        : this.fieldOptions
     }
   },
   watch: {

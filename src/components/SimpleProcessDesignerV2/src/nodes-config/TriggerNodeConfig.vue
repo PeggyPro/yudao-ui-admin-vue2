@@ -78,6 +78,7 @@
 
 <script>
 import { TRIGGER_TYPES, TriggerTypeEnum, ConditionType } from '../consts'
+import { BpmModelFormType } from '@/utils/constants'
 import { clone, conditionGroupsDefault, conditionIsValid, parseFields } from './components/node-config-utils'
 import { normalizeTriggerSetting } from './node-config-schema'
 import HttpRequestSetting from './components/HttpRequestSetting.vue'
@@ -101,19 +102,24 @@ export default {
   components: { HttpRequestSetting, Condition },
   props: { flowNode: { type: Object, required: true } },
   inject: {
-    formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) }
+    formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
+    formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
   },
   data() {
     return {
       visible: false,
       draft: this.createDraft(this.flowNode),
-      triggerTypes: TRIGGER_TYPES,
       TriggerTypeEnum,
       ConditionType,
       loadError: ''
     }
   },
   computed: {
+    triggerTypes() {
+      return Number(this.formTypeRef && this.formTypeRef.value) === BpmModelFormType.CUSTOM
+        ? TRIGGER_TYPES.filter((item) => ![TriggerTypeEnum.FORM_UPDATE, TriggerTypeEnum.FORM_DELETE].includes(item.value))
+        : TRIGGER_TYPES
+    },
     drawerTitle() { return `${this.draft.name || '触发器'}配置` },
     formFields() { return parseFields(this.formFieldsRef && this.formFieldsRef.value) },
     isHttpTrigger() { return Number(this.draft.type) === TriggerTypeEnum.HTTP_REQUEST || Number(this.draft.type) === TriggerTypeEnum.HTTP_CALLBACK },

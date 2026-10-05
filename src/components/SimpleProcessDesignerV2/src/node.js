@@ -544,7 +544,7 @@ export function getConditionShowText(
 /** 获取表单字段名称 */
 const getFormFieldTitle = (fieldOptions, field) => {
   const item = fieldOptions.find((item) => item.field === field)
-  return item?.title
+  return item?.title ?? field
 }
 
 /** 获取操作符名称 */
