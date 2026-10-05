@@ -261,7 +261,7 @@ import { createChannel, getChannel, updateChannel } from '@/api/pay/channel'
 import { CommonStatusEnum } from '@/utils/constants'
 
 export default {
-  name: 'weixinChannelForm',
+  name: 'WeixinChannelForm',
   data() {
     return {
       dialogVisible: false,

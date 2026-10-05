@@ -59,7 +59,7 @@ import 'quill/dist/quill.bubble.css'
 import { getAccessToken } from '@/utils/auth'
 
 export default {
-  name: 'wxEditor',
+  name: 'WxEditor',
   components: {
     quillEditor
   },

@@ -125,7 +125,7 @@
 
 <script>
 export default {
-  name: 'crontab-week',
+  name: 'CrontabWeek',
   props: {
     check: { type: Function, default: undefined },
     cron: { type: Object, default: undefined }

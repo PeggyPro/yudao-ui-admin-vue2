@@ -303,7 +303,7 @@ import { createChannel, getChannel, updateChannel } from '@/api/pay/channel'
 import { CommonStatusEnum } from '@/utils/constants'
 
 export default {
-  name: 'alipayChannelForm',
+  name: 'AlipayChannelForm',
   data() {
     return {
       dialogVisible: false,

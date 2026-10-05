@@ -159,6 +159,7 @@ function buildListeners(scheme) {
 }
 
 export default {
+  name: 'FormParser',
   components: {
     render
   },

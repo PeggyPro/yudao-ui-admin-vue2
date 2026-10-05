@@ -74,7 +74,7 @@
 
 <script>
 export default {
-  name: 'crontab-min',
+  name: 'CrontabMin',
   props: {
     check: { type: Function, default: undefined },
     cron: { type: Object, default: undefined }

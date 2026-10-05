@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  name: 'Dialog',
+  name: 'AppDialog',
   inheritAttrs: false,
   props: {
     value: { type: Boolean, default: false },

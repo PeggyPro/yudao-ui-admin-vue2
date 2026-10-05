@@ -62,7 +62,7 @@ import { createChannel, getChannel, updateChannel } from '@/api/pay/channel'
 import { CommonStatusEnum } from '@/utils/constants'
 
 export default {
-  name: 'noneConfigChannelForm',
+  name: 'NoneConfigChannelForm',
   data() {
     return {
       dialogVisible: false,

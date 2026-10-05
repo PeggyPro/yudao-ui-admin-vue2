@@ -105,7 +105,7 @@
 
 <script>
 export default {
-  name: 'crontab-day',
+  name: 'CrontabDay',
   props: {
     check: { type: Function, default: undefined },
     cron: { type: Object, default: undefined }

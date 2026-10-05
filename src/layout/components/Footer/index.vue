@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Footer',
+  name: 'AppFooter',
   computed: {
     title() {
       return process.env.VUE_APP_TITLE

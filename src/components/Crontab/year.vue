@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  name: 'crontab-year',
+  name: 'CrontabYear',
   props: ['check', 'month', 'cron'],
   data() {
     return {

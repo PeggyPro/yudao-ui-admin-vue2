@@ -73,7 +73,7 @@
 
 <script>
 export default {
-  name: 'crontab-hour',
+  name: 'CrontabHour',
   props: {
     check: { type: Function, default: undefined },
     cron: { type: Object, default: undefined }

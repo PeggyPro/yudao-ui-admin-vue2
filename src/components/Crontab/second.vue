@@ -73,7 +73,7 @@
 
 <script>
 export default {
-  name: 'crontab-second',
+  name: 'CrontabSecond',
   props: ['check', 'radioParent'],
   data() {
     return {

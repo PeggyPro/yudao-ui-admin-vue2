@@ -40,6 +40,7 @@ import SidebarItem from './SidebarItem'
 import variables from '@/assets/styles/variables.scss'
 
 export default {
+  name: 'AppSidebar',
   components: { SidebarItem, Logo },
   computed: {
     ...mapState(['settings']),

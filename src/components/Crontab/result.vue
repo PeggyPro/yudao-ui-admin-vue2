@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'crontab-result',
+  name: 'CrontabResult',
   props: {
     ex: { type: String, default: undefined }
   },

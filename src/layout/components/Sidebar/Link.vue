@@ -11,6 +11,7 @@
 import { isExternal } from '@/utils/validate'
 
 export default {
+  name: 'SidebarLink',
   props: {
     to: {
       type: String,
