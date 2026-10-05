@@ -216,6 +216,9 @@ export default {
       } finally { this.formLoading = false }
     },
     async handleCustomerChange(customerId) {
+      this.formData.price = undefined
+      this.formData.returnTime = undefined
+      this.formData.returnType = undefined
       this.formData.contractId = undefined
       this.formData.planId = undefined
       this.contractList = []

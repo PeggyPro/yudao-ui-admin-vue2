@@ -70,7 +70,7 @@
                 >
                   项目设置
                 </el-dropdown-item>
-                <template v-if="project.memberStatus">
+                  <template v-if="project.memberStatus && checkPermi(['pms:pm:project-group:update'])">
                   <el-dropdown-item disabled divided>移动到分组</el-dropdown-item>
                   <el-dropdown-item
                     v-for="group in movableGroupList"
@@ -268,7 +268,7 @@
                 >
                   项目设置
                 </el-dropdown-item>
-                <template v-if="isParticipatedProjectScene && scope.row.memberStatus">
+                  <template v-if="isParticipatedProjectScene && scope.row.memberStatus && checkPermi(['pms:pm:project-group:update'])">
                   <el-dropdown-item disabled divided>移动到分组</el-dropdown-item>
                   <el-dropdown-item
                     v-for="group in movableGroupList"
@@ -406,6 +406,10 @@ export default {
       } finally { this.favoriteLoading = false }
     },
     async getGroupList() {
+      if (!checkPermi(['pms:pm:project-group:query'])) {
+        this.groupList = []
+        return
+      }
       const response = await ProjectGroupApi.getProjectGroupList()
       this.groupList = response.data
       if (!this.queryParams.groupId) {

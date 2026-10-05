@@ -79,7 +79,6 @@ import {
 } from '@/api/bpm/processInstance'
 import { BpmModelFormType, BpmModelType } from '@/utils/constants'
 import { decodeFields, setConfAndFields2 } from '@/utils/formCreate'
-import formCreate from '@form-create/element-ui'
 import {
   CandidateStrategy,
   FieldPermissionType,
@@ -206,21 +205,29 @@ export default {
         return {}
       }
       try {
-        const formApi = formCreate.create(decodeFields(formFields || []))
-        const allowedFields = formApi.fields()
+        const allowedFields = this.collectFormFields(decodeFields(formFields || []))
         const variables = {}
         Object.keys(formVariables).forEach((key) => {
-          if (allowedFields.includes(key)) {
+          if (allowedFields.has(key)) {
             variables[key] = formVariables[key]
           }
         })
-        if (formApi.destroy) {
-          formApi.destroy()
-        }
         return variables
       } catch (e) {
         return formVariables
       }
+    },
+    /** 收集布局和条件规则中的字段 */
+    collectFormFields(rules, fields = new Set()) {
+      for (const rule of rules) {
+        if (!rule || typeof rule !== 'object') continue
+        if (typeof rule.field === 'string') fields.add(rule.field)
+        if (Array.isArray(rule.children)) this.collectFormFields(rule.children, fields)
+        for (const control of rule.control || []) {
+          if (Array.isArray(control.rule)) this.collectFormFields(control.rule, fields)
+        }
+      }
+      return fields
     },
     async loadProcessDiagram() {
       let definitionDetail = null

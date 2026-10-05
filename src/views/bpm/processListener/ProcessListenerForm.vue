@@ -39,9 +39,9 @@
         <el-select v-model="form.event" placeholder="请选择事件" style="width: 100%">
           <el-option
             v-for="event in eventOptions"
-            :key="event"
-            :label="event"
-            :value="event"
+            :key="event.value"
+            :label="event.label"
+            :value="event.value"
           />
         </el-select>
       </el-form-item>
@@ -79,7 +79,7 @@ import {
   getProcessListener,
   updateProcessListener
 } from '@/api/bpm/processListener'
-import { CommonStatusEnum } from '@/utils/constants'
+import { CommonStatusEnum, BPM_PROCESS_LISTENER_EXECUTION_EVENT_OPTIONS, BPM_PROCESS_LISTENER_TASK_EVENT_OPTIONS } from '@/utils/constants'
 
 function createDefaultForm() {
   return {
@@ -92,9 +92,6 @@ function createDefaultForm() {
     value: undefined
   }
 }
-
-const EVENT_EXECUTION_OPTIONS = ['开始', '结束']
-const EVENT_TASK_OPTIONS = ['创建', '指派', '完成', '删除', '更新', '超时']
 
 /** 可复用的 BPM 流程监听器表单。 */
 export default {
@@ -120,8 +117,8 @@ export default {
   computed: {
     eventOptions() {
       return this.form.type === 'execution'
-        ? EVENT_EXECUTION_OPTIONS
-        : EVENT_TASK_OPTIONS
+        ? BPM_PROCESS_LISTENER_EXECUTION_EVENT_OPTIONS
+        : BPM_PROCESS_LISTENER_TASK_EVENT_OPTIONS
     },
     valueLabel() {
       return this.form.type === 'class' ? '类路径' : '表达式'

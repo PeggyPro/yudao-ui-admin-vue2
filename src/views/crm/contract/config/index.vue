@@ -53,7 +53,8 @@
         >
           <el-input-number
             v-model="formData.notifyDays"
-            :min="1"
+            :min="0"
+            :precision="0"
             controls-position="right"
           />
           <span class="config-suffix">天</span>
@@ -96,13 +97,17 @@ export default {
     handleNotifyEnabledChange(val) {
       if (!val) {
         this.formData.notifyDays = undefined
-      } else if (!this.formData.notifyDays) {
+      } else if (this.formData.notifyDays == null) {
         this.formData.notifyDays = 1
       }
     },
     submitForm() {
       this.$refs.form.validate((valid) => {
         if (!valid) return
+        if (this.formData.notifyEnabled && (!Number.isInteger(this.formData.notifyDays) || this.formData.notifyDays < 0)) {
+          this.$modal.msgWarning('请填写非负整数天数')
+          return
+        }
         this.loading = true
         ContractConfigApi.saveContractConfig(this.formData).then(() => {
           this.$modal.msgSuccess('修改成功')

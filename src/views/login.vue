@@ -290,6 +290,7 @@ export default {
       }
       // 忘记密码
       if (this.loginForm.loginType === "forget") {
+        rules.password = [...rules.password, { min: 4, max: 16, message: '密码长度为4到16位', trigger: 'blur' }]
         rules.resetCode = [
           {required: true, trigger: "blur", message: "短信验证码不能为空"}
         ]

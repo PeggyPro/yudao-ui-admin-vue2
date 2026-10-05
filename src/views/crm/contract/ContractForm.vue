@@ -318,7 +318,6 @@ export default {
         name: [{ required: true, message: '合同名称不能为空', trigger: 'blur' }],
         customerId: [{ required: true, message: '客户不能为空', trigger: 'change' }],
         ownerUserId: [{ required: true, message: '负责人不能为空', trigger: 'change' }],
-        signUserId: [{ required: true, message: '公司签约人不能为空', trigger: 'change' }],
         orderDate: [{ required: true, message: '下单时间不能为空', trigger: 'change' }]
       },
       syncingTotals: false
@@ -377,7 +376,6 @@ export default {
         }
         if (this.formType === 'create') {
           this.formData.ownerUserId = this.$store.getters.userId
-          this.formData.signUserId = this.$store.getters.userId
         }
         if (this.formData.customerId) {
           await this.loadContactList(this.formData.customerId)
@@ -394,7 +392,10 @@ export default {
       await this.loadContactList(customerId)
     },
     async handleBusinessChange(businessId) {
-      if (!businessId) return
+      if (!businessId) {
+        this.formData.products = []
+        return
+      }
       const response = await BusinessApi.getBusiness(businessId)
       const business = response.data
       if (!business || !Array.isArray(business.products)) return

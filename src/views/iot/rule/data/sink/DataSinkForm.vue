@@ -132,6 +132,7 @@ export default /*@__PURE__*/ _defineComponent({
             'config.password': [{ required: true, message: '密码不能为空', trigger: 'blur' }],
             'config.clientId': [{ required: true, message: '客户端 ID 不能为空', trigger: 'blur' }],
             'config.topic': [{ required: true, message: '主题不能为空', trigger: 'blur' }],
+      'config.dataStructure': [{ required: true, message: '数据结构不能为空', trigger: 'change' }],
             // Database 配置
             'config.jdbcUrl': [{ required: true, message: 'JDBC 连接地址不能为空', trigger: 'blur' }],
             'config.tableName': [{ required: true, message: '目标表名不能为空', trigger: 'blur' }],

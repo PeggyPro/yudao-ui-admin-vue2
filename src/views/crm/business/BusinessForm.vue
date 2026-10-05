@@ -39,7 +39,7 @@
           prop="customerId"
         ><el-select
           v-model="formData.customerId"
-          :disabled="formData.customerDefault"
+          :disabled="customerLocked"
           filterable
           placeholder="请选择客户"
           style="width: 100%"
@@ -139,6 +139,7 @@ export default {
       formType: 'create',
       subTabsName: 'product',
       formData: this.defaultForm(),
+      customerLocked: false,
       formRules: {
         name: [{ required: true, message: '商机名称不能为空', trigger: 'blur' }],
         customerId: [{ required: true, message: '客户不能为空', trigger: 'change' }],
@@ -156,7 +157,7 @@ export default {
   },
   methods: {
     defaultForm() {
-      return { id: undefined, name: '', customerId: undefined, ownerUserId: undefined, statusTypeId: undefined, dealTime: undefined, discountPercent: 0, totalProductPrice: 0, totalPrice: 0, remark: '', products: [], contactId: undefined, customerDefault: false }
+      return { id: undefined, name: '', customerId: undefined, ownerUserId: undefined, statusTypeId: undefined, dealTime: undefined, discountPercent: 0, totalProductPrice: 0, totalPrice: 0, remark: '', products: [], contactId: undefined }
     },
     formatPrice(value) { return value === undefined || value === null ? '0.00' : Number(value).toFixed(2) },
     recalculate() {
@@ -168,12 +169,13 @@ export default {
       this.dialogVisible = true
       this.formType = type || 'create'
       this.dialogTitle = this.formType === 'update' ? '修改商机' : (this.formType === 'detail' ? '商机详情' : '新增商机')
+      this.customerLocked = false
       this.formData = this.defaultForm()
       if (id !== undefined && id !== null) {
         this.formLoading = true
         BusinessApi.getBusiness(id).then(response => { this.formData = Object.assign(this.defaultForm(), response.data) }).finally(() => { this.formLoading = false })
       } else {
-        if (customerId !== undefined && customerId !== null) { this.formData.customerId = customerId; this.formData.customerDefault = true }
+        if (customerId !== undefined && customerId !== null) { this.formData.customerId = customerId; this.customerLocked = true }
         this.formData.contactId = contactId
       }
       return Promise.all([

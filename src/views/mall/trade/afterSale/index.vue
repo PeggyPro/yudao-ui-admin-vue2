@@ -352,7 +352,7 @@ export default {
     tabClick(tab) {
       if (tab.name === undefined) return Promise.resolve()
       this.queryParams.status = String(tab.name)
-      return this.getList()
+      return this.handleQuery()
     },
     /** 处理退款 */
     openAfterSaleDetail(id) {

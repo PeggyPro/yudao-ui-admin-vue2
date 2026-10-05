@@ -279,18 +279,11 @@ export default {
         date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
       }).then(response => {
         this.userSummaryOption.xAxis.data = this.xAxisDate;
-        // 处理数据
+        // 按统计日期对齐，缺失日期补零
         this.xAxisDate.forEach((date, index) => {
-          response.data.forEach((item) => {
-            // 匹配日期
-            const refDate = formatDate(new Date(item.refDate), 'yyyy-MM-dd');
-            if (refDate.indexOf(date) === -1) {
-              return;
-            }
-            // 设置数据到对应的位置
-            this.userSummaryOption.series[0].data[index] = item.newUser;
-            this.userSummaryOption.series[1].data[index] = item.cancelUser;
-          })
+          const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
+          this.userSummaryOption.series[0].data[index] = item?.newUser ?? 0
+          this.userSummaryOption.series[1].data[index] = item?.cancelUser ?? 0;
         })
         // 绘制图表
         const userSummaryChart = echarts.init(this.$refs.userSummaryChart);
@@ -306,9 +299,10 @@ export default {
         date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
       }).then(response => {
         this.userCumulateOption.xAxis.data = this.xAxisDate;
-        // 处理数据
-        response.data.forEach((item, index) => {
-          this.userCumulateOption.series[0].data[index] = item.cumulateUser;
+        // 按统计日期对齐，缺失日期补零
+        this.xAxisDate.forEach((date, index) => {
+          const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
+          this.userCumulateOption.series[0].data[index] = item?.cumulateUser ?? 0;
         })
         // 绘制图表
         const userCumulateChart = echarts.init(this.$refs.userCumulateChart);
@@ -325,10 +319,11 @@ export default {
         date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
       }).then(response => {
         this.upstreamMessageOption.xAxis.data = this.xAxisDate;
-        // 处理数据
-        response.data.forEach((item, index) => {
-          this.upstreamMessageOption.series[0].data[index] = item.messageUser;
-          this.upstreamMessageOption.series[1].data[index] = item.messageCount;
+        // 按统计日期对齐，缺失日期补零
+        this.xAxisDate.forEach((date, index) => {
+          const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
+          this.upstreamMessageOption.series[0].data[index] = item?.messageUser ?? 0
+          this.upstreamMessageOption.series[1].data[index] = item?.messageCount ?? 0;
         })
         // 绘制图表
         const upstreamMessageChart = echarts.init(this.$refs.upstreamMessageChart);
@@ -347,12 +342,13 @@ export default {
         date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
       }).then(response => {
         this.interfaceSummaryOption.xAxis.data = this.xAxisDate;
-        // 处理数据
-        response.data.forEach((item, index) => {
-          this.interfaceSummaryOption.series[0].data[index] = item.callbackCount;
-          this.interfaceSummaryOption.series[1].data[index] = item.failCount;
-          this.interfaceSummaryOption.series[2].data[index] = item.maxTimeCost;
-          this.interfaceSummaryOption.series[3].data[index] = item.totalTimeCost;
+        // 按统计日期对齐，缺失日期补零
+        this.xAxisDate.forEach((date, index) => {
+          const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
+          this.interfaceSummaryOption.series[0].data[index] = item?.callbackCount ?? 0
+          this.interfaceSummaryOption.series[1].data[index] = item?.failCount ?? 0
+          this.interfaceSummaryOption.series[2].data[index] = item?.maxTimeCost ?? 0
+          this.interfaceSummaryOption.series[3].data[index] = item?.totalTimeCost ?? 0;
         })
         // 绘制图表
         const interfaceSummaryChart = echarts.init(this.$refs.interfaceSummaryChart);

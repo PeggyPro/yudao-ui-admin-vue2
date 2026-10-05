@@ -39,20 +39,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select
-          v-model="queryParams.type"
-          placeholder="请选择类型"
-          clearable
-        >
-          <el-option
-            v-for="dict in getDictDatas(DICT_TYPE.PAY_TRANSFER_TYPE)"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item label="转账状态" prop="status">
         <el-select
           v-model="queryParams.status"
@@ -222,7 +208,6 @@ export default {
         no: null,
         channelCode: null,
         merchantOrderId: null,
-        type: null,
         status: null,
         userName: null,
         userAccount: null,

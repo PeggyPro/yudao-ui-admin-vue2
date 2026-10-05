@@ -90,7 +90,9 @@
           prop="nickname"
           min-width="120"
           show-overflow-tooltip
-        />
+        >
+          <template slot-scope="scope">{{ scope.row.nickname || '-' }}</template>
+        </el-table-column>
         <el-table-column
           label="组内显示名"
           prop="displayUserName"

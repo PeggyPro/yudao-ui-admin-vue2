@@ -101,7 +101,10 @@
         />
       </el-form-item>
       <el-form-item label="附件" prop="fileUrls">
-        <UploadFile v-model="formData.fileUrls" :limit="1" />
+        <UploadFile
+          v-model="formData.fileUrls"
+          :limit="5"
+        />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -188,6 +191,7 @@ export default {
         this.formLoading = true
         PlanApi.getPlan(id).then(response => {
           this.formData = response.data
+          this.formData.fileUrls ??= []
         }).finally(() => {
           this.formLoading = false
         })

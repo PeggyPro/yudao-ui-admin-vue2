@@ -23,7 +23,15 @@
         <el-tab-pane label="积分"><user-point-list :user-id="id" /></el-tab-pane>
         <el-tab-pane label="签到" lazy><user-sign-list :user-id="id" /></el-tab-pane>
         <el-tab-pane label="成长值" lazy><user-experience-record-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="余额" lazy><user-balance-list :wallet-id="wallet.id" /></el-tab-pane>
+        <el-tab-pane
+          label="余额"
+          lazy
+        >
+          <user-balance-list
+            v-if="wallet.id"
+            :wallet-id="wallet.id"
+          />
+        </el-tab-pane>
         <el-tab-pane label="收货地址" lazy><user-address-list :user-id="id" /></el-tab-pane>
         <el-tab-pane label="订单管理" lazy><user-order-list :user-id="id" /></el-tab-pane>
         <el-tab-pane label="售后管理" lazy><user-after-sale-list :user-id="id" /></el-tab-pane>

@@ -354,7 +354,11 @@ export default {
     async getList() {
       this.loading = true
       try {
-        const response = await TradeOrderApi.getOrderPage(this.queryParams)
+        const { pickUpStoreId, ...params } = this.queryParams
+        const response = await TradeOrderApi.getOrderPage({
+          ...params,
+          pickUpStoreIds: pickUpStoreId?.length ? pickUpStoreId : undefined
+        })
         this.list = response.data.list
         this.total = response.data.total
       } finally {

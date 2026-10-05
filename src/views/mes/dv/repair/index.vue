@@ -15,7 +15,20 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="维修单编号" align="center" prop="code" min-width="160"><template v-slot="scope"><el-button type="text" @click="openForm('detail', scope.row.id)">{{ scope.row.code }}</el-button></template></el-table-column>
+      <el-table-column
+        label="维修单编号"
+        align="center"
+        prop="code"
+        min-width="160"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['mes:dv-repair:query']"
+            type="text"
+            @click="openForm('detail', scope.row.id)"
+          >{{ scope.row.code }}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="维修单名称" align="center" prop="name" min-width="150" /><el-table-column label="设备编码" align="center" prop="machineryCode" min-width="120" /><el-table-column label="设备名称" align="center" prop="machineryName" min-width="120" />
       <el-table-column label="报修日期" align="center" prop="requireDate" width="180"><template v-slot="scope">{{ parseTime(scope.row.requireDate) }}</template></el-table-column>
       <el-table-column label="维修完成日期" align="center" prop="finishDate" width="180"><template v-slot="scope">{{ parseTime(scope.row.finishDate) }}</template></el-table-column>

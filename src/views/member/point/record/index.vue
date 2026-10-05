@@ -43,18 +43,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="获得时间" prop="createDate">
-        <el-date-picker
-          v-model="queryParams.createDate"
-          style="width: 240px"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :default-time="['00:00:00', '23:59:59']"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -118,8 +106,7 @@ export default {
         userId: undefined,
         nickname: null,
         bizType: null,
-        title: null,
-        createDate: []
+        title: null
       }
     }
   },

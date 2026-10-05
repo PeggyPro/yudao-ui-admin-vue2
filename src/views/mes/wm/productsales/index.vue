@@ -56,10 +56,10 @@
       </el-form-item>
       <el-form-item
         label="出库日期"
-        prop="salesDate"
+        prop="shipmentDate"
       >
         <el-date-picker
-          v-model="queryParams.salesDate"
+          v-model="queryParams.shipmentDate"
           value-format="yyyy-MM-dd HH:mm:ss"
           type="daterange"
           start-placeholder="开始日期"
@@ -307,7 +307,7 @@ export default {
         name: undefined,
         salesOrderCode: undefined,
         clientId: undefined,
-        salesDate: undefined,
+        shipmentDate: undefined,
         status: undefined
       }
     }

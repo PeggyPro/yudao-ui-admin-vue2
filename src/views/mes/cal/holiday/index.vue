@@ -76,6 +76,10 @@ export default {
         this.$modal.msgWarning('没有假期设置权限')
         return
       }
+      if (!checkPermi(['mes:cal-holiday:query'])) {
+        this.$modal.msgWarning('没有假期查询权限')
+        return
+      }
       this.$refs.form.open(data.day)
     },
     isWeekend(day) {

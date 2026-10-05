@@ -15,7 +15,20 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="loading" :data="list" stripe :show-overflow-tooltip="true">
-      <el-table-column label="设备编码" align="center" prop="machineryCode" min-width="140"><template v-slot="scope"><el-button type="text" @click="openForm('detail', scope.row.id)">{{ scope.row.machineryCode }}</el-button></template></el-table-column>
+      <el-table-column
+        label="设备编码"
+        align="center"
+        prop="machineryCode"
+        min-width="140"
+      >
+        <template slot-scope="scope">
+          <el-button
+            v-hasPermi="['mes:dv-check-record:query']"
+            type="text"
+            @click="openForm('detail', scope.row.id)"
+          >{{ scope.row.machineryCode }}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="设备名称" align="center" prop="machineryName" min-width="120" />
       <el-table-column label="品牌" align="center" prop="machineryBrand" />
       <el-table-column label="规格型号" align="center" prop="machinerySpecification" min-width="120" />

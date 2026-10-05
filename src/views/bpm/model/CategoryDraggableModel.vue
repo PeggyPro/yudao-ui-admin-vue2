@@ -155,7 +155,7 @@
                 @click="openModelForm('update', scope.row.id)"
               >修改</el-button>
               <el-button
-                v-hasPermi="['bpm:model:update']"
+                v-hasPermi="['bpm:model:create']"
                 type="text"
                 :disabled="!isModelManager(scope.row)"
                 @click="openModelForm('copy', scope.row.id)"

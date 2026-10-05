@@ -46,11 +46,15 @@
           <el-form-item>
             <el-input-number
               v-model="formData.contactExpireDays"
+              :min="0"
+              :precision="0"
               controls-position="right"
             />
             <span class="config-text">天不跟进或</span>
             <el-input-number
               v-model="formData.dealExpireDays"
+              :min="0"
+              :precision="0"
               controls-position="right"
             />
             <span class="config-text">天未成交</span>
@@ -71,6 +75,8 @@
             <span class="config-text config-text-first">提前</span>
             <el-input-number
               v-model="formData.notifyDays"
+              :min="0"
+              :precision="0"
               controls-position="right"
             />
             <span class="config-text">天提醒</span>
@@ -125,6 +131,12 @@ export default {
     onSubmit() {
       this.$refs.form.validate(valid => {
         if (!valid) return
+        const days = this.formData.enabled ? [this.formData.contactExpireDays, this.formData.dealExpireDays] : []
+        if (this.formData.notifyEnabled) days.push(this.formData.notifyDays)
+        if (days.some(day => !Number.isInteger(day) || day < 0)) {
+          this.$modal.msgWarning('请填写非负整数天数')
+          return
+        }
         this.formLoading = true
         CustomerPoolConfigApi.saveCustomerPoolConfig(this.formData).then(() => {
           this.$modal.msgSuccess('修改成功')

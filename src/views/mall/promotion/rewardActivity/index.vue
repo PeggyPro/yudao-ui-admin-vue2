@@ -42,21 +42,6 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item
-        label="活动时间"
-        prop="createTime"
-      >
-        <el-date-picker
-          v-model="queryParams.createTime"
-          type="daterange"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          range-separator="-"
-          start-placeholder="活动开始日期"
-          end-placeholder="活动结束日期"
-          :default-time="['00:00:00', '23:59:59']"
-          style="width: 240px"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
@@ -233,8 +218,7 @@ export default {
         pageNo: 1,
         pageSize: 10,
         name: undefined,
-        status: undefined,
-        createTime: []
+        status: undefined
       },
       statusOptions: getDictDatas(DICT_TYPE.COMMON_STATUS),
       DICT_TYPE

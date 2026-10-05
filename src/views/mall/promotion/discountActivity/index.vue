@@ -43,11 +43,11 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="活动时间"
-        prop="activeTime"
+        label="创建时间"
+        prop="createTime"
       >
         <el-date-picker
-          v-model="queryParams.activeTime"
+          v-model="queryParams.createTime"
           type="daterange"
           value-format="yyyy-MM-dd HH:mm:ss"
           range-separator="-"
@@ -214,7 +214,7 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        activeTime: null,
+        createTime: null,
         name: null,
         status: null
       },

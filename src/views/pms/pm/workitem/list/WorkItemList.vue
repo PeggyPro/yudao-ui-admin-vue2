@@ -600,7 +600,10 @@ export default {
       }
     },
     async handleExport() {
-      const data = await WorkItemApi.exportWorkItemList(this.queryParams)
+      const data = await WorkItemApi.exportWorkItemList({
+        ...this.queryParams,
+        name: this.searchKeyword.trim() || undefined
+      })
       this.$download.excel(data, `${this.workItemTypeName}.xlsx`)
     },
     getMemberAvatar(userId) {

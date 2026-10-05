@@ -124,6 +124,7 @@
         >
           <template slot-scope="scope">
             <el-link
+              v-hasPermi="['mes:qc-oqc:query']"
               type="primary"
               @click="openForm('detail', scope.row.id)"
             >

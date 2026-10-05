@@ -335,7 +335,10 @@
           >
             查看
           </el-button>
-          <el-button type="text" @click="openModel(scope.row.id)"> 日志 </el-button>
+            <el-button
+              type="text"
+              @click="openLog(scope.row.id)"
+            >日志</el-button>
           <el-button
 
             type="text"
@@ -521,6 +524,9 @@ export default /*@__PURE__*/ _defineComponent({
         const openModel = (id) => {
             push({ name: 'IoTDeviceDetail', params: { id }, query: { tab: 'model' } });
         };
+    const openLog = (id) => {
+      push({ name: 'IoTDeviceDetail', params: { id }, query: { tab: 'log' }})
+    }
         /** 设备导入 */
         const importFormRef = ref();
         const handleImport = () => {
@@ -539,7 +545,7 @@ export default /*@__PURE__*/ _defineComponent({
             // 获取分组列表
             deviceGroups.value = (await DeviceGroupApi.getSimpleDeviceGroupList()).data;
         });
-        const __returned__ = { Icon: IotIcon, message, t, route, loading, list, total, queryParams, queryFormRef, exportLoading, products, deviceGroups, selectedIds, viewMode, defaultPicUrl, defaultIconUrl, getList, handleQuery, resetQuery, formRef, openForm, push, openDetail, openProductDetail, handleDelete, handleExport, handleSelectionChange, handleDeleteList, groupFormRef, openGroupForm, openModel, importFormRef, handleImport, get DICT_TYPE() { return DICT_TYPE; }, get getIntDictOptions() { return getIntDictOptions; }, get getDictLabel() { return getDictLabel; }, get dateFormatter() { return dateFormatter; }, get DeviceStateEnum() { return DeviceStateEnum; }, DeviceForm, DeviceGroupForm, DeviceImportForm };
+    const __returned__ = { Icon: IotIcon, message, t, route, loading, list, total, queryParams, queryFormRef, exportLoading, products, deviceGroups, selectedIds, viewMode, defaultPicUrl, defaultIconUrl, getList, handleQuery, resetQuery, formRef, openForm, push, openDetail, openProductDetail, handleDelete, handleExport, handleSelectionChange, handleDeleteList, groupFormRef, openGroupForm, openModel, openLog, importFormRef, handleImport, get DICT_TYPE() { return DICT_TYPE }, get getIntDictOptions() { return getIntDictOptions }, get getDictLabel() { return getDictLabel }, get dateFormatter() { return dateFormatter }, get DeviceStateEnum() { return DeviceStateEnum }, DeviceForm, DeviceGroupForm, DeviceImportForm };
         Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true });
         return __returned__;
     }

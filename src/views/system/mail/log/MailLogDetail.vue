@@ -5,7 +5,11 @@
     width="820px"
     append-to-body
   >
-    <el-descriptions :column="1" border>
+    <el-descriptions
+      v-loading="detailLoading"
+      :column="1"
+      border
+    >
       <el-descriptions-item label="日志主键">{{
         detailData.id
       }}</el-descriptions-item>
@@ -59,11 +63,12 @@
 </template>
 <script>
 import { getSimpleMailAccountList } from "@/api/system/mail/account";
+import { getMailLog } from '@/api/system/mail/log';
 import { DICT_TYPE } from "@/utils/dict";
 export default {
   name: "SystemMailLogDetail",
   data() {
-    return { DICT_TYPE, dialogVisible: false, detailData: {}, accountList: [] };
+    return { DICT_TYPE, dialogVisible: false, detailLoading: false, detailData: {}, accountList: [] };
   },
   computed: {
     accountName() {
@@ -81,12 +86,18 @@ export default {
     },
   },
   methods: {
-    open(data) {
-      this.detailData = Object.assign({}, data || {});
+    async open(id) {
+      this.detailData = {};
       this.dialogVisible = true;
-      getSimpleMailAccountList().then((response) => {
-        this.accountList = response.data;
-      });
+      this.detailLoading = true
+      try {
+        const detailResponse = await getMailLog(id)
+        this.detailData = detailResponse.data
+        const accountResponse = await getSimpleMailAccountList()
+        this.accountList = accountResponse.data
+      } finally {
+        this.detailLoading = false
+      }
     },
   },
 };

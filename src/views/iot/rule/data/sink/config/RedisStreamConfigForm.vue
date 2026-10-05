@@ -29,15 +29,52 @@
     <el-input v-model="config.topic" placeholder="请输入主题" />
   </el-form-item>
 
+    <el-form-item
+      label="数据结构"
+      prop="config.dataStructure"
+    >
+      <el-select
+        v-model="config.dataStructure"
+        placeholder="请选择数据结构"
+        style="width: 100%"
+      >
+        <el-option
+          v-for="item in IOT_REDIS_DATA_STRUCTURE_OPTIONS"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-form-item>
+    <el-form-item
+      v-if="config.dataStructure === IotRedisDataStructureEnum.HASH"
+      label="Hash 字段"
+      prop="config.hashField"
+    >
+      <el-input
+        v-model="config.hashField"
+        placeholder="留空时使用设备 ID"
+      />
+    </el-form-item>
+    <el-form-item
+      v-if="config.dataStructure === IotRedisDataStructureEnum.ZSET"
+      label="Score 字段"
+      prop="config.scoreField"
+    >
+      <el-input
+        v-model="config.scoreField"
+        placeholder="留空时使用当前时间戳"
+      />
+    </el-form-item>
 </div>
 </template>
 <script>
 import '@/views/iot/styles/vue2.css';
-import { onMounted } from 'vue';
+import { onMounted, set } from 'vue';
 import { defineComponent as _defineComponent } from 'vue';
 import { IotDataSinkTypeEnum } from '@/api/iot/rule/data/sink';
 import { useVModel } from '@/views/iot/utils/composables';
-import { isEmpty } from '@/utils/is';
+import { IOT_REDIS_DATA_STRUCTURE_OPTIONS, IotRedisDataStructureEnum } from '@/views/iot/utils/constants';
 export default /*@__PURE__*/ _defineComponent({
     ...{ name: 'RedisStreamMQConfigForm' },
     __name: 'RedisStreamConfigForm',
@@ -51,21 +88,25 @@ export default /*@__PURE__*/ _defineComponent({
         const emit = __emit;
         const config = useVModel(props, 'value', emit);
         /** 组件初始化 */
-        onMounted(() => {
-            // EUI2 el-input-number 挂载即回写 undefined 占位键，键全为空视为未初始化（对齐 Vue3 源行为）
-            if (config.value && Object.keys(config.value).some((key) => config.value[key] !== undefined)) {
-                return;
-            }
-            config.value = {
-                type: IotDataSinkTypeEnum.REDIS_STREAM + '', // 序列化成对应类型时使用
-                host: '',
-                port: 6379,
-                password: '',
-                database: 0,
-                topic: ''
-            };
-        });
-        const __returned__ = { props, emit, config };
+    onMounted(() => {
+      // 数字控件挂载会回写 undefined，键全为空时初始化配置
+      if (config.value && Object.keys(config.value).some((key) => config.value[key] !== undefined)) {
+        if (config.value.dataStructure == null) {
+          set(config.value, 'dataStructure', IotRedisDataStructureEnum.STREAM)
+        }
+        return
+      }
+      config.value = {
+        type: IotDataSinkTypeEnum.REDIS_STREAM + '', // 序列化成对应类型时使用
+        host: '',
+        port: 6379,
+        password: '',
+        database: 0,
+        dataStructure: IotRedisDataStructureEnum.STREAM,
+        topic: ''
+      }
+    })
+    const __returned__ = { props, emit, config, IOT_REDIS_DATA_STRUCTURE_OPTIONS, IotRedisDataStructureEnum };
         Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true });
         return __returned__;
     }

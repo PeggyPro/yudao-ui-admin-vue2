@@ -136,7 +136,7 @@ export default /*@__PURE__*/ _defineComponent({
         const mapDialogRef = ref(); // 地图弹窗 Ref
         /** 是否有位置信息 */
         const hasLocation = computed(() => {
-            return !!(__props.device.longitude && __props.device.latitude);
+      return __props.device.longitude != null && __props.device.latitude != null;
         });
         /** 打开地图弹窗 */
         const openMapDialog = () => {

@@ -143,7 +143,7 @@
               <el-input-number
                 v-model="scope.row.productPrice"
                 controls-position="right"
-                :min="0.01"
+                :min="0"
                 :precision="2"
                 style="width: 100%"
               />

@@ -37,14 +37,6 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-download"
-          :loading="exportLoading"
-          v-hasPermi="['system:mail-log:export']"
-          @click="handleExport"
-        >导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -196,7 +188,7 @@
 
 <script>
 import MailLogDetail from './MailLogDetail.vue'
-import { getMailLogPage, exportMailLog } from "@/api/system/mail/log";
+import { getMailLogPage } from '@/api/system/mail/log';
 import { getSimpleMailAccountList } from "@/api/system/mail/account";
 import Editor from '@/components/Editor';
 
@@ -208,7 +200,6 @@ export default {
       // 遮罩层
       loading: true,
       // 导出遮罩层
-      exportLoading: false,
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -255,18 +246,6 @@ export default {
         this.loading = false;
       });
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const params = { ...this.queryParams, pageNo: undefined, pageSize: undefined }
-      this.$modal.confirm('是否确认导出所有邮件日志数据项?').then(() => {
-        this.exportLoading = true
-        return exportMailLog(params)
-      }).then(response => {
-        this.$download.excel(response, '邮件日志.xls')
-      }).catch(() => {}).finally(() => {
-        this.exportLoading = false
-      })
-    },
     /** 取消按钮 */
     cancel() {
       this.open = false;
@@ -308,7 +287,7 @@ export default {
     },
     /** 详细按钮操作 */
     handleView(row) {
-      this.$refs.mailLogDetail.open(row);
+      this.$refs.mailLogDetail.open(row.id);
     },
   }
 };

@@ -9,24 +9,17 @@ import 'highlight.js/styles/vs2015.css'
 
 const md = new MarkdownIt({
   highlight(code, language) {
+    const languageHtml = '<span class="markdown-code-language">' + md.utils.escapeHtml(language || 'text') + '</span>'
+    const copyButton = '<button type="button" class="markdown-code-copy" data-code="' + encodeURIComponent(code) + '">复制</button>'
+    let codeHtml = md.utils.escapeHtml(code)
     if (language && hljs.getLanguage(language)) {
       try {
-        const copyButton =
-          '<button type="button" class="markdown-code-copy" data-code="' +
-          encodeURIComponent(code) +
-          '">复制</button>'
-        return (
-          '<pre class="markdown-code-block">' +
-          copyButton +
-          '<code class="hljs">' +
-          hljs.highlight(language, code, true).value +
-          '</code></pre>'
-        )
+        codeHtml = hljs.highlight(language, code, true).value
       } catch (error) {
-        return ''
+        // 无法高亮时保留转义后的正文
       }
     }
-    return ''
+    return '<pre class="markdown-code-block">' + languageHtml + copyButton + '<code class="hljs">' + codeHtml + '</code></pre>'
   }
 })
 
@@ -79,6 +72,13 @@ export default {
 
   .markdown-code-block {
     position: relative;
+  }
+
+  .markdown-code-language {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    color: #fff;
   }
 
   .markdown-code-copy {

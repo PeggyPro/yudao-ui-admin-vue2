@@ -16,16 +16,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="是否启用" prop="status">
-        <el-select v-model="queryParams.status" clearable placeholder="请选择是否启用">
-          <el-option
-            v-for="dict in statusOptions"
-            :key="dict.value"
-            :label="dict.label"
-            :value="Number(dict.value)"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -107,7 +97,6 @@
 
 <script>
 import { KnowledgeDocumentApi } from '@/api/ai/knowledge/document'
-import { getDictDatas, DICT_TYPE } from '@/utils/dict'
 import { checkPermi } from '@/utils/permission'
 import { CommonStatusEnum } from '@/utils/constants'
 
@@ -119,12 +108,10 @@ export default {
       loading: true,
       list: [],
       total: 0,
-      statusOptions: getDictDatas(DICT_TYPE.COMMON_STATUS),
       queryParams: {
         pageNo: 1,
         pageSize: 10,
         name: undefined,
-        status: undefined,
         knowledgeId: undefined
       }
     }

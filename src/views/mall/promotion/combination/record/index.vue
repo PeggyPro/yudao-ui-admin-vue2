@@ -169,7 +169,7 @@
       <el-table-column
         align="center"
         label="开团团长"
-        prop="headId"
+        prop="headNickname"
         min-width="120"
       >
         <template v-slot="scope">{{ getHeadNickname(scope.row) }}</template>
@@ -405,9 +405,7 @@ export default {
       return this.$refs.recordListDialog.open(row.headId || row.id)
     },
     getHeadNickname(row) {
-      if (!row.headId) return row.nickname || '-'
-      const head = this.pageList.find((item) => String(item.id) === String(row.headId))
-      return head && head.nickname ? head.nickname : '记录 #' + row.headId
+      return row.headNickname || '-'
     },
     formatTime(value) {
       return parseTime(value) || '-'

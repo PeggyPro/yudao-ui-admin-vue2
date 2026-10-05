@@ -6,6 +6,7 @@
     :options="deptTree"
     :normalizer="normalizer"
     :multiple="multiple"
+    :flat="multiple"
     :disabled="disabled"
     :placeholder="placeholder || '请选择部门'"
     :clearable="true"

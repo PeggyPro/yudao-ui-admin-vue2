@@ -41,7 +41,7 @@
           prop="customerId"
         ><el-select
           v-model="formData.customerId"
-          :disabled="formData.customerDefault"
+          :disabled="customerLocked"
           filterable
           placeholder="请选择客户"
           style="width: 100%"
@@ -190,7 +190,7 @@ import { getSimpleUserList } from '@/api/system/user'
 import { getAreaTree } from '@/api/system/area'
 import { DICT_TYPE, getDictDatas } from '@/utils/dict'
 
-const blank = () => ({ id: undefined, name: undefined, customerId: undefined, contactNextTime: undefined, ownerUserId: undefined, mobile: undefined, telephone: undefined, qq: undefined, wechat: undefined, email: undefined, areaId: undefined, detailAddress: undefined, sex: undefined, master: false, post: undefined, parentId: undefined, remark: undefined, businessId: undefined, customerDefault: false })
+const blank = () => ({ id: undefined, name: undefined, customerId: undefined, contactNextTime: undefined, ownerUserId: undefined, mobile: undefined, telephone: undefined, qq: undefined, wechat: undefined, email: undefined, areaId: undefined, detailAddress: undefined, sex: undefined, master: false, post: undefined, parentId: undefined, remark: undefined, businessId: undefined })
 
 export default {
   name: 'CrmContactForm',
@@ -202,6 +202,7 @@ export default {
       title: '',
       formType: 'create',
       formData: blank(),
+      customerLocked: false,
       userOptions: [],
       customerList: [],
       contactList: [],
@@ -230,6 +231,7 @@ export default {
       this.visible = true
       this.formType = type
       this.title = type === 'update' ? '修改联系人' : '新增联系人'
+      this.customerLocked = false
       this.formData = blank()
       this.loading = true
       try {
@@ -240,7 +242,7 @@ export default {
         this.customerList = (result[1]).data
         this.areaList = (result[2]).data
         if (type === 'update' && result[3]) this.formData = Object.assign(blank(), (result[3]).data)
-        if (customerId !== undefined && type === 'create') { this.formData.customerId = customerId; this.formData.customerDefault = true }
+        if (customerId !== undefined && type === 'create') { this.formData.customerId = customerId; this.customerLocked = true }
         if (businessId !== undefined) this.formData.businessId = businessId
         await this.getContactList()
         if (type === 'create') this.formData.ownerUserId = this.$store.getters.userId
@@ -259,6 +261,7 @@ export default {
       })
     },
     resetForm() {
+      this.customerLocked = false
       this.formData = blank(); this.userOptions = []; this.customerList = []; this.contactList = []; this.areaList = []
       this.$nextTick(() => this.$refs.form && this.$refs.form.resetFields())
     }

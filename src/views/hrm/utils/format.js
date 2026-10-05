@@ -51,12 +51,12 @@ export function formatHrmInsuranceProjectName(project) {
 
 /** 格式化 HRM 分析项的字典分类 */
 export function formatHrmAnalysisDictType(dictType, type) {
-  return type === null ? '未填写' : getDictDataLabel(dictType, type) || '未知'
+  return type == null ? '未填写' : getDictDataLabel(dictType, type) || '未知'
 }
 
 /** 格式化 HRM 分析项的区间分类 */
 export function formatHrmAnalysisRangeType(rangeNames, type) {
-  return type === null ? '未填写' : rangeNames[type] || '未知'
+  return type == null ? '未填写' : rangeNames[type] || '未知'
 }
 
 /** 获得 HRM 日历农历信息 */

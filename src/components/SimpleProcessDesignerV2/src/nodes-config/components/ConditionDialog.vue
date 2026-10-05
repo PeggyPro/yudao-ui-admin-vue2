@@ -55,7 +55,10 @@ export default {
   methods: {
     /** Open the modal with a cloned condition so cancel never mutates callers. */
     open(condition) {
-      this.draft = condition ? clone(condition) : defaultCondition()
+      const draft = condition ? clone(condition) : defaultCondition()
+      draft.conditionType ??= ConditionType.RULE
+      draft.conditionGroups ??= clone(DEFAULT_CONDITION_GROUP_VALUE)
+      this.draft = draft
       this.dialogVisible = true
       return this.$nextTick()
     },

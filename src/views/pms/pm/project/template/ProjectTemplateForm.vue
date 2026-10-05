@@ -279,6 +279,7 @@
 </template>
 
 <script>
+import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
 import { Icon } from '@/components/Icon'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
@@ -663,7 +664,7 @@ export default {
       return false
     },
     buildSubmitData() {
-      const data = JSON.parse(JSON.stringify(this.formData))
+      const data = cloneDeep(this.formData)
       const statusBoardMap = new Map()
       data.boards.forEach(board => {
         board.statusCodes.forEach(statusCode => statusBoardMap.set(statusCode, board.code))

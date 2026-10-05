@@ -402,12 +402,14 @@ export default {
       }
       this.setStockCount(row)
     },
-    setStockCount(row) {
+    async setStockCount(row) {
       if (!row.productId) return
-      return StockApi.getStockCount(row.productId)
-        .then((response) => {
-          row.stockCount = Number(response.data) || 0
-        })
+      const warehouseId = row.warehouseId
+      const response = warehouseId == null
+        ? await StockApi.getStockCount(row.productId)
+        : await StockApi.getStock2(row.productId, warehouseId)
+      const count = warehouseId == null ? response.data : response.data && response.data.count
+      this.$set(row, 'stockCount', Number(count) || 0)
     },
     validate(callback) {
       if (!this.$refs.form) {

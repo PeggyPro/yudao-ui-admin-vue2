@@ -198,8 +198,8 @@
             @click="handleProcessDetail(scope.row)"
           >进度</el-button>
           <el-button
-            v-if="scope.row.result === 1"
-            v-hasPermi="['bpm:oa-leave:create']"
+            v-if="scope.row.status === BpmProcessInstanceStatus.RUNNING"
+            v-hasPermi="['bpm:process-instance:cancel']"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -230,6 +230,7 @@
 
 <script>
 import { getLeavePage } from '@/api/bpm/leave'
+import { BpmProcessInstanceStatus } from '@/utils/constants'
 import { getDictDatas, DICT_TYPE } from '@/utils/dict'
 import { cancelProcessInstanceByStartUser } from '@/api/bpm/processInstance'
 
@@ -239,6 +240,7 @@ export default {
   },
   data() {
     return {
+      BpmProcessInstanceStatus,
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -309,7 +311,7 @@ export default {
         inputPattern: /^[\s\S]*.*\S[\s\S]*$/, // 判断非空，且非空格
         inputErrorMessage: '取消原因不能为空'
       })
-      await cancelProcessInstanceByStartUser(row.id, value)
+      await cancelProcessInstanceByStartUser(row.processInstanceId, value)
       this.$modal.msgSuccess('取消成功')
       await this.getList()
     }

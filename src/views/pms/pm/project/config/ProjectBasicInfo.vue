@@ -41,7 +41,10 @@
             归档后项目只允许查看，不能继续维护项目中的迭代和工作项。
           </div>
         </div>
-        <el-button @click="handleArchive">归档</el-button>
+        <el-button
+          v-hasPermi="['pms:pm:project:update']"
+          @click="handleArchive"
+        >归档</el-button>
       </div>
       <el-divider />
       <div class="flex items-center justify-between gap-16px">
@@ -51,7 +54,11 @@
             项目进入回收站后不可访问；只有项目拥有者可以在回收站彻底删除。
           </div>
         </div>
-        <el-button type="danger" @click="handleRecycle">移入回收站</el-button>
+        <el-button
+          v-hasPermi="['pms:pm:project:update']"
+          type="danger"
+          @click="handleRecycle"
+        >移入回收站</el-button>
       </div>
     </template>
 

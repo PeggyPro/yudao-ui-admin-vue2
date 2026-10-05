@@ -141,7 +141,7 @@ export default {
       formType: '', // 表单类型：create - 新增；update - 修改
       formData: createDefaultForm(), // 表单数据
       formRules: {
-        title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
+        title: [{ required: true, whitespace: true, message: '标题不能为空', trigger: 'blur' }],
         urgency: [{ required: true, message: '紧急程度不能为空', trigger: 'change' }],
         startTime: [{ required: true, message: '开始时间不能为空', trigger: 'change' }],
         endTime: [{ required: true, message: '结束时间不能为空', trigger: 'change' }],
