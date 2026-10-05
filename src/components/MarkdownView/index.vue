@@ -1,5 +1,10 @@
 <template>
-  <div ref="content" class="markdown-view" v-html="renderedMarkdown" @click="handleCopy" />
+  <div
+    ref="content"
+    class="markdown-view"
+    @click="handleCopy"
+    v-html="renderedMarkdown"
+  />
 </template>
 
 <script>

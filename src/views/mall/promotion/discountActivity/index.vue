@@ -111,7 +111,7 @@
         label="活动时间"
         min-width="210"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           {{ formatDateOnly(scope.row.startTime) }}
           ~ {{ formatDateOnly(scope.row.endTime) }}
         </template>
@@ -122,7 +122,7 @@
         align="center"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -135,7 +135,7 @@
         align="center"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -145,7 +145,7 @@
         width="150"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:discount-activity:update']"
             type="text"

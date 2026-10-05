@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     width="800px"
     append-to-body
     @closed="resetForm"
@@ -13,11 +13,25 @@
       :rules="formRules"
       label-width="150px"
     >
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="formData.title" placeholder="请输入标题" maxlength="255" />
+      <el-form-item
+        label="标题"
+        prop="title"
+      >
+        <el-input
+          v-model="formData.title"
+          placeholder="请输入标题"
+          maxlength="255"
+        />
       </el-form-item>
-      <el-form-item label="紧急程度" prop="urgency">
-        <el-select v-model="formData.urgency" placeholder="请选择紧急程度" style="width: 100%">
+      <el-form-item
+        label="紧急程度"
+        prop="urgency"
+      >
+        <el-select
+          v-model="formData.urgency"
+          placeholder="请选择紧急程度"
+          style="width: 100%"
+        >
           <el-option
             v-for="dict in urgencyOptions"
             :key="dict.value"
@@ -26,7 +40,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="开始时间" prop="startTime">
+      <el-form-item
+        label="开始时间"
+        prop="startTime"
+      >
         <el-date-picker
           v-model="formData.startTime"
           type="datetime"
@@ -35,7 +52,10 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="结束时间" prop="endTime">
+      <el-form-item
+        label="结束时间"
+        prop="endTime"
+      >
         <el-date-picker
           v-model="formData.endTime"
           type="datetime"
@@ -44,7 +64,10 @@
           style="width: 100%"
         />
       </el-form-item>
-      <el-form-item label="试用期心得" prop="experience">
+      <el-form-item
+        label="试用期心得"
+        prop="experience"
+      >
         <el-input
           v-model="formData.experience"
           maxlength="255"
@@ -53,7 +76,10 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="岗位职责理解" prop="understanding">
+      <el-form-item
+        label="岗位职责理解"
+        prop="understanding"
+      >
         <el-input
           v-model="formData.understanding"
           maxlength="255"
@@ -62,7 +88,10 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="试用期成长" prop="growth">
+      <el-form-item
+        label="试用期成长"
+        prop="growth"
+      >
         <el-input
           v-model="formData.growth"
           maxlength="255"
@@ -71,7 +100,10 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="目前不足" prop="deficiency">
+      <el-form-item
+        label="目前不足"
+        prop="deficiency"
+      >
         <el-input
           v-model="formData.deficiency"
           maxlength="255"
@@ -80,7 +112,10 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="工作改进" prop="improvement">
+      <el-form-item
+        label="工作改进"
+        prop="improvement"
+      >
         <el-input
           v-model="formData.improvement"
           maxlength="255"
@@ -89,7 +124,10 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item label="产品意见建议" prop="suggestion">
+      <el-form-item
+        label="产品意见建议"
+        prop="suggestion"
+      >
         <el-input
           v-model="formData.suggestion"
           maxlength="255"
@@ -99,19 +137,29 @@
         />
       </el-form-item>
       <el-form-item label="天数">
-        <el-input :value="days" disabled />
+        <el-input
+          :value="days"
+          disabled
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :disabled="formLoading" @click="submitForm">保 存</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :disabled="formLoading"
+        @click="submitForm"
+      >保 存</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import * as RegularApplyApi from '@/api/oa/regular'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 
@@ -132,7 +180,7 @@ function createDefaultForm() {
 
 export default {
   name: 'OaRegularApplyForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false, // 弹窗是否展示

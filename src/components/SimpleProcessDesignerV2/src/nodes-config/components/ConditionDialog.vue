@@ -12,10 +12,20 @@
     append-to-body
     @closed="reset"
   >
-    <Condition ref="condition" v-model="draft" />
-    <div slot="footer" class="dialog-footer">
+    <Condition
+      ref="condition"
+      v-model="draft"
+    />
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" :loading="saving" @click="submitForm">确 定</el-button>
+      <el-button
+        type="primary"
+        :loading="saving"
+        @click="submitForm"
+      >确 定</el-button>
     </div>
   </el-dialog>
 </template>

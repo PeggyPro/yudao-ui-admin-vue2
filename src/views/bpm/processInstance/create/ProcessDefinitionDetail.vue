@@ -1,12 +1,24 @@
 <template>
   <div class="process-definition-detail">
-    <el-card shadow="never" class="process-create-card">
+    <el-card
+      shadow="never"
+      class="process-create-card"
+    >
       <div class="process-create-title">流程：{{ definition.name }}</div>
       <el-divider class="process-create-divider" />
 
-      <el-tabs v-model="activeTab" class="process-create-tabs">
-        <el-tab-pane label="表单填写" name="form">
-          <div class="process-form-area" v-loading="submitting">
+      <el-tabs
+        v-model="activeTab"
+        class="process-create-tabs"
+      >
+        <el-tab-pane
+          label="表单填写"
+          name="form"
+        >
+          <div
+            v-loading="submitting"
+            class="process-form-area"
+          >
             <el-row :gutter="24">
               <el-col :span="17">
                 <template v-if="isNormalForm">
@@ -18,7 +30,10 @@
                     @change="handleFormChange"
                     @submit="handleSubmit"
                   />
-                  <el-empty v-else description="该流程未配置表单字段" />
+                  <el-empty
+                    v-else
+                    description="该流程未配置表单字段"
+                  />
                 </template>
                 <template v-else-if="isCustomForm">
                   <el-alert
@@ -28,9 +43,15 @@
                     show-icon
                   />
                 </template>
-                <el-empty v-else description="该流程未配置有效的表单类型" />
+                <el-empty
+                  v-else
+                  description="该流程未配置有效的表单类型"
+                />
               </el-col>
-              <el-col :span="6" :offset="1">
+              <el-col
+                :span="6"
+                :offset="1"
+              >
                 <ProcessInstanceTimeline
                   ref="timeline"
                   v-loading="approvalLoading"
@@ -43,7 +64,11 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane label="流程图" name="diagram" lazy>
+        <el-tab-pane
+          label="流程图"
+          name="diagram"
+          lazy
+        >
           <div class="process-diagram-area">
             <SimpleProcessViewer
               v-if="isSimpleModel && simpleModel"
@@ -56,16 +81,30 @@
               v-model="bpmnXML"
               :prefix="'flowable'"
             />
-            <el-empty v-else description="暂无流程图" />
+            <el-empty
+              v-else
+              description="暂无流程图"
+            />
           </div>
         </el-tab-pane>
       </el-tabs>
 
       <div class="process-action-bar">
-        <el-button plain type="success" icon="el-icon-check" :loading="submitting" @click="submitForm">
+        <el-button
+          plain
+          type="success"
+          icon="el-icon-check"
+          :loading="submitting"
+          @click="submitForm"
+        >
           发起
         </el-button>
-        <el-button plain type="danger" icon="el-icon-close" @click="$emit('cancel')">取消</el-button>
+        <el-button
+          plain
+          type="danger"
+          icon="el-icon-close"
+          @click="$emit('cancel')"
+        >取消</el-button>
       </div>
     </el-card>
   </div>

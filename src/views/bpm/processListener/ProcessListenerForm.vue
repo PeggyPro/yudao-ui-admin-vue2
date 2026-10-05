@@ -1,7 +1,7 @@
 <template>
-  <Dialog
-    :title="dialogTitle"
+  <AppDialog
     v-model="dialogVisible"
+    :title="dialogTitle"
     @closed="handleClosed"
   >
     <el-form
@@ -11,10 +11,19 @@
       :rules="rules"
       label-width="110px"
     >
-      <el-form-item label="名字" prop="name">
-        <el-input v-model="form.name" placeholder="请输入名字" />
+      <el-form-item
+        label="名字"
+        prop="name"
+      >
+        <el-input
+          v-model="form.name"
+          placeholder="请输入名字"
+        />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item
+        label="状态"
+        prop="status"
+      >
         <el-radio-group v-model="form.status">
           <el-radio
             v-for="dict in getDictDatas(DICT_TYPE.COMMON_STATUS)"
@@ -25,8 +34,16 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="form.type" placeholder="请选择类型" style="width: 100%" @change="handleTypeChange">
+      <el-form-item
+        label="类型"
+        prop="type"
+      >
+        <el-select
+          v-model="form.type"
+          placeholder="请选择类型"
+          style="width: 100%"
+          @change="handleTypeChange"
+        >
           <el-option
             v-for="dict in getDictDatas(DICT_TYPE.BPM_PROCESS_LISTENER_TYPE)"
             :key="dict.value"
@@ -35,8 +52,15 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="事件" prop="event">
-        <el-select v-model="form.event" placeholder="请选择事件" style="width: 100%">
+      <el-form-item
+        label="事件"
+        prop="event"
+      >
+        <el-select
+          v-model="form.event"
+          placeholder="请选择事件"
+          style="width: 100%"
+        >
           <el-option
             v-for="event in eventOptions"
             :key="event.value"
@@ -45,7 +69,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="值类型" prop="valueType">
+      <el-form-item
+        label="值类型"
+        prop="valueType"
+      >
         <el-select
           v-model="form.valueType"
           placeholder="请选择值类型"
@@ -59,21 +86,35 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item :label="valueLabel" prop="value">
-        <el-input v-model="form.value" :placeholder="valuePlaceholder" />
+      <el-form-item
+        :label="valueLabel"
+        prop="value"
+      >
+        <el-input
+          v-model="form.value"
+          :placeholder="valuePlaceholder"
+        />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" :disabled="formLoading" @click="submitForm">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        :disabled="formLoading"
+        @click="submitForm"
+      >
         确 定
       </el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import {
   createProcessListener,
   getProcessListener,
@@ -96,7 +137,7 @@ function createDefaultForm() {
 /** 可复用的 BPM 流程监听器表单。 */
 export default {
   name: 'ProcessListenerForm',
-  components: { Dialog },
+  components: { AppDialog },
   data() {
     return {
       dialogVisible: false,

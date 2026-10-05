@@ -72,7 +72,7 @@ export function useFormFieldsPermission(defaultPermission) {
     if (formFields) {
       mergedFieldsPermission = parseFormCreateFields(formFields).map((item) => {
         const found = formFieldsPermisson.find(
-          (fieldPermission) => fieldPermission.field == item.field
+          (fieldPermission) => fieldPermission.field === item.field
         )
         return {
           field: item.field,
@@ -285,7 +285,7 @@ export function useNodeForm(nodeType) {
    * 处理候选人参数的赋值
    */
   const handleCandidateParam = () => {
-    let candidateParam = undefined
+    let candidateParam
     if (!configForm.value) {
       return candidateParam
     }
@@ -508,7 +508,7 @@ export function getConditionShowText(
   if (conditionType === ConditionType.RULE) {
     // 条件组是否为与关系
     const groupAnd = conditionGroups?.and
-    let warningMessage = undefined
+    let warningMessage
     const conditionGroup = conditionGroups?.conditions.map((item) => {
       return (
         '(' +

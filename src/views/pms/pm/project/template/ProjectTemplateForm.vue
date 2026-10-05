@@ -13,11 +13,20 @@
       :rules="formRules"
       label-width="96px"
     >
-      <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-        <el-tab-pane label="基本信息" name="basic">
+      <el-tabs
+        v-model="activeTab"
+        @tab-click="handleTabClick"
+      >
+        <el-tab-pane
+          label="基本信息"
+          name="basic"
+        >
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="模板名称" prop="name">
+              <el-form-item
+                label="模板名称"
+                prop="name"
+              >
                 <el-input
                   v-model="formData.name"
                   maxlength="100"
@@ -27,22 +36,34 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="项目类型" prop="projectType">
+              <el-form-item
+                label="项目类型"
+                prop="projectType"
+              >
                 <el-select
                   v-model="formData.projectType"
                   class="full-width"
                   placeholder="请选择项目类型"
                   @change="handleProjectTypeChange"
                 >
-                  <el-option label="通用项目" :value="PmsProjectType.GENERAL" />
-                  <el-option label="敏捷开发项目" :value="PmsProjectType.AGILE" />
+                  <el-option
+                    label="通用项目"
+                    :value="PmsProjectType.GENERAL"
+                  />
+                  <el-option
+                    label="敏捷开发项目"
+                    :value="PmsProjectType.AGILE"
+                  />
                 </el-select>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="模板状态" prop="status">
+              <el-form-item
+                label="模板状态"
+                prop="status"
+              >
                 <el-radio-group v-model="formData.status">
                   <el-radio
                     v-for="dict in getIntDictOptions(DICT_TYPE.COMMON_STATUS)"
@@ -55,12 +76,22 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="显示顺序" prop="sort">
-                <el-input-number v-model="formData.sort" :min="0" class="full-width" />
+              <el-form-item
+                label="显示顺序"
+                prop="sort"
+              >
+                <el-input-number
+                  v-model="formData.sort"
+                  :min="0"
+                  class="full-width"
+                />
               </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item label="模板描述" prop="description">
+          <el-form-item
+            label="模板描述"
+            prop="description"
+          >
             <el-input
               v-model="formData.description"
               :rows="4"
@@ -72,7 +103,10 @@
           </el-form-item>
         </el-tab-pane>
 
-        <el-tab-pane :label="'事项类型（' + formData.itemTypes.length + '）'" name="itemType">
+        <el-tab-pane
+          :label="'事项类型（' + formData.itemTypes.length + '）'"
+          name="itemType"
+        >
           <el-alert
             :closable="false"
             class="tab-alert"
@@ -80,8 +114,15 @@
             title="事项类型是模板的全局关系；项目创建后不提供项目级维护"
             type="info"
           />
-          <el-form-item class="item-type-form-item" label="事项类型" prop="itemTypes">
-            <el-checkbox-group v-model="formData.itemTypes" @change="handleItemTypesChange">
+          <el-form-item
+            class="item-type-form-item"
+            label="事项类型"
+            prop="itemTypes"
+          >
+            <el-checkbox-group
+              v-model="formData.itemTypes"
+              @change="handleItemTypesChange"
+            >
               <el-checkbox
                 v-for="item in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_TYPE)"
                 :key="item.value"
@@ -93,7 +134,10 @@
           </el-form-item>
         </el-tab-pane>
 
-        <el-tab-pane :label="'状态（' + formData.statuses.length + '）'" name="status">
+        <el-tab-pane
+          :label="'状态（' + formData.statuses.length + '）'"
+          name="status"
+        >
           <div class="tab-toolbar">
             <el-alert
               :closable="false"
@@ -101,12 +145,22 @@
               title="拖拽调整状态顺序；每种事项类型必须且只能配置一个初始状态"
               type="info"
             />
-            <el-button type="primary" @click="addStatus">
-              <Icon class="button-icon" icon="ep:plus" />新增状态
+            <el-button
+              type="primary"
+              @click="addStatus"
+            >
+              <Icon
+                class="button-icon"
+                icon="ep:plus"
+              />新增状态
             </el-button>
           </div>
           <div class="status-groups">
-            <div v-for="group in statusGroups" :key="group.value" class="status-group">
+            <div
+              v-for="group in statusGroups"
+              :key="group.value"
+              class="status-group"
+            >
               <div class="status-group-title">
                 <span>{{ group.label }}</span>
                 <span class="secondary-text">（{{ group.statuses.length }}）</span>
@@ -117,9 +171,15 @@
                 max-height="430px"
                 row-key="code"
               >
-                <el-table-column align="center" width="44">
+                <el-table-column
+                  align="center"
+                  width="44"
+                >
                   <template slot-scope="scope">
-                    <el-tooltip content="拖动排序" placement="top">
+                    <el-tooltip
+                      content="拖动排序"
+                      placement="top"
+                    >
                       <Icon
                         :key="scope.row.code"
                         class="status-drag-handle drag-handle"
@@ -128,19 +188,37 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
-                <el-table-column label="编码" min-width="150">
+                <el-table-column
+                  label="编码"
+                  min-width="150"
+                >
                   <template slot-scope="scope">
-                    <el-input v-model="scope.row.code" placeholder="如 task_todo" />
+                    <el-input
+                      v-model="scope.row.code"
+                      placeholder="如 task_todo"
+                    />
                   </template>
                 </el-table-column>
-                <el-table-column label="名称" min-width="130">
+                <el-table-column
+                  label="名称"
+                  min-width="130"
+                >
                   <template slot-scope="scope">
-                    <el-input v-model="scope.row.name" placeholder="请输入状态名称" />
+                    <el-input
+                      v-model="scope.row.name"
+                      placeholder="请输入状态名称"
+                    />
                   </template>
                 </el-table-column>
-                <el-table-column label="事项类型" min-width="130">
+                <el-table-column
+                  label="事项类型"
+                  min-width="130"
+                >
                   <template slot-scope="scope">
-                    <el-select v-model="scope.row.workItemType" @change="handleStatusTypeChange">
+                    <el-select
+                      v-model="scope.row.workItemType"
+                      @change="handleStatusTypeChange"
+                    >
                       <el-option
                         v-for="item in enabledWorkItemTypeOptions"
                         :key="item.value"
@@ -150,7 +228,10 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column label="语义状态" min-width="130">
+                <el-table-column
+                  label="语义状态"
+                  min-width="130"
+                >
                   <template slot-scope="scope">
                     <el-select v-model="scope.row.statusType">
                       <el-option
@@ -162,7 +243,11 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column align="center" label="初始" width="80">
+                <el-table-column
+                  align="center"
+                  label="初始"
+                  width="80"
+                >
                   <template slot-scope="scope">
                     <el-radio
                       :label="true"
@@ -174,7 +259,12 @@
                     </el-radio>
                   </template>
                 </el-table-column>
-                <el-table-column align="center" fixed="right" label="操作" width="70">
+                <el-table-column
+                  align="center"
+                  fixed="right"
+                  label="操作"
+                  width="70"
+                >
                   <template slot-scope="scope">
                     <el-button
                       type="text"
@@ -190,7 +280,10 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane :label="'看板（' + formData.boards.length + '）'" name="board">
+        <el-tab-pane
+          :label="'看板（' + formData.boards.length + '）'"
+          name="board"
+        >
           <div class="tab-toolbar">
             <el-alert
               :closable="false"
@@ -198,14 +291,30 @@
               title="拖拽调整看板列顺序；同一状态只能归属一个看板列"
               type="info"
             />
-            <el-button type="primary" @click="addBoard">
-              <Icon class="button-icon" icon="ep:plus" />新增看板列
+            <el-button
+              type="primary"
+              @click="addBoard"
+            >
+              <Icon
+                class="button-icon"
+                icon="ep:plus"
+              />新增看板列
             </el-button>
           </div>
-          <el-table ref="boardTable" :data="formData.boards" max-height="430px">
-            <el-table-column align="center" width="44">
+          <el-table
+            ref="boardTable"
+            :data="formData.boards"
+            max-height="430px"
+          >
+            <el-table-column
+              align="center"
+              width="44"
+            >
               <template slot-scope="scope">
-                <el-tooltip content="拖动排序" placement="top">
+                <el-tooltip
+                  content="拖动排序"
+                  placement="top"
+                >
                   <Icon
                     :key="scope.row.code"
                     class="board-drag-handle drag-handle"
@@ -214,17 +323,32 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column label="编码" min-width="140">
+            <el-table-column
+              label="编码"
+              min-width="140"
+            >
               <template slot-scope="scope">
-                <el-input v-model="scope.row.code" placeholder="如 todo" />
+                <el-input
+                  v-model="scope.row.code"
+                  placeholder="如 todo"
+                />
               </template>
             </el-table-column>
-            <el-table-column label="名称" min-width="130">
+            <el-table-column
+              label="名称"
+              min-width="130"
+            >
               <template slot-scope="scope">
-                <el-input v-model="scope.row.name" placeholder="请输入看板列名称" />
+                <el-input
+                  v-model="scope.row.name"
+                  placeholder="请输入看板列名称"
+                />
               </template>
             </el-table-column>
-            <el-table-column label="事项类型" min-width="130">
+            <el-table-column
+              label="事项类型"
+              min-width="130"
+            >
               <template slot-scope="scope">
                 <el-select
                   v-model="scope.row.workItemType"
@@ -239,7 +363,10 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column label="关联状态" min-width="260">
+            <el-table-column
+              label="关联状态"
+              min-width="260"
+            >
               <template slot-scope="scope">
                 <el-select
                   v-model="scope.row.statusCodes"
@@ -256,7 +383,12 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column align="center" fixed="right" label="操作" width="70">
+            <el-table-column
+              align="center"
+              fixed="right"
+              label="操作"
+              width="70"
+            >
               <template slot-scope="scope">
                 <el-button
                   type="text"
@@ -271,8 +403,15 @@
         </el-tab-pane>
       </el-tabs>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button :disabled="formLoading" type="primary" @click="submitForm">确 定</el-button>
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        :disabled="formLoading"
+        type="primary"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </span>
   </el-dialog>

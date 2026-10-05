@@ -36,7 +36,10 @@ export default {
     }
   },
   props: {
-    value: [String, Number, Array],
+    value: {
+      type: [String, Number, Array],
+      default: undefined
+    },
     multiple: {
       type: Boolean,
       default: false

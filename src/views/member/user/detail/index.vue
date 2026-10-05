@@ -1,28 +1,57 @@
 <template>
-  <div v-loading="loading" class="app-container member-user-detail">
+  <div
+    v-loading="loading"
+    class="app-container member-user-detail"
+  >
     <el-row :gutter="10">
-      <el-col :span="14" class="detail-info-item">
+      <el-col
+        :span="14"
+        class="detail-info-item"
+      >
         <user-basic-info :user="user">
           <template slot="header">
             <span>基本信息</span>
-            <el-button v-hasPermi="['member:user:update']" type="text" size="small" @click="openForm('update')">编辑</el-button>
+            <el-button
+              v-hasPermi="['member:user:update']"
+              type="text"
+              size="small"
+              @click="openForm('update')"
+            >编辑</el-button>
           </template>
         </user-basic-info>
       </el-col>
-      <el-col :span="10" class="detail-info-item">
-        <el-card shadow="never" class="account-card">
+      <el-col
+        :span="10"
+        class="detail-info-item"
+      >
+        <el-card
+          shadow="never"
+          class="account-card"
+        >
           <div slot="header">账户信息</div>
-          <user-account-info :user="user" :wallet="wallet" />
+          <user-account-info
+            :user="user"
+            :wallet="wallet"
+          />
         </el-card>
       </el-col>
     </el-row>
 
-    <el-card shadow="never" class="detail-card">
+    <el-card
+      shadow="never"
+      class="detail-card"
+    >
       <div slot="header">账户明细</div>
       <el-tabs>
         <el-tab-pane label="积分"><user-point-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="签到" lazy><user-sign-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="成长值" lazy><user-experience-record-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="签到"
+          lazy
+        ><user-sign-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="成长值"
+          lazy
+        ><user-experience-record-list :user-id="id" /></el-tab-pane>
         <el-tab-pane
           label="余额"
           lazy
@@ -32,16 +61,37 @@
             :wallet-id="wallet.id"
           />
         </el-tab-pane>
-        <el-tab-pane label="收货地址" lazy><user-address-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="订单管理" lazy><user-order-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="售后管理" lazy><user-after-sale-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="收藏记录" lazy><user-favorite-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="优惠劵" lazy><user-coupon-list :user-id="id" /></el-tab-pane>
-        <el-tab-pane label="推广用户" lazy><user-brokerage-list :bind-user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="收货地址"
+          lazy
+        ><user-address-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="订单管理"
+          lazy
+        ><user-order-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="售后管理"
+          lazy
+        ><user-after-sale-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="收藏记录"
+          lazy
+        ><user-favorite-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="优惠劵"
+          lazy
+        ><user-coupon-list :user-id="id" /></el-tab-pane>
+        <el-tab-pane
+          label="推广用户"
+          lazy
+        ><user-brokerage-list :bind-user-id="id" /></el-tab-pane>
       </el-tabs>
     </el-card>
 
-    <user-form ref="form" @success="getUserData(id)" />
+    <user-form
+      ref="form"
+      @success="getUserData(id)"
+    />
   </div>
 </template>
 

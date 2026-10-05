@@ -1,5 +1,10 @@
 <template>
-  <Dialog :title="dialogTitle" v-model="dialogVisible" width="780px" @closed="resetForm">
+  <AppDialog
+    v-model="dialogVisible"
+    :title="dialogTitle"
+    width="780px"
+    @closed="resetForm"
+  >
     <el-form
       ref="form"
       v-loading="formLoading"
@@ -10,7 +15,10 @@
       <!-- 基础信息 -->
       <el-row>
         <el-col :span="12">
-          <el-form-item label="计划类型" prop="type">
+          <el-form-item
+            label="计划类型"
+            prop="type"
+          >
             <el-select
               v-model="formData.type"
               placeholder="请选择计划类型"
@@ -27,8 +35,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="计划状态" prop="status">
-            <el-select v-model="formData.status" placeholder="请选择计划状态" style="width: 100%">
+          <el-form-item
+            label="计划状态"
+            prop="status"
+          >
+            <el-select
+              v-model="formData.status"
+              placeholder="请选择计划状态"
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in statusOptions"
                 :key="item.value"
@@ -39,7 +54,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="计划标题" prop="title">
+      <el-form-item
+        label="计划标题"
+        prop="title"
+      >
         <el-input
           v-model="formData.title"
           placeholder="请输入计划标题"
@@ -47,13 +65,23 @@
           show-word-limit
         />
       </el-form-item>
-      <el-form-item label="计划标签" prop="label">
-        <el-input v-model="formData.label" maxlength="255" placeholder="例如：重点、销售" />
+      <el-form-item
+        label="计划标签"
+        prop="label"
+      >
+        <el-input
+          v-model="formData.label"
+          maxlength="255"
+          placeholder="例如：重点、销售"
+        />
       </el-form-item>
       <!-- 计划周期 -->
       <el-row>
         <el-col :span="12">
-          <el-form-item label="开始时间" prop="startTime">
+          <el-form-item
+            label="开始时间"
+            prop="startTime"
+          >
             <el-date-picker
               v-model="formData.startTime"
               placeholder="请选择开始时间"
@@ -64,7 +92,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="结束时间" prop="endTime">
+          <el-form-item
+            label="结束时间"
+            prop="endTime"
+          >
             <el-date-picker
               v-model="formData.endTime"
               placeholder="请选择结束时间"
@@ -76,7 +107,10 @@
         </el-col>
       </el-row>
       <!-- 计划内容 -->
-      <el-form-item label="计划内容" prop="content">
+      <el-form-item
+        label="计划内容"
+        prop="content"
+      >
         <el-input
           v-model="formData.content"
           placeholder="请输入计划内容"
@@ -84,7 +118,10 @@
           :rows="5"
         />
       </el-form-item>
-      <el-form-item label="计划总结" prop="summary">
+      <el-form-item
+        label="计划总结"
+        prop="summary"
+      >
         <el-input
           v-model="formData.summary"
           placeholder="请输入计划总结"
@@ -92,7 +129,10 @@
           :rows="3"
         />
       </el-form-item>
-      <el-form-item v-if="formType === 'update'" label="计划点评">
+      <el-form-item
+        v-if="formType === 'update'"
+        label="计划点评"
+      >
         <el-input
           :value="formData.comment || '暂无点评'"
           type="textarea"
@@ -100,24 +140,34 @@
           readonly
         />
       </el-form-item>
-      <el-form-item label="附件" prop="fileUrls">
+      <el-form-item
+        label="附件"
+        prop="fileUrls"
+      >
         <UploadFile
           v-model="formData.fileUrls"
           :limit="5"
         />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="formLoading" @click="submitForm">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        type="primary"
+        :loading="formLoading"
+        @click="submitForm"
+      >确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
-  </Dialog>
+  </AppDialog>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import * as PlanApi from '@/api/oa/plan'
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import UploadFile from '@/components/UploadFile'
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import { OA_PLAN_STATUS, OA_PLAN_TYPE } from '@/views/oa/utils/constants-collab'
@@ -140,7 +190,7 @@ function createDefaultFormData() {
 
 export default {
   name: 'OaPlanForm',
-  components: { Dialog, UploadFile },
+  components: { AppDialog, UploadFile },
   data() {
     const validateSummary = (rule, value, callback) => {
       if (!value || value.trim().length >= 20) {

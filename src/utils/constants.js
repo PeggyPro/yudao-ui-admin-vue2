@@ -3,32 +3,32 @@
  *
  * 枚举类
  */
-import {beginOfDay, endOfDay} from "@/utils/dateUtils";
+import { beginOfDay, endOfDay } from '@/utils/dateUtils'
 
 export const datePickerOptions = {
   shortcuts: [{
     text: '最近一周',
     onClick(picker) {
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-      const end = new Date();
-      picker.$emit('pick', [beginOfDay(start), endOfDay(end)]);
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      const end = new Date()
+      picker.$emit('pick', [beginOfDay(start), endOfDay(end)])
     }
   }, {
     text: '最近一个月',
     onClick(picker) {
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-      const end = new Date();
-      picker.$emit('pick', [beginOfDay(start), endOfDay(end)]);
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+      const end = new Date()
+      picker.$emit('pick', [beginOfDay(start), endOfDay(end)])
     }
   }, {
     text: '最近三个月',
     onClick(picker) {
-      const start = new Date();
-      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-      const end = new Date();
-      picker.$emit('pick', [beginOfDay(start), endOfDay(end)]);
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+      const end = new Date()
+      picker.$emit('pick', [beginOfDay(start), endOfDay(end)])
     }
   }]
 }
@@ -139,7 +139,7 @@ export const SystemDataScopeEnum = {
 export const InfraCodegenTemplateTypeEnum = {
   CRUD: 1, // 基础 CRUD
   TREE: 2, // 树形 CRUD
-  SUB: 3, // 主子表 CRUD
+  SUB: 3 // 主子表 CRUD
 }
 
 /**
@@ -148,7 +148,7 @@ export const InfraCodegenTemplateTypeEnum = {
 export const InfraJobStatusEnum = {
   INIT: 0, // 初始化中
   NORMAL: 1, // 运行中
-  STOP: 2, // 暂停运行
+  STOP: 2 // 暂停运行
 }
 
 /**
@@ -157,7 +157,7 @@ export const InfraJobStatusEnum = {
 export const InfraApiErrorLogProcessStatusEnum = {
   INIT: 0, // 未处理
   DONE: 1, // 已处理
-  IGNORE: 2, // 已忽略
+  IGNORE: 2 // 已忽略
 }
 
 /**
@@ -165,16 +165,16 @@ export const InfraApiErrorLogProcessStatusEnum = {
  */
 export const SystemUserSocialTypeEnum = {
   DINGTALK: {
-    title: "钉钉",
+    title: '钉钉',
     type: 20,
-    source: "dingtalk",
-    img: "https://s1.ax1x.com/2022/05/22/OzMDRs.png",
+    source: 'dingtalk',
+    img: 'https://s1.ax1x.com/2022/05/22/OzMDRs.png'
   },
   WECHAT_ENTERPRISE: {
-    title: "企业微信",
+    title: '企业微信',
     type: 30,
-    source: "wechat_enterprise",
-    img: "https://s1.ax1x.com/2022/05/22/OzMrzn.png",
+    source: 'wechat_enterprise',
+    img: 'https://s1.ax1x.com/2022/05/22/OzMrzn.png'
   }
 }
 
@@ -183,52 +183,52 @@ export const SystemUserSocialTypeEnum = {
  */
 export const PayChannelEnum = {
   WX_PUB: {
-    "code": "wx_pub",
-    "name": "微信 JSAPI 支付",
+    'code': 'wx_pub',
+    'name': '微信 JSAPI 支付'
   },
   WX_LITE: {
-    "code": "wx_lite",
-    "name": "微信小程序支付"
+    'code': 'wx_lite',
+    'name': '微信小程序支付'
   },
   WX_APP: {
-    "code": "wx_app",
-    "name": "微信 APP 支付"
+    'code': 'wx_app',
+    'name': '微信 APP 支付'
   },
   WX_NATIVE: {
-    "code": "wx_native",
-    "name": "微信扫码支付"
+    'code': 'wx_native',
+    'name': '微信扫码支付'
   },
   WX_BAR: {
-    "code": "wx_bar",
-    "name": "微信条码支付"
+    'code': 'wx_bar',
+    'name': '微信条码支付'
   },
   ALIPAY_PC: {
-    "code": "alipay_pc",
-    "name": "支付宝 PC 网站支付"
+    'code': 'alipay_pc',
+    'name': '支付宝 PC 网站支付'
   },
   ALIPAY_WAP: {
-    "code": "alipay_wap",
-    "name": "支付宝 WAP 网站支付"
+    'code': 'alipay_wap',
+    'name': '支付宝 WAP 网站支付'
   },
   ALIPAY_APP: {
-    "code": "alipay_app",
-    "name": "支付宝 APP 支付"
+    'code': 'alipay_app',
+    'name': '支付宝 APP 支付'
   },
   ALIPAY_QR: {
-    "code": "alipay_qr",
-    "name": "支付宝扫码支付"
+    'code': 'alipay_qr',
+    'name': '支付宝扫码支付'
   },
   ALIPAY_BAR: {
-    "code": "alipay_bar",
-    "name": "支付宝条码支付"
+    'code': 'alipay_bar',
+    'name': '支付宝条码支付'
   },
-  MOCK : {
-    "code": "mock",
-    "name": "模拟支付"
+  MOCK: {
+    'code': 'mock',
+    'name': '模拟支付'
   },
-  WALLET : {
-    "code": "wallet",
-    "name": "钱包支付"
+  WALLET: {
+    'code': 'wallet',
+    'name': '钱包支付'
   }
 }
 
@@ -237,19 +237,19 @@ export const PayChannelEnum = {
  */
 export const PayDisplayModeEnum = {
   URL: {
-    "mode": "url",
+    'mode': 'url'
   },
   IFRAME: {
-    "mode": "iframe",
+    'mode': 'iframe'
   },
   FORM: {
-    "mode": "form"
+    'mode': 'form'
   },
   QR_CODE: {
-    "mode": "qr_code"
+    'mode': 'qr_code'
   },
   APP: {
-    "mode": "app"
+    'mode': 'app'
   }
 }
 
@@ -324,7 +324,7 @@ export const ProductSpuStatusEnum = {
   ENABLE: {
     status: 1,
     name: '上架'
-  },
+  }
 }
 
 /**

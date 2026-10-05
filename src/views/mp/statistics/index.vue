@@ -1,62 +1,115 @@
 <template>
   <div class="app-container">
-    <doc-alert title="公众号统计" url="https://doc.iocoder.cn/mp/statistics/" />
+    <doc-alert
+      title="公众号统计"
+      url="https://doc.iocoder.cn/mp/statistics/"
+    />
 
     <!-- 搜索工作栏 -->
-    <el-form ref="queryForm" size="small" :inline="true" label-width="68px">
-      <el-form-item label="公众号" prop="accountId">
-        <el-select v-model="accountId" @change="getSummary">
-          <el-option v-for="item in accounts" :key="parseInt(item.id)" :label="item.name" :value="parseInt(item.id)" />
+    <el-form
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      label-width="68px"
+    >
+      <el-form-item
+        label="公众号"
+        prop="accountId"
+      >
+        <el-select
+          v-model="accountId"
+          @change="getSummary"
+        >
+          <el-option
+            v-for="item in accounts"
+            :key="parseInt(item.id)"
+            :label="item.name"
+            :value="parseInt(item.id)"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="时间范围" prop="date">
-        <el-date-picker v-model="date" style="width: 260px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"
-                        :picker-options="datePickerOptions" :default-time="['00:00:00', '23:59:59']"
-                        @change="getSummary">
-        </el-date-picker>
+      <el-form-item
+        label="时间范围"
+        prop="date"
+      >
+        <el-date-picker
+          v-model="date"
+          style="width: 260px"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :picker-options="datePickerOptions"
+          :default-time="['00:00:00', '23:59:59']"
+          @change="getSummary"
+        />
       </el-form-item>
     </el-form>
 
     <!-- 图表 -->
     <el-row>
-      <el-col :span="12" class="card-box">
+      <el-col
+        :span="12"
+        class="card-box"
+      >
         <el-card>
           <div slot="header">
             <span>用户增减数据</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
-            <div ref="userSummaryChart" style="height: 420px" />
+            <div
+              ref="userSummaryChart"
+              style="height: 420px"
+            />
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12" class="card-box">
+      <el-col
+        :span="12"
+        class="card-box"
+      >
         <el-card>
           <div slot="header">
             <span>累计用户数据</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
-            <div ref="userCumulateChart" style="height: 420px" />
+            <div
+              ref="userCumulateChart"
+              style="height: 420px"
+            />
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12" class="card-box">
+      <el-col
+        :span="12"
+        class="card-box"
+      >
         <el-card>
           <div slot="header">
             <span>消息概况数据</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
-            <div ref="upstreamMessageChart" style="height: 420px" />
+            <div
+              ref="upstreamMessageChart"
+              style="height: 420px"
+            />
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12" class="card-box">
+      <el-col
+        :span="12"
+        class="card-box"
+      >
         <el-card>
           <div slot="header">
             <span>接口分析数据</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
-            <div ref="interfaceSummaryChart" style="height: 420px" />
+            <div
+              ref="interfaceSummaryChart"
+              style="height: 420px"
+            />
           </div>
         </el-card>
       </el-col>
@@ -76,16 +129,16 @@ require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
 require('echarts/lib/component/legend')
 
-import { getInterfaceSummary, getUserSummary, getUserCumulate, getUpstreamMessage} from '@/api/mp/statistics'
-import { datePickerOptions } from "@/utils/constants";
-import {addTime, beginOfDay, betweenDay, endOfDay, formatDate} from "@/utils/dateUtils";
-import { getSimpleAccountList } from "@/api/mp/account";
+import { getInterfaceSummary, getUserSummary, getUserCumulate, getUpstreamMessage } from '@/api/mp/statistics'
+import { datePickerOptions } from '@/utils/constants'
+import { addTime, beginOfDay, betweenDay, endOfDay, formatDate } from '@/utils/dateUtils'
+import { getSimpleAccountList } from '@/api/mp/account'
 
 export default {
   name: 'MpStatistics',
   data() {
     return {
-      date : [beginOfDay(new Date(new Date().getTime() - 3600 * 1000 * 24 * 7)), // -7 天
+      date: [beginOfDay(new Date(new Date().getTime() - 3600 * 1000 * 24 * 7)), // -7 天
         endOfDay(new Date(new Date().getTime() - 3600 * 1000 * 24))], // -1 天
       accountId: undefined,
       accounts: [],
@@ -94,7 +147,7 @@ export default {
       userSummaryOption: { // 用户增减数据
         color: ['#67C23A', '#e5323e'],
         legend: {
-          data: ['新增用户','取消关注的用户']
+          data: ['新增用户', '取消关注的用户']
         },
         tooltip: {},
         xAxis: {
@@ -136,7 +189,7 @@ export default {
           minInterval: 1
         },
         series: [{
-          name:'累计用户量',
+          name: '累计用户量',
           data: [], // 累计用户量的数据
           type: 'line',
           smooth: true,
@@ -181,10 +234,10 @@ export default {
           data: [] // 用户发送条数的数据
         }]
       },
-      interfaceSummaryOption: {  // 接口分析况数据
+      interfaceSummaryOption: { // 接口分析况数据
         color: ['#67C23A', '#e5323e', '#E6A23C', '#409EFF'],
         legend: {
-          data: ['被动回复用户消息的次数','失败次数', '最大耗时','总耗时']
+          data: ['被动回复用户消息的次数', '失败次数', '最大耗时', '总耗时']
         },
         tooltip: {},
         xAxis: {
@@ -232,18 +285,18 @@ export default {
       },
 
       // 静态变量
-      datePickerOptions: datePickerOptions,
+      datePickerOptions: datePickerOptions
     }
   },
   created() {
     getSimpleAccountList().then(response => {
-      this.accounts = response.data;
+      this.accounts = response.data
       // 默认选中第一个
       if (this.accounts.length > 0) {
-        this.accountId = this.accounts[0].id;
+        this.accountId = this.accounts[0].id
       }
       // 加载数据
-      this.getSummary();
+      this.getSummary()
     })
   },
   methods: {
@@ -260,99 +313,99 @@ export default {
       }
       this.xAxisDate = []
       const days = betweenDay(this.date[0], this.date[1]) // 相差天数
-      for(let i = 0; i <= days; i++){
-        this.xAxisDate.push(formatDate(addTime(this.date[0], 3600 * 1000 * 24 * i), 'yyyy-MM-dd'));
+      for (let i = 0; i <= days; i++) {
+        this.xAxisDate.push(formatDate(addTime(this.date[0], 3600 * 1000 * 24 * i), 'yyyy-MM-dd'))
       }
 
       // 初始化图表
-      this.initUserSummaryChart();
-      this.initUserCumulateChart();
-      this.initUpstreamMessageChart();
-      this.interfaceSummaryChart();
+      this.initUserSummaryChart()
+      this.initUserCumulateChart()
+      this.initUpstreamMessageChart()
+      this.interfaceSummaryChart()
     },
     initUserSummaryChart() {
-      this.userSummaryOption.xAxis.data = [];
-      this.userSummaryOption.series[0].data = [];
-      this.userSummaryOption.series[1].data = [];
+      this.userSummaryOption.xAxis.data = []
+      this.userSummaryOption.series[0].data = []
+      this.userSummaryOption.series[1].data = []
       getUserSummary({
         accountId: this.accountId,
-        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
+        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss')]
       }).then(response => {
-        this.userSummaryOption.xAxis.data = this.xAxisDate;
+        this.userSummaryOption.xAxis.data = this.xAxisDate
         // 按统计日期对齐，缺失日期补零
         this.xAxisDate.forEach((date, index) => {
           const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
           this.userSummaryOption.series[0].data[index] = item?.newUser ?? 0
-          this.userSummaryOption.series[1].data[index] = item?.cancelUser ?? 0;
+          this.userSummaryOption.series[1].data[index] = item?.cancelUser ?? 0
         })
         // 绘制图表
-        const userSummaryChart = echarts.init(this.$refs.userSummaryChart);
+        const userSummaryChart = echarts.init(this.$refs.userSummaryChart)
         userSummaryChart.setOption(this.userSummaryOption)
       }).catch(() => {})
     },
     initUserCumulateChart() {
-      this.userCumulateOption.xAxis.data = [];
-      this.userCumulateOption.series[0].data = [];
+      this.userCumulateOption.xAxis.data = []
+      this.userCumulateOption.series[0].data = []
       // 发起请求
       getUserCumulate({
         accountId: this.accountId,
-        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
+        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss')]
       }).then(response => {
-        this.userCumulateOption.xAxis.data = this.xAxisDate;
+        this.userCumulateOption.xAxis.data = this.xAxisDate
         // 按统计日期对齐，缺失日期补零
         this.xAxisDate.forEach((date, index) => {
           const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
-          this.userCumulateOption.series[0].data[index] = item?.cumulateUser ?? 0;
+          this.userCumulateOption.series[0].data[index] = item?.cumulateUser ?? 0
         })
         // 绘制图表
-        const userCumulateChart = echarts.init(this.$refs.userCumulateChart);
+        const userCumulateChart = echarts.init(this.$refs.userCumulateChart)
         userCumulateChart.setOption(this.userCumulateOption)
       }).catch(() => {})
     },
     initUpstreamMessageChart() {
-      this.upstreamMessageOption.xAxis.data = [];
-      this.upstreamMessageOption.series[0].data = [];
-      this.upstreamMessageOption.series[1].data = [];
+      this.upstreamMessageOption.xAxis.data = []
+      this.upstreamMessageOption.series[0].data = []
+      this.upstreamMessageOption.series[1].data = []
       // 发起请求
       getUpstreamMessage({
         accountId: this.accountId,
-        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
+        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss')]
       }).then(response => {
-        this.upstreamMessageOption.xAxis.data = this.xAxisDate;
+        this.upstreamMessageOption.xAxis.data = this.xAxisDate
         // 按统计日期对齐，缺失日期补零
         this.xAxisDate.forEach((date, index) => {
           const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
           this.upstreamMessageOption.series[0].data[index] = item?.messageUser ?? 0
-          this.upstreamMessageOption.series[1].data[index] = item?.messageCount ?? 0;
+          this.upstreamMessageOption.series[1].data[index] = item?.messageCount ?? 0
         })
         // 绘制图表
-        const upstreamMessageChart = echarts.init(this.$refs.upstreamMessageChart);
-        upstreamMessageChart.setOption(this.upstreamMessageOption);
+        const upstreamMessageChart = echarts.init(this.$refs.upstreamMessageChart)
+        upstreamMessageChart.setOption(this.upstreamMessageOption)
       }).catch(() => {})
     },
     interfaceSummaryChart() {
-      this.interfaceSummaryOption.xAxis.data = [];
-      this.interfaceSummaryOption.series[0].data = [];
-      this.interfaceSummaryOption.series[1].data = [];
-      this.interfaceSummaryOption.series[2].data = [];
-      this.interfaceSummaryOption.series[3].data = [];
+      this.interfaceSummaryOption.xAxis.data = []
+      this.interfaceSummaryOption.series[0].data = []
+      this.interfaceSummaryOption.series[1].data = []
+      this.interfaceSummaryOption.series[2].data = []
+      this.interfaceSummaryOption.series[3].data = []
       // 发起请求
       getInterfaceSummary({
         accountId: this.accountId,
-        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss'),]
+        date: [formatDate(this.date[0], 'yyyy-MM-dd HH:mm:ss'), formatDate(this.date[1], 'yyyy-MM-dd HH:mm:ss')]
       }).then(response => {
-        this.interfaceSummaryOption.xAxis.data = this.xAxisDate;
+        this.interfaceSummaryOption.xAxis.data = this.xAxisDate
         // 按统计日期对齐，缺失日期补零
         this.xAxisDate.forEach((date, index) => {
           const item = response.data.find(item => formatDate(new Date(item.refDate), 'yyyy-MM-dd') === date)
           this.interfaceSummaryOption.series[0].data[index] = item?.callbackCount ?? 0
           this.interfaceSummaryOption.series[1].data[index] = item?.failCount ?? 0
           this.interfaceSummaryOption.series[2].data[index] = item?.maxTimeCost ?? 0
-          this.interfaceSummaryOption.series[3].data[index] = item?.totalTimeCost ?? 0;
+          this.interfaceSummaryOption.series[3].data[index] = item?.totalTimeCost ?? 0
         })
         // 绘制图表
-        const interfaceSummaryChart = echarts.init(this.$refs.interfaceSummaryChart);
-        interfaceSummaryChart.setOption(this.interfaceSummaryOption);
+        const interfaceSummaryChart = echarts.init(this.$refs.interfaceSummaryChart)
+        interfaceSummaryChart.setOption(this.interfaceSummaryOption)
       }).catch(() => {})
     }
   }

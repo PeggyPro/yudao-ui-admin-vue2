@@ -226,7 +226,7 @@
           :list="list"
           :pick-up-store-list="pickUpStoreList"
         >
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             <div class="order-actions">
               <el-button
                 v-hasPermi="['trade:order:query']"

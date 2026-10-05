@@ -8,14 +8,21 @@
   <div class="category-draggable-model">
     <div class="category-header">
       <div class="category-title">
-        <el-tooltip v-if="isCategorySorting" content="拖动排序" placement="top">
+        <el-tooltip
+          v-if="isCategorySorting"
+          content="拖动排序"
+          placement="top"
+        >
           <i class="el-icon-rank category-drag-icon" />
         </el-tooltip>
         <h3>{{ categoryInfo.name }}</h3>
         <span>({{ modelList.length }})</span>
       </div>
 
-      <div v-if="!isCategorySorting" class="category-actions">
+      <div
+        v-if="!isCategorySorting"
+        class="category-actions"
+      >
         <div
           v-if="modelList.length > 0"
           class="category-expand"
@@ -47,7 +54,11 @@
             trigger="click"
             @command="handleCategoryCommand"
           >
-            <el-button type="text" class="category-action" icon="el-icon-setting">分类</el-button>
+            <el-button
+              type="text"
+              class="category-action"
+              icon="el-icon-setting"
+            >分类</el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 v-if="hasCategoryUpdate"
@@ -62,7 +73,10 @@
         </template>
         <template v-else>
           <el-button @click.stop="cancelModelSort">取 消</el-button>
-          <el-button type="primary" @click.stop="saveModelSort">保存排序</el-button>
+          <el-button
+            type="primary"
+            @click.stop="saveModelSort"
+          >保存排序</el-button>
         </template>
       </div>
     </div>
@@ -78,10 +92,18 @@
           :cell-style="tableCellStyle"
           :row-style="{ height: '68px' }"
         >
-          <el-table-column label="流程名" prop="name" min-width="150">
+          <el-table-column
+            label="流程名"
+            prop="name"
+            min-width="150"
+          >
             <template slot-scope="scope">
               <div class="model-name-cell">
-                <el-tooltip v-if="isModelSorting" content="拖动排序" placement="top">
+                <el-tooltip
+                  v-if="isModelSorting"
+                  content="拖动排序"
+                  placement="top"
+                >
                   <i class="el-icon-rank model-drag-icon" />
                 </el-tooltip>
                 <el-image
@@ -90,14 +112,20 @@
                   class="model-flow-image"
                   fit="cover"
                 />
-                <div v-else class="flow-icon">
+                <div
+                  v-else
+                  class="flow-icon"
+                >
                   <span>{{ subString(scope.row.name, 0, 2) }}</span>
                 </div>
                 <span>{{ scope.row.name }}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="可见范围" min-width="150">
+          <el-table-column
+            label="可见范围"
+            min-width="150"
+          >
             <template slot-scope="scope">
               <el-tooltip
                 v-if="visibleScopeText(scope.row).length > 18"
@@ -109,12 +137,23 @@
               <span v-else>{{ visibleScopeText(scope.row) }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="流程类型" prop="type" min-width="120">
+          <el-table-column
+            label="流程类型"
+            prop="type"
+            min-width="120"
+          >
             <template slot-scope="scope">
-              <dict-tag :value="scope.row.type" :type="DICT_TYPE.BPM_MODEL_TYPE" />
+              <dict-tag
+                :value="scope.row.type"
+                :type="DICT_TYPE.BPM_MODEL_TYPE"
+              />
             </template>
           </el-table-column>
-          <el-table-column label="表单信息" prop="formType" min-width="150">
+          <el-table-column
+            label="表单信息"
+            prop="formType"
+            min-width="150"
+          >
             <template slot-scope="scope">
               <el-button
                 v-if="Number(scope.row.formType) === Number(BpmModelFormType.NORMAL)"
@@ -129,16 +168,25 @@
               <span v-else>暂无表单</span>
             </template>
           </el-table-column>
-          <el-table-column label="最后发布" min-width="250">
+          <el-table-column
+            label="最后发布"
+            min-width="250"
+          >
             <template slot-scope="scope">
               <div class="deployment-cell">
-                <span v-if="scope.row.processDefinition" class="deployment-time">
+                <span
+                  v-if="scope.row.processDefinition"
+                  class="deployment-time"
+                >
                   {{ formatDate(scope.row.processDefinition.deploymentTime) }}
                 </span>
                 <el-tag v-if="scope.row.processDefinition">
                   v{{ scope.row.processDefinition.version }}
                 </el-tag>
-                <el-tag v-else type="warning">未部署</el-tag>
+                <el-tag
+                  v-else
+                  type="warning"
+                >未部署</el-tag>
                 <el-tag
                   v-if="scope.row.processDefinition && scope.row.processDefinition.suspensionState === 2"
                   type="warning"
@@ -146,7 +194,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="215" fixed="right">
+          <el-table-column
+            label="操作"
+            width="215"
+            fixed="right"
+          >
             <template slot-scope="scope">
               <el-button
                 v-hasPermi="['bpm:model:update']"
@@ -177,7 +229,10 @@
                     v-if="hasPermiDefinition"
                     command="definition"
                   >历史</el-dropdown-item>
-                  <el-dropdown-item v-if="hasPermiExport" command="export">导出</el-dropdown-item>
+                  <el-dropdown-item
+                    v-if="hasPermiExport"
+                    command="export"
+                  >导出</el-dropdown-item>
                   <el-dropdown-item
                     v-if="hasPermiReport"
                     command="report"
@@ -207,21 +262,24 @@
       </div>
     </el-collapse-transition>
 
-    <CategoryForm ref="categoryForm" @success="handleChildSuccess" />
-    <Dialog
-      title="表单详情"
+    <CategoryForm
+      ref="categoryForm"
+      @success="handleChildSuccess"
+    />
+    <AppDialog
       v-model="formDetailVisible"
+      title="表单详情"
     >
       <form-create
         :rule="formDetail.rule"
         :option="formDetail.option"
       />
-    </Dialog>
+    </AppDialog>
   </div>
 </template>
 
 <script>
-import Dialog from '@/components/Dialog'
+import AppDialog from '@/components/Dialog'
 import Sortable from 'sortablejs'
 import CategoryForm from '../category/CategoryForm.vue'
 import * as CategoryApi from '@/api/bpm/category'
@@ -241,7 +299,7 @@ function subString(str, start, end) {
 
 export default {
   name: 'CategoryDraggableModel',
-  components: { CategoryForm, Dialog },
+  components: { CategoryForm, AppDialog },
   props: {
     categoryInfo: {
       type: Object,
@@ -262,7 +320,7 @@ export default {
       isModelSorting: false,
       sortable: null,
       formDetailVisible: false,
-      formDetail: { rule: [], option: {} }
+      formDetail: { rule: [], option: {}}
     }
   },
   computed: {
@@ -346,7 +404,7 @@ export default {
     async openModelForm(type, id) {
       const route = type === 'create'
         ? { name: 'BpmModelCreate' }
-        : { name: 'BpmModelUpdate', params: { type, id } }
+        : { name: 'BpmModelUpdate', params: { type, id }}
       await this.$router.push(route)
     },
     async handleFormDetail(row) {
@@ -366,11 +424,13 @@ export default {
         await ModelApi.deployModel(row.id)
         this.$modal.msgSuccess('发布成功')
         this.$emit('success')
-      } catch (e) {}
+      } catch (e) {
+        return
+      }
     },
     async handleModelCommand(command, row) {
       if (command === 'definition') {
-        return this.$router.push({ name: 'BpmProcessDefinition', query: { key: row.key } })
+        return this.$router.push({ name: 'BpmProcessDefinition', query: { key: row.key }})
       }
       if (command === 'report') {
         if (!row.processDefinition) return this.$message.warning('请先发布流程')
@@ -405,7 +465,9 @@ export default {
           this.$modal.msgSuccess('删除成功')
           this.$emit('success')
         }
-      } catch (e) {}
+      } catch (e) {
+        return
+      }
     },
     handleCategoryCommand(command) {
       if (command === 'rename') this.openCategoryForm('update', this.categoryInfo.id)
@@ -424,7 +486,9 @@ export default {
         await CategoryApi.deleteCategory(this.categoryInfo.id)
         this.$modal.msgSuccess('删除成功')
         this.$emit('success')
-      } catch (e) {}
+      } catch (e) {
+        return
+      }
     },
     startModelSort() {
       if (!this.canManageModels) return this.$message.warning('当前用户不是该分类下全部流程模型的负责人，无法排序')
@@ -444,7 +508,9 @@ export default {
         this.isModelSorting = false
         this.originalModelList = []
         this.$emit('success')
-      } catch (e) {}
+      } catch (e) {
+        return
+      }
     },
     initSortable() {
       const table = this.$el && this.$el.querySelector('.el-table__body-wrapper tbody')

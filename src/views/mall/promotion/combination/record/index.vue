@@ -155,7 +155,7 @@
         prop="avatar"
         min-width="80"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-avatar :src="scope.row.avatar" />
         </template>
       </el-table-column>
@@ -172,7 +172,7 @@
         prop="headNickname"
         min-width="120"
       >
-        <template v-slot="scope">{{ getHeadNickname(scope.row) }}</template>
+        <template slot-scope="scope">{{ getHeadNickname(scope.row) }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -180,7 +180,7 @@
         prop="startTime"
         width="180"
       >
-        <template v-slot="scope">{{ formatTime(scope.row.startTime) }}</template>
+        <template slot-scope="scope">{{ formatTime(scope.row.startTime) }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -189,7 +189,7 @@
         min-width="300"
         show-overflow-tooltip
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div class="product-cell">
             <el-image
               :src="scope.row.picUrl"
@@ -218,7 +218,7 @@
         prop="createTime"
         width="180"
       >
-        <template v-slot="scope">{{ formatTime(scope.row.createTime) }}</template>
+        <template slot-scope="scope">{{ formatTime(scope.row.createTime) }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -226,7 +226,7 @@
         prop="endTime"
         width="180"
       >
-        <template v-slot="scope">{{ formatTime(scope.row.endTime) }}</template>
+        <template slot-scope="scope">{{ formatTime(scope.row.endTime) }}</template>
       </el-table-column>
       <el-table-column
         align="center"
@@ -234,7 +234,7 @@
         prop="status"
         min-width="120"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="recordStatusDictType"
             :value="scope.row.status"
@@ -247,7 +247,7 @@
         label="操作"
         width="110"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:combination-record:query']"
             type="text"

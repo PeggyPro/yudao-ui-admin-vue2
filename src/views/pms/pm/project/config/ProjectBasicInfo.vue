@@ -14,7 +14,10 @@
     </div>
 
     <!-- 项目基础字段 -->
-    <el-descriptions :column="2" border>
+    <el-descriptions
+      :column="2"
+      border
+    >
       <el-descriptions-item label="项目名称">{{ project.name }}</el-descriptions-item>
       <el-descriptions-item label="项目类型">
         {{ formatProjectType(project.type) }}
@@ -26,7 +29,10 @@
       <el-descriptions-item label="可见范围">
         {{ formatProjectOpenStatus(project.openStatus) }}
       </el-descriptions-item>
-      <el-descriptions-item label="项目描述" :span="2">
+      <el-descriptions-item
+        label="项目描述"
+        :span="2"
+      >
         {{ project.description || '暂无项目描述' }}
       </el-descriptions-item>
     </el-descriptions>
@@ -63,7 +69,10 @@
     </template>
 
     <!-- 项目表单 -->
-    <ProjectForm ref="projectFormRef" @success="$emit('success')" />
+    <ProjectForm
+      ref="projectFormRef"
+      @success="$emit('success')"
+    />
   </div>
 </template>
 
@@ -80,15 +89,13 @@ export default {
     formatDate, formatProjectOpenStatus, formatProjectType,
     openForm() { this.$refs.projectFormRef.open('update', this.project.id) },
     async handleArchive() {
-      try { await this.$confirm('归档后将不能继续操作项目中的数据，确认归档该项目吗？', '提示', { type: 'warning' }) }
-      catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
+      try { await this.$confirm('归档后将不能继续操作项目中的数据，确认归档该项目吗？', '提示', { type: 'warning' }) } catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
       await ProjectApi.archiveProject(this.project.id)
       this.$message.success('项目已归档')
       await this.$router.push({ name: 'PmsProjectArchive' })
     },
     async handleRecycle() {
-      try { await this.$confirm('确认将该项目移入回收站吗？', '提示', { type: 'warning' }) }
-      catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
+      try { await this.$confirm('确认将该项目移入回收站吗？', '提示', { type: 'warning' }) } catch (error) { if (error === 'cancel' || error === 'close') return; throw error }
       await ProjectApi.recycleProject(this.project.id)
       this.$message.success('项目已移入回收站')
       await this.$router.push({ name: 'PmsProjectRecycle' })

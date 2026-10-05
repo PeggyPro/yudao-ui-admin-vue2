@@ -7,13 +7,31 @@
     :before-close="handleBeforeClose"
   >
     <div class="trigger-config">
-      <el-form ref="form" :model="draft" label-position="top" size="small">
+      <el-form
+        ref="form"
+        :model="draft"
+        label-position="top"
+        size="small"
+      >
         <el-form-item label="节点名称">
-          <el-input v-model="draft.name" maxlength="30" show-word-limit />
+          <el-input
+            v-model="draft.name"
+            maxlength="30"
+            show-word-limit
+          />
         </el-form-item>
         <el-form-item label="触发器类型">
-          <el-select v-model="draft.type" style="width: 100%" @change="changeTriggerType">
-            <el-option v-for="item in triggerTypes" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select
+            v-model="draft.type"
+            style="width: 100%"
+            @change="changeTriggerType"
+          >
+            <el-option
+              v-for="item in triggerTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
 
@@ -34,44 +52,115 @@
             show-icon
             class="trigger-help"
           />
-          <el-card v-for="(setting, index) in draft.formSettings" :key="`form-setting-${index}`" shadow="never" class="form-setting-card">
-            <div slot="header" class="setting-header">
+          <el-card
+            v-for="(setting, index) in draft.formSettings"
+            :key="`form-setting-${index}`"
+            shadow="never"
+            class="form-setting-card"
+          >
+            <div
+              slot="header"
+              class="setting-header"
+            >
               <span>{{ isFormUpdate ? '修改' : '删除' }}表单设置 {{ index + 1 }}</span>
-              <el-button v-if="draft.formSettings.length > 1" type="text" icon="el-icon-delete" @click="removeFormSetting(index)" />
+              <el-button
+                v-if="draft.formSettings.length > 1"
+                type="text"
+                icon="el-icon-delete"
+                @click="removeFormSetting(index)"
+              />
             </div>
             <el-form-item label="启用条件">
-              <el-switch v-model="setting.hasCondition" @change="conditionToggle(setting)" />
+              <el-switch
+                v-model="setting.hasCondition"
+                @change="conditionToggle(setting)"
+              />
             </el-form-item>
-            <Condition v-if="setting.hasCondition" v-model="setting.condition" />
+            <Condition
+              v-if="setting.hasCondition"
+              v-model="setting.condition"
+            />
 
             <template v-if="isFormUpdate">
               <el-divider content-position="left">修改字段</el-divider>
-              <div v-for="(entry, entryIndex) in setting.updateEntries" :key="`entry-${index}-${entryIndex}`" class="update-entry">
-                <el-select v-model="entry.key" filterable clearable placeholder="表单字段" @change="entryKeyChanged(setting, entry)">
-                  <el-option v-for="field in formFields" :key="field.field" :label="field.title" :value="field.field" />
+              <div
+                v-for="(entry, entryIndex) in setting.updateEntries"
+                :key="`entry-${index}-${entryIndex}`"
+                class="update-entry"
+              >
+                <el-select
+                  v-model="entry.key"
+                  filterable
+                  clearable
+                  placeholder="表单字段"
+                  @change="entryKeyChanged(setting, entry)"
+                >
+                  <el-option
+                    v-for="field in formFields"
+                    :key="field.field"
+                    :label="field.title"
+                    :value="field.field"
+                  />
                 </el-select>
                 <span class="assign-label">设置为</span>
-                <el-input v-model="entry.value" placeholder="固定值或表达式" />
-                <el-button type="text" icon="el-icon-delete" title="删除" @click="removeUpdateEntry(setting, entryIndex)" />
+                <el-input
+                  v-model="entry.value"
+                  placeholder="固定值或表达式"
+                />
+                <el-button
+                  type="text"
+                  icon="el-icon-delete"
+                  title="删除"
+                  @click="removeUpdateEntry(setting, entryIndex)"
+                />
               </div>
-              <el-button type="text" icon="el-icon-plus" @click="addUpdateEntry(setting)">添加修改字段</el-button>
+              <el-button
+                type="text"
+                icon="el-icon-plus"
+                @click="addUpdateEntry(setting)"
+              >添加修改字段</el-button>
             </template>
             <template v-else>
               <el-form-item label="删除字段">
-                <el-select v-model="setting.deleteFields" multiple filterable clearable placeholder="请选择要删除的字段" style="width: 100%">
-                  <el-option v-for="field in formFields" :key="field.field" :label="field.title" :value="field.field" />
+                <el-select
+                  v-model="setting.deleteFields"
+                  multiple
+                  filterable
+                  clearable
+                  placeholder="请选择要删除的字段"
+                  style="width: 100%"
+                >
+                  <el-option
+                    v-for="field in formFields"
+                    :key="field.field"
+                    :label="field.title"
+                    :value="field.field"
+                  />
                 </el-select>
               </el-form-item>
             </template>
           </el-card>
-          <el-button type="text" icon="el-icon-plus" @click="addFormSetting">添加设置</el-button>
+          <el-button
+            type="text"
+            icon="el-icon-plus"
+            @click="addFormSetting"
+          >添加设置</el-button>
         </template>
       </el-form>
-      <el-alert v-if="loadError" :title="loadError" type="warning" :closable="false" show-icon />
+      <el-alert
+        v-if="loadError"
+        :title="loadError"
+        type="warning"
+        :closable="false"
+        show-icon
+      />
     </div>
     <div class="drawer-footer">
       <el-button @click="cancelConfig">取 消</el-button>
-      <el-button type="primary" @click="saveConfig">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="saveConfig"
+      >确 定</el-button>
     </div>
   </el-drawer>
 </template>
@@ -100,11 +189,11 @@ function emptyFormSetting(isUpdate) {
 export default {
   name: 'TriggerNodeConfig',
   components: { HttpRequestSetting, Condition },
-  props: { flowNode: { type: Object, required: true } },
   inject: {
     formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
     formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
   },
+  props: { flowNode: { type: Object, required: true }},
   data() {
     return {
       visible: false,

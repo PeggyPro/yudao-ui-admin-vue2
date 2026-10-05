@@ -8,7 +8,10 @@
       label-width="68px"
       @submit.native.prevent
     >
-      <el-form-item label="文件名称" prop="name">
+      <el-form-item
+        label="文件名称"
+        prop="name"
+      >
         <el-input
           v-model="queryParams.name"
           clearable
@@ -17,13 +20,20 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
         <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
+        <el-button
+          v-hasPermi="['ai:knowledge:create']"
           type="primary"
           plain
           icon="el-icon-plus"
-          v-hasPermi="['ai:knowledge:create']"
           @click="handleCreate"
         >
           新增
@@ -37,18 +47,48 @@
       stripe
       :show-overflow-tooltip="true"
     >
-      <el-table-column label="文档编号" align="center" prop="id" width="100" />
-      <el-table-column label="文件名称" align="center" prop="name" min-width="180" />
-      <el-table-column label="字符数" align="center" prop="contentLength" width="100" />
-      <el-table-column label="Token 数" align="center" prop="tokens" width="100" />
+      <el-table-column
+        label="文档编号"
+        align="center"
+        prop="id"
+        width="100"
+      />
+      <el-table-column
+        label="文件名称"
+        align="center"
+        prop="name"
+        min-width="180"
+      />
+      <el-table-column
+        label="字符数"
+        align="center"
+        prop="contentLength"
+        width="100"
+      />
+      <el-table-column
+        label="Token 数"
+        align="center"
+        prop="tokens"
+        width="100"
+      />
       <el-table-column
         label="分片最大 Token 数"
         align="center"
         prop="segmentMaxTokens"
         min-width="150"
       />
-      <el-table-column label="召回次数" align="center" prop="retrievalCount" width="100" />
-      <el-table-column label="是否启用" align="center" prop="status" width="100">
+      <el-table-column
+        label="召回次数"
+        align="center"
+        prop="retrievalCount"
+        width="100"
+      />
+      <el-table-column
+        label="是否启用"
+        align="center"
+        prop="status"
+        width="100"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -59,27 +99,36 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="上传时间" align="center" prop="createTime" width="180">
+      <el-table-column
+        label="上传时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
         <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" min-width="120">
+      <el-table-column
+        label="操作"
+        align="center"
+        min-width="120"
+      >
         <template slot-scope="scope">
           <el-button
+            v-hasPermi="['ai:knowledge:update']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:knowledge:update']"
             @click="handleUpdate(scope.row.id)"
           >编辑</el-button>
           <el-button
+            v-hasPermi="['ai:knowledge:query']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:knowledge:query']"
             @click="handleSegment(scope.row.id)"
           >分段</el-button>
           <el-button
+            v-hasPermi="['ai:knowledge:delete']"
             type="text"
             size="mini"
-            v-hasPermi="['ai:knowledge:delete']"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>

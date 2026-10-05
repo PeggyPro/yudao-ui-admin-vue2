@@ -93,7 +93,7 @@
         align="center"
         min-width="100"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.PROMOTION_PRODUCT_SCOPE"
             :value="scope.row.productScope"
@@ -106,7 +106,7 @@
         align="center"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startTime) }}</span>
         </template>
       </el-table-column>
@@ -116,7 +116,7 @@
         align="center"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.endTime) }}</span>
         </template>
       </el-table-column>
@@ -126,7 +126,7 @@
         align="center"
         min-width="90"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <dict-tag
             :type="DICT_TYPE.COMMON_STATUS"
             :value="scope.row.status"
@@ -139,7 +139,7 @@
         align="center"
         width="180"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -149,7 +149,7 @@
         width="180"
         fixed="right"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <el-button
             v-hasPermi="['promotion:reward-activity:update']"
             type="text"

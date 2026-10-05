@@ -170,7 +170,7 @@
           min-width="200"
           prop="orderNo"
         >
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             <el-button
               type="text"
               @click="openOrderDetail(row.orderId)"
@@ -184,7 +184,7 @@
           min-width="600"
           prop="spuName"
         >
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             <div class="product-info">
               <el-image
                 :src="row.picUrl"
@@ -208,7 +208,7 @@
           min-width="120"
           prop="refundPrice"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <span>{{ fenToYuan(scope.row.refundPrice) }} 元</span>
           </template>
         </el-table-column>
@@ -223,7 +223,7 @@
           prop="createTime"
           width="180"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
@@ -232,7 +232,7 @@
           label="售后状态"
           width="100"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <dict-tag
               :type="DICT_TYPE.TRADE_AFTER_SALE_STATUS"
               :value="scope.row.status"
@@ -243,7 +243,7 @@
           align="center"
           label="售后方式"
         >
-          <template v-slot="scope">
+          <template slot-scope="scope">
             <dict-tag
               :type="DICT_TYPE.TRADE_AFTER_SALE_WAY"
               :value="scope.row.way"
@@ -256,7 +256,7 @@
           label="操作"
           width="160"
         >
-          <template v-slot="{ row }">
+          <template slot-scope="{ row }">
             <el-button
               type="text"
               @click="openAfterSaleDetail(row.id)"

@@ -2,7 +2,12 @@
   <div class="work-item-list">
     <div class="list-toolbar">
       <div class="toolbar-left">
-        <el-form ref="queryFormRef" :inline="true" :model="queryParams" class="query-form">
+        <el-form
+          ref="queryFormRef"
+          :inline="true"
+          :model="queryParams"
+          class="query-form"
+        >
           <el-form-item>
             <el-input
               v-model="searchKeyword"
@@ -12,18 +17,41 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-popover v-model="showFilterPopover" placement="bottom-start" width="420" trigger="click">
-              <el-button slot="reference" icon="el-icon-plus">高级筛选</el-button>
+            <el-popover
+              v-model="showFilterPopover"
+              placement="bottom-start"
+              width="420"
+              trigger="click"
+            >
+              <el-button
+                slot="reference"
+                icon="el-icon-plus"
+              >高级筛选</el-button>
               <div class="advanced-filter">
-                <el-form-item class="filter-item" label="数据范围" prop="lifecycleStatus">
+                <el-form-item
+                  class="filter-item"
+                  label="数据范围"
+                  prop="lifecycleStatus"
+                >
                   <el-radio-group v-model="queryParams.lifecycleStatus">
                     <el-radio-button :label="PmsWorkItemLifecycleStatus.ACTIVE">当前</el-radio-button>
                     <el-radio-button :label="PmsWorkItemLifecycleStatus.ARCHIVED">已归档</el-radio-button>
                     <el-radio-button :label="PmsWorkItemLifecycleStatus.RECYCLED">回收站</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item class="filter-item" label="语义状态" prop="statuses">
-                  <el-select v-model="queryParams.statuses" class="full-width" clearable collapse-tags multiple placeholder="全部状态">
+                <el-form-item
+                  class="filter-item"
+                  label="语义状态"
+                  prop="statuses"
+                >
+                  <el-select
+                    v-model="queryParams.statuses"
+                    class="full-width"
+                    clearable
+                    collapse-tags
+                    multiple
+                    placeholder="全部状态"
+                  >
                     <el-option
                       v-for="option in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_STATUS_TYPE)"
                       :key="option.value"
@@ -32,8 +60,19 @@
                     />
                   </el-select>
                 </el-form-item>
-                <el-form-item class="filter-item" label="优先级" prop="priorities">
-                  <el-select v-model="queryParams.priorities" class="full-width" clearable collapse-tags multiple placeholder="全部优先级">
+                <el-form-item
+                  class="filter-item"
+                  label="优先级"
+                  prop="priorities"
+                >
+                  <el-select
+                    v-model="queryParams.priorities"
+                    class="full-width"
+                    clearable
+                    collapse-tags
+                    multiple
+                    placeholder="全部优先级"
+                  >
                     <el-option
                       v-for="option in getIntDictOptions(DICT_TYPE.PMS_WORK_ITEM_PRIORITY)"
                       :key="option.value"
@@ -70,7 +109,11 @@
                     placeholder="不显示所选迭代"
                   />
                 </el-form-item>
-                <el-form-item class="filter-item" label="负责人" prop="assigneeUserIds">
+                <el-form-item
+                  class="filter-item"
+                  label="负责人"
+                  prop="assigneeUserIds"
+                >
                   <ProjectMemberSelect
                     v-model="queryParams.assigneeUserIds"
                     class="full-width"
@@ -80,21 +123,38 @@
                     @loaded="memberOptions = $event"
                   />
                 </el-form-item>
-                <el-form-item class="filter-item" label="标签" prop="labelIds">
-                  <WorkItemLabelSelect v-model="queryParams.labelIds" class="full-width" placeholder="全部标签" />
+                <el-form-item
+                  class="filter-item"
+                  label="标签"
+                  prop="labelIds"
+                >
+                  <WorkItemLabelSelect
+                    v-model="queryParams.labelIds"
+                    class="full-width"
+                    placeholder="全部标签"
+                  />
                 </el-form-item>
               </div>
               <div class="filter-actions">
                 <el-button @click="resetQuery">清空</el-button>
                 <el-button @click="showFilterPopover = false">取消</el-button>
-                <el-button type="primary" @click="handleAdvancedQuery">确认</el-button>
+                <el-button
+                  type="primary"
+                  @click="handleAdvancedQuery"
+                >确认</el-button>
               </div>
             </el-popover>
           </el-form-item>
         </el-form>
-        <el-radio-group v-model="viewMode" @change="getWorkItemList">
+        <el-radio-group
+          v-model="viewMode"
+          @change="getWorkItemList"
+        >
           <el-radio-button label="list">列表</el-radio-button>
-          <el-radio-button label="board" :disabled="!isActiveLifecycle">看板</el-radio-button>
+          <el-radio-button
+            label="board"
+            :disabled="!isActiveLifecycle"
+          >看板</el-radio-button>
         </el-radio-group>
       </div>
 
@@ -105,8 +165,14 @@
           type="primary"
           @click="openCreateForm"
         >创建{{ workItemTypeName }}</el-button>
-        <el-dropdown trigger="click" @command="handleToolbarCommand">
-          <el-button aria-label="更多操作" icon="el-icon-more" />
+        <el-dropdown
+          trigger="click"
+          @command="handleToolbarCommand"
+        >
+          <el-button
+            aria-label="更多操作"
+            icon="el-icon-more"
+          />
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               v-if="editable && isActiveLifecycle && checkPermi(['pms:pm:work-item:update'])"
@@ -116,28 +182,51 @@
               v-if="editable && isActiveLifecycle && checkPermi(['pms:pm:work-item:import'])"
               command="import"
             >导入</el-dropdown-item>
-            <el-dropdown-item v-if="checkPermi(['pms:pm:work-item:export'])" command="export">导出</el-dropdown-item>
+            <el-dropdown-item
+              v-if="checkPermi(['pms:pm:work-item:export'])"
+              command="export"
+            >导出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
     </div>
 
     <template v-if="viewMode === 'list'">
-      <el-table v-loading="loading" :data="filteredWorkItemList" show-overflow-tooltip>
-        <el-table-column :label="`${workItemTypeName}编号`" width="100">
+      <el-table
+        v-loading="loading"
+        :data="filteredWorkItemList"
+        show-overflow-tooltip
+      >
+        <el-table-column
+          :label="`${workItemTypeName}编号`"
+          width="100"
+        >
           <template slot-scope="scope">#{{ scope.row.serialNumber }}</template>
         </el-table-column>
-        <el-table-column :label="`${workItemTypeName}标题`" min-width="220">
+        <el-table-column
+          :label="`${workItemTypeName}标题`"
+          min-width="220"
+        >
           <template slot-scope="scope">
-            <el-button type="text" @click="openDetail(scope.row)">{{ scope.row.name }}</el-button>
+            <el-button
+              type="text"
+              @click="openDetail(scope.row)"
+            >{{ scope.row.name }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="优先级" width="90">
+        <el-table-column
+          align="center"
+          label="优先级"
+          width="90"
+        >
           <template slot-scope="scope">
             <el-tag :type="getPriorityTagType(scope.row.priority)">{{ getPriorityName(scope.row.priority) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="140">
+        <el-table-column
+          label="状态"
+          min-width="140"
+        >
           <template slot-scope="scope">
             <el-select
               v-if="editable && isActiveLifecycle"
@@ -145,13 +234,25 @@
               size="small"
               @change="handleStatusChange(scope.row)"
             >
-              <el-option v-for="status in statusOptions" :key="status.id" :label="status.name" :value="status.id" />
+              <el-option
+                v-for="status in statusOptions"
+                :key="status.id"
+                :label="status.name"
+                :value="status.id"
+              />
             </el-select>
             <span v-else>{{ scope.row.statusName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="负责人" min-width="110" prop="assigneeUserName" />
-        <el-table-column label="标签" min-width="150">
+        <el-table-column
+          label="负责人"
+          min-width="110"
+          prop="assigneeUserName"
+        />
+        <el-table-column
+          label="标签"
+          min-width="150"
+        >
           <template slot-scope="scope">
             <div class="table-labels">
               <el-tag
@@ -170,11 +271,28 @@
           min-width="130"
           prop="iterationName"
         />
-        <el-table-column align="center" label="进度" width="150">
-          <template slot-scope="scope"><el-progress :percentage="scope.row.progress || 0" :stroke-width="8" /></template>
+        <el-table-column
+          align="center"
+          label="进度"
+          width="150"
+        >
+          <template slot-scope="scope"><el-progress
+            :percentage="scope.row.progress || 0"
+            :stroke-width="8"
+          /></template>
         </el-table-column>
-        <el-table-column :formatter="dateFormatter" label="截止时间" prop="endTime" width="180" />
-        <el-table-column align="center" fixed="right" label="操作" width="220">
+        <el-table-column
+          :formatter="dateFormatter"
+          label="截止时间"
+          prop="endTime"
+          width="180"
+        />
+        <el-table-column
+          align="center"
+          fixed="right"
+          label="操作"
+          width="220"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="editable && isActiveLifecycle"
@@ -182,7 +300,11 @@
               type="text"
               @click="openEditForm(scope.row)"
             >编辑</el-button>
-            <el-button v-else type="text" @click="openDetail(scope.row)">查看</el-button>
+            <el-button
+              v-else
+              type="text"
+              @click="openDetail(scope.row)"
+            >查看</el-button>
             <el-button
               v-if="editable && isActiveLifecycle"
               v-hasPermi="['pms:pm:work-item:update']"
@@ -221,19 +343,40 @@
       />
     </template>
 
-    <div v-else v-loading="loading" class="board-scroll">
-      <section v-for="column in filteredBoard" :key="column.name" class="board-column">
+    <div
+      v-else
+      v-loading="loading"
+      class="board-scroll"
+    >
+      <section
+        v-for="column in filteredBoard"
+        :key="column.name"
+        class="board-column"
+      >
         <header class="board-column-header">
           <div>
             <span>{{ column.name }}</span>
-            <div v-if="column.statuses.length > 1" class="board-status-names">
+            <div
+              v-if="column.statuses.length > 1"
+              class="board-status-names"
+            >
               {{ getBoardColumnStatusNames(column) }}
             </div>
           </div>
-          <el-tag size="small" type="info">{{ getBoardColumnItemCount(column) }}</el-tag>
+          <el-tag
+            size="small"
+            type="info"
+          >{{ getBoardColumnItemCount(column) }}</el-tag>
         </header>
-        <div v-for="statusGroup in column.statusGroups" :key="statusGroup.status.id" class="board-status-group">
-          <div v-if="column.statusGroups.length > 1" class="board-status-title">{{ statusGroup.status.name }}</div>
+        <div
+          v-for="statusGroup in column.statusGroups"
+          :key="statusGroup.status.id"
+          class="board-status-group"
+        >
+          <div
+            v-if="column.statusGroups.length > 1"
+            class="board-status-title"
+          >{{ statusGroup.status.name }}</div>
           <draggable
             v-model="statusGroup.items"
             class="board-drop-zone"
@@ -249,20 +392,38 @@
               @click="openDetail(element)"
             >
               <div class="board-card-title">{{ element.name }}</div>
-              <div v-if="element.endTime" class="board-card-deadline">
-                <el-tag :type="isWorkItemOverdue(element) ? 'danger' : 'info'" size="small">
+              <div
+                v-if="element.endTime"
+                class="board-card-deadline"
+              >
+                <el-tag
+                  :type="isWorkItemOverdue(element) ? 'danger' : 'info'"
+                  size="small"
+                >
                   {{ formatDate(element.endTime, 'MM月DD日') }}截止
                 </el-tag>
               </div>
               <div class="board-card-footer">
                 <span class="board-number"><i class="el-icon-tickets" /> #{{ element.serialNumber }}</span>
                 <div class="board-card-meta">
-                  <span class="priority-copy" :style="{ color: getPriorityColor(element.priority) }">
+                  <span
+                    class="priority-copy"
+                    :style="{ color: getPriorityColor(element.priority) }"
+                  >
                     <span class="priority-dot" />{{ getPriorityName(element.priority) }}
                   </span>
-                  <el-tag :type="getWorkItemStatusTagType(element.status)" size="small">{{ element.statusName }}</el-tag>
-                  <el-tooltip :content="element.assigneeUserName || '未分配'" placement="top">
-                    <el-avatar :size="24" :src="getMemberAvatar(element.assigneeUserId)">
+                  <el-tag
+                    :type="getWorkItemStatusTagType(element.status)"
+                    size="small"
+                  >{{ element.statusName }}</el-tag>
+                  <el-tooltip
+                    :content="element.assigneeUserName || '未分配'"
+                    placement="top"
+                  >
+                    <el-avatar
+                      :size="24"
+                      :src="getMemberAvatar(element.assigneeUserId)"
+                    >
                       {{ element.assigneeUserName ? element.assigneeUserName.slice(0, 1) : '未' }}
                     </el-avatar>
                   </el-tooltip>
@@ -274,10 +435,22 @@
       </section>
     </div>
 
-    <WorkItemForm ref="formRef" @success="handleDataChanged" />
-    <WorkItemDetail ref="detailRef" @success="handleDataChanged" />
-    <WorkItemStatusList ref="statusListRef" @success="getWorkItemList" />
-    <WorkItemImportForm ref="importFormRef" @success="getWorkItemList" />
+    <WorkItemForm
+      ref="formRef"
+      @success="handleDataChanged"
+    />
+    <WorkItemDetail
+      ref="detailRef"
+      @success="handleDataChanged"
+    />
+    <WorkItemStatusList
+      ref="statusListRef"
+      @success="getWorkItemList"
+    />
+    <WorkItemImportForm
+      ref="importFormRef"
+      @success="getWorkItemList"
+    />
   </div>
 </template>
 

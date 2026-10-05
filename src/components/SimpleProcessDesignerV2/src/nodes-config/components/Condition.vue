@@ -1,7 +1,19 @@
 <template>
-  <el-form ref="form" :model="condition" :rules="rules" label-position="top" size="small">
-    <el-form-item label="配置方式" prop="conditionType">
-      <el-radio-group v-model="condition.conditionType" @change="changeConditionType">
+  <el-form
+    ref="form"
+    :model="condition"
+    :rules="rules"
+    label-position="top"
+    size="small"
+  >
+    <el-form-item
+      label="配置方式"
+      prop="conditionType"
+    >
+      <el-radio-group
+        v-model="condition.conditionType"
+        @change="changeConditionType"
+      >
         <el-radio
           v-for="item in conditionConfigTypesBase"
           :key="item.value"
@@ -31,7 +43,10 @@
         class="condition-group"
       >
         <el-card shadow="never">
-          <div slot="header" class="condition-group-header">
+          <div
+            slot="header"
+            class="condition-group-header"
+          >
             <span>条件组 {{ groupIndex + 1 }}</span>
             <span>
               规则关系
@@ -70,7 +85,11 @@
                 />
               </el-select>
             </el-form-item>
-            <el-select v-model="rule.opCode" class="condition-operator" placeholder="运算符">
+            <el-select
+              v-model="rule.opCode"
+              class="condition-operator"
+              placeholder="运算符"
+            >
               <el-option
                 v-for="operator in COMPARISON_OPERATORS"
                 :key="operator.value"
@@ -82,7 +101,11 @@
               :prop="'conditionGroups.conditions.' + groupIndex + '.rules.' + ruleIndex + '.rightSide'"
               :rules="requiredRule('右值不能为空')"
             >
-              <el-input v-model="rule.rightSide" class="condition-value" placeholder="值" />
+              <el-input
+                v-model="rule.rightSide"
+                class="condition-value"
+                placeholder="值"
+              />
             </el-form-item>
             <el-button
               v-if="group.rules.length > 1"
@@ -110,7 +133,11 @@
           @click="deleteConditionGroup(groupIndex)"
         />
       </div>
-      <el-button type="text" icon="el-icon-plus" @click="addConditionGroup">添加条件组</el-button>
+      <el-button
+        type="text"
+        icon="el-icon-plus"
+        @click="addConditionGroup"
+      >添加条件组</el-button>
     </el-form-item>
 
     <el-form-item
@@ -150,16 +177,16 @@ function clone(value) {
 }
 
 export default {
-  name: 'Condition',
+  name: 'BpmCondition',
+  inject: {
+    formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
+    formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
+  },
   props: {
     value: {
       type: Object,
       required: true
     }
-  },
-  inject: {
-    formFieldsRef: { from: 'formFields', default: () => ({ value: [] }) },
-    formTypeRef: { from: 'formType', default: () => ({ value: undefined }) }
   },
   data() {
     return {

@@ -1,26 +1,53 @@
 <!-- MES 假期设置 - 日历视图 -->
 <template>
   <div class="app-container">
-    <doc-alert title="【排班】班组设置、节假日设置" url="https://doc.iocoder.cn/mes/cal/team/" />
+    <doc-alert
+      title="【排班】班组设置、节假日设置"
+      url="https://doc.iocoder.cn/mes/cal/team/"
+    />
 
     <el-calendar v-model="currentDate">
-      <template slot="dateCell" slot-scope="{ data }">
-        <div class="holiday-cell" @click.stop="onClickDay(data)">
+      <template
+        slot="dateCell"
+        slot-scope="{ data }"
+      >
+        <div
+          class="holiday-cell"
+          @click.stop="onClickDay(data)"
+        >
           <div class="cell-header">
-            <span class="day-number" :class="{ weekend: isWeekend(data.day) }">
+            <span
+              class="day-number"
+              :class="{ weekend: isWeekend(data.day) }"
+            >
               {{ data.day.split('-')[2] }}
             </span>
-            <el-tag v-if="holidaySet.has(data.day)" size="mini" effect="dark" type="success">休</el-tag>
-            <el-tag v-else size="mini" effect="dark">班</el-tag>
+            <el-tag
+              v-if="holidaySet.has(data.day)"
+              size="mini"
+              effect="dark"
+              type="success"
+            >休</el-tag>
+            <el-tag
+              v-else
+              size="mini"
+              effect="dark"
+            >班</el-tag>
           </div>
-          <div class="lunar-text" :class="{ festival: hasFestival(data.day) }">
+          <div
+            class="lunar-text"
+            :class="{ festival: hasFestival(data.day) }"
+          >
             {{ getLunarDisplay(data.day) }}
           </div>
         </div>
       </template>
     </el-calendar>
 
-    <holiday-form ref="form" @success="getList" />
+    <holiday-form
+      ref="form"
+      @success="getList"
+    />
   </div>
 </template>
 

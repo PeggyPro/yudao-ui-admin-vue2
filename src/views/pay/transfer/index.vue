@@ -2,14 +2,17 @@
   <div class="app-container">
     <!-- 搜索工作栏 -->
     <el-form
-      ref="queryForm"
       v-show="showSearch"
+      ref="queryForm"
       :model="queryParams"
       size="small"
       :inline="true"
       label-width="120px"
     >
-      <el-form-item label="转账单号" prop="no">
+      <el-form-item
+        label="转账单号"
+        prop="no"
+      >
         <el-input
           v-model="queryParams.no"
           placeholder="请输入转账单号"
@@ -17,7 +20,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="转账渠道" prop="channelCode">
+      <el-form-item
+        label="转账渠道"
+        prop="channelCode"
+      >
         <el-select
           v-model="queryParams.channelCode"
           placeholder="请选择支付渠道"
@@ -31,7 +37,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="商户单号" prop="merchantOrderId">
+      <el-form-item
+        label="商户单号"
+        prop="merchantOrderId"
+      >
         <el-input
           v-model="queryParams.merchantOrderId"
           placeholder="请输入商户单号"
@@ -39,7 +48,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="转账状态" prop="status">
+      <el-form-item
+        label="转账状态"
+        prop="status"
+      >
         <el-select
           v-model="queryParams.status"
           placeholder="请选择转账状态"
@@ -53,7 +65,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="收款人姓名" prop="userName">
+      <el-form-item
+        label="收款人姓名"
+        prop="userName"
+      >
         <el-input
           v-model="queryParams.userName"
           placeholder="请输入收款人姓名"
@@ -61,7 +76,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="收款人账号" prop="userAccount">
+      <el-form-item
+        label="收款人账号"
+        prop="userAccount"
+      >
         <el-input
           v-model="queryParams.userAccount"
           placeholder="请输入收款人账号"
@@ -69,7 +87,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="渠道单号" prop="channelTransferNo">
+      <el-form-item
+        label="渠道单号"
+        prop="channelTransferNo"
+      >
         <el-input
           v-model="queryParams.channelTransferNo"
           placeholder="请输入渠道单号"
@@ -77,7 +98,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <el-form-item
+        label="创建时间"
+        prop="createTime"
+      >
         <el-date-picker
           v-model="queryParams.createTime"
           style="width: 240px"
@@ -90,15 +114,22 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
         <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleQuery"
+        >搜索</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          @click="resetQuery"
+        >重置</el-button>
+        <el-button
+          v-hasPermi="['pay:transfer:export']"
           type="warning"
           plain
           icon="el-icon-download"
           :loading="exportLoading"
           @click="handleExport"
-          v-hasPermi="['pay:transfer:export']"
         >
           导出
         </el-button>
@@ -106,50 +137,125 @@
     </el-form>
 
     <!-- 操作栏 -->
-    <el-row :gutter="10" class="mb8">
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+    <el-row
+      :gutter="10"
+      class="mb8"
+    >
+      <right-toolbar
+        :show-search.sync="showSearch"
+        @queryTable="getList"
+      />
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" stripe>
-      <el-table-column label="编号" align="center" prop="id" width="90" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template v-slot="scope">
+    <el-table
+      v-loading="loading"
+      :data="list"
+      :show-overflow-tooltip="true"
+      stripe
+    >
+      <el-table-column
+        label="编号"
+        align="center"
+        prop="id"
+        width="90"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
+        <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="支付应用" align="center" prop="appName" min-width="120" />
-      <el-table-column label="转账金额" align="center" prop="price" width="110">
-        <template v-slot="scope">
+      <el-table-column
+        label="支付应用"
+        align="center"
+        prop="appName"
+        min-width="120"
+      />
+      <el-table-column
+        label="转账金额"
+        align="center"
+        prop="price"
+        width="110"
+      >
+        <template #default="scope">
           <span>￥{{ formatPrice(scope.row.price) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="转账状态" align="center" prop="status" width="120">
-        <template v-slot="scope">
-          <dict-tag :type="DICT_TYPE.PAY_TRANSFER_STATUS" :value="scope.row.status" />
+      <el-table-column
+        label="转账状态"
+        align="center"
+        prop="status"
+        width="120"
+      >
+        <template #default="scope">
+          <dict-tag
+            :type="DICT_TYPE.PAY_TRANSFER_STATUS"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="订单号" align="left" width="300">
-        <template v-slot="scope">
+      <el-table-column
+        label="订单号"
+        align="left"
+        width="300"
+      >
+        <template #default="scope">
           <p class="transfer-font">
             <el-tag size="mini">商户</el-tag>
             {{ scope.row.merchantTransferId }}
           </p>
-          <p v-if="scope.row.no" class="transfer-font">
-            <el-tag size="mini" type="warning">转账</el-tag>
+          <p
+            v-if="scope.row.no"
+            class="transfer-font"
+          >
+            <el-tag
+              size="mini"
+              type="warning"
+            >转账</el-tag>
             {{ scope.row.no }}
           </p>
-          <p v-if="scope.row.channelTransferNo" class="transfer-font">
-            <el-tag size="mini" type="success">渠道</el-tag>
+          <p
+            v-if="scope.row.channelTransferNo"
+            class="transfer-font"
+          >
+            <el-tag
+              size="mini"
+              type="success"
+            >渠道</el-tag>
             {{ scope.row.channelTransferNo }}
           </p>
         </template>
       </el-table-column>
-      <el-table-column label="收款人姓名" align="center" prop="userName" width="120" />
-      <el-table-column label="收款账号" align="left" prop="userAccount" width="200" />
-      <el-table-column label="转账标题" align="center" prop="subject" width="140" />
-      <el-table-column label="转账渠道" align="center" prop="channelCode" width="140">
-        <template v-slot="scope">
+      <el-table-column
+        label="收款人姓名"
+        align="center"
+        prop="userName"
+        width="120"
+      />
+      <el-table-column
+        label="收款账号"
+        align="left"
+        prop="userAccount"
+        width="200"
+      />
+      <el-table-column
+        label="转账标题"
+        align="center"
+        prop="subject"
+        width="140"
+      />
+      <el-table-column
+        label="转账渠道"
+        align="center"
+        prop="channelCode"
+        width="140"
+      >
+        <template #default="scope">
           <dict-tag
             v-if="scope.row.channelCode"
             :type="DICT_TYPE.PAY_CHANNEL_CODE"
@@ -157,13 +263,23 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="转账成功时间" align="center" prop="successTime" width="180">
-        <template v-slot="scope">
+      <el-table-column
+        label="转账成功时间"
+        align="center"
+        prop="successTime"
+        width="180"
+      >
+        <template #default="scope">
           <span>{{ parseTime(scope.row.successTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="80">
-        <template v-slot="scope">
+      <el-table-column
+        label="操作"
+        align="center"
+        fixed="right"
+        width="80"
+      >
+        <template #default="scope">
           <el-button
             type="text"
             size="mini"
@@ -216,6 +332,9 @@ export default {
       }
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
     toNumber(value) {
       const number = Number(value)
@@ -264,9 +383,6 @@ export default {
     openDetail(id) {
       this.$refs.transferDetail.open(id)
     }
-  },
-  created() {
-    this.getList()
   }
 }
 </script>
