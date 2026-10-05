@@ -126,7 +126,10 @@
 <script>
 export default {
   name: 'crontab-week',
-  props: ['check', 'cron'],
+  props: {
+    check: { type: Function, default: undefined },
+    cron: { type: Object, default: undefined }
+  },
   data() {
     return {
       radioValue: 2,

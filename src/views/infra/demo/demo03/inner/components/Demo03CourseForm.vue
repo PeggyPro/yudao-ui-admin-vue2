@@ -81,9 +81,9 @@ import * as Demo03StudentApi from '@/api/infra/demo/demo03/inner'
 export default {
   name: 'Demo03CourseForm',
   components: {},
-  props: [
-    'studentId'
-  ], // 学生编号（主表的关联字段）
+  props: {
+    studentId: { type: [Number, String], default: undefined }
+  }, // 学生编号（主表的关联字段）
   data() {
     return {
       // 表单的加载中：1）修改时的数据加载；2）提交的按钮禁用

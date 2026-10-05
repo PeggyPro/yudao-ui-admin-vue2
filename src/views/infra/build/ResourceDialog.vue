@@ -65,7 +65,9 @@ import { deepClone } from '@/utils'
 export default {
   components: {},
   inheritAttrs: false,
-  props: ['originResource'],
+  props: {
+    originResource: { type: Array, default: undefined }
+  },
   data() {
     return {
       resources: null

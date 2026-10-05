@@ -177,7 +177,10 @@ let monaco
 
 export default {
   components: { ResourceDialog },
-  props: ['formData', 'generateConf'],
+  props: {
+    formData: { type: Object, default: undefined },
+    generateConf: { type: Object, default: undefined }
+  },
   data() {
     return {
       activeTab: 'html',

@@ -64,9 +64,9 @@ import * as Demo03StudentApi from '@/api/infra/demo/demo03/inner'
 
 export default {
   name: 'Demo03CourseList',
-  props: [
-    'studentId'
-  ], // 学生编号（主表的关联字段）
+  props: {
+    studentId: { type: [Number, String], default: undefined }
+  }, // 学生编号（主表的关联字段）
   data() {
     return {
       // 遮罩层

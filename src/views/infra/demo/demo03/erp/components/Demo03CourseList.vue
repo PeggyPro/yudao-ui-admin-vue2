@@ -116,9 +116,9 @@ export default {
   components: {
     Demo03CourseForm
   },
-  props: [
-    'studentId'
-  ], // 学生编号（主表的关联字段）
+  props: {
+    studentId: { type: [Number, String], default: undefined }
+  }, // 学生编号（主表的关联字段）
   data() {
     return {
       // 遮罩层

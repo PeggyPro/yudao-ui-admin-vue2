@@ -101,13 +101,13 @@ export default {
     render,
     draggable
   },
-  props: [
-    'currentItem',
-    'index',
-    'drawingList',
-    'activeId',
-    'formConf'
-  ],
+  props: {
+    currentItem: { type: Object, default: undefined },
+    index: { type: Number, default: undefined },
+    drawingList: { type: Array, default: undefined },
+    activeId: { type: [String, Number], default: undefined },
+    formConf: { type: Object, default: undefined }
+  },
   render(h) {
     const layout = layouts[this.currentItem.__config__.layout]
 

@@ -170,7 +170,10 @@ export default {
     CrontabYear,
     CrontabResult
   },
-  props: ['expression', 'hideComponent'],
+  props: {
+    expression: { type: String, default: undefined },
+    hideComponent: { type: [String, Array], default: undefined }
+  },
   data() {
     return {
       tabTitles: ['秒', '分钟', '小时', '日', '月', '周', '年'],

@@ -16,7 +16,9 @@
 <script>
 export default {
   name: 'crontab-result',
-  props: ['ex'],
+  props: {
+    ex: { type: String, default: undefined }
+  },
   data() {
     return {
       dayRule: '',
