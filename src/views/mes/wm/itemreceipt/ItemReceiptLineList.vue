@@ -192,7 +192,7 @@ import ItemReceiptDetailForm from './ItemReceiptDetailForm.vue'
 import PrinterLabel from '@/views/mes/wm/barcode/components/PrinterLabel.vue'
 export default {
   name: 'ItemReceiptLineList', components: { MdItemSelect, WmArrivalNoticeLineSelect, ItemReceiptDetailList, ItemReceiptDetailForm, PrinterLabel },
-  props: { receiptId: { type: Number, required: true }, noticeId: Number, formType: { type: String, required: true }},
+  props: { receiptId: { type: Number, required: true }, noticeId: { type: Number, default: undefined }, formType: { type: String, required: true }},
   data() { return { loading: false, list: [], total: 0, queryParams: { pageNo: 1, pageSize: 10, receiptId: undefined }, dialogVisible: false, dialogTitle: '', lineFormType: '', formLoading: false, formData: this.getDefaultForm(), detailRefreshKeys: {}, formRules: { arrivalNoticeLineId: [{ required: true, message: '到货通知单行不能为空', trigger: 'change' }], itemId: [{ required: true, message: '物料不能为空', trigger: 'change' }], receivedQuantity: [{ required: true, message: '入库数量不能为空', trigger: 'blur' }] }} },
   computed: { isUpdate() { return ['create', 'update'].includes(this.formType) }, isStock() { return this.formType === 'stock' }, hasNoticeId() { return !!this.noticeId } },
   watch: { receiptId: { immediate: true, handler(value) { if (value) this.getList() } }},

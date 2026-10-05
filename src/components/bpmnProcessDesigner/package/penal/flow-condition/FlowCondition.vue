@@ -111,8 +111,8 @@
 export default {
   name: 'FlowCondition',
   props: {
-    businessObject: Object,
-    type: String
+    businessObject: { type: Object, default: undefined },
+    type: { type: String, default: undefined }
   },
   data() {
     return {

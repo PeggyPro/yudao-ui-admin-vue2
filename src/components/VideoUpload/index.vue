@@ -84,7 +84,7 @@ import { getAccessToken } from '@/utils/auth'
 
 export default {
   props: {
-    value: [String, Object],
+    value: { type: [String, Object], default: undefined },
     // 大小限制(MB)
     fileSize: {
       type: Number,

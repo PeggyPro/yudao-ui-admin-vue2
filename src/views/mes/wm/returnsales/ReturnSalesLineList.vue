@@ -251,7 +251,7 @@ import { PrinterLabel } from '@/views/mes/wm/barcode/components'
 export default {
   name: 'ReturnSalesLineList',
   components: { MdItemSelect, WmBatchSelect, ReturnSalesDetailList, ReturnSalesDetailForm, PrinterLabel },
-  props: { 'returnId': { type: Number, required: true }, 'formType': { type: String, required: true }, 'clientId': { type: Number }, 'salesOrderCode': { type: String }},
+  props: { 'returnId': { type: Number, required: true }, 'formType': { type: String, required: true }, 'clientId': { type: Number, default: undefined }, 'salesOrderCode': { type: String, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const t = (...args) => vm.$t(...args) // 国际化

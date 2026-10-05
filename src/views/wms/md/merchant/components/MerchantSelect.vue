@@ -26,8 +26,8 @@ export default {
   name: 'WmsMerchantSelect',
   inheritAttrs: false,
   props: {
-    value: Number,
-    modelValue: Number,
+    value: { type: Number, default: undefined },
+    modelValue: { type: Number, default: undefined },
     supplier: Boolean,
     customer: Boolean,
     disabled: { type: Boolean, default: false },

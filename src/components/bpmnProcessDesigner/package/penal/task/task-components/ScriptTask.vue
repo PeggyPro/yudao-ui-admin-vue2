@@ -60,8 +60,8 @@
 export default {
   name: 'ScriptTask',
   props: {
-    id: String,
-    type: String
+    id: { type: String, default: undefined },
+    type: { type: String, default: undefined }
   },
   data() {
     return {

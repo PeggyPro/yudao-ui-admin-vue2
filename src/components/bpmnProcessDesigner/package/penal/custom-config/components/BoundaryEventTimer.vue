@@ -126,8 +126,8 @@ export default {
     prefix: { default: 'flowable' }
   },
   props: {
-    id: String,
-    type: String
+    id: { type: String, default: undefined },
+    type: { type: String, default: undefined }
   },
   data() {
     return {

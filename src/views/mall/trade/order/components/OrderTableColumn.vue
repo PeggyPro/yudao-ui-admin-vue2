@@ -119,7 +119,7 @@
           min-width="120"
           prop="payPrice"
         >
-          <template>
+          <template slot-scope="{}">
             {{ floatToFixed2(scope.row.payPrice) + '元' }}
           </template>
         </el-table-column>
@@ -127,7 +127,7 @@
           label="买家/收货人"
           min-width="160"
         >
-          <template>
+          <template slot-scope="{}">
             <div
               v-if="scope.row.deliveryType === DeliveryTypeEnum.EXPRESS.type"
               class="delivery-info"
@@ -155,7 +155,7 @@
           label="配送方式"
           width="120"
         >
-          <template>
+          <template slot-scope="{}">
             <dict-tag
               :type="DICT_TYPE.TRADE_DELIVERY_TYPE"
               :value="scope.row.deliveryType"
@@ -167,7 +167,7 @@
           label="订单状态"
           width="120"
         >
-          <template>
+          <template slot-scope="{}">
             <dict-tag
               :type="DICT_TYPE.TRADE_ORDER_STATUS"
               :value="scope.row.status"
@@ -180,7 +180,7 @@
           label="操作"
           width="160"
         >
-          <template>
+          <template slot-scope="{}">
             <slot :row="scope.row" />
           </template>
         </el-table-column>

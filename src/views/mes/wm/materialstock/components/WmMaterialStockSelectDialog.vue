@@ -235,7 +235,7 @@ import WmWarehouseAreaSelect from '@/views/mes/wm/warehouse/components/WmWarehou
 export default {
   name: 'WmMaterialStockSelectDialog',
   components: { MdItemTypeTree, MdItemSelect, MdVendorSelect, WmWarehouseSelect, WmWarehouseLocationSelect, WmWarehouseAreaSelect },
-  props: { 'multiple': { type: Boolean, default: true }, 'itemId': { type: Number }, 'batchId': { type: Number }, 'warehouseId': { type: Number }, 'virtualFilter': { type: String, default: 'exclude' }},
+  props: { 'multiple': { type: Boolean, default: true }, 'itemId': { type: Number, default: undefined }, 'batchId': { type: Number, default: undefined }, 'warehouseId': { type: Number, default: undefined }, 'virtualFilter': { type: String, default: 'exclude' }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const message = {

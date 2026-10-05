@@ -187,9 +187,9 @@ export default {
     }
   },
   props: {
-    businessObject: Object,
-    type: String,
-    id: String
+    businessObject: { type: Object, default: undefined },
+    type: { type: String, default: undefined },
+    id: { type: String, default: undefined }
   },
   data() {
     return {

@@ -168,7 +168,7 @@ import MdItemSelect from '@/views/mes/md/item/components/MdItemSelect.vue'
 import MdClientSelect from '@/views/mes/md/client/components/MdClientSelect.vue'
 
 export default {
-  name: 'ProWorkOrderSelectDialog', components: { MdItemSelect, MdClientSelect }, props: { multiple: { type: Boolean, default: true }, status: Number, type: Number },
+  name: 'ProWorkOrderSelectDialog', components: { MdItemSelect, MdClientSelect }, props: { multiple: { type: Boolean, default: true }, status: { type: Number, default: undefined }, type: { type: Number, default: undefined }},
   data() { return { DICT_TYPE, dialogVisible: false, loading: false, list: [], total: 0, selectedRows: [], selectedRadioId: undefined, currentRadioRow: undefined, preSelectedIds: [], queryParams: { pageNo: 1, pageSize: 10, code: undefined, name: undefined, productId: undefined, clientId: undefined, status: undefined, type: undefined }} },
   methods: {
     dateFormatter2, getDictLabel, getIntDictOptions, handleSelectionChange(rows) { if (this.multiple) this.selectedRows = rows }, handleRadioChange(row) { this.currentRadioRow = row }, handleRowClick(row) { if (!this.multiple) { this.selectedRadioId = row.id; this.currentRadioRow = row } }, handleRowDblClick(row) { if (this.multiple) { this.$refs.table.toggleRowSelection(row); return } this.handleRowClick(row); this.confirmSelect() },

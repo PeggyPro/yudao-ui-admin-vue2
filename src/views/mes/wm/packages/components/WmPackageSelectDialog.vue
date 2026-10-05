@@ -231,7 +231,7 @@ import { MesWmPackageStatusEnum } from '@/views/mes/utils/constants'
 export default {
   name: 'WmPackageSelectDialog',
   components: { MdClientSelect, UserSelectV2 },
-  props: { 'multiple': { type: Boolean, default: true }, 'excludeId': { type: Number }, 'childableOnly': { type: Boolean, default: false }},
+  props: { 'multiple': { type: Boolean, default: true }, 'excludeId': { type: Number, default: undefined }, 'childableOnly': { type: Boolean, default: false }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const message = {

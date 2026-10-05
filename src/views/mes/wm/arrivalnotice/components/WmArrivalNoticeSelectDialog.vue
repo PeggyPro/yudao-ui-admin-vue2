@@ -158,7 +158,7 @@ import { WmArrivalNoticeApi } from '@/api/mes/wm/arrivalnotice'
 import MdVendorSelect from '@/views/mes/md/vendor/components/MdVendorSelect.vue'
 const ARRIVAL_STATUS = 'mes_wm_arrival_notice_status'
 export default {
-  name: 'WmArrivalNoticeSelectDialog', components: { MdVendorSelect }, props: { multiple: { type: Boolean, default: true }, status: Number },
+  name: 'WmArrivalNoticeSelectDialog', components: { MdVendorSelect }, props: { multiple: { type: Boolean, default: true }, status: { type: Number, default: undefined }},
   data() { return { ARRIVAL_STATUS, statusOptions: getIntDictOptions(ARRIVAL_STATUS), dialogVisible: false, loading: false, list: [], total: 0, selectedRows: [], selectedRadioId: undefined, currentRadioRow: undefined, preSelectedIds: [], queryParams: { pageNo: 1, pageSize: 10, code: undefined, name: undefined, purchaseOrderCode: undefined, vendorId: undefined, arrivalDate: undefined, status: undefined }} },
   methods: {
     formatDay(value) { return formatDate(value, 'YYYY-MM-DD') },

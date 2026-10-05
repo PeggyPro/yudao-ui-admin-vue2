@@ -61,8 +61,8 @@
 export default {
   name: 'ElementBaseInfo',
   props: {
-    businessObject: Object,
-    model: Object // 流程模型的数据
+    businessObject: { type: Object, default: undefined },
+    model: { type: Object, default: undefined } // 流程模型的数据
   },
   data() {
     return {

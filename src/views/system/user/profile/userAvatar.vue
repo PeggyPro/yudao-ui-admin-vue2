@@ -130,7 +130,8 @@ export default {
   components: { VueCropper },
   props: {
     user: {
-      type: Object
+      type: Object,
+      default: undefined
     }
   },
   data() {

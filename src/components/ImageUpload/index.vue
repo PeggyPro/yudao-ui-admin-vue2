@@ -51,7 +51,7 @@ import { getAccessToken } from '@/utils/auth'
 
 export default {
   props: {
-    value: [String, Object, Array],
+    value: { type: [String, Object, Array], default: undefined },
     // 图片数量限制
     limit: {
       type: Number,

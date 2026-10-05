@@ -38,8 +38,8 @@ export default {
   name: 'DvMachineryTypeSelect',
   inheritAttrs: false,
   props: {
-    value: Number,
-    modelValue: Number,
+    value: { type: Number, default: undefined },
+    modelValue: { type: Number, default: undefined },
     disabled: { type: Boolean, default: false },
     placeholder: { type: String, default: '请选择设备类型' }
   },

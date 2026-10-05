@@ -50,13 +50,16 @@ import { socialAuthRedirect, socialBind, socialUnbind } from '@/api/system/user/
 export default {
   props: {
     user: {
-      type: Object
+      type: Object,
+      default: undefined
     },
     getUser: { // 刷新用户
-      type: Function
+      type: Function,
+      default: undefined
     },
     setActiveTab: { // 设置激活的
-      type: Function
+      type: Function,
+      default: undefined
     }
   },
   data() {

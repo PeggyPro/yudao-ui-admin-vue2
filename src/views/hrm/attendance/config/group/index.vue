@@ -76,7 +76,7 @@
           label="考勤规则"
           min-width="120"
         >
-          <template>早晚打卡</template>
+          <template slot-scope="{}">早晚打卡</template>
         </el-table-column>
         <el-table-column
           label="适用范围"

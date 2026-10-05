@@ -20,7 +20,7 @@ import { AreaLevelEnum } from '@/utils/constants'
 export default {
   name: 'AreaSelect',
   props: {
-    value: [String, Number, Array],
+    value: { type: [String, Number, Array], default: undefined },
     level: {
       type: Number,
       default: AreaLevelEnum.DISTRICT

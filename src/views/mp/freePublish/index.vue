@@ -74,8 +74,7 @@ SOFTWARE.
       class="waterfall"
     >
       <div
-        v-for="item in list"
-        v-if="item.content && item.content.newsItem"
+        v-for="item in list.filter(article => article.content && article.content.newsItem)"
         :key="item.articleId"
         class="waterfall-item"
       >

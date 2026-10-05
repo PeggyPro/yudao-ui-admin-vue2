@@ -1014,7 +1014,7 @@
 
           <template
             v-if="activeData.__config__.layoutTree"
-            slot-scope="scope"
+            slot-scope="{}"
           >
             <el-divider>布局结构树</el-divider>
             <el-tree

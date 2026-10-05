@@ -125,7 +125,7 @@ import WmMaterialStockSelectDialog from '@/views/mes/wm/materialstock/components
 export default {
   name: 'StockTakingTaskLineList',
   components: { WmMaterialStockSelectDialog },
-  props: { 'taskId': { type: Number, required: true }, 'formType': { type: String }},
+  props: { 'taskId': { type: Number, required: true }, 'formType': { type: String, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const t = (...args) => vm.$t(...args) // 国际化

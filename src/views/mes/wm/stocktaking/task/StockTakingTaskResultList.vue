@@ -268,7 +268,7 @@ import WmWarehouseAreaSelect from '@/views/mes/wm/warehouse/components/WmWarehou
 export default {
   name: 'StockTakingTaskResultList',
   components: { MdItemSelect, WmWarehouseSelect, WmWarehouseLocationSelect, WmWarehouseAreaSelect },
-  props: { 'taskId': { type: Number, required: true }, 'formType': { type: String }},
+  props: { 'taskId': { type: Number, required: true }, 'formType': { type: String, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const t = (...args) => vm.$t(...args) // 国际化

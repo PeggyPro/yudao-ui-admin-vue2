@@ -120,7 +120,7 @@ import { MesQcTypeEnum } from '@/views/mes/utils/constants'
 export default {
   name: 'IpqcLineList',
   components: { DefectRecordInlineList },
-  props: { 'ipqcId': { type: Number, required: true }, 'formType': { type: String }},
+  props: { 'ipqcId': { type: Number, required: true }, 'formType': { type: String, default: undefined }},
   setup(props, { emit }) {
     const loading = ref(false) // 列表的加载中
     const list = ref([]) // 列表的数据

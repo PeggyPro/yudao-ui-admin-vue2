@@ -27,7 +27,7 @@
           align="center"
           width="60"
         >
-          <template>
+          <template slot-scope="{}">
             <el-tooltip
               content="拖动排序"
               placement="top"

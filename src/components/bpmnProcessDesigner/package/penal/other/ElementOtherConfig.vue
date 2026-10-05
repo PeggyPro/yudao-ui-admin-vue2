@@ -21,7 +21,7 @@
 export default {
   name: 'ElementOtherConfig',
   props: {
-    id: String
+    id: { type: String, default: undefined }
   },
   data() {
     return {

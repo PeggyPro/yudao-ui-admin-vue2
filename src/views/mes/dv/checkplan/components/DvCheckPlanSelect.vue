@@ -59,13 +59,13 @@ export default {
   components: { DvCheckPlanSelectDialog },
   inheritAttrs: false,
   props: {
-    value: Number,
-    modelValue: Number,
+    value: { type: Number, default: undefined },
+    modelValue: { type: Number, default: undefined },
     disabled: { type: Boolean, default: false },
     clearable: { type: Boolean, default: true },
     placeholder: { type: String, default: '请选择保养方案' },
-    type: Number,
-    status: Number
+    type: { type: Number, default: undefined },
+    status: { type: Number, default: undefined }
   },
   data() {
     return { MES_DV_CYCLE_TYPE, hovering: false, selectedItem: undefined }

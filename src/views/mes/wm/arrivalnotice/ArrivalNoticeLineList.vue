@@ -189,7 +189,7 @@ import MdItemSelect from '@/views/mes/md/item/components/MdItemSelect.vue'
 export default {
   name: 'ArrivalNoticeLineList',
   components: { MdItemSelect },
-  props: { 'noticeId': { type: Number, required: true }, 'formType': { type: String }},
+  props: { 'noticeId': { type: Number, required: true }, 'formType': { type: String, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const t = (...args) => vm.$t(...args) // 国际化

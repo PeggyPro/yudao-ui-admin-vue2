@@ -274,14 +274,14 @@ export default {
   name: 'MyProcessDesigner',
   componentName: 'MyProcessDesigner',
   props: {
-    value: String, // xml 字符串
+    value: { type: String, default: undefined }, // xml 字符串
     valueWatch: { type: Boolean, default: true }, // xml 字符串的 watch 状态
-    processId: String, // 流程 key 标识
-    processName: String, // 流程 name 名字
-    formId: Number, // 流程 form 表单编号
-    translations: Object, // 自定义的翻译文件
-    additionalModel: [Object, Array], // 自定义model
-    moddleExtension: Object, // 自定义moddle
+    processId: { type: String, default: undefined }, // 流程 key 标识
+    processName: { type: String, default: undefined }, // 流程 name 名字
+    formId: { type: Number, default: undefined }, // 流程 form 表单编号
+    translations: { type: Object, default: undefined }, // 自定义的翻译文件
+    additionalModel: { type: [Object, Array], default: undefined }, // 自定义model
+    moddleExtension: { type: Object, default: undefined }, // 自定义moddle
     onlyCustomizeAddi: {
       type: Boolean,
       default: false

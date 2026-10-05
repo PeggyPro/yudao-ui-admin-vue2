@@ -44,7 +44,7 @@ import { ref, watch, onMounted, toRefs } from 'vue'
 import { BatchApi } from '@/api/mes/wm/batch'
 export default {
   name: 'BatchTraceDetailList',
-  props: { 'batchId': { type: Number }, 'batchCode': { type: String }, 'direction': { type: String, required: true }},
+  props: { 'batchId': { type: Number, default: undefined }, 'batchCode': { type: String, default: undefined }, 'direction': { type: String, required: true }},
   setup(props, { emit }) {
     const loading = ref(true) // 列表的加载中
     const batchList = ref([]) // 列表的数据

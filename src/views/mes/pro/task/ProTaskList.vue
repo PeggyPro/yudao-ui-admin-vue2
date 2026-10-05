@@ -216,8 +216,8 @@ export default {
     workOrderId: { type: Number, required: true },
     routeId: { type: Number, required: true },
     processId: { type: Number, required: true },
-    itemId: Number,
-    colorCode: String,
+    itemId: { type: Number, default: undefined },
+    colorCode: { type: String, default: undefined },
     disabled: { type: Boolean, default: false }
   },
   data() {

@@ -48,8 +48,8 @@ export default {
   components: { CalTeamSelectDialog },
   inheritAttrs: false,
   props: {
-    value: Number,
-    modelValue: Number,
+    value: { type: Number, default: undefined },
+    modelValue: { type: Number, default: undefined },
     disabled: { type: Boolean, default: false },
     clearable: { type: Boolean, default: true },
     placeholder: { type: String, default: '请选择班组' }

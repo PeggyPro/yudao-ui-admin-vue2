@@ -69,7 +69,8 @@ export default {
       default: true
     },
     columns: {
-      type: Array
+      type: Array,
+      default: undefined
     },
     search: {
       type: Boolean,

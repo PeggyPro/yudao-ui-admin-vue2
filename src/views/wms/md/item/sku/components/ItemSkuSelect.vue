@@ -188,7 +188,7 @@ import {
 
 export default {
   name: 'WmsItemSkuSelect',
-  props: { value: Array, modelValue: Array },
+  props: { value: { type: Array, default: undefined }, modelValue: { type: Array, default: undefined }},
   data() {
     return {
       visible: false,

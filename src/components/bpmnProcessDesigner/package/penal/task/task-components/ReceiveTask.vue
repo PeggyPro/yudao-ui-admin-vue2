@@ -7,10 +7,10 @@
           @change="updateTaskMessage"
         >
           <el-option
-            v-for="id in Object.keys(messageMap)"
-            :key="id"
-            :value="id"
-            :label="messageMap[id]"
+            v-for="messageId in Object.keys(messageMap)"
+            :key="messageId"
+            :value="messageId"
+            :label="messageMap[messageId]"
           />
         </el-select>
         <el-button
@@ -64,8 +64,8 @@
 export default {
   name: 'ReceiveTask',
   props: {
-    id: String,
-    type: String
+    id: { type: String, default: undefined },
+    type: { type: String, default: undefined }
   },
   data() {
     return {

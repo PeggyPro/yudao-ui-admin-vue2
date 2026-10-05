@@ -148,8 +148,8 @@ export default {
   name: 'DvCheckPlanSelectDialog',
   props: {
     multiple: { type: Boolean, default: true },
-    type: Number,
-    status: Number
+    type: { type: Number, default: undefined },
+    status: { type: Number, default: undefined }
   },
   data() {
     return {

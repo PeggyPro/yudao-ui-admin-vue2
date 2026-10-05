@@ -53,7 +53,7 @@ export default {
   components: { WmSalesNoticeSelectDialog },
   inheritAttrs: false,
   model: { prop: 'modelValue', event: 'update:modelValue' },
-  props: { 'modelValue': { type: Number }, 'status': { type: Number }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择发货通知单' }},
+  props: { 'modelValue': { type: Number, default: undefined }, 'status': { type: Number, default: undefined }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择发货通知单' }},
   setup(props, { emit, attrs: contextAttrs }) {
     const Search = 'el-icon-search'
     const CircleClose = 'el-icon-circle-close'

@@ -102,11 +102,11 @@
             class="cycle-config__appoint"
           >
             <el-checkbox
-              v-for="value in appointValues(field)"
-              :key="`${field.key}-${value}`"
-              :label="pad(value)"
+              v-for="appointValue in appointValues(field)"
+              :key="`${field.key}-${appointValue}`"
+              :label="pad(appointValue)"
             >
-              {{ pad(value) }}
+              {{ pad(appointValue) }}
             </el-checkbox>
           </el-checkbox-group>
         </el-tab-pane>

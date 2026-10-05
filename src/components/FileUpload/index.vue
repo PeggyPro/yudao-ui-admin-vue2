@@ -69,7 +69,7 @@ export default {
   name: 'FileUpload',
   props: {
     // 值
-    value: [String, Object, Array],
+    value: { type: [String, Object, Array], default: undefined },
     // 数量限制
     limit: {
       type: Number,

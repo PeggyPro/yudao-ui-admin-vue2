@@ -216,7 +216,7 @@ import { PrinterLabel } from '@/views/mes/wm/barcode/components'
 export default {
   name: 'ReturnVendorLineList',
   components: { MdItemSelect, WmBatchSelect, ReturnVendorDetailList, ReturnVendorDetailForm, PrinterLabel },
-  props: { 'returnId': { type: Number, required: true }, 'formType': { type: String, required: true }, 'vendorId': { type: Number }},
+  props: { 'returnId': { type: Number, required: true }, 'formType': { type: String, required: true }, 'vendorId': { type: Number, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const t = (...args) => vm.$t(...args) // 国际化

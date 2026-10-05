@@ -56,7 +56,8 @@ import { updateUserProfile } from '@/api/system/user/profile'
 export default {
   props: {
     user: {
-      type: Object
+      type: Object,
+      default: undefined
     }
   },
   data() {

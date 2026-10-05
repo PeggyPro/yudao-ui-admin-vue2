@@ -126,7 +126,7 @@ import { DICT_TYPE } from '@/utils/dict'
 import { WmSalesNoticeLineApi } from '@/api/mes/wm/salesnotice/line'
 export default {
   name: 'WmSalesNoticeLineSelectDialog',
-  props: { 'multiple': { type: Boolean, default: true }, 'noticeId': { type: Number }},
+  props: { 'multiple': { type: Boolean, default: true }, 'noticeId': { type: Number, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const message = {

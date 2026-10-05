@@ -113,7 +113,7 @@ import MdProductBomSelect from '@/views/mes/md/item/components/MdProductBomSelec
 
 export default {
   name: 'RouteProductBomList', components: { MdProductBomSelect },
-  props: { routeId: { type: Number, required: true }, productId: { type: Number, required: true }, productName: String },
+  props: { routeId: { type: Number, required: true }, productId: { type: Number, required: true }, productName: { type: String, default: undefined }},
   data() { return { loading: false, bomList: [], processList: [], activeProcessId: '', formVisible: false, formTitle: '', formLoading: false, formType: '', formData: {}, formRules: { itemId: [{ required: true, message: 'BOM 物料不能为空', trigger: 'change' }], quantity: [{ required: true, message: '用料比例不能为空', trigger: 'blur' }] }} },
   created() { this.loadProcessList() },
   methods: {

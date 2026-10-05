@@ -58,7 +58,7 @@ export default {
   components: { WmMaterialStockSelectDialog },
   inheritAttrs: false,
   model: { prop: 'modelValue', event: 'update:modelValue' },
-  props: { 'modelValue': { type: Number }, 'itemId': { type: Number }, 'batchId': { type: Number }, 'warehouseId': { type: Number }, 'virtualFilter': { type: String, default: 'exclude' }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择库存' }},
+  props: { 'modelValue': { type: Number, default: undefined }, 'itemId': { type: Number, default: undefined }, 'batchId': { type: Number, default: undefined }, 'warehouseId': { type: Number, default: undefined }, 'virtualFilter': { type: String, default: 'exclude' }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择库存' }},
   setup(props, { emit, attrs: contextAttrs }) {
     const Search = 'el-icon-search'
     const CircleClose = 'el-icon-circle-close'

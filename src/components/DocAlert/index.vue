@@ -16,8 +16,8 @@ import { getDocEnable } from '@/utils/ruoyi'
 export default {
   name: 'DocAlert',
   props: {
-    title: String,
-    url: String
+    title: { type: String, default: undefined },
+    url: { type: String, default: undefined }
   },
   methods: {
     enable: function() {

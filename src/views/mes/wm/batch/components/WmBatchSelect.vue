@@ -52,7 +52,7 @@ export default {
   components: { WmBatchSelectDialog },
   inheritAttrs: false,
   model: { prop: 'modelValue', event: 'update:modelValue' },
-  props: { 'modelValue': { type: Number }, 'itemId': { type: Number }, 'clientId': { type: Number }, 'vendorId': { type: Number }, 'salesOrderCode': { type: String }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择批次' }},
+  props: { 'modelValue': { type: Number, default: undefined }, 'itemId': { type: Number, default: undefined }, 'clientId': { type: Number, default: undefined }, 'vendorId': { type: Number, default: undefined }, 'salesOrderCode': { type: String, default: undefined }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择批次' }},
   setup(props, { emit, attrs: contextAttrs }) {
     const Search = 'el-icon-search'
     const CircleClose = 'el-icon-circle-close'

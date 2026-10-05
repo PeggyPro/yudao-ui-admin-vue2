@@ -71,7 +71,8 @@ export default {
     },
     /* 编辑器的内容 */
     value: {
-      type: String
+      type: String,
+      default: undefined
     },
     /* 图片大小 */
     maxSize: {

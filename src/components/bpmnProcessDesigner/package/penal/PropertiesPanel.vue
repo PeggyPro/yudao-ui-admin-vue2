@@ -226,7 +226,7 @@ export default {
     }
   },
   props: {
-    bpmnModeler: Object,
+    bpmnModeler: { type: Object, default: undefined },
     prefix: {
       type: String,
       default: 'camunda'
@@ -239,7 +239,7 @@ export default {
       type: Boolean,
       default: false
     },
-    model: Object // 流程模型的数据
+    model: { type: Object, default: undefined } // 流程模型的数据
   },
   data() {
     return {

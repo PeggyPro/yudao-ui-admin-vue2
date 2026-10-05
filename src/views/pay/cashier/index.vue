@@ -26,8 +26,7 @@
       <el-descriptions title="选择支付宝支付" />
       <div class="pay-channel-container">
         <div
-          v-for="channel in channels"
-          v-if="channel.code.indexOf('alipay_') === 0"
+          v-for="channel in channels.filter(item => item.code.indexOf('alipay_') === 0)"
           :key="channel.code"
           class="box"
           @click="submit(channel.code)"
@@ -43,8 +42,7 @@
       />
       <div class="pay-channel-container">
         <div
-          v-for="channel in channels"
-          v-if="channel.code.indexOf('wx_') === 0"
+          v-for="channel in channels.filter(item => item.code.indexOf('wx_') === 0)"
           :key="channel.code"
           class="box"
           @click="submit(channel.code)"
@@ -60,8 +58,7 @@
       />
       <div class="pay-channel-container">
         <div
-          v-for="channel in channels"
-          v-if="channel.code.indexOf('alipay_') === -1 && channel.code.indexOf('wx_') === -1"
+          v-for="channel in channels.filter(item => item.code.indexOf('alipay_') === -1 && item.code.indexOf('wx_') === -1)"
           :key="channel.code"
           class="box"
           @click="submit(channel.code)"

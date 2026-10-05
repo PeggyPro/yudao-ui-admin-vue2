@@ -205,7 +205,8 @@ export default {
       default: undefined
     },
     value: { // BPMN XML 字符串
-      type: String
+      type: String,
+      default: undefined
     },
     prefix: { // 使用哪个引擎
       type: String,
@@ -216,7 +217,8 @@ export default {
       default: () => []
     },
     processInstanceData: { // 流程实例的数据。传递时，可展示流程发起人等信息
-      type: Object
+      type: Object,
+      default: undefined
     },
     taskData: { // 任务实例的数据。传递时，可展示 UserTask 审核相关的信息
       type: Array,

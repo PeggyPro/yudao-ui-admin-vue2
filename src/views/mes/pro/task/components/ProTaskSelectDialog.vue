@@ -170,7 +170,7 @@ import ProWorkOrderSelect from '@/views/mes/pro/workorder/components/ProWorkOrde
 import MdWorkstationSelect from '@/views/mes/md/workstation/components/MdWorkstationSelect.vue'
 
 export default {
-  name: 'ProTaskSelectDialog', components: { ProProcessSelect, ProWorkOrderSelect, MdWorkstationSelect }, props: { multiple: { type: Boolean, default: true }, statuses: Array },
+  name: 'ProTaskSelectDialog', components: { ProProcessSelect, ProWorkOrderSelect, MdWorkstationSelect }, props: { multiple: { type: Boolean, default: true }, statuses: { type: Array, default: undefined }},
   data() { return { DICT_TYPE, dialogVisible: false, loading: false, list: [], total: 0, selectedRows: [], selectedRadioId: undefined, currentRadioRow: undefined, preSelectedIds: [], externalWorkstationId: undefined, queryParams: { pageNo: 1, pageSize: 10, code: undefined, name: undefined, processId: undefined, workOrderId: undefined, workstationId: undefined, statuses: undefined }} },
   methods: {
     formatDate, getDictLabel, handleSelectionChange(rows) { if (this.multiple) this.selectedRows = rows }, handleRadioChange(row) { this.currentRadioRow = row }, handleRowClick(row) { if (!this.multiple) { this.selectedRadioId = row.id; this.currentRadioRow = row } }, handleRowDblClick(row) { if (this.multiple) { this.$refs.table.toggleRowSelection(row); return } this.handleRowClick(row); this.confirmSelect() },

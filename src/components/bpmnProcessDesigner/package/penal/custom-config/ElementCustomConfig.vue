@@ -39,8 +39,8 @@ function eventTypeSuffix(businessObject) {
 export default {
   name: 'ElementCustomConfig',
   props: {
-    id: String,
-    type: String,
+    id: { type: String, default: undefined },
+    type: { type: String, default: undefined },
     businessObject: {
       type: Object,
       default: () => ({})

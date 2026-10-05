@@ -177,7 +177,7 @@ export default {
   name: 'DvSubjectSelectDialog',
   props: {
     multiple: { type: Boolean, default: true },
-    subjectType: Number
+    subjectType: { type: Number, default: undefined }
   },
   data() {
     return {

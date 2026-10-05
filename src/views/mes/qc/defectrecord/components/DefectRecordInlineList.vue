@@ -157,7 +157,7 @@ import { getIntDictOptions, DICT_TYPE } from '@/utils/dict'
 import { QcDefectRecordApi } from '@/api/mes/qc/defectrecord'
 export default {
   name: 'DefectRecordInlineList',
-  props: { 'formType': { type: String }},
+  props: { 'formType': { type: String, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const message = {

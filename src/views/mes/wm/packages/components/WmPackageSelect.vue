@@ -54,7 +54,7 @@ export default {
   components: { WmPackageSelectDialog },
   inheritAttrs: false,
   model: { prop: 'modelValue', event: 'update:modelValue' },
-  props: { 'modelValue': { type: Number }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择装箱单' }, 'excludeId': { type: Number }, 'childableOnly': { type: Boolean, default: false }},
+  props: { 'modelValue': { type: Number, default: undefined }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择装箱单' }, 'excludeId': { type: Number, default: undefined }, 'childableOnly': { type: Boolean, default: false }},
   setup(props, { emit, attrs: contextAttrs }) {
     const Search = 'el-icon-search'
     const CircleClose = 'el-icon-circle-close'

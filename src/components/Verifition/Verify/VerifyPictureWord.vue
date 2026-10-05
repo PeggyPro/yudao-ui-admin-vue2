@@ -72,7 +72,8 @@ export default {
       default: 'fixed'
     },
     captchaType: {
-      type: String
+      type: String,
+      default: undefined
     },
     // 间隔
     vSpace: {

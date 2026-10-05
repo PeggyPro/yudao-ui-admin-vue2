@@ -57,7 +57,7 @@ export default {
   name: 'TmToolTypeSelect',
   inheritAttrs: false,
   model: { prop: 'modelValue', event: 'update:modelValue' },
-  props: { 'modelValue': { type: Number }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择工具类型' }},
+  props: { 'modelValue': { type: Number, default: undefined }, 'disabled': { type: Boolean, default: false }, 'clearable': { type: Boolean, default: true }, 'placeholder': { type: String, default: '请选择工具类型' }},
   setup(props, { emit }) {
     const allList = ref([])
     const filteredList = ref([])

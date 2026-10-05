@@ -59,7 +59,7 @@ import { ref, computed, onMounted, toRefs, getCurrentInstance } from 'vue'
 import { WmTransferDetailApi } from '@/api/mes/wm/transfer/detail'
 export default {
   name: 'TransferDetailList',
-  props: { 'transferId': { type: Number, required: true }, 'lineId': { type: Number, required: true }, 'itemId': { type: Number, required: true }, 'lineQuantity': { type: Number }, 'formType': { type: String, required: true }},
+  props: { 'transferId': { type: Number, required: true }, 'lineId': { type: Number, required: true }, 'itemId': { type: Number, required: true }, 'lineQuantity': { type: Number, default: undefined }, 'formType': { type: String, required: true }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const t = (...args) => vm.$t(...args) // 国际化

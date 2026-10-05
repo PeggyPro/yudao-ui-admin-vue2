@@ -217,7 +217,7 @@ import MdClientSelect from '@/views/mes/md/client/components/MdClientSelect.vue'
 export default {
   name: 'WmSalesNoticeSelectDialog',
   components: { MdClientSelect },
-  props: { 'multiple': { type: Boolean, default: true }, 'status': { type: Number }},
+  props: { 'multiple': { type: Boolean, default: true }, 'status': { type: Number, default: undefined }},
   setup(props, { emit }) {
     const vm = getCurrentInstance().proxy
     const message = {

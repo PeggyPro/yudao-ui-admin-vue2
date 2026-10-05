@@ -93,7 +93,8 @@ export default {
   name: 'VerifySlide',
   props: {
     captchaType: {
-      type: String
+      type: String,
+      default: undefined
     },
     type: {
       type: String,

@@ -82,7 +82,7 @@
 <script>
 import { WmArrivalNoticeLineApi } from '@/api/mes/wm/arrivalnotice/line'
 export default {
-  name: 'WmArrivalNoticeLineSelectDialog', props: { noticeId: Number },
+  name: 'WmArrivalNoticeLineSelectDialog', props: { noticeId: { type: Number, default: undefined }},
   data() { return { dialogVisible: false, loading: false, list: [], total: 0, selectedRadioId: undefined, currentRadioRow: undefined, preSelectedIds: [], queryParams: { pageNo: 1, pageSize: 10, noticeId: undefined }} },
   methods: {
     handleRowClick(row) { this.selectedRadioId = row.id; this.currentRadioRow = row }, handleRowDblClick(row) { this.handleRowClick(row); this.confirmSelect() },
