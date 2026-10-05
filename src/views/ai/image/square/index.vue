@@ -20,7 +20,7 @@
         >
       </div>
     </div>
-    <pagination
+    <Pagination
       :total="total"
       :page.sync="queryParams.pageNo"
       :limit.sync="queryParams.pageSize"

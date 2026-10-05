@@ -208,7 +208,7 @@
         description="暂无回复"
         :image-size="60"
       />
-      <pagination
+      <Pagination
         v-if="replyTotal > 0"
         :total="replyTotal"
         :page.sync="replyQueryParams.pageNo"

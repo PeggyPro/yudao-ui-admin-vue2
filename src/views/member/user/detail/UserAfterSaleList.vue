@@ -177,7 +177,7 @@
         @click="openAfterSaleDetail(scope.row.id)"
       >处理退款</el-button></template></el-table-column>
     </el-table>
-    <pagination
+    <Pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNo"

@@ -116,7 +116,7 @@
             v-else
             description="暂无可用标签"
           />
-          <pagination
+          <Pagination
             v-if="selectedLabel"
             :limit.sync="queryParams.pageSize"
             :page.sync="queryParams.pageNo"

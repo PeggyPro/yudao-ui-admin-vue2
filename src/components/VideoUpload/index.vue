@@ -83,7 +83,6 @@
 import { getAccessToken } from '@/utils/auth'
 
 export default {
-  name: 'VideoUpload',
   props: {
     value: { type: [String, Object], default: undefined },
     // 大小限制(MB)

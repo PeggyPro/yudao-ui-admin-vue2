@@ -176,7 +176,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination
+    <Pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNo"

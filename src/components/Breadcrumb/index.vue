@@ -23,7 +23,6 @@
 
 <script>
 export default {
-  name: 'AppBreadcrumb',
   data() {
     return {
       levelList: null

@@ -2,6 +2,7 @@
 import { deepClone } from '@/utils/index'
 import render from '@/components/render/render.js'
 import { getAccessToken } from '@/utils/auth'
+import { parseRegExp } from '@/utils/regexp'
 
 const ruleTrigger = {
   'el-input': 'blur',
@@ -159,7 +160,6 @@ function buildListeners(scheme) {
 }
 
 export default {
-  name: 'FormParser',
   components: {
     render
   },
@@ -201,7 +201,7 @@ export default {
             config.regList.push(required)
           }
           rules[cur.__vModel__] = config.regList.map(item => {
-            item.pattern && (item.pattern = eval(item.pattern))
+            item.pattern && (item.pattern = parseRegExp(item.pattern))
             item.trigger = ruleTrigger && ruleTrigger[config.tag]
             return item
           })

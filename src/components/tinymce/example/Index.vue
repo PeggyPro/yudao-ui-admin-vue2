@@ -12,7 +12,6 @@
 import Tinymce from '../index.vue'
 
 export default {
-  name: 'TinymceExample',
   components: {
     Tinymce
   },

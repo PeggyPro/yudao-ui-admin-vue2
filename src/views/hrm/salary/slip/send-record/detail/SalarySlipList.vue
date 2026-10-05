@@ -180,7 +180,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <pagination
+      <Pagination
         v-show="total > 0"
         :page.sync="queryParams.pageNo"
         :limit.sync="queryParams.pageSize"

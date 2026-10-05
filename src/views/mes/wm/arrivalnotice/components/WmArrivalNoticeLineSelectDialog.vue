@@ -69,7 +69,7 @@
   align="center"
   prop="remark"
   min-width="120"
-/></el-table><pagination
+/></el-table><Pagination
   v-show="total > 0"
   :total="total"
   :page.sync="queryParams.pageNo"

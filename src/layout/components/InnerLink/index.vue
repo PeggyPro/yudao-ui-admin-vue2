@@ -15,7 +15,6 @@
 
 <script>
 export default {
-  name: 'InnerLink',
   props: {
     src: {
       type: String,

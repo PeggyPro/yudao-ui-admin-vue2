@@ -339,7 +339,7 @@
         ><template #default="scope">{{ parseTime(scope.row.receiptTime) }}</template></el-table-column>
       </template>
     </el-table>
-    <pagination
+    <Pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNo"

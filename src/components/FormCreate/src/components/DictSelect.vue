@@ -51,7 +51,7 @@ import { getDictDatas } from '@/utils/dict'
 export default {
   name: 'DictSelect',
   props: {
-    value: [String, Number, Boolean, Array],
+    value: { type: [String, Number, Boolean, Array], default: undefined },
     dictType: {
       type: String,
       default: ''

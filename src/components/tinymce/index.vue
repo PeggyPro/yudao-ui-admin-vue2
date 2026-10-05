@@ -13,7 +13,6 @@ import { debounce } from 'throttle-debounce'
 let num = 1
 
 export default {
-  name: 'AppTinymce',
   props: {
     id: {
       type: String,

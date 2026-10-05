@@ -74,7 +74,10 @@
 <script>
 export default {
   name: 'CrontabSecond',
-  props: ['check', 'radioParent'],
+  props: {
+    check: { type: Function, default: undefined },
+    radioParent: { type: Number, default: undefined }
+  },
   data() {
     return {
       radioValue: 1,

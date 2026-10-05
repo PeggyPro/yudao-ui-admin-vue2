@@ -69,7 +69,7 @@
       type="text"
       class="success-text"
       @click="handleGenerateWorkOrder(scope.row)"
-    >生成工单</el-button></template></el-table-column></el-table><pagination
+    >生成工单</el-button></template></el-table-column></el-table><Pagination
       v-show="bomTotal > 0"
       :total="bomTotal"
       :page.sync="bomQueryParams.pageNo"

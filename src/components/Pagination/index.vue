@@ -22,7 +22,7 @@
 import { scrollTo } from '@/utils/scroll-to'
 
 export default {
-  name: 'AppPagination',
+  name: 'Pagination',
   props: {
     total: {
       required: true,

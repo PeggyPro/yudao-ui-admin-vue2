@@ -84,7 +84,11 @@
 <script>
 export default {
   name: 'CrontabYear',
-  props: ['check', 'month', 'cron'],
+  props: {
+    check: { type: Function, default: undefined },
+    month: { type: [String, Number], default: undefined },
+    cron: { type: Object, default: undefined }
+  },
   data() {
     return {
       fullYear: 0,

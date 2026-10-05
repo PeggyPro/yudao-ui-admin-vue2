@@ -266,7 +266,7 @@
       </el-table>
 
       <!-- 分页 -->
-      <pagination
+      <Pagination
         v-show="total > 0"
         :limit.sync="queryParams.pageSize"
         :page.sync="queryParams.pageNo"

@@ -285,7 +285,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
+    <Pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNo"

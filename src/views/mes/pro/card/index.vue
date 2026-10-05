@@ -153,7 +153,7 @@
         :biz-code="scope.row.code"
         biz-type="PROCARD"
       /></template></el-table-column>
-    </el-table><pagination
+    </el-table><Pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNo"

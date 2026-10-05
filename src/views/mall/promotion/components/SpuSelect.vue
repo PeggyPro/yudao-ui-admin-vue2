@@ -73,7 +73,7 @@
         type="expand"
         width="30"
       >
-        <template v-slot>
+        <template slot-scope="{}">
           <el-table
             v-if="isExpand"
             ref="skuList"
@@ -233,7 +233,7 @@
         <template slot-scope="scope">{{ parseTime(scope.row.createTime) }}</template>
       </el-table-column>
     </el-table>
-    <pagination
+    <Pagination
       v-show="total > 0"
       :limit.sync="queryParams.pageSize"
       :page.sync="queryParams.pageNo"

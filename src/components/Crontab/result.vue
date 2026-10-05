@@ -122,8 +122,10 @@ export default {
         resetSecond()
       }
 
+      // 逐层结束当前循环，将跳转目标传递给外层循环
+      let nextLoop = ''
       // 循环年份数组
-      goYear: for (let Yi = YIdx; Yi < YDate.length; Yi++) {
+      for (let Yi = YIdx; Yi < YDate.length; Yi++) {
         const YY = YDate[Yi]
         // 如果到达最大值时
         if (nMonth > MDate[MDate.length - 1]) {
@@ -131,7 +133,7 @@ export default {
           continue
         }
         // 循环月份数组
-        goMonth: for (let Mi = MIdx; Mi < MDate.length; Mi++) {
+        for (let Mi = MIdx; Mi < MDate.length; Mi++) {
           // 赋值、方便后面运算
           let MM = MDate[Mi]
           MM = MM < 10 ? '0' + MM : MM
@@ -140,12 +142,13 @@ export default {
             resetDay()
             if (Mi === MDate.length - 1) {
               resetMonth()
-              continue goYear
+              nextLoop = 'goYear'
+              break
             }
             continue
           }
           // 循环日期数组
-          goDay: for (let Di = DIdx; Di < DDate.length; Di++) {
+          for (let Di = DIdx; Di < DDate.length; Di++) {
             // 赋值、方便后面运算
             let DD = DDate[Di]
             let thisDD = DD < 10 ? '0' + DD : DD
@@ -157,9 +160,11 @@ export default {
                 resetDay()
                 if (Mi === MDate.length - 1) {
                   resetMonth()
-                  continue goYear
+                  nextLoop = 'goYear'
+                  break
                 }
-                continue goMonth
+                nextLoop = 'goMonth'
+                break
               }
               continue
             }
@@ -167,7 +172,8 @@ export default {
             // 判断日期的合法性，不合法的话也是跳出当前循环
             if (this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true && this.dayRule !== 'workDay' && this.dayRule !== 'lastWeek' && this.dayRule !== 'lastDay') {
               resetDay()
-              continue goMonth
+              nextLoop = 'goMonth'
+              break
             }
             // 如果日期规则中有值时
             if (this.dayRule === 'lastDay') {
@@ -218,9 +224,11 @@ export default {
                   resetDay()
                   if (Mi === MDate.length - 1) {
                     resetMonth()
-                    continue goYear
+                    nextLoop = 'goYear'
+                    break
                   }
-                  continue goMonth
+                  nextLoop = 'goMonth'
+                  break
                 }
                 continue
               }
@@ -255,7 +263,7 @@ export default {
             DD = DD < 10 ? '0' + DD : DD
 
             // 循环“时”数组
-            goHour: for (let hi = hIdx; hi < hDate.length; hi++) {
+            for (let hi = hIdx; hi < hDate.length; hi++) {
               const hh = hDate[hi] < 10 ? '0' + hDate[hi] : hDate[hi]
 
               // 如果到达最大值时
@@ -267,16 +275,19 @@ export default {
                     resetDay()
                     if (Mi === MDate.length - 1) {
                       resetMonth()
-                      continue goYear
+                      nextLoop = 'goYear'
+                      break
                     }
-                    continue goMonth
+                    nextLoop = 'goMonth'
+                    break
                   }
-                  continue goDay
+                  nextLoop = 'goDay'
+                  break
                 }
                 continue
               }
               // 循环"分"数组
-              goMin: for (let mi = mIdx; mi < mDate.length; mi++) {
+              for (let mi = mIdx; mi < mDate.length; mi++) {
                 const mm = mDate[mi] < 10 ? '0' + mDate[mi] : mDate[mi]
 
                 // 如果到达最大值时
@@ -290,13 +301,17 @@ export default {
                         resetDay()
                         if (Mi === MDate.length - 1) {
                           resetMonth()
-                          continue goYear
+                          nextLoop = 'goYear'
+                          break
                         }
-                        continue goMonth
+                        nextLoop = 'goMonth'
+                        break
                       }
-                      continue goDay
+                      nextLoop = 'goDay'
+                      break
                     }
-                    continue goHour
+                    nextLoop = 'goHour'
+                    break
                   }
                   continue
                 }
@@ -309,7 +324,10 @@ export default {
                     nums++
                   }
                   // 如果条数满了就退出循环
-                  if (nums === 5) break goYear
+                  if (nums === 5) {
+                    nextLoop = 'done'
+                    break
+                  }
                   // 如果到达最大值时
                   if (si === sDate.length - 1) {
                     resetSecond()
@@ -321,21 +339,51 @@ export default {
                           resetDay()
                           if (Mi === MDate.length - 1) {
                             resetMonth()
-                            continue goYear
+                            nextLoop = 'goYear'
+                            break
                           }
-                          continue goMonth
+                          nextLoop = 'goMonth'
+                          break
                         }
-                        continue goDay
+                        nextLoop = 'goDay'
+                        break
                       }
-                      continue goHour
+                      nextLoop = 'goHour'
+                      break
                     }
-                    continue goMin
+                    nextLoop = 'goMin'
+                    break
                   }
                 } // goSecond
+                if (nextLoop === 'goMin') {
+                  nextLoop = ''
+                  continue
+                }
+                if (nextLoop) break
               } // goMin
+              if (nextLoop === 'goHour') {
+                nextLoop = ''
+                continue
+              }
+              if (nextLoop) break
             }// goHour
+            if (nextLoop === 'goDay') {
+              nextLoop = ''
+              continue
+            }
+            if (nextLoop) break
           }// goDay
+          if (nextLoop === 'goMonth') {
+            nextLoop = ''
+            continue
+          }
+          if (nextLoop) break
         }// goMonth
+        if (nextLoop === 'goYear') {
+          nextLoop = ''
+          continue
+        }
+        if (nextLoop) break
       }
       // 判断100年内的结果条数
       if (resultArr.length === 0) {

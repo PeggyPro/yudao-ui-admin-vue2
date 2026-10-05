@@ -12,7 +12,7 @@
       </keep-alive>
     </transition>
     <iframe-toggle />
-    <app-footer v-if="$store.state.settings.footer" />
+    <AppFooter v-if="$store.state.settings.footer" />
   </section>
 </template>
 

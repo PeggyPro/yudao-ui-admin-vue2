@@ -159,7 +159,7 @@ import CrontabYear from './year.vue'
 import CrontabResult from './result.vue'
 
 export default {
-  name: 'AppCrontab',
+  name: 'Vcrontab',
   components: {
     CrontabSecond,
     CrontabMin,

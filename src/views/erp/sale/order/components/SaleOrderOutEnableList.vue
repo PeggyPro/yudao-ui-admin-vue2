@@ -147,7 +147,7 @@
         :formatter="erpPriceTableColumnFormatter"
       />
     </el-table>
-    <pagination
+    <Pagination
       :total="total"
       :page.sync="queryParams.pageNo"
       :limit.sync="queryParams.pageSize"

@@ -150,7 +150,7 @@
   ><template #default="scope"><dict-tag
     :type="DICT_TYPE.MES_PRO_TASK_STATUS"
     :value="scope.row.status"
-  /></template></el-table-column></el-table><pagination
+  /></template></el-table-column></el-table><Pagination
     v-show="total > 0"
     :total="total"
     :page.sync="queryParams.pageNo"

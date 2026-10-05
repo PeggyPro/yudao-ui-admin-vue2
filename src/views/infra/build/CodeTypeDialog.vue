@@ -65,7 +65,9 @@
 <script>
 export default {
   inheritAttrs: false,
-  props: ['showFileName'],
+  props: {
+    showFileName: { type: Boolean, default: undefined }
+  },
   data() {
     return {
       formData: {

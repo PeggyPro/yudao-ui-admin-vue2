@@ -370,7 +370,7 @@
           :divided="index > 0 && action.command === 'delete'"
         >{{ action.label }}</el-dropdown-item></el-dropdown-menu></el-dropdown></template></el-table-column>
       </el-table>
-      <pagination
+      <Pagination
         v-show="total > 0"
         :total="total"
         :page.sync="queryParams.pageNo"

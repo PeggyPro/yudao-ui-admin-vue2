@@ -30,7 +30,7 @@
     </div>
 
     <div class="image-list-card__pagination">
-      <pagination
+      <Pagination
         v-show="pageTotal > 0"
         :total="pageTotal"
         :page.sync="queryParams.pageNo"

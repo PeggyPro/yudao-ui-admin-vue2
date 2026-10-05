@@ -205,7 +205,7 @@
                 <template slot-scope="scope">{{ formatHrmMoney(scope.row.realPaySalary) }}</template>
               </el-table-column>
             </el-table>
-            <pagination
+            <Pagination
               v-show="employeeTotal > 0"
               :limit.sync="queryParams.pageSize"
               :page.sync="queryParams.pageNo"

@@ -30,7 +30,7 @@
 ><template slot-scope="scope"><el-button
   type="text"
   @click="openDetail(scope.row)"
->详情</el-button></template></el-table-column></el-table><pagination
+>详情</el-button></template></el-table-column></el-table><Pagination
   v-show="total > 0"
   :total="total"
   :page.sync="queryParams.pageNo"

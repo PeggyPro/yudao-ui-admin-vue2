@@ -1195,7 +1195,11 @@ export default {
     TreeNodeDialog,
     IconsDialog
   },
-  props: ['showField', 'activeData', 'formConf'],
+  props: {
+    showField: { type: Boolean, default: undefined },
+    activeData: { type: Object, default: undefined },
+    formConf: { type: Object, default: undefined }
+  },
   data() {
     return {
       currentTab: 'field',

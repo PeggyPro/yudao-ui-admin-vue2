@@ -30,7 +30,7 @@
           :list="list"
           @delete="handleDelete"
         />
-        <pagination
+        <Pagination
           v-show="total > 0"
           :total="total"
           :page.sync="queryParams.pageNo"
@@ -51,7 +51,7 @@
           :list="list"
           @delete="handleDelete"
         />
-        <pagination
+        <Pagination
           v-show="total > 0"
           :total="total"
           :page.sync="queryParams.pageNo"
@@ -79,7 +79,7 @@
           :list="list"
           @delete="handleDelete"
         />
-        <pagination
+        <Pagination
           v-show="total > 0"
           :total="total"
           :page.sync="queryParams.pageNo"

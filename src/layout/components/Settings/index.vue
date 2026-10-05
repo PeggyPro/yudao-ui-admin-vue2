@@ -256,7 +256,6 @@ const buildSettingComputed = key => ({
 })
 
 export default {
-  name: 'AppSettings',
   components: { ThemePicker },
   data() {
     return {

@@ -70,7 +70,7 @@
       </button>
     </div>
     <div class="mail-message-list__pagination">
-      <pagination
+      <Pagination
         :total="total"
         :page.sync="innerPageNo"
         :limit.sync="innerPageSize"

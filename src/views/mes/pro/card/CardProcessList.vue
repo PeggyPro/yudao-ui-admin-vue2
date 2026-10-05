@@ -84,7 +84,7 @@
       class="danger-text"
       @click="handleDelete(scope.row.id)"
     >删除</el-button></template></el-table-column></el-table>
-    <pagination
+    <Pagination
       v-show="processTotal > 0"
       :total="processTotal"
       :page.sync="processQueryParams.pageNo"

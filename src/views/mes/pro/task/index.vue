@@ -222,7 +222,7 @@
           @click="openForm('schedule', scope.row.id)"
         >排产</el-button></template></el-table-column>
       </el-table>
-      <pagination
+      <Pagination
         v-show="total > 0"
         :total="total"
         :page.sync="queryParams.pageNo"

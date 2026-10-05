@@ -1,6 +1,7 @@
 import { isArray } from 'util'
 import { exportDefault, titleCase, deepClone } from '@/utils'
 import ruleTrigger from './ruleTrigger'
+import { parseRegExp } from '@/utils/regexp'
 
 const units = {
   KB: '1024',
@@ -163,7 +164,7 @@ function buildRules(scheme, ruleList) {
       config.regList.forEach(item => {
         if (item.pattern) {
           rules.push(
-            `{ pattern: ${eval(item.pattern)}, message: '${item.message}', trigger: '${ruleTrigger[config.tag]}' }`
+            `{ pattern: ${parseRegExp(item.pattern)}, message: '${item.message}', trigger: '${ruleTrigger[config.tag]}' }`
           )
         }
       })

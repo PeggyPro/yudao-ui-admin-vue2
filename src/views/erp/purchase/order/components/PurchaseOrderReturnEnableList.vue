@@ -148,7 +148,7 @@
         <template slot-scope="scope">{{ formatPrice(scope.row.totalPrice) }}</template>
       </el-table-column>
     </el-table>
-    <pagination
+    <Pagination
       :total="total"
       :page.sync="queryParams.pageNo"
       :limit.sync="queryParams.pageSize"

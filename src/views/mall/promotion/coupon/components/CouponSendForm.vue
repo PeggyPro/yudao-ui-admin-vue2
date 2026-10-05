@@ -90,7 +90,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
+    <Pagination
       :limit.sync="queryParams.pageSize"
       :page.sync="queryParams.pageNo"
       :total="total"

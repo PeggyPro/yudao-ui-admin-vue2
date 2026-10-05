@@ -130,7 +130,7 @@
         width="180"
       />
     </el-table>
-    <pagination
+    <Pagination
       v-show="total > 0"
       :limit.sync="queryParams.pageSize"
       :page.sync="queryParams.pageNo"
