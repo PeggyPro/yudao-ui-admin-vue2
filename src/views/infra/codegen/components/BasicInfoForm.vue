@@ -2,6 +2,7 @@
   <basic-info-form
     ref="inner"
     :info="table"
+    @field-change="(field, value) => $emit('field-change', field, value)"
   />
 </template>
 

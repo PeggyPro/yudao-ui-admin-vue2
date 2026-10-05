@@ -4,6 +4,7 @@
     :form-data="table"
     :columns="columns"
     :menus="menus"
+    @field-change="(field, value) => $emit('field-change', field, value)"
   />
 </template>
 

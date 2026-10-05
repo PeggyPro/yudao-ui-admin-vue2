@@ -119,7 +119,7 @@
       </div>
       <HttpRequestSetting
         v-if="triggerEnabled[trigger.key] && modelData[trigger.settingKey]"
-        :setting="modelData[trigger.settingKey]"
+        :setting.sync="modelData[trigger.settingKey]"
         :response-enable="true"
         :form-item-prefix="trigger.settingKey"
         :form-fields="formFields"

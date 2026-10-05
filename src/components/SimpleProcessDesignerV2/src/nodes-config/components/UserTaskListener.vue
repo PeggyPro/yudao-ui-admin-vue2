@@ -12,9 +12,10 @@
     >
       <el-divider content-position="left">{{ listener.name }}</el-divider>
       <el-switch
-        v-model="value[listener.enableKey]"
+        :value="value[listener.enableKey]"
         active-text="开启"
         inactive-text="关闭"
+        @input="$emit('input', { ...value, [listener.enableKey]: $event })"
       />
       <template v-if="value[listener.enableKey]">
         <el-alert
@@ -30,8 +31,9 @@
           :rules="pathRules"
         >
           <el-input
-            v-model="value[listener.pathKey]"
+            :value="value[listener.pathKey]"
             placeholder="https://example.com/listener"
+            @input="$emit('input', { ...value, [listener.pathKey]: $event })"
           />
         </el-form-item>
         <HttpRequestParamSetting
@@ -77,26 +79,33 @@ export default {
   },
   methods: {
     ensureShape() {
+      const value = { ...this.value }
+      let changed = false
       LISTENERS.forEach((listener) => {
-        if (this.value[listener.enableKey] === undefined || this.value[listener.enableKey] === null) {
-          this.$set(this.value, listener.enableKey, false)
+        if (value[listener.enableKey] == null) {
+          value[listener.enableKey] = false
+          changed = true
         }
-        if (this.value[listener.pathKey] === undefined || this.value[listener.pathKey] === null) {
-          this.$set(this.value, listener.pathKey, '')
+        if (value[listener.pathKey] == null) {
+          value[listener.pathKey] = ''
+          changed = true
         }
-        if (!this.value[listener.configKey] || typeof this.value[listener.configKey] !== 'object') {
-          this.$set(this.value, listener.configKey, { header: [], body: [] })
-        }
-        if (!Array.isArray(this.value[listener.configKey].header)) {
-          this.$set(this.value[listener.configKey], 'header', [])
-        }
-        if (!Array.isArray(this.value[listener.configKey].body)) {
-          this.$set(this.value[listener.configKey], 'body', [])
+        const original = value[listener.configKey]
+        const setting = original && typeof original === 'object' ? original : {}
+        if (!Array.isArray(setting.header) || !Array.isArray(setting.body)) {
+          value[listener.configKey] = {
+            ...setting,
+            header: Array.isArray(setting.header) ? setting.header : [],
+            body: Array.isArray(setting.body) ? setting.body : []
+          }
+          changed = true
         }
       })
+      if (changed) this.$emit('input', value)
     },
     async validate() {
       this.ensureShape()
+      await this.$nextTick()
       const formValid = await new Promise((resolve) => {
         if (!this.$refs.listenerForm) return resolve(true)
         this.$refs.listenerForm.validate(resolve)

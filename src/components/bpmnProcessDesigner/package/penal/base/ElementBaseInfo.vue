@@ -19,9 +19,10 @@
           prop="key"
         >
           <el-input
-            v-model="model.key"
+            :value="model.key"
             placeholder="请输入流标标识"
             :disabled="model.id !== undefined && model.id.length > 0"
+            @input="$emit('model-field-change', 'key', $event)"
             @change="handleKeyUpdate"
           />
         </el-form-item>
@@ -30,9 +31,10 @@
           prop="name"
         >
           <el-input
-            v-model="model.name"
+            :value="model.name"
             placeholder="请输入流程名称"
             clearable
+            @input="$emit('model-field-change', 'name', $event)"
             @change="handleNameUpdate"
           />
         </el-form-item>

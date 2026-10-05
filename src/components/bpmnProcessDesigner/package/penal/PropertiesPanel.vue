@@ -14,6 +14,7 @@
           :business-object="elementBusinessObject"
           :type="elementType"
           :model="model"
+          @model-field-change="(field, value) => $emit('model-field-change', field, value)"
         />
       </el-collapse-item>
       <!-- Keep each collapse key unique.  Reusing `condition` here couples the

@@ -9,7 +9,10 @@
       <el-col :span="12">
         <el-form-item prop="templateType">
           <span slot="label">生成模板</span>
-          <el-select v-model="formData.templateType">
+          <el-select
+            :value="formData.templateType"
+            @input="$emit('field-change', 'templateType', $event)"
+          >
             <el-option
               v-for="dict in getDictDatas(DICT_TYPE.INFRA_CODEGEN_TEMPLATE_TYPE)"
               :key="parseInt(dict.value)"
@@ -22,7 +25,10 @@
       <el-col :span="12">
         <el-form-item prop="templateType">
           <span slot="label">前端类型</span>
-          <el-select v-model="formData.frontType">
+          <el-select
+            :value="formData.frontType"
+            @input="$emit('field-change', 'frontType', $event)"
+          >
             <el-option
               v-for="dict in getDictDatas(DICT_TYPE.INFRA_CODEGEN_FRONT_TYPE)"
               :key="parseInt(dict.value)"
@@ -36,7 +42,10 @@
       <el-col :span="12">
         <el-form-item prop="scene">
           <span slot="label">生成场景</span>
-          <el-select v-model="formData.scene">
+          <el-select
+            :value="formData.scene"
+            @input="$emit('field-change', 'scene', $event)"
+          >
             <el-option
               v-for="dict in getDictDatas(DICT_TYPE.INFRA_CODEGEN_SCENE)"
               :key="parseInt(dict.value)"
@@ -58,12 +67,13 @@
             </el-tooltip>
           </span>
           <treeselect
-            v-model="formData.parentMenuId"
+            :value="formData.parentMenuId"
             :append-to-body="true"
             :options="menus"
             :normalizer="normalizer"
             :show-count="true"
             placeholder="请选择系统菜单"
+            @input="$emit('field-change', 'parentMenuId', $event)"
           />
         </el-form-item>
       </el-col>
@@ -76,7 +86,8 @@
       <!--              <i class="el-icon-question"></i>-->
       <!--            </el-tooltip>-->
       <!--          </span>-->
-      <!--          <el-input v-model="formData.packageName" />-->
+      <!--          <el-input :value="formData.packageName"
+            @input="$emit('field-change', 'packageName', $event)" />-->
       <!--        </el-form-item>-->
       <!--      </el-col>-->
 
@@ -91,7 +102,10 @@
               <i class="el-icon-question" />
             </el-tooltip>
           </span>
-          <el-input v-model="formData.moduleName" />
+          <el-input
+            :value="formData.moduleName"
+            @input="$emit('field-change', 'moduleName', $event)"
+          />
         </el-form-item>
       </el-col>
 
@@ -106,7 +120,10 @@
               <i class="el-icon-question" />
             </el-tooltip>
           </span>
-          <el-input v-model="formData.businessName" />
+          <el-input
+            :value="formData.businessName"
+            @input="$emit('field-change', 'businessName', $event)"
+          />
         </el-form-item>
       </el-col>
 
@@ -118,7 +135,8 @@
       <!--              <i class="el-icon-question"></i>-->
       <!--            </el-tooltip>-->
       <!--          </span>-->
-      <!--          <el-input v-model="formData.businessPackage" />-->
+      <!--          <el-input :value="formData.businessPackage"
+            @input="$emit('field-change', 'businessPackage', $event)" />-->
       <!--        </el-form-item>-->
       <!--      </el-col>-->
 
@@ -133,7 +151,10 @@
               <i class="el-icon-question" />
             </el-tooltip>
           </span>
-          <el-input v-model="formData.className" />
+          <el-input
+            :value="formData.className"
+            @input="$emit('field-change', 'className', $event)"
+          />
         </el-form-item>
       </el-col>
 
@@ -148,7 +169,10 @@
               <i class="el-icon-question" />
             </el-tooltip>
           </span>
-          <el-input v-model="formData.classComment" />
+          <el-input
+            :value="formData.classComment"
+            @input="$emit('field-change', 'classComment', $event)"
+          />
         </el-form-item>
       </el-col>
 
@@ -166,14 +190,17 @@
               <i class="el-icon-question" />
             </el-tooltip>
           </span>
-          <el-input v-model="formData.genPath">
+          <el-input
+            :value="formData.genPath"
+            @input="$emit('field-change', 'genPath', $event)"
+          >
             <el-dropdown slot="append">
               <el-button type="primary">
                 最近路径快速选择
                 <i class="el-icon-arrow-down el-icon--right" />
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="formData.genPath = '/'">恢复默认的生成基础路径</el-dropdown-item>
+                <el-dropdown-item @click.native="$emit('field-change', 'genPath', '/')">恢复默认的生成基础路径</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-input>
@@ -200,8 +227,9 @@
             </span>
           </template>
           <el-select
-            v-model="formData.treeParentColumnId"
+            :value="formData.treeParentColumnId"
             placeholder="请选择"
+            @input="$emit('field-change', 'treeParentColumnId', $event)"
           >
             <el-option
               v-for="(column, index) in columns"
@@ -226,8 +254,9 @@
             </span>
           </template>
           <el-select
-            v-model="formData.treeNameColumnId"
+            :value="formData.treeNameColumnId"
             placeholder="请选择"
+            @input="$emit('field-change', 'treeNameColumnId', $event)"
           >
             <el-option
               v-for="(column, index) in columns"
@@ -259,8 +288,9 @@
             </span>
           </template>
           <el-select
-            v-model="formData.masterTableId"
+            :value="formData.masterTableId"
             placeholder="请选择"
+            @input="$emit('field-change', 'masterTableId', $event)"
           >
             <el-option
               v-for="(table0, index) in tables"
@@ -285,8 +315,9 @@
             </span>
           </template>
           <el-select
-            v-model="formData.subJoinColumnId"
+            :value="formData.subJoinColumnId"
             placeholder="请选择"
+            @input="$emit('field-change', 'subJoinColumnId', $event)"
           >
             <el-option
               v-for="(column, index) in columns"
@@ -311,8 +342,9 @@
             </span>
           </template>
           <el-radio-group
-            v-model="formData.subJoinMany"
+            :value="formData.subJoinMany"
             placeholder="请选择"
+            @input="$emit('field-change', 'subJoinMany', $event)"
           >
             <el-radio :label="true">一对多</el-radio>
             <el-radio :label="false">一对一</el-radio>

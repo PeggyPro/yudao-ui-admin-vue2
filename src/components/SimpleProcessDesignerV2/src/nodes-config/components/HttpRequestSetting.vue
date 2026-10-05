@@ -14,8 +14,9 @@
       :rules="urlRules"
     >
       <el-input
-        v-model="setting.url"
+        :value="setting.url"
         placeholder="https://example.com/webhook"
+        @input="$emit('update:setting', { ...setting, url: $event })"
       />
     </el-form-item>
     <HttpRequestParamSetting
@@ -45,11 +46,12 @@
           class="http-response-row"
         >
           <el-select
-            v-model="item.key"
+            :value="item.key"
             class="http-response-field"
             filterable
             clearable
             placeholder="表单字段"
+            @input="updateResponse(index, 'key', $event)"
           >
             <el-option
               v-for="field in formFields"
@@ -60,9 +62,10 @@
             />
           </el-select>
           <el-input
-            v-model="item.value"
+            :value="item.value"
             class="http-response-value"
             placeholder="响应字段"
+            @input="updateResponse(index, 'value', $event)"
           />
           <el-button
             type="text"
@@ -127,27 +130,41 @@ export default {
   },
   methods: {
     ensureSettingShape() {
-      if (!Array.isArray(this.setting.header)) this.$set(this.setting, 'header', [])
-      if (!Array.isArray(this.setting.body)) this.$set(this.setting, 'body', [])
-      if (this.responseEnable && !Array.isArray(this.setting.response)) {
-        this.$set(this.setting, 'response', [])
+      const setting = { ...this.setting }
+      let changed = false
+      for (const field of ['header', 'body', ...(this.responseEnable ? ['response'] : [])]) {
+        if (!Array.isArray(setting[field])) {
+          setting[field] = []
+          changed = true
+        }
       }
-      this.normalizeResponseItems()
+      if (Array.isArray(setting.response)) {
+        setting.response = setting.response.map(item => {
+          if (!item || typeof item !== 'object') return item
+          if (item.key != null && item.value != null) return item
+          changed = true
+          return { ...item, key: item.key == null ? '' : item.key, value: item.value == null ? '' : item.value }
+        })
+      }
+      if (changed) this.$emit('update:setting', setting)
     },
-    normalizeResponseItems() {
-      if (!Array.isArray(this.setting.response)) return
-      this.setting.response.forEach((item) => {
-        if (!item || typeof item !== 'object') return
-        if (item.key === undefined || item.key === null) this.$set(item, 'key', '')
-        if (item.value === undefined || item.value === null) this.$set(item, 'value', '')
+    updateResponse(index, field, value) {
+      this.$emit('update:setting', {
+        ...this.setting,
+        response: this.setting.response.map((item, row) => row === index ? { ...item, [field]: value } : item)
       })
     },
     addResponse() {
-      if (!Array.isArray(this.setting.response)) this.$set(this.setting, 'response', [])
-      this.setting.response.push({ key: '', value: '' })
+      this.$emit('update:setting', {
+        ...this.setting,
+        response: [...(this.setting.response || []), { key: '', value: '' }]
+      })
     },
     deleteResponse(index) {
-      if (Array.isArray(this.setting.response)) this.setting.response.splice(index, 1)
+      this.$emit('update:setting', {
+        ...this.setting,
+        response: (this.setting.response || []).filter((item, row) => row !== index)
+      })
     }
   }
 }

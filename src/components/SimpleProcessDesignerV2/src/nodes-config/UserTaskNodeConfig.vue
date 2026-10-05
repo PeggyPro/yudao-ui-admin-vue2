@@ -891,8 +891,8 @@ export default {
       return ''
     },
     applyDraftToNode() {
-      const node = this.flowNode
       const data = clone(this.draft)
+      data.approveType = Number(this.draft.approveType) || ApproveType.USER
       delete data.timeoutDuration
       delete data.timeoutUnit
       data.candidateParam = buildCandidateParam(data)
@@ -923,8 +923,8 @@ export default {
         delete data[`${key}Enable`]
         delete data[`${key}Path`]
       })
-      Object.keys(data).forEach((key) => { this.$set(node, key, data[key]) })
-      this.$set(node, 'showText', this.buildShowText())
+      data.showText = this.buildShowText()
+      this.$emit('update:config', data)
     },
     buildShowText() {
       const strategy = Number(this.draft.candidateStrategy)
@@ -955,9 +955,11 @@ export default {
         const approve = this.approveTypes.find((item) => Number(item.value) === Number(this.draft.approveType))
         // Auto approve/reject nodes intentionally skip the candidate form, but
         // still commit the draft only after this branch has been accepted.
-        this.$set(this.flowNode, 'name', this.draft.name)
-        this.$set(this.flowNode, 'approveType', Number(this.draft.approveType) || ApproveType.USER)
-        this.flowNode.showText = approve ? approve.label : ''
+        this.$emit('update:config', {
+          name: this.draft.name,
+          approveType: Number(this.draft.approveType) || ApproveType.USER,
+          showText: approve ? approve.label : ''
+        })
         this.visible = false
         return true
       }
@@ -974,8 +976,6 @@ export default {
       // Keep the live node untouched while validation is running.  This is
       // important for cancel/reopen: an invalid candidate configuration must
       // not leak a changed name or approve type into the designer model.
-      this.$set(this.flowNode, 'name', this.draft.name)
-      this.$set(this.flowNode, 'approveType', Number(this.draft.approveType) || ApproveType.USER)
       this.applyDraftToNode()
       this.visible = false
       return true

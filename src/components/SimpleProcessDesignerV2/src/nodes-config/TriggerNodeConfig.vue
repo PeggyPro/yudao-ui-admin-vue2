@@ -37,7 +37,7 @@
 
         <template v-if="isHttpTrigger">
           <HttpRequestSetting
-            :setting="draft.httpRequestSetting"
+            :setting.sync="draft.httpRequestSetting"
             :response-enable="Number(draft.type) === TriggerTypeEnum.HTTP_REQUEST"
             form-item-prefix="httpRequestSetting"
             :form-fields="formFields"

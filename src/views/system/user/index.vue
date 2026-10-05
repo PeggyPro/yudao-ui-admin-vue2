@@ -173,7 +173,7 @@
           </el-col>
           <right-toolbar
             :show-search.sync="showSearch"
-            :columns="columns"
+            :columns.sync="columns"
             @queryTable="getList"
           />
         </el-row>

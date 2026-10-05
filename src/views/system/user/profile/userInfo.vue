@@ -1,7 +1,7 @@
 <template>
   <el-form
     ref="form"
-    :model="user"
+    :model="formData"
     :rules="rules"
     label-width="80px"
   >
@@ -9,14 +9,14 @@
       label="用户昵称"
       prop="nickname"
     >
-      <el-input v-model="user.nickname" />
+      <el-input v-model="formData.nickname" />
     </el-form-item>
     <el-form-item
       label="手机号码"
       prop="mobile"
     >
       <el-input
-        v-model="user.mobile"
+        v-model="formData.mobile"
         maxlength="11"
       />
     </el-form-item>
@@ -25,12 +25,12 @@
       prop="email"
     >
       <el-input
-        v-model="user.email"
+        v-model="formData.email"
         maxlength="50"
       />
     </el-form-item>
     <el-form-item label="性别">
-      <el-radio-group v-model="user.sex">
+      <el-radio-group v-model="formData.sex">
         <el-radio :label="1">男</el-radio>
         <el-radio :label="2">女</el-radio>
       </el-radio-group>
@@ -62,6 +62,7 @@ export default {
   },
   data() {
     return {
+      formData: {}, // 表单数据
       // 表单校验
       rules: {
         nickname: [
@@ -86,11 +87,19 @@ export default {
       }
     }
   },
+  watch: {
+    user: {
+      immediate: true,
+      handler(user) {
+        this.formData = { ...user }
+      }
+    }
+  },
   methods: {
     submit() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          updateUserProfile(this.user).then(response => {
+          updateUserProfile(this.formData).then(response => {
             this.$modal.msgSuccess('修改成功')
             this.$emit('success')
           })

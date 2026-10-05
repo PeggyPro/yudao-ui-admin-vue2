@@ -82,6 +82,7 @@
         ref="nodeSetting"
         :flow-node="currentNode"
         @find:return-task-nodes="findReturnTaskNodes"
+        @update:config="updateNodeConfig"
       />
     </div>
     <!-- 审批记录 -->
@@ -172,7 +173,7 @@
   </div>
 </template>
 <script setup>
-import { ref, inject } from 'vue'
+import { set, ref, inject } from 'vue'
 import { NodeType, NODE_DEFAULT_TEXT } from '../consts'
 import { useWatchNode, useNodeName2, useTaskStatusClass } from '../node'
 import NodeHandler from '../NodeHandler.vue'
@@ -195,6 +196,10 @@ const currentNode = useWatchNode(props)
 // 节点名称编辑
 const { showInput, blurEvent, clickTitle } = useNodeName2(currentNode, NodeType.START_USER_NODE)
 const nodeSetting = ref()
+
+const updateNodeConfig = (config) => {
+  Object.keys(config).forEach((key) => set(currentNode.value, key, config[key]))
+}
 
 const nodeClick = () => {
   if (readonly) {

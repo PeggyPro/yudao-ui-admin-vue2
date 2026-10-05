@@ -12,8 +12,9 @@
           prop="tableName"
         >
           <el-input
-            v-model="info.tableName"
+            :value="info.tableName"
             placeholder="请输入仓库名称"
+            @input="$emit('field-change', 'tableName', $event)"
           />
         </el-form-item>
       </el-col>
@@ -23,8 +24,9 @@
           prop="tableComment"
         >
           <el-input
-            v-model="info.tableComment"
+            :value="info.tableComment"
             placeholder="请输入"
+            @input="$emit('field-change', 'tableComment', $event)"
           />
         </el-form-item>
       </el-col>
@@ -41,8 +43,9 @@
             </el-tooltip>
           </span>
           <el-input
-            v-model="info.className"
+            :value="info.className"
             placeholder="请输入"
+            @input="$emit('field-change', 'className', $event)"
           />
         </el-form-item>
       </el-col>
@@ -52,8 +55,9 @@
           prop="author"
         >
           <el-input
-            v-model="info.author"
+            :value="info.author"
             placeholder="请输入"
+            @input="$emit('field-change', 'author', $event)"
           />
         </el-form-item>
       </el-col>
@@ -63,9 +67,10 @@
           prop="remark"
         >
           <el-input
-            v-model="info.remark"
+            :value="info.remark"
             type="textarea"
             :rows="3"
+            @input="$emit('field-change', 'remark', $event)"
           />
         </el-form-item>
       </el-col>

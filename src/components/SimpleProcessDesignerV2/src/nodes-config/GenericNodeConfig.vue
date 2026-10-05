@@ -293,7 +293,7 @@
 
         <template v-if="isTriggerNode">
           <HttpRequestSetting
-            :setting="form.httpRequestSetting"
+            :setting.sync="form.httpRequestSetting"
             :response-enable="true"
             form-item-prefix="httpRequestSetting"
             :form-fields="formFieldList"

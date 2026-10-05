@@ -8,6 +8,7 @@
         <basic-info-form
           ref="basicInfoRef"
           :table="formData.table"
+          @field-change="updateTableField"
         />
       </el-tab-pane>
       <el-tab-pane
@@ -29,6 +30,7 @@
           :table="formData.table"
           :columns="formData.columns"
           :menus="menus"
+          @field-change="updateTableField"
         />
       </el-tab-pane>
     </el-tabs>
@@ -72,6 +74,9 @@ export default {
     this.getMenus()
   },
   methods: {
+    updateTableField(field, value) {
+      this.$set(this.formData.table, field, value)
+    },
     getDetail() {
       const route = this.$route || {}
       const id = (route.query && route.query.id) || (route.params && route.params.tableId)

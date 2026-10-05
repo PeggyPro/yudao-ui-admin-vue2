@@ -38,6 +38,7 @@
           :prefix="controlForm.prefix"
           class="process-panel"
           :model="modelData"
+          @model-field-change="(field, value) => $set(modelData, field, value)"
         />
       </div>
     </template>

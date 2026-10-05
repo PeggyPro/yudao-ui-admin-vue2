@@ -119,10 +119,10 @@ export default {
     },
     // 右侧列表元素变化
     dataChange(data) {
-      for (const item in this.columns) {
-        const key = this.columns[item].key
-        this.columns[item].visible = !data.includes(key)
-      }
+      this.$emit('update:columns', this.columns.map(column => ({
+        ...column,
+        visible: !data.includes(column.key)
+      })))
     },
     // 打开显隐列dialog
     showColumn() {
